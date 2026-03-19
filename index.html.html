@@ -1,0 +1,2892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COMP Alumni Engagement Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --burgundy: #8b2230;
+            --dark-burgundy: #58001b;
+            --gold: #e0ab4c;
+            --gold-light: #f5e6c8;
+            --white: #ffffff;
+            --light-gray: #e2e4db;
+            --dark-gray: #242424;
+            --bg: #faf9f7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--dark-gray);
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--dark-burgundy) 0%, var(--burgundy) 100%);
+            color: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .header-top {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .header-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .header-subtitle {
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--gold-light);
+            margin-bottom: 12px;
+        }
+
+        .header-meta {
+            font-size: 12px;
+            color: var(--gold-light);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .prototype-badge {
+            background: rgba(224, 171, 76, 0.2);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Campus Filter */
+        .filter-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .campus-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .campus-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background-color: var(--white);
+            color: var(--dark-gray);
+            border: 1px solid var(--light-gray);
+        }
+
+        .campus-btn.active {
+            background-color: var(--burgundy);
+            color: var(--white);
+            border-color: var(--burgundy);
+        }
+
+        .campus-btn:hover {
+            border-color: var(--burgundy);
+        }
+
+        .filter-label {
+            font-size: 13px;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            display: flex;
+            gap: 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--light-gray);
+            overflow-x: auto;
+        }
+
+        .tab-button {
+            padding: 14px 20px;
+            border: none;
+            background: transparent;
+            color: var(--dark-gray);
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-button.active {
+            color: var(--burgundy);
+            border-bottom-color: var(--gold);
+        }
+
+        .tab-button:hover {
+            color: var(--burgundy);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Stat Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: attr(data-emoji);
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 32px;
+            opacity: 0.8;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            margin-top: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .stat-subtitle {
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* Charts */
+        .chart-container {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--dark-gray);
+        }
+
+        svg {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+        }
+
+        /* Horizontal Bar Chart */
+        .bar-horizontal {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+
+        .bar-label {
+            width: 140px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 24px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: var(--burgundy);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: var(--white);
+            font-size: 12px;
+            font-weight: 700;
+            transition: width 0.3s ease;
+        }
+
+        .bar-fill.gold {
+            background: var(--gold);
+            color: var(--dark-gray);
+        }
+
+        /* Opportunity Cards */
+        .opportunity-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .opportunity-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid var(--burgundy);
+        }
+
+        .opportunity-card.warm {
+            border-left-color: #f39c12;
+        }
+
+        .opportunity-card.lost {
+            border-left-color: #e74c3c;
+        }
+
+        .opportunity-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark-gray);
+        }
+
+        .opportunity-stat {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--burgundy);
+            margin-bottom: 6px;
+        }
+
+        .opportunity-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-highly-engaged {
+            background: #fce4ec;
+            color: var(--burgundy);
+        }
+
+        .badge-engaged {
+            background: var(--gold-light);
+            color: var(--dark-gray);
+        }
+
+        .badge-warm {
+            background: #ffe0b2;
+            color: #d84315;
+        }
+
+        .badge-inactive {
+            background: var(--light-gray);
+            color: #666;
+        }
+
+        .badge-lost {
+            background: #ffcdd2;
+            color: #c62828;
+        }
+
+        .badge-gap {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 2px 6px;
+            margin-left: 8px;
+            font-size: 9px;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        thead {
+            background: var(--gold-light);
+        }
+
+        th {
+            padding: 14px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--dark-burgundy);
+        }
+
+        td {
+            padding: 12px 14px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        tbody tr:hover {
+            background: var(--bg);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Search Bar */
+        .search-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 13px;
+            background: var(--white);
+        }
+
+        .search-btn {
+            padding: 12px 24px;
+            background: var(--burgundy);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: var(--dark-burgundy);
+        }
+
+        /* Timeline */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .timeline-phase {
+            position: relative;
+        }
+
+        .timeline-phase::before {
+            content: attr(data-phase);
+            position: absolute;
+            left: -8px;
+            top: -8px;
+            width: 32px;
+            height: 32px;
+            background: var(--burgundy);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            border: 3px solid var(--bg);
+        }
+
+        .timeline-phase.inactive::before {
+            background: var(--light-gray);
+            color: #999;
+        }
+
+        .timeline-phase::after {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 40px;
+            width: 2px;
+            height: calc(100% + 24px);
+            background: var(--light-gray);
+        }
+
+        .timeline-phase:last-child::after {
+            display: none;
+        }
+
+        .phase-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            margin-top: 12px;
+        }
+
+        .phase-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--dark-gray);
+        }
+
+        .phase-items {
+            list-style: none;
+        }
+
+        .phase-items li {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .phase-items li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--burgundy);
+            font-weight: 700;
+        }
+
+        /* Big Numbers */
+        .big-numbers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .big-number-card {
+            background: linear-gradient(135deg, var(--burgundy) 0%, #a8355c 100%);
+            color: var(--white);
+            padding: 32px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .big-number {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .big-number-label {
+            font-size: 13px;
+            opacity: 0.95;
+            font-weight: 600;
+        }
+
+        /* Why This Works */
+        .why-works {
+            background: linear-gradient(135deg, var(--burgundy) 0%, #a8355c 100%);
+            padding: 40px;
+            border-radius: 12px;
+            color: var(--white);
+            margin-bottom: 30px;
+        }
+
+        .why-works-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+
+        .why-works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+
+        .why-card {
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--gold);
+        }
+
+        .why-card-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .why-card-desc {
+            font-size: 13px;
+            opacity: 0.95;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--white);
+            border-top: 1px solid var(--light-gray);
+            padding: 24px;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #999;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-left {
+            flex: 1;
+        }
+
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-prepared {
+            color: var(--burgundy);
+            font-weight: 600;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 28px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .campus-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .campus-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .timeline {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-phase::after {
+                left: 8px;
+            }
+
+            .footer {
+                flex-direction: column;
+            }
+
+            .footer-right {
+                text-align: left;
+            }
+        }
+
+        /* Engagement Distribution Legend */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 16px;
+            justify-content: center;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Mentor Gap Indicator */
+        .mentor-bar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: 6px;
+        }
+
+        .mentor-specialty {
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .mentor-bar-wrapper {
+            flex: 1;
+            margin: 0 16px;
+            height: 28px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .mentor-bar-fill {
+            height: 100%;
+            background: var(--burgundy);
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            color: var(--white);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .mentor-bar-fill.gold {
+            background: var(--gold);
+            color: var(--dark-gray);
+        }
+
+        .mentor-stats {
+            font-size: 12px;
+            color: #666;
+            min-width: 100px;
+            text-align: right;
+        }
+
+        /* FERPA Note */
+        .ferpa-note {
+            background: #f0f0f0;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 11px;
+            color: #666;
+            margin-top: 20px;
+            border-left: 3px solid var(--gold);
+        }
+
+        /* Campus Comparison Table */
+        .comparison-note {
+            font-size: 12px;
+            color: #999;
+            font-style: italic;
+            margin-bottom: 16px;
+        }
+
+        /* Pie Chart */
+        .pie-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .pie-chart-wrapper {
+            width: 280px;
+            height: 280px;
+        }
+
+        /* Line Chart */
+        .line-chart-wrapper {
+            overflow-x: auto;
+        }
+    
+        /* Alumni Locator Tab Styles */
+        .section-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-gray);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .enrichment-pipeline {
+            background: var(--white);
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .pipeline-stats {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .pipeline-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--burgundy);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+        }
+
+        .arrow {
+            color: var(--gold);
+            font-size: 20px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Geographic Distribution */
+        .geo-section {
+            background: var(--white);
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .geo-stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .geo-stat-card {
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--white) 100%);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 3px solid var(--burgundy);
+        }
+
+        .geo-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--burgundy);
+            margin-bottom: 4px;
+        }
+
+        .geo-stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .geo-distribution-table {
+            margin-top: 20px;
+        }
+
+        .geo-table-header {
+            display: flex;
+            gap: 16px;
+            padding: 12px 16px;
+            background: var(--gold-light);
+            border-radius: 6px 6px 0 0;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--dark-gray);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .geo-table-col {
+            flex: 1;
+        }
+
+        .geo-table-row {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .geo-table-row:last-child {
+            border-bottom: none;
+        }
+
+        .geo-state-name {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .geo-state-count {
+            flex: 1;
+            text-align: center;
+            font-weight: 600;
+            color: var(--burgundy);
+        }
+
+        .geo-bar-container {
+            flex: 3;
+        }
+
+        .geo-bar-label {
+            font-size: 11px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+
+        .geo-bar {
+            height: 20px;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .geo-bar.burgundy {
+            background: var(--burgundy);
+        }
+
+        .geo-bar.gold {
+            background: var(--gold);
+        }
+
+        .geo-bar.gray {
+            background: #d0ccc4;
+        }
+
+        /* NPI Simulator */
+        .npi-simulator {
+            background: var(--white);
+            padding: 28px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .npi-results {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .npi-result-card {
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 18px;
+            background: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .npi-result-card:hover {
+            border-color: var(--burgundy);
+            box-shadow: 0 4px 12px rgba(139, 34, 48, 0.1);
+        }
+
+        .npi-result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .npi-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        .npi-badge {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .npi-result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .npi-detail-row {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .npi-label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .npi-value {
+            font-size: 13px;
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        .npi-info-note {
+            margin-top: 24px;
+            padding: 14px;
+            background: var(--gold-light);
+            border-left: 3px solid var(--burgundy);
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .how-card {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid var(--burgundy);
+        }
+
+        .how-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--burgundy);
+            margin-bottom: 12px;
+        }
+
+        .how-desc {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-top">Western University of Health Sciences</div>
+        <div class="header-title">COMP Alumni Engagement Dashboard</div>
+        <div class="header-subtitle">College of Osteopathic Medicine of the Pacific & COMP-Northwest</div>
+        <div class="header-meta">
+            <span class="prototype-badge">Prototype</span>
+            <span>Prepared for Dr. Lisa Warren</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <div class="campus-buttons">
+                <button class="campus-btn active" data-campus="all">All Campuses</button>
+                <button class="campus-btn" data-campus="pomona">Pomona CA</button>
+                <button class="campus-btn" data-campus="lebanon">Lebanon OR</button>
+            </div>
+            <div class="filter-label" id="filter-label">Showing: All Campuses data</div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs-container" id="tabs-container">
+            <button class="tab-button active" data-tab="overview">Overview</button>
+            <button class="tab-button" data-tab="engagement">Engagement</button>
+            <button class="tab-button" data-tab="coca">COCA Outcomes</button>
+            <button class="tab-button" data-tab="mentorship">Mentorship</button>
+            <button class="tab-button" data-tab="donor">Donor Pipeline</button>
+            <button class="tab-button" data-tab="records">Alumni Records</button>
+            <button class="tab-button" data-tab="locator">Alumni Locator</button>
+            
+            <button class="tab-button" data-tab="roadmap">Roadmap & ROI</button>
+        </div>
+
+        <!-- OVERVIEW TAB -->
+        <div class="tab-content active" id="overview">
+            <!-- Stats Grid -->
+            <div class="stats-grid" id="overview-stats">
+                <div class="stat-card" data-emoji="👥">
+                    <div class="stat-label">Total Alumni</div>
+                    <div class="stat-value" style="color: var(--burgundy);">2,665</div>
+                    <div class="stat-subtitle">Active records</div>
+                </div>
+                <div class="stat-card" data-emoji="📞">
+                    <div class="stat-label">Contact Rate</div>
+                    <div class="stat-value" style="color: var(--burgundy);">76%</div>
+                    <div class="stat-subtitle">Current contact info</div>
+                </div>
+                <div class="stat-card" data-emoji="⭐">
+                    <div class="stat-label">Avg Engagement</div>
+                    <div class="stat-value" style="color: var(--burgundy);">6.2/10</div>
+                    <div class="stat-subtitle">Network health score</div>
+                </div>
+                <div class="stat-card" data-emoji="🤝">
+                    <div class="stat-label">Active Mentors</div>
+                    <div class="stat-value" style="color: var(--burgundy);">312</div>
+                    <div class="stat-subtitle">Mentorship capacity</div>
+                </div>
+            </div>
+
+            <!-- Bar Chart: Graduates by Year -->
+            <div class="chart-container">
+                <div class="chart-title">Graduates by Year (Pomona vs Lebanon)</div>
+                <svg id="graduates-chart" viewBox="0 0 1000 350" style="height: 300px;"></svg>
+            </div>
+
+            <!-- Specialties Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Top Specialties</div>
+                <div id="specialties-container"></div>
+            </div>
+
+            <!-- Engagement Distribution Pie -->
+            <div class="chart-container">
+                <div class="chart-title">Engagement Distribution</div>
+                <div class="pie-container">
+                    <svg id="engagement-pie" viewBox="0 0 300 300" style="width: 280px; height: 280px;"></svg>
+                    <div class="legend" id="engagement-legend"></div>
+                </div>
+            </div>
+
+            <!-- Campus Comparison Table -->
+            <div class="chart-container" id="campus-comparison-container" style="display: none;">
+                <div class="chart-title">Campus Comparison</div>
+                <div class="comparison-note">This table is only visible when "All Campuses" is selected</div>
+                <div class="table-wrapper">
+                    <table id="campus-comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Campus</th>
+                                <th>Total Alumni</th>
+                                <th>Contact Rate</th>
+                                <th>Engagement Score</th>
+                                <th>Donor Participation</th>
+                                <th>Active Mentors</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Pomona CA</strong></td>
+                                <td>1,913</td>
+                                <td>78%</td>
+                                <td>6.4/10</td>
+                                <td>12.3%</td>
+                                <td>218</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lebanon OR</strong></td>
+                                <td>752</td>
+                                <td>71%</td>
+                                <td>5.8/10</td>
+                                <td>8.7%</td>
+                                <td>94</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENGAGEMENT TAB -->
+        <div class="tab-content" id="engagement">
+            <!-- Engagement Stats -->
+            <div class="stats-grid" id="engagement-stats"></div>
+
+            <!-- Opportunity Cards -->
+            <div class="opportunity-cards" id="opportunity-cards"></div>
+        </div>
+
+        <!-- COCA OUTCOMES TAB -->
+        <div class="tab-content" id="coca">
+            <!-- COCA Stats -->
+            <div class="stats-grid" id="coca-stats"></div>
+
+            <!-- Line Chart -->
+            <div class="chart-container">
+                <div class="chart-title">7-Year Residency Match Trend</div>
+                <div class="line-chart-wrapper">
+                    <svg id="residency-chart" viewBox="0 0 1000 350" style="height: 300px;"></svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- MENTORSHIP TAB -->
+        <div class="tab-content" id="mentorship">
+            <!-- Mentorship Stats -->
+            <div class="stats-grid" id="mentorship-stats"></div>
+
+            <!-- Specialty Mentor Bars -->
+            <div class="chart-container">
+                <div class="chart-title">Mentorship by Specialty</div>
+                <div id="mentor-bars"></div>
+                <div class="opportunity-card" style="margin-top: 24px; background: var(--gold-light);">
+                    <div class="opportunity-title">Strategic Gaps</div>
+                    <div class="opportunity-desc">Surgery, Orthopedics, and Emergency Medicine show critical mentor shortages. Consider recruitment blitz from board-certified specialists in these areas.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DONOR PIPELINE TAB -->
+        <div class="tab-content" id="donor">
+            <!-- Donor Stats -->
+            <div class="stats-grid" id="donor-stats"></div>
+
+            <!-- Pipeline Chart -->
+            <div class="chart-container">
+                <div class="chart-title">Donor Pipeline: Journey to Major Gift</div>
+                <div id="donor-pipeline"></div>
+            </div>
+
+            <!-- Insight Cards -->
+            <div class="opportunity-cards">
+                <div class="opportunity-card warm">
+                    <div class="opportunity-title">Reunion Classes Quick Win</div>
+                    <div class="opportunity-desc">2019 & 2020 cohorts (372 alumni) show highest reunion attendance. Launch targeted peer-to-peer solicitation for $100K+ gifts.</div>
+                </div>
+                <div class="opportunity-card">
+                    <div class="opportunity-title">Upgrade Potential</div>
+                    <div class="opportunity-desc">87 alumni with 3+ touchpoints and $500-$2,000 giving history. High conversion rate for major gift solicitation.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ALUMNI RECORDS TAB -->
+        <div class="tab-content" id="records">
+            <!-- Search -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search alumni by name, specialty, location...">
+                <button class="search-btn">🤖 AI Search</button>
+            </div>
+
+            <!-- Table -->
+            <div class="chart-container">
+                <div class="table-wrapper">
+                    <table id="alumni-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Class</th>
+                                <th>Specialty</th>
+                                <th>Campus</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Mentor</th>
+                                <th>Donor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alumni-tbody">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="ferpa-note">
+                    <strong>Data Privacy Notice:</strong> All sample data shown is illustrative and for prototype purposes only. In production, all alumni records are protected under FERPA and institutional policies.
+                </div>
+            </div>
+        </div>
+
+        <!-- ALUMNI LOCATOR TAB -->
+        <div class="tab-content" id="locator">
+            <!-- Hero Banner -->
+            <div style="background: linear-gradient(135deg, #58001b, #8b2230); border-radius: 12px; padding: 32px; margin-bottom: 32px; position: relative; overflow: hidden;">
+                <div style="position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 80px; opacity: 0.15;">🔍</div>
+                <p style="font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #e0ab4c; margin: 0 0 8px;">The Core Challenge</p>
+                <h2 style="font-size: 24px; font-weight: 700; color: #fff; margin: 0 0 12px; max-width: 700px;">Where are your 2,665 alumni — and how do you reach them?</h2>
+                <p style="font-size: 15px; color: rgba(255,255,255,0.75); margin: 0 0 20px; max-width: 600px; line-height: 1.6;">Most medical schools lose track of graduates within 5 years of commencement. Using free federal databases and public records, we estimate locating 75–85% of COMP alumni — automatically, legally, and at zero data cost. Exact match rate validated in Phase 1.</p>
+                <div style="display: flex; gap: 24px;">
+                    <div style="padding: 12px 20px; background: rgba(224,171,76,0.15); border: 1px solid rgba(224,171,76,0.3); border-radius: 8px;">
+                        <span style="font-size: 22px; font-weight: 700; color: #e0ab4c;">75–85%</span>
+                        <span style="font-size: 12px; color: rgba(255,255,255,0.6); margin-left: 8px;">Est. NPI match rate</span>
+                    </div>
+                    <div style="padding: 12px 20px; background: rgba(224,171,76,0.15); border: 1px solid rgba(224,171,76,0.3); border-radius: 8px;">
+                        <span style="font-size: 22px; font-weight: 700; color: #e0ab4c;">$0</span>
+                        <span style="font-size: 12px; color: rgba(255,255,255,0.6); margin-left: 8px;">Data acquisition cost</span>
+                    </div>
+                    <div style="padding: 12px 20px; background: rgba(224,171,76,0.15); border: 1px solid rgba(224,171,76,0.3); border-radius: 8px;">
+                        <span style="font-size: 22px; font-weight: 700; color: #e0ab4c;">Monthly</span>
+                        <span style="font-size: 12px; color: rgba(255,255,255,0.6); margin-left: 8px;">Auto-sync updates</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Enrichment Pipeline -->
+            <div class="section-header">Data Enrichment Pipeline</div>
+            <div class="enrichment-pipeline" id="enrichment-pipeline">
+                <div class="pipeline-stats">
+                    <div class="pipeline-stat">
+                        <span class="stat-number" id="stat-grad-records">2,665</span>
+                        <span class="stat-label">graduation records</span>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="pipeline-stat">
+                        <span class="stat-number" id="stat-npi-matches">2,180</span>
+                        <span class="stat-label">est. NPI matches (75–85%)</span>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="pipeline-stat">
+                        <span class="stat-number" id="stat-verified-locs">1,919</span>
+                        <span class="stat-label">verified locations (est. 72%)</span>
+                    </div>
+                    <span class="arrow">→</span>
+                    <div class="pipeline-stat">
+                        <span class="stat-number" id="stat-enriched-profiles">1,546</span>
+                        <span class="stat-label">enriched profiles (est. 58%)</span>
+                    </div>
+                </div>
+                <svg id="enrichment-flowchart" viewBox="0 0 1200 200" style="height: 180px; margin-bottom: 20px;"></svg>
+            </div>
+
+            <!-- Alumni Geographic Distribution -->
+            <div class="section-header" style="margin-top: 40px;">Alumni Geographic Distribution</div>
+            <div class="geo-section">
+                <div class="geo-stats-row">
+                    <div class="geo-stat-card">
+                        <div class="geo-stat-value" id="geo-states-count">38</div>
+                        <div class="geo-stat-label">States Represented</div>
+                    </div>
+                    <div class="geo-stat-card">
+                        <div class="geo-stat-value" id="geo-top-state">California (32%)</div>
+                        <div class="geo-stat-label">Top State</div>
+                    </div>
+                    <div class="geo-stat-card">
+                        <div class="geo-stat-value" id="geo-pnw">24%</div>
+                        <div class="geo-stat-label">Pacific Northwest</div>
+                    </div>
+                    <div class="geo-stat-card">
+                        <div class="geo-stat-value" id="geo-underserved">28%</div>
+                        <div class="geo-stat-label">Underserved Areas</div>
+                    </div>
+                </div>
+
+                <div class="geo-distribution-table">
+                    <div class="geo-table-header">
+                        <div class="geo-table-col">State</div>
+                        <div class="geo-table-col">Count</div>
+                        <div class="geo-table-col" style="flex: 3;">Distribution</div>
+                    </div>
+                    <div id="geo-table-body">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- NPI Lookup Simulator -->
+            <div class="section-header" style="margin-top: 40px;">Alumni Finder — Powered by NPI Registry</div>
+            <p style="font-size: 14px; color: #78716c; margin: -8px 0 16px;">Cross-reference WesternU graduation records with the federal NPI database. Locate the majority of COMP graduates currently in clinical practice — their specialty, location, and credentials.</p>
+            <div class="npi-simulator">
+                <div class="search-container">
+                    <input type="text" class="search-input" id="npi-search" placeholder="Search by name, NPI number, or specialty...">
+                    <button class="search-btn">🔍 Search NPI Registry</button>
+                </div>
+
+                <div class="npi-results" id="npi-results">
+                    <!-- Sample results shown -->
+                    <div class="npi-result-card">
+                        <div class="npi-result-header">
+                            <span class="npi-name">Dr. Sarah Chen, DO</span>
+                            <span class="npi-badge">✅ Active License</span>
+                        </div>
+                        <div class="npi-result-details">
+                            <div class="npi-detail-row">
+                                <span class="npi-label">NPI:</span>
+                                <span class="npi-value">1234567890</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Specialty:</span>
+                                <span class="npi-value">Cardiology</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Location:</span>
+                                <span class="npi-value">Portland, OR</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Class Year:</span>
+                                <span class="npi-value">COMP '18</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Practice:</span>
+                                <span class="npi-value">Oregon Heart Associates</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="npi-result-card">
+                        <div class="npi-result-header">
+                            <span class="npi-name">Dr. Kevin Park, DO</span>
+                            <span class="npi-badge">✅ Active License</span>
+                        </div>
+                        <div class="npi-result-details">
+                            <div class="npi-detail-row">
+                                <span class="npi-label">NPI:</span>
+                                <span class="npi-value">0987654321</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Specialty:</span>
+                                <span class="npi-value">Orthopedics</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Location:</span>
+                                <span class="npi-value">Riverside, CA</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Class Year:</span>
+                                <span class="npi-value">COMP '15</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Practice:</span>
+                                <span class="npi-value">Inland Orthopedic Group</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="npi-result-card">
+                        <div class="npi-result-header">
+                            <span class="npi-name">Dr. Marcus Williams, DO</span>
+                            <span class="npi-badge">✅ Active License</span>
+                        </div>
+                        <div class="npi-result-details">
+                            <div class="npi-detail-row">
+                                <span class="npi-label">NPI:</span>
+                                <span class="npi-value">1122334455</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Specialty:</span>
+                                <span class="npi-value">Family Medicine</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Location:</span>
+                                <span class="npi-value">Salem, OR</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Class Year:</span>
+                                <span class="npi-value">COMP-NW '20</span>
+                            </div>
+                            <div class="npi-detail-row">
+                                <span class="npi-label">Practice:</span>
+                                <span class="npi-value">Salem Family Health</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="npi-info-note">
+                    <strong>What is the NPI Registry?</strong> The National Provider Identifier (NPI) is a unique 10-digit number assigned to every practicing physician in the US — including every DO. It's maintained by CMS (Centers for Medicare & Medicaid Services) and released publicly under the Freedom of Information Act (FOIA). Your team likely already works with NPI data for credentialing and GME. This approach flips that same database around — instead of verifying a provider, you cross-reference graduation records to locate alumni. The NPPES API is free, requires no authentication, and is updated monthly.
+                </div>
+                <div class="npi-info-note" style="margin-top: 12px; border-left-color: #2d8659;">
+                    <strong>Privacy & Opt-Out:</strong> All data shown comes from public federal records. Alumni who prefer not to be contacted can opt out at any time — the system includes a one-click removal. No social media scraping, no third-party data brokers. Just public records + voluntary participation.
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="section-header" style="margin-top: 40px;">How It Works</div>
+            <div class="how-it-works">
+                <div class="how-card" style="border-top: 4px solid #8b2230;">
+                    <div style="font-size: 28px; margin-bottom: 8px;">🎓</div>
+                    <div class="how-title">Automated Discovery</div>
+                    <div class="how-desc">Cross-reference graduation records with the NPI Registry API. An estimated 75–85% of alumni can be matched automatically with practice mailing addresses and specialties. Match rate validated in Phase 1.</div>
+                </div>
+                <div class="how-card" style="border-top: 4px solid #e0ab4c;">
+                    <div style="font-size: 28px; margin-bottom: 8px;">🔄</div>
+                    <div class="how-title">Continuous Updates</div>
+                    <div class="how-desc">Monthly sync with NPPES data. When alumni move practices, update specialties, or earn new credentials — the system knows. Your data never goes stale.</div>
+                </div>
+                <div class="how-card" style="border-top: 4px solid #2d8659;">
+                    <div style="font-size: 28px; margin-bottom: 8px;">🔒</div>
+                    <div class="how-title">Privacy First</div>
+                    <div class="how-desc">Core data from the NPI Registry (federal, FOIA-released). Additional profile enrichment is voluntary opt-in only. FERPA-compliant. No social media scraping. One-click opt-out for any alumni who prefers not to participate.</div>
+                </div>
+            </div>
+
+            <!-- Data Sources -->
+            <div style="background: #fff; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e7e5e4; padding: 24px; margin-top: 24px;">
+                <h3 style="font-weight: 700; color: #242424; margin: 0 0 16px; font-size: 16px;">Data Sources — Tiered by Access Level</h3>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+                    <div style="padding: 16px; background: #faf9f7; border-radius: 8px; border-left: 3px solid #8b2230;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;"><div style="font-weight: 700; color: #8b2230; font-size: 13px;">NPPES / NPI Registry</div><span style="font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #fce4ec; color: #8b2230;">AUTOMATED</span></div>
+                        <div style="font-size: 12px; color: #78716c; line-height: 1.5;">Federal database (CMS). FOIA-disclosed. Every practicing physician — including DOs. Name, specialty taxonomy, practice mailing address, credentials. Free API, no auth required. Updated monthly.</div>
+                    </div>
+                    <div style="padding: 16px; background: #faf9f7; border-radius: 8px; border-left: 3px solid #e0ab4c;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;"><div style="font-weight: 700; color: #8a6914; font-size: 13px;">State Medical Boards</div><span style="font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #f5e6c8; color: #8a6914;">VERIFICATION</span></div>
+                        <div style="font-size: 12px; color: #78716c; line-height: 1.5;">CA & OR boards. License status, practice location. Public record for individual lookups. Used to verify and supplement NPI data.</div>
+                    </div>
+                    <div style="padding: 16px; background: #faf9f7; border-radius: 8px; border-left: 3px solid #2d8659;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;"><div style="font-weight: 700; color: #2d8659; font-size: 13px;">Doximity (Voluntary Opt-In)</div><span style="font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #ecfdf5; color: #2d8659;">ALUMNI-DRIVEN</span></div>
+                        <div style="font-size: 12px; color: #78716c; line-height: 1.5;">Alumni can self-link their Doximity profiles to enrich their record with residency, fellowship, and research data. No automated collection — their TOS prohibits scraping.</div>
+                    </div>
+                    <div style="padding: 16px; background: #faf9f7; border-radius: 8px; border-left: 3px solid #64748b;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;"><div style="font-weight: 700; color: #64748b; font-size: 13px;">PubMed / Google Scholar</div><span style="font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 10px; background: #f1f5f9; color: #64748b;">PUBLIC</span></div>
+                        <div style="font-size: 12px; color: #78716c; line-height: 1.5;">Published research with institutional affiliations. Identifies research-active alumni and potential collaborators. Fully public data.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <!-- ROADMAP & ROI TAB -->
+        <div class="tab-content" id="roadmap">
+            <!-- Timeline -->
+            <div class="timeline" id="timeline-container"></div>
+
+            <!-- Projection Chart -->
+            <div class="chart-container">
+                <div class="chart-title">3-Year Financial & Mentor Projection</div>
+                <svg id="projection-chart" viewBox="0 0 1000 350" style="height: 300px;"></svg>
+            </div>
+
+            <!-- Big Numbers -->
+            <div class="big-numbers">
+                <div class="big-number-card">
+                    <div class="big-number">$1.65M</div>
+                    <div class="big-number-label">95% Increase<br>in Fund Value</div>
+                </div>
+                <div class="big-number-card">
+                    <div class="big-number">93%</div>
+                    <div class="big-number-label">Contact Rate<br>(from 76%)</div>
+                </div>
+                <div class="big-number-card">
+                    <div class="big-number">680</div>
+                    <div class="big-number-label">Active Mentors<br>(+118%)</div>
+                </div>
+            </div>
+
+            <!-- Why This Works -->
+            <div class="why-works">
+                <div class="why-works-title">Why This Works</div>
+                <div class="why-works-grid">
+                    <div class="why-card">
+                        <div class="why-card-title">Built for COMP</div>
+                        <div class="why-card-desc">Schema designed around residency outcomes, specialty mentorship, and donor cultivation — not generic alumni software.</div>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-card-title">Fast to Value</div>
+                        <div class="why-card-desc">Quick wins identified in first 30 days. Dashboard live in week 2. Mentorship matching automation by day 45.</div>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-card-title">Scalable & Personal</div>
+                        <div class="why-card-desc">One system for two campuses, three specialties per mentee, and personalized at scale via workflow automation.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-left">
+            <div><strong>COMP Alumni Engagement Dashboard</strong> — Prototype v2.0</div>
+            <div style="margin-top: 4px; color: #ccc;">All data sample/illustrative</div>
+        </div>
+        <div class="footer-right">
+            <div><span class="footer-prepared">Prepared by Scotty Ledell</span></div>
+            <div style="margin-top: 4px;">For Dr. Lisa Warren — March 2026</div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================
+        // DATA & CONFIG
+        // ============================================
+
+        const campusData = {
+            all: {
+                totalAlumni: 2665,
+                contactRate: 76,
+                avgEngagement: 6.2,
+                activeMentors: 312,
+                engagement: {
+                    'Highly Engaged': 485,
+                    'Engaged': 670,
+                    'Warm': 805,
+                    'Inactive': 535,
+                    'Lost Contact': 170
+                },
+                donors: { active: 156, fund: 847, avgGift: 2180, majorProspects: 42, participation: 8.3 },
+                mentorship: { available: 312, matched: 187, pending: 89, matchRate: 68 },
+                residency: { matchRate: 97.5, nationalBench: 92.1, aboveBench: 5.4, boardPass: 94.8 }
+            },
+            pomona: {
+                totalAlumni: 1913,
+                contactRate: 78,
+                avgEngagement: 6.4,
+                activeMentors: 218,
+                engagement: {
+                    'Highly Engaged': 368,
+                    'Engaged': 497,
+                    'Warm': 554,
+                    'Inactive': 364,
+                    'Lost Contact': 130
+                },
+                donors: { active: 118, fund: 682, avgGift: 2340, majorProspects: 34, participation: 12.3 },
+                mentorship: { available: 218, matched: 138, pending: 52, matchRate: 73 },
+                residency: { matchRate: 97.8, aboveBench: 5.7, boardPass: 95.2 }
+            },
+            lebanon: {
+                totalAlumni: 752,
+                contactRate: 71,
+                avgEngagement: 5.8,
+                activeMentors: 94,
+                engagement: {
+                    'Highly Engaged': 117,
+                    'Engaged': 173,
+                    'Warm': 251,
+                    'Inactive': 171,
+                    'Lost Contact': 40
+                },
+                donors: { active: 38, fund: 165, avgGift: 1820, majorProspects: 8, participation: 8.7 },
+                mentorship: { available: 94, matched: 49, pending: 37, matchRate: 57 },
+                residency: { matchRate: 96.8, aboveBench: 4.7, boardPass: 93.9 }
+            }
+        };
+
+        const graduatesData = {
+            all: [
+                {year: 2015, pomona: 165, lebanon: 82},
+                {year: 2016, pomona: 172, lebanon: 88},
+                {year: 2017, pomona: 178, lebanon: 95},
+                {year: 2018, pomona: 185, lebanon: 98},
+                {year: 2019, pomona: 190, lebanon: 105},
+                {year: 2020, pomona: 195, lebanon: 110},
+                {year: 2021, pomona: 198, lebanon: 115},
+                {year: 2022, pomona: 205, lebanon: 120},
+                {year: 2023, pomona: 210, lebanon: 125},
+                {year: 2024, pomona: 215, lebanon: 130}
+            ],
+            pomona: [
+                {year: 2015, value: 165},
+                {year: 2016, value: 172},
+                {year: 2017, value: 178},
+                {year: 2018, value: 185},
+                {year: 2019, value: 190},
+                {year: 2020, value: 195},
+                {year: 2021, value: 198},
+                {year: 2022, value: 205},
+                {year: 2023, value: 210},
+                {year: 2024, value: 215}
+            ],
+            lebanon: [
+                {year: 2015, value: 82},
+                {year: 2016, value: 88},
+                {year: 2017, value: 95},
+                {year: 2018, value: 98},
+                {year: 2019, value: 105},
+                {year: 2020, value: 110},
+                {year: 2021, value: 115},
+                {year: 2022, value: 120},
+                {year: 2023, value: 125},
+                {year: 2024, value: 130}
+            ]
+        };
+
+        const specialtiesData = {
+            all: [
+                {name: 'Family Medicine', count: 485},
+                {name: 'Internal Medicine', count: 412},
+                {name: 'Pediatrics', count: 298},
+                {name: 'Emergency Medicine', count: 267},
+                {name: 'Surgery', count: 234},
+                {name: 'OB/GYN', count: 189},
+                {name: 'Psychiatry', count: 156},
+                {name: 'Orthopedics', count: 134}
+            ],
+            pomona: [
+                {name: 'Family Medicine', count: 365},
+                {name: 'Internal Medicine', count: 318},
+                {name: 'Pediatrics', count: 225},
+                {name: 'Emergency Medicine', count: 202},
+                {name: 'Surgery', count: 178},
+                {name: 'OB/GYN', count: 142},
+                {name: 'Psychiatry', count: 118},
+                {name: 'Orthopedics', count: 102}
+            ],
+            lebanon: [
+                {name: 'Family Medicine', count: 120},
+                {name: 'Internal Medicine', count: 94},
+                {name: 'Pediatrics', count: 73},
+                {name: 'Emergency Medicine', count: 65},
+                {name: 'Surgery', count: 56},
+                {name: 'OB/GYN', count: 47},
+                {name: 'Psychiatry', count: 38},
+                {name: 'Orthopedics', count: 32}
+            ]
+        };
+
+        const residencyData = {
+            all: [
+                {year: 2018, comp: 96.2, national: 90.8},
+                {year: 2019, comp: 95.8, national: 91.2},
+                {year: 2020, comp: 97.1, national: 91.5},
+                {year: 2021, comp: 96.5, national: 90.9},
+                {year: 2022, comp: 97.3, national: 91.8},
+                {year: 2023, comp: 96.8, national: 92.0},
+                {year: 2024, comp: 97.5, national: 92.1}
+            ],
+            pomona: [
+                {year: 2018, value: 96.8},
+                {year: 2019, value: 96.3},
+                {year: 2020, value: 97.6},
+                {year: 2021, value: 97.0},
+                {year: 2022, value: 97.8},
+                {year: 2023, value: 97.2},
+                {year: 2024, value: 97.8}
+            ],
+            lebanon: [
+                {year: 2018, value: 94.9},
+                {year: 2019, value: 94.5},
+                {year: 2020, value: 95.8},
+                {year: 2021, value: 95.2},
+                {year: 2022, value: 96.1},
+                {year: 2023, value: 95.9},
+                {year: 2024, value: 96.8}
+            ]
+        };
+
+        const mentorData = {
+            all: [
+                {specialty: 'Family Medicine', available: 62, needed: 45, percentage: 100},
+                {specialty: 'Internal Medicine', available: 48, needed: 52, percentage: 92},
+                {specialty: 'Pediatrics', available: 38, needed: 34, percentage: 100},
+                {specialty: 'Emergency Medicine', available: 32, needed: 41, percentage: 78},
+                {specialty: 'Surgery', available: 28, needed: 55, percentage: 51},
+                {specialty: 'Psychiatry', available: 24, needed: 18, percentage: 100},
+                {specialty: 'OB/GYN', available: 22, needed: 30, percentage: 73},
+                {specialty: 'Orthopedics', available: 18, needed: 38, percentage: 47}
+            ],
+            pomona: [
+                {specialty: 'Family Medicine', available: 44, needed: 28, percentage: 100},
+                {specialty: 'Internal Medicine', available: 35, needed: 32, percentage: 100},
+                {specialty: 'Pediatrics', available: 28, needed: 22, percentage: 100},
+                {specialty: 'Emergency Medicine', available: 24, needed: 26, percentage: 92},
+                {specialty: 'Surgery', available: 22, needed: 35, percentage: 63},
+                {specialty: 'Psychiatry', available: 18, needed: 12, percentage: 100},
+                {specialty: 'OB/GYN', available: 16, needed: 18, percentage: 89},
+                {specialty: 'Orthopedics', available: 14, needed: 24, percentage: 58}
+            ],
+            lebanon: [
+                {specialty: 'Family Medicine', available: 18, needed: 17, percentage: 100},
+                {specialty: 'Internal Medicine', available: 13, needed: 20, percentage: 65},
+                {specialty: 'Pediatrics', available: 10, needed: 12, percentage: 83},
+                {specialty: 'Emergency Medicine', available: 8, needed: 15, percentage: 53},
+                {specialty: 'Surgery', available: 6, needed: 20, percentage: 30},
+                {specialty: 'Psychiatry', available: 6, needed: 6, percentage: 100},
+                {specialty: 'OB/GYN', available: 6, needed: 12, percentage: 50},
+                {specialty: 'Orthopedics', available: 4, needed: 14, percentage: 29}
+            ]
+        };
+
+        const alumniRecords = [
+            {name: "Dr. Sarah Chen", year: '18', specialty: "Cardiology", campus: "Pomona", location: "Portland, OR", status: "Highly Engaged", mentor: true, donor: true},
+            {name: "Dr. Marcus Williams", year: '20', specialty: "Family Medicine", campus: "Lebanon", location: "Salem, OR", status: "Engaged", mentor: true, donor: false},
+            {name: "Dr. Priya Patel", year: '16', specialty: "Pediatrics", campus: "Pomona", location: "Los Angeles, CA", status: "Warm", mentor: false, donor: true},
+            {name: "Dr. James Rodriguez", year: '19', specialty: "Emergency Medicine", campus: "Pomona", location: "San Diego, CA", status: "Highly Engaged", mentor: true, donor: true},
+            {name: "Dr. Emily Nakamura", year: '21', specialty: "Surgery", campus: "Lebanon", location: "Seattle, WA", status: "Inactive", mentor: false, donor: false},
+            {name: "Dr. David Okafor", year: '17', specialty: "Psychiatry", campus: "Pomona", location: "Phoenix, AZ", status: "Engaged", mentor: true, donor: false},
+            {name: "Dr. Ana Gutierrez", year: '22', specialty: "OB/GYN", campus: "Lebanon", location: "Eugene, OR", status: "Warm", mentor: false, donor: false},
+            {name: "Dr. Kevin Park", year: '15', specialty: "Orthopedics", campus: "Pomona", location: "Riverside, CA", status: "Highly Engaged", mentor: true, donor: true},
+            {name: "Dr. Rachel Kim", year: '23', specialty: "Family Medicine", campus: "Lebanon", location: "Corvallis, OR", status: "Engaged", mentor: false, donor: false},
+            {name: "Dr. Michael Torres", year: '18', specialty: "Internal Medicine", campus: "Pomona", location: "Pasadena, CA", status: "Warm", mentor: true, donor: true}
+        ];
+
+        // ============================================
+        // STATE & HELPERS
+        // ============================================
+
+        let currentCampus = 'all';
+
+        function getCurrentData() {
+            return campusData[currentCampus];
+        }
+
+        function formatCurrency(num) {
+            return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(num);
+        }
+
+        // ============================================
+        // RENDER FUNCTIONS
+        // ============================================
+
+        function renderOverviewStats() {
+            const data = getCurrentData();
+            const container = document.getElementById('overview-stats');
+            container.innerHTML = `
+                <div class="stat-card" data-emoji="👥">
+                    <div class="stat-label">Total Alumni</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.totalAlumni.toLocaleString()}</div>
+                    <div class="stat-subtitle">Active records</div>
+                </div>
+                <div class="stat-card" data-emoji="📞">
+                    <div class="stat-label">Contact Rate</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.contactRate}%</div>
+                    <div class="stat-subtitle">Current contact info</div>
+                </div>
+                <div class="stat-card" data-emoji="⭐">
+                    <div class="stat-label">Avg Engagement</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.avgEngagement}/10</div>
+                    <div class="stat-subtitle">Network health score</div>
+                </div>
+                <div class="stat-card" data-emoji="🤝">
+                    <div class="stat-label">Active Mentors</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.activeMentors}</div>
+                    <div class="stat-subtitle">Mentorship capacity</div>
+                </div>
+            `;
+        }
+
+        function renderEngagementStats() {
+            const data = getCurrentData();
+            const container = document.getElementById('engagement-stats');
+            const eng = data.engagement;
+
+            container.innerHTML = `
+                <div class="stat-card" data-emoji="💎">
+                    <div class="stat-label">Highly Engaged</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${eng['Highly Engaged']}</div>
+                    <div class="stat-subtitle">${((eng['Highly Engaged']/data.totalAlumni)*100).toFixed(1)}% of network</div>
+                </div>
+                <div class="stat-card" data-emoji="✨">
+                    <div class="stat-label">Engaged</div>
+                    <div class="stat-value" style="color: var(--gold);">${eng['Engaged']}</div>
+                    <div class="stat-subtitle">${((eng['Engaged']/data.totalAlumni)*100).toFixed(1)}% of network</div>
+                </div>
+                <div class="stat-card" data-emoji="🌤️">
+                    <div class="stat-label">Warm</div>
+                    <div class="stat-value" style="color: #f39c12;">${eng['Warm']}</div>
+                    <div class="stat-subtitle">${((eng['Warm']/data.totalAlumni)*100).toFixed(1)}% of network</div>
+                </div>
+                <div class="stat-card" data-emoji="😴">
+                    <div class="stat-label">Inactive</div>
+                    <div class="stat-value" style="color: #999;">${eng['Inactive']}</div>
+                    <div class="stat-subtitle">${((eng['Inactive']/data.totalAlumni)*100).toFixed(1)}% of network</div>
+                </div>
+                <div class="stat-card" data-emoji="❌">
+                    <div class="stat-label">Lost Contact</div>
+                    <div class="stat-value" style="color: #e74c3c;">${eng['Lost Contact']}</div>
+                    <div class="stat-subtitle">${((eng['Lost Contact']/data.totalAlumni)*100).toFixed(1)}% of network</div>
+                </div>
+            `;
+        }
+
+        function renderEngagementOpportunities() {
+            const data = getCurrentData();
+            const container = document.getElementById('opportunity-cards');
+
+            let opportunities = '';
+            if (currentCampus === 'all') {
+                opportunities = `
+                    <div class="opportunity-card">
+                        <div class="opportunity-title">Re-engagement Initiative</div>
+                        <div class="opportunity-stat">${data.engagement['Inactive']}</div>
+                        <div class="opportunity-desc">Inactive alumni represent greatest opportunity. Model recovery rate of 15-25% = ${Math.round(data.engagement['Inactive'] * 0.15)}-${Math.round(data.engagement['Inactive'] * 0.25)} reactivations.</div>
+                    </div>
+                    <div class="opportunity-card warm">
+                        <div class="opportunity-title">Warm → Engaged Conversion</div>
+                        <div class="opportunity-stat">${data.engagement['Warm']}</div>
+                        <div class="opportunity-desc">Highest ROI segment. Low friction, strong intent signals. Virtual events + peer intro campaigns historically show 40%+ conversion.</div>
+                    </div>
+                    <div class="opportunity-card lost">
+                        <div class="opportunity-title">Lost Contact Recovery</div>
+                        <div class="opportunity-stat">${data.engagement['Lost Contact']}</div>
+                        <div class="opportunity-desc">Auto-enrichment via board directory, LinkedIn, alumni network. Expect 35-45% successful recontact rate.</div>
+                    </div>
+                `;
+            } else if (currentCampus === 'pomona') {
+                opportunities = `
+                    <div class="opportunity-card">
+                        <div class="opportunity-title">Re-engagement in Pomona</div>
+                        <div class="opportunity-stat">${data.engagement['Inactive']}</div>
+                        <div class="opportunity-desc">Pomona inactive cohort shows stronger historical ties. Targeted reunion outreach + regional events recommended.</div>
+                    </div>
+                    <div class="opportunity-card warm">
+                        <div class="opportunity-title">Warm → Engaged Conversion</div>
+                        <div class="opportunity-stat">${data.engagement['Warm']}</div>
+                        <div class="opportunity-desc">In-person regional events + mentorship matching drive highest conversion. Plan quarterly events in LA/San Diego corridor.</div>
+                    </div>
+                    <div class="opportunity-card lost">
+                        <div class="opportunity-title">Lost Contact Recovery</div>
+                        <div class="opportunity-stat">${data.engagement['Lost Contact']}</div>
+                        <div class="opportunity-desc">CA board cross-reference database provides additional data points for re-discovery strategy.</div>
+                    </div>
+                `;
+            } else {
+                opportunities = `
+                    <div class="opportunity-card">
+                        <div class="opportunity-title">Rural Disconnection Challenge</div>
+                        <div class="opportunity-stat">${data.engagement['Inactive']}</div>
+                        <div class="opportunity-desc">Lebanon geography presents unique challenge. Virtual-first engagement model critical. Focus on asynchronous programs.</div>
+                    </div>
+                    <div class="opportunity-card warm">
+                        <div class="opportunity-title">Virtual Events Critical</div>
+                        <div class="opportunity-stat">${data.engagement['Warm']}</div>
+                        <div class="opportunity-desc">Lebanon warm segment responds best to virtual speaker series, online mentorship, and webinar-based CME.</div>
+                    </div>
+                    <div class="opportunity-card lost">
+                        <div class="opportunity-title">Mentor Recruitment Gap</div>
+                        <div class="opportunity-stat">57% Match Rate</div>
+                        <div class="opportunity-desc">Focus: Recruit 6 surgical mentors to meet 20 incoming requests. Partner with regional health systems in OR/ID.</div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = opportunities;
+        }
+
+        function renderCOCAStats() {
+            const data = getCurrentData();
+            const container = document.getElementById('coca-stats');
+
+            container.innerHTML = `
+                <div class="stat-card" data-emoji="🎯">
+                    <div class="stat-label">Residency Match Rate</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.residency.matchRate}%</div>
+                    <div class="stat-subtitle">2024 COMP cohort</div>
+                </div>
+                <div class="stat-card" data-emoji="📊">
+                    <div class="stat-label">National Benchmark</div>
+                    <div class="stat-value" style="color: var(--burgundy);">92.1%</div>
+                    <div class="stat-subtitle">Allopathic med schools</div>
+                </div>
+                <div class="stat-card" data-emoji="⬆️">
+                    <div class="stat-label">Above Benchmark</div>
+                    <div class="stat-value" style="color: var(--gold);">+${data.residency.aboveBench}%</div>
+                    <div class="stat-subtitle">COMP advantage</div>
+                </div>
+                <div class="stat-card" data-emoji="📝">
+                    <div class="stat-label">Board Pass Rate</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.residency.boardPass}%</div>
+                    <div class="stat-subtitle">Certification rate</div>
+                </div>
+            `;
+        }
+
+        function renderMentorshipStats() {
+            const data = getCurrentData();
+            const container = document.getElementById('mentorship-stats');
+
+            container.innerHTML = `
+                <div class="stat-card" data-emoji="🙋">
+                    <div class="stat-label">Available Mentors</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.mentorship.available}</div>
+                    <div class="stat-subtitle">Willing to mentor</div>
+                </div>
+                <div class="stat-card" data-emoji="✅">
+                    <div class="stat-label">Matched Pairs</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.mentorship.matched}</div>
+                    <div class="stat-subtitle">Active relationships</div>
+                </div>
+                <div class="stat-card" data-emoji="⏳">
+                    <div class="stat-label">Pending Matches</div>
+                    <div class="stat-value" style="color: var(--gold);">${data.mentorship.pending}</div>
+                    <div class="stat-subtitle">In process</div>
+                </div>
+                <div class="stat-card" data-emoji="📈">
+                    <div class="stat-label">Match Rate</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.mentorship.matchRate}%</div>
+                    <div class="stat-subtitle">Supply-to-demand ratio</div>
+                </div>
+            `;
+        }
+
+        function renderDonorStats() {
+            const data = getCurrentData();
+            const container = document.getElementById('donor-stats');
+
+            container.innerHTML = `
+                <div class="stat-card" data-emoji="💰">
+                    <div class="stat-label">Active Donors</div>
+                    <div class="stat-value" style="color: var(--burgundy);">${data.donors.active}</div>
+                    <div class="stat-subtitle">${((data.donors.participation).toFixed(1))}% participation</div>
+                </div>
+                <div class="stat-card" data-emoji="🏦">
+                    <div class="stat-label">Annual Fund</div>
+                    <div class="stat-value" style="color: var(--burgundy);">$${(data.donors.fund/1000).toFixed(0)}K</div>
+                    <div class="stat-subtitle">Total raised</div>
+                </div>
+                <div class="stat-card" data-emoji="👑">
+                    <div class="stat-label">Major Prospects</div>
+                    <div class="stat-value" style="color: var(--gold);">${data.donors.majorProspects}</div>
+                    <div class="stat-subtitle">$10K+ potential</div>
+                </div>
+                <div class="stat-card" data-emoji="🎁">
+                    <div class="stat-label">Avg Gift</div>
+                    <div class="stat-value" style="color: var(--burgundy);">$${data.donors.avgGift.toLocaleString()}</div>
+                    <div class="stat-subtitle">Per donor</div>
+                </div>
+            `;
+        }
+
+        function drawGraduatesChart() {
+            const svg = document.getElementById('graduates-chart');
+            const data = currentCampus === 'all' ? graduatesData.all : (currentCampus === 'pomona' ? graduatesData.pomona : graduatesData.lebanon);
+
+            svg.innerHTML = '';
+
+            const width = 1000, height = 350;
+            const margin = { top: 30, right: 30, bottom: 40, left: 60 };
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+
+            // Axes
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            g.setAttribute('transform', `translate(${margin.left},${margin.top})`);
+
+            // Y axis line
+            const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            yAxis.setAttribute('x1', '0');
+            yAxis.setAttribute('y1', '0');
+            yAxis.setAttribute('x2', '0');
+            yAxis.setAttribute('y2', chartHeight);
+            yAxis.setAttribute('stroke', '#ccc');
+            yAxis.setAttribute('stroke-width', '2');
+            g.appendChild(yAxis);
+
+            // X axis line
+            const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            xAxis.setAttribute('x1', '0');
+            xAxis.setAttribute('y1', chartHeight);
+            xAxis.setAttribute('x2', chartWidth);
+            xAxis.setAttribute('y2', chartHeight);
+            xAxis.setAttribute('stroke', '#ccc');
+            xAxis.setAttribute('stroke-width', '2');
+            g.appendChild(xAxis);
+
+            // Find max value
+            let maxVal = 0;
+            if (currentCampus === 'all') {
+                data.forEach(d => {
+                    maxVal = Math.max(maxVal, d.pomona, d.lebanon);
+                });
+            } else {
+                data.forEach(d => {
+                    maxVal = Math.max(maxVal, d.value);
+                });
+            }
+            maxVal = Math.ceil(maxVal / 50) * 50;
+
+            // Y axis labels
+            for (let i = 0; i <= maxVal; i += 50) {
+                const y = chartHeight - (i / maxVal) * chartHeight;
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', '-10');
+                text.setAttribute('y', y + 4);
+                text.setAttribute('text-anchor', 'end');
+                text.setAttribute('font-size', '11');
+                text.setAttribute('fill', '#999');
+                text.textContent = i;
+                g.appendChild(text);
+            }
+
+            // Bars
+            const barWidth = chartWidth / data.length / (currentCampus === 'all' ? 2.5 : 1.5);
+            data.forEach((d, i) => {
+                const x = (i * chartWidth) / data.length;
+
+                if (currentCampus === 'all') {
+                    // Pomona bar
+                    const h1 = (d.pomona / maxVal) * chartHeight;
+                    const rect1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    rect1.setAttribute('x', x);
+                    rect1.setAttribute('y', chartHeight - h1);
+                    rect1.setAttribute('width', barWidth);
+                    rect1.setAttribute('height', h1);
+                    rect1.setAttribute('fill', '#8b2230');
+                    g.appendChild(rect1);
+
+                    // Lebanon bar
+                    const h2 = (d.lebanon / maxVal) * chartHeight;
+                    const rect2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    rect2.setAttribute('x', x + barWidth + 4);
+                    rect2.setAttribute('y', chartHeight - h2);
+                    rect2.setAttribute('width', barWidth);
+                    rect2.setAttribute('height', h2);
+                    rect2.setAttribute('fill', '#e0ab4c');
+                    g.appendChild(rect2);
+                } else {
+                    // Single bar
+                    const h = (d.value / maxVal) * chartHeight;
+                    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    rect.setAttribute('x', x + barWidth * 0.5);
+                    rect.setAttribute('y', chartHeight - h);
+                    rect.setAttribute('width', barWidth * 1.5);
+                    rect.setAttribute('height', h);
+                    rect.setAttribute('fill', '#8b2230');
+                    g.appendChild(rect);
+                }
+
+                // Year label
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', x + chartWidth / data.length / 2);
+                text.setAttribute('y', chartHeight + 20);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('font-size', '12');
+                text.setAttribute('fill', '#666');
+                text.textContent = d.year;
+                g.appendChild(text);
+            });
+
+            // Legend
+            if (currentCampus === 'all') {
+                const legendX = chartWidth - 200;
+                const leg1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                leg1.setAttribute('x', legendX);
+                leg1.setAttribute('y', -25);
+                leg1.setAttribute('width', '12');
+                leg1.setAttribute('height', '12');
+                leg1.setAttribute('fill', '#8b2230');
+                g.appendChild(leg1);
+
+                const leg1Text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                leg1Text.setAttribute('x', legendX + 18);
+                leg1Text.setAttribute('y', -14);
+                leg1Text.setAttribute('font-size', '12');
+                leg1Text.setAttribute('fill', '#666');
+                leg1Text.textContent = 'Pomona';
+                g.appendChild(leg1Text);
+
+                const leg2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                leg2.setAttribute('x', legendX + 100);
+                leg2.setAttribute('y', -25);
+                leg2.setAttribute('width', '12');
+                leg2.setAttribute('height', '12');
+                leg2.setAttribute('fill', '#e0ab4c');
+                g.appendChild(leg2);
+
+                const leg2Text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                leg2Text.setAttribute('x', legendX + 118);
+                leg2Text.setAttribute('y', -14);
+                leg2Text.setAttribute('font-size', '12');
+                leg2Text.setAttribute('fill', '#666');
+                leg2Text.textContent = 'Lebanon';
+                g.appendChild(leg2Text);
+            }
+
+            svg.appendChild(g);
+        }
+
+        function renderSpecialtiesChart() {
+            const container = document.getElementById('specialties-container');
+            const specs = currentCampus === 'all' ? specialtiesData.all : (currentCampus === 'pomona' ? specialtiesData.pomona : specialtiesData.lebanon);
+            const maxCount = Math.max(...specs.map(s => s.count));
+
+            let html = '';
+            specs.forEach((spec, i) => {
+                const percentage = (spec.count / maxCount) * 100;
+                const color = i % 2 === 0 ? 'var(--burgundy)' : 'var(--gold)';
+                const textColor = i % 2 === 0 ? 'var(--white)' : 'var(--dark-gray)';
+
+                html += `
+                    <div class="bar-horizontal">
+                        <div class="bar-label">${spec.name}</div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="background: ${color}; color: ${textColor}; width: ${percentage}%;">
+                                ${spec.count}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function drawEngagementPie() {
+            const svg = document.getElementById('engagement-pie');
+            svg.innerHTML = '';
+
+            const data = getCurrentData();
+            const values = [
+                data.engagement['Highly Engaged'],
+                data.engagement['Engaged'],
+                data.engagement['Warm'],
+                data.engagement['Inactive'],
+                data.engagement['Lost Contact']
+            ];
+
+            const colors = ['#e84393', '#e0ab4c', '#f39c12', '#bbb', '#e74c3c'];
+            const labels = ['Highly Engaged', 'Engaged', 'Warm', 'Inactive', 'Lost Contact'];
+
+            const total = values.reduce((a, b) => a + b, 0);
+            let currentAngle = -Math.PI / 2;
+
+            values.forEach((value, i) => {
+                const sliceAngle = (value / total) * 2 * Math.PI;
+                const endAngle = currentAngle + sliceAngle;
+
+                const x1 = 150 + 120 * Math.cos(currentAngle);
+                const y1 = 150 + 120 * Math.sin(currentAngle);
+                const x2 = 150 + 120 * Math.cos(endAngle);
+                const y2 = 150 + 120 * Math.sin(endAngle);
+
+                const largeArc = sliceAngle > Math.PI ? 1 : 0;
+                const pathData = `M 150 150 L ${x1} ${y1} A 120 120 0 ${largeArc} 1 ${x2} ${y2} Z`;
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', pathData);
+                path.setAttribute('fill', colors[i]);
+                path.setAttribute('stroke', '#fff');
+                path.setAttribute('stroke-width', '2');
+                svg.appendChild(path);
+
+                currentAngle = endAngle;
+            });
+
+            // Legend
+            const legendContainer = document.getElementById('engagement-legend');
+            let legendHtml = '';
+            labels.forEach((label, i) => {
+                const count = values[i];
+                const pct = ((count / total) * 100).toFixed(0);
+                legendHtml += `
+                    <div class="legend-item">
+                        <div class="legend-dot" style="background: ${colors[i]};"></div>
+                        <span>${label} (${count}, ${pct}%)</span>
+                    </div>
+                `;
+            });
+            legendContainer.innerHTML = legendHtml;
+        }
+
+        function drawResidencyChart() {
+            const svg = document.getElementById('residency-chart');
+            svg.innerHTML = '';
+
+            const data = currentCampus === 'all' ? residencyData.all : (currentCampus === 'pomona' ? residencyData.pomona : residencyData.lebanon);
+
+            const width = 1000, height = 350;
+            const margin = { top: 30, right: 30, bottom: 40, left: 60 };
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            g.setAttribute('transform', `translate(${margin.left},${margin.top})`);
+
+            // Axes
+            const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            yAxis.setAttribute('x1', '0');
+            yAxis.setAttribute('y1', '0');
+            yAxis.setAttribute('x2', '0');
+            yAxis.setAttribute('y2', chartHeight);
+            yAxis.setAttribute('stroke', '#ccc');
+            yAxis.setAttribute('stroke-width', '2');
+            g.appendChild(yAxis);
+
+            const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            xAxis.setAttribute('x1', '0');
+            xAxis.setAttribute('y1', chartHeight);
+            xAxis.setAttribute('x2', chartWidth);
+            xAxis.setAttribute('y2', chartHeight);
+            xAxis.setAttribute('stroke', '#ccc');
+            xAxis.setAttribute('stroke-width', '2');
+            g.appendChild(xAxis);
+
+            // Y axis labels (88-98%)
+            for (let i = 88; i <= 98; i += 2) {
+                const y = chartHeight - ((i - 88) / 10) * chartHeight;
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', '-10');
+                text.setAttribute('y', y + 4);
+                text.setAttribute('text-anchor', 'end');
+                text.setAttribute('font-size', '11');
+                text.setAttribute('fill', '#999');
+                text.textContent = i + '%';
+                g.appendChild(text);
+            }
+
+            // Line plots
+            let compPath = 'M';
+            let nationalPath = currentCampus === 'all' ? 'M' : null;
+
+            data.forEach((d, i) => {
+                const x = (i / (data.length - 1)) * chartWidth;
+                const compVal = currentCampus === 'all' ? d.comp : d.value;
+                const y = chartHeight - ((compVal - 88) / 10) * chartHeight;
+
+                compPath += `${x},${y} `;
+
+                if (currentCampus === 'all' && nationalPath) {
+                    const nationalY = chartHeight - ((d.national - 88) / 10) * chartHeight;
+                    nationalPath += `${x},${nationalY} `;
+                }
+
+                // Year labels
+                if (i === 0 || i === data.length - 1 || i % 2 === 0) {
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', x);
+                    text.setAttribute('y', chartHeight + 20);
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('font-size', '12');
+                    text.setAttribute('fill', '#666');
+                    text.textContent = d.year;
+                    g.appendChild(text);
+                }
+            });
+
+            // COMP line
+            const compLine = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+            compLine.setAttribute('points', compPath);
+            compLine.setAttribute('fill', 'none');
+            compLine.setAttribute('stroke', '#8b2230');
+            compLine.setAttribute('stroke-width', '3');
+            g.appendChild(compLine);
+
+            // National line (if all campuses)
+            if (currentCampus === 'all' && nationalPath) {
+                const nationalLine = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+                nationalLine.setAttribute('points', nationalPath);
+                nationalLine.setAttribute('fill', 'none');
+                nationalLine.setAttribute('stroke', '#999');
+                nationalLine.setAttribute('stroke-width', '2');
+                nationalLine.setAttribute('stroke-dasharray', '5,5');
+                g.appendChild(nationalLine);
+            }
+
+            // Legend
+            if (currentCampus === 'all') {
+                const leg1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                leg1.setAttribute('x1', chartWidth - 180);
+                leg1.setAttribute('y1', -20);
+                leg1.setAttribute('x2', chartWidth - 140);
+                leg1.setAttribute('y2', -20);
+                leg1.setAttribute('stroke', '#8b2230');
+                leg1.setAttribute('stroke-width', '3');
+                g.appendChild(leg1);
+
+                const leg1Text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                leg1Text.setAttribute('x', chartWidth - 130);
+                leg1Text.setAttribute('y', -14);
+                leg1Text.setAttribute('font-size', '12');
+                leg1Text.setAttribute('fill', '#666');
+                leg1Text.textContent = 'COMP';
+                g.appendChild(leg1Text);
+
+                const leg2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                leg2.setAttribute('x1', chartWidth - 50);
+                leg2.setAttribute('y1', -20);
+                leg2.setAttribute('x2', chartWidth - 10);
+                leg2.setAttribute('y2', -20);
+                leg2.setAttribute('stroke', '#999');
+                leg2.setAttribute('stroke-width', '2');
+                leg2.setAttribute('stroke-dasharray', '5,5');
+                g.appendChild(leg2);
+
+                const leg2Text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                leg2Text.setAttribute('x', chartWidth + 5);
+                leg2Text.setAttribute('y', -14);
+                leg2Text.setAttribute('font-size', '12');
+                leg2Text.setAttribute('fill', '#666');
+                leg2Text.textContent = 'National';
+                g.appendChild(leg2Text);
+            }
+
+            svg.appendChild(g);
+        }
+
+        function renderMentorBars() {
+            const container = document.getElementById('mentor-bars');
+            const mentors = currentCampus === 'all' ? mentorData.all : (currentCampus === 'pomona' ? mentorData.pomona : mentorData.lebanon);
+
+            let html = '';
+            mentors.forEach(m => {
+                const maxNeeded = 55;
+                const fillPct = (m.needed / maxNeeded) * 100;
+                const isGap = m.percentage < 70;
+
+                html += `
+                    <div class="mentor-bar-container">
+                        <div class="mentor-specialty">${m.specialty}</div>
+                        <div class="mentor-bar-wrapper">
+                            <div class="mentor-bar-fill" style="width: ${fillPct}%;">
+                                ${m.available}/${m.needed}
+                            </div>
+                        </div>
+                        <div class="mentor-stats">
+                            ${m.percentage}%
+                            ${isGap ? '<span class="badge-gap">GAP</span>' : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderDonorPipeline() {
+            const container = document.getElementById('donor-pipeline');
+            const data = getCurrentData();
+
+            const stages = [
+                { label: 'Identified', count: 542 },
+                { label: 'Cultivating', count: 340 },
+                { label: 'Solicitation Ready', count: 215 },
+                { label: 'Active Donors', count: data.donors.active },
+                { label: 'Major Gift Prospects', count: data.donors.majorProspects }
+            ];
+
+            const maxCount = Math.max(...stages.map(s => s.count));
+
+            let html = '';
+            stages.forEach((stage, i) => {
+                const pct = (stage.count / maxCount) * 100;
+                html += `
+                    <div class="bar-horizontal">
+                        <div class="bar-label">${stage.label}</div>
+                        <div class="bar-track">
+                            <div class="bar-fill" style="width: ${pct}%;">
+                                ${stage.count}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderAlumniTable() {
+            const tbody = document.getElementById('alumni-tbody');
+            const filtered = currentCampus === 'all' ? alumniRecords : alumniRecords.filter(a => a.campus.toLowerCase() === (currentCampus === 'pomona' ? 'pomona' : 'lebanon'));
+
+            let html = '';
+            filtered.forEach(a => {
+                const statusBadge = `<span class="badge badge-${a.status.toLowerCase().replace(/\s/g, '-')}">${a.status}</span>`;
+                const mentorIcon = a.mentor ? '✓' : '—';
+                const donorIcon = a.donor ? '❤️' : '—';
+
+                html += `
+                    <tr>
+                        <td><strong>${a.name}</strong></td>
+                        <td>'${a.year}</td>
+                        <td>${a.specialty}</td>
+                        <td>${a.campus}</td>
+                        <td>${a.location}</td>
+                        <td>${statusBadge}</td>
+                        <td style="text-align: center;">${mentorIcon}</td>
+                        <td style="text-align: center;">${donorIcon}</td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function renderTimeline() {
+            const container = document.getElementById('timeline-container');
+
+            const phases = [
+                {
+                    num: 1,
+                    title: 'Foundation (Days 1-30)',
+                    items: ['Audit existing data', 'Design schema & taxonomy', 'Data enrichment pilot', 'Build dashboard MVP', 'Identify quick wins']
+                },
+                {
+                    num: 2,
+                    title: 'Activation (Days 31-90)',
+                    items: ['Launch outreach campaigns', 'Deploy mentorship matching', 'Automate COCA tracking', 'Add campus-specific views', 'Email triage automation']
+                },
+                {
+                    num: 3,
+                    title: 'Scale (Days 91-180)',
+                    items: ['AI-powered alumni search', 'Donor pipeline workflows', 'Recurring automation', 'Cross-campus collaboration tools', 'Executive reporting cadence']
+                }
+            ];
+
+            let html = '';
+            phases.forEach((phase, i) => {
+                const inactive = i > 0 ? 'inactive' : '';
+                html += `
+                    <div class="timeline-phase ${inactive}" data-phase="${phase.num}">
+                        <div class="phase-card">
+                            <div class="phase-title">${phase.title}</div>
+                            <ul class="phase-items">
+                                ${phase.items.map(item => `<li>${item}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function drawProjectionChart() {
+            const svg = document.getElementById('projection-chart');
+            svg.innerHTML = '';
+
+            const projectionData = [
+                {year: 'Year 1', donors: 210, mentors: 380},
+                {year: 'Year 2', donors: 340, mentors: 520},
+                {year: 'Year 3', donors: 485, mentors: 680}
+            ];
+
+            const width = 1000, height = 350;
+            const margin = { top: 30, right: 30, bottom: 40, left: 60 };
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            g.setAttribute('transform', `translate(${margin.left},${margin.top})`);
+
+            // Axes
+            const yAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            yAxis.setAttribute('x1', '0');
+            yAxis.setAttribute('y1', '0');
+            yAxis.setAttribute('x2', '0');
+            yAxis.setAttribute('y2', chartHeight);
+            yAxis.setAttribute('stroke', '#ccc');
+            yAxis.setAttribute('stroke-width', '2');
+            g.appendChild(yAxis);
+
+            const xAxis = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            xAxis.setAttribute('x1', '0');
+            xAxis.setAttribute('y1', chartHeight);
+            xAxis.setAttribute('x2', chartWidth);
+            xAxis.setAttribute('y2', chartHeight);
+            xAxis.setAttribute('stroke', '#ccc');
+            xAxis.setAttribute('stroke-width', '2');
+            g.appendChild(xAxis);
+
+            // Y axis labels
+            for (let i = 0; i <= 700; i += 100) {
+                const y = chartHeight - (i / 700) * chartHeight;
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', '-10');
+                text.setAttribute('y', y + 4);
+                text.setAttribute('text-anchor', 'end');
+                text.setAttribute('font-size', '11');
+                text.setAttribute('fill', '#999');
+                text.textContent = i;
+                g.appendChild(text);
+            }
+
+            // Bars
+            const barWidth = chartWidth / projectionData.length / 2.5;
+            projectionData.forEach((d, i) => {
+                const x = (i * chartWidth) / projectionData.length;
+
+                // Donors bar
+                const h1 = (d.donors / 700) * chartHeight;
+                const rect1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect1.setAttribute('x', x);
+                rect1.setAttribute('y', chartHeight - h1);
+                rect1.setAttribute('width', barWidth);
+                rect1.setAttribute('height', h1);
+                rect1.setAttribute('fill', '#8b2230');
+                g.appendChild(rect1);
+
+                // Mentors bar
+                const h2 = (d.mentors / 700) * chartHeight;
+                const rect2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect2.setAttribute('x', x + barWidth + 4);
+                rect2.setAttribute('y', chartHeight - h2);
+                rect2.setAttribute('width', barWidth);
+                rect2.setAttribute('height', h2);
+                rect2.setAttribute('fill', '#e0ab4c');
+                g.appendChild(rect2);
+
+                // Year label
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', x + barWidth);
+                text.setAttribute('y', chartHeight + 20);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('font-size', '12');
+                text.setAttribute('fill', '#666');
+                text.textContent = d.year;
+                g.appendChild(text);
+            });
+
+            // Legend
+            const leg1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            leg1.setAttribute('x', chartWidth - 200);
+            leg1.setAttribute('y', -25);
+            leg1.setAttribute('width', '12');
+            leg1.setAttribute('height', '12');
+            leg1.setAttribute('fill', '#8b2230');
+            g.appendChild(leg1);
+
+            const leg1Text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            leg1Text.setAttribute('x', chartWidth - 180);
+            leg1Text.setAttribute('y', -14);
+            leg1Text.setAttribute('font-size', '12');
+            leg1Text.setAttribute('fill', '#666');
+            leg1Text.textContent = 'Active Donors';
+            g.appendChild(leg1Text);
+
+            const leg2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            leg2.setAttribute('x', chartWidth - 50);
+            leg2.setAttribute('y', -25);
+            leg2.setAttribute('width', '12');
+            leg2.setAttribute('height', '12');
+            leg2.setAttribute('fill', '#e0ab4c');
+            g.appendChild(leg2);
+
+            const leg2Text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            leg2Text.setAttribute('x', chartWidth - 30);
+            leg2Text.setAttribute('y', -14);
+            leg2Text.setAttribute('font-size', '12');
+            leg2Text.setAttribute('fill', '#666');
+            leg2Text.textContent = 'Mentors';
+            g.appendChild(leg2Text);
+
+            svg.appendChild(g);
+        }
+
+        function renderAllCharts() {
+            renderOverviewStats();
+            drawGraduatesChart();
+            renderSpecialtiesChart();
+            drawEngagementPie();
+            renderEngagementStats();
+            renderEngagementOpportunities();
+            renderCOCAStats();
+            drawResidencyChart();
+            renderMentorshipStats();
+            renderMentorBars();
+            renderDonorStats();
+            renderDonorPipeline();
+            renderAlumniTable();
+            renderAlumniLocator();
+            renderTimeline();
+            drawProjectionChart();
+
+            // Show/hide campus comparison based on selection
+            const comparisonContainer = document.getElementById('campus-comparison-container');
+            if (currentCampus === 'all') {
+                comparisonContainer.style.display = 'block';
+            } else {
+                comparisonContainer.style.display = 'none';
+            }
+        }
+
+        // ============================================
+        // EVENT LISTENERS
+        // ============================================
+
+        // Campus filter buttons
+        document.querySelectorAll('.campus-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.campus-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+
+                currentCampus = e.target.dataset.campus;
+                const labels = { all: 'All Campuses', pomona: 'Pomona CA', lebanon: 'Lebanon OR' };
+                document.getElementById('filter-label').textContent = `Showing: ${labels[currentCampus]} data`;
+
+                renderAllCharts();
+            });
+        });
+
+        // Tab buttons
+        document.querySelectorAll('.tab-button').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                e.target.classList.add('active');
+                const tabId = e.target.dataset.tab;
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Initial ren
+        // Alumni Locator Data & Functions
+        const stateDistributionData = {
+            all: [
+                { state: 'California', count: 842, percent: 31.6 },
+                { state: 'Oregon', count: 385, percent: 14.4 },
+                { state: 'Washington', count: 198, percent: 7.4 },
+                { state: 'Arizona', count: 156, percent: 5.8 },
+                { state: 'Texas', count: 134, percent: 5.0 },
+                { state: 'Nevada', count: 98, percent: 3.7 },
+                { state: 'Colorado', count: 87, percent: 3.3 },
+                { state: 'Florida', count: 74, percent: 2.8 },
+                { state: 'Hawaii', count: 62, percent: 2.3 },
+                { state: 'Utah', count: 56, percent: 2.1 },
+                { state: 'Idaho', count: 48, percent: 1.8 },
+                { state: 'New York', count: 45, percent: 1.7 },
+                { state: 'Montana', count: 42, percent: 1.6 },
+                { state: 'Illinois', count: 38, percent: 1.4 },
+                { state: 'Michigan', count: 35, percent: 1.3 },
+                { state: 'Pennsylvania', count: 32, percent: 1.2 },
+                { state: 'Georgia', count: 28, percent: 1.1 },
+                { state: 'North Carolina', count: 26, percent: 1.0 },
+                { state: 'Virginia', count: 24, percent: 0.9 },
+                { state: 'Ohio', count: 22, percent: 0.8 },
+                { state: 'New Mexico', count: 20, percent: 0.8 },
+                { state: 'Alaska', count: 18, percent: 0.7 },
+                { state: 'Other (16 states)', count: 95, percent: 3.6 }
+            ],
+            pomona: [
+                { state: 'California', count: 842, percent: 44.0 },
+                { state: 'Oregon', count: 145, percent: 7.6 },
+                { state: 'Arizona', count: 156, percent: 8.2 },
+                { state: 'Texas', count: 118, percent: 6.2 },
+                { state: 'Nevada', count: 92, percent: 4.8 },
+                { state: 'Washington', count: 82, percent: 4.3 },
+                { state: 'Colorado', count: 55, percent: 2.9 },
+                { state: 'Hawaii', count: 52, percent: 2.7 },
+                { state: 'Florida', count: 48, percent: 2.5 },
+                { state: 'Utah', count: 42, percent: 2.2 },
+                { state: 'New York', count: 38, percent: 2.0 },
+                { state: 'Idaho', count: 22, percent: 1.2 },
+                { state: 'Illinois', count: 28, percent: 1.5 },
+                { state: 'Michigan', count: 26, percent: 1.4 },
+                { state: 'Georgia', count: 24, percent: 1.3 },
+                { state: 'Other (18 states)', count: 143, percent: 7.5 }
+            ],
+            lebanon: [
+                { state: 'Oregon', count: 240, percent: 31.9 },
+                { state: 'Washington', count: 116, percent: 15.4 },
+                { state: 'California', count: 78, percent: 10.4 },
+                { state: 'Idaho', count: 48, percent: 6.4 },
+                { state: 'Montana', count: 38, percent: 5.1 },
+                { state: 'Alaska', count: 32, percent: 4.3 },
+                { state: 'Utah', count: 28, percent: 3.7 },
+                { state: 'Colorado', count: 26, percent: 3.5 },
+                { state: 'Nevada', count: 22, percent: 2.9 },
+                { state: 'Arizona', count: 20, percent: 2.7 },
+                { state: 'New Mexico', count: 18, percent: 2.4 },
+                { state: 'Wyoming', count: 16, percent: 2.1 },
+                { state: 'Texas', count: 16, percent: 2.1 },
+                { state: 'Hawaii', count: 10, percent: 1.3 },
+                { state: 'North Dakota', count: 8, percent: 1.1 },
+                { state: 'Other (12 states)', count: 36, percent: 4.8 }
+            ]
+        };
+
+        function renderAlumniLocator() {
+            const data = getCurrentData();
+            const campus = currentCampus;
+
+            // Update stats
+            document.getElementById('stat-grad-records').textContent = data.totalAlumni.toLocaleString();
+            const npiMatchLow = Math.round(data.totalAlumni * 0.75);
+            const npiMatchHigh = Math.round(data.totalAlumni * 0.85);
+            const verifiedLocs = Math.round(data.totalAlumni * 0.72);
+            const enrichedProfiles = Math.round(data.totalAlumni * 0.58);
+
+            document.getElementById('stat-npi-matches').textContent = npiMatchLow.toLocaleString() + '–' + npiMatchHigh.toLocaleString();
+            document.getElementById('stat-verified-locs').textContent = verifiedLocs.toLocaleString();
+            document.getElementById('stat-enriched-profiles').textContent = enrichedProfiles.toLocaleString();
+
+            // Update geo stats
+            const states = stateDistributionData[campus];
+            const stateCount = states.length;
+            const topState = states[0];
+
+            document.getElementById('geo-states-count').textContent = campus === 'all' ? '38' : (campus === 'pomona' ? '28' : '12');
+            document.getElementById('geo-top-state').textContent = topState.state + ' (' + topState.percent.toFixed(0) + '%)';
+
+            if (campus === 'pomona') {
+                document.getElementById('geo-pnw').textContent = '21%';
+                document.getElementById('geo-underserved').textContent = '32%';
+            } else if (campus === 'lebanon') {
+                document.getElementById('geo-pnw').textContent = '77%';
+                document.getElementById('geo-underserved').textContent = '12%';
+            } else {
+                document.getElementById('geo-pnw').textContent = '24%';
+                document.getElementById('geo-underserved').textContent = '28%';
+            }
+
+            // Render geo table
+            const tableBody = document.getElementById('geo-table-body');
+            tableBody.innerHTML = '';
+
+            const maxCount = Math.max(...states.map(s => s.count));
+
+            states.forEach((state, idx) => {
+                const row = document.createElement('div');
+                row.className = 'geo-table-row';
+
+                const barColor = idx % 2 === 0 ? 'burgundy' : 'gold';
+                const barPercent = (state.count / maxCount) * 100;
+
+                row.innerHTML = `
+                    <div class="geo-state-name">${state.state}</div>
+                    <div class="geo-state-count">${state.count}</div>
+                    <div class="geo-bar-container">
+                        <div class="geo-bar ${barColor}" style="width: ${barPercent}%;"></div>
+                    </div>
+                `;
+
+                tableBody.appendChild(row);
+            });
+
+            // Draw enrichment flowchart
+            drawEnrichmentFlowchart();
+        }
+
+        function drawEnrichmentFlowchart() {
+            const svg = document.getElementById('enrichment-flowchart');
+            if (!svg) return;
+
+            // Clear previous content
+            while (svg.firstChild) {
+                svg.removeChild(svg.firstChild);
+            }
+
+            const stages = [
+                { icon: '🎓', title: 'University Records', desc: 'Graduation data, class year, degree, basic contact info', x: 50 },
+                { icon: '🏥', title: 'NPI Registry', desc: 'Practice mailing address, specialty taxonomy, credentials', x: 280 },
+                { icon: '📋', title: 'State Medical Boards', desc: 'License verification, practice location confirmation', x: 510 },
+                { icon: '👤', title: 'Voluntary Opt-In', desc: 'Alumni self-link Doximity, add research, update info', x: 740 },
+                { icon: '⭐', title: 'Enriched Alumni Profile', desc: 'Complete 360° view — location, specialty, engagement potential', x: 970 }
+            ];
+
+            const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            g.setAttribute('transform', 'translate(10, 20)');
+
+            stages.forEach((stage, idx) => {
+                // Draw card
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', stage.x);
+                rect.setAttribute('y', 0);
+                rect.setAttribute('width', '200');
+                rect.setAttribute('height', '150');
+                rect.setAttribute('rx', '8');
+                rect.setAttribute('fill', idx % 2 === 0 ? '#8b2230' : '#e0ab4c');
+                rect.setAttribute('opacity', '0.1');
+                g.appendChild(rect);
+
+                const rectBorder = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rectBorder.setAttribute('x', stage.x);
+                rectBorder.setAttribute('y', 0);
+                rectBorder.setAttribute('width', '200');
+                rectBorder.setAttribute('height', '150');
+                rectBorder.setAttribute('rx', '8');
+                rectBorder.setAttribute('fill', 'none');
+                rectBorder.setAttribute('stroke', idx % 2 === 0 ? '#8b2230' : '#e0ab4c');
+                rectBorder.setAttribute('stroke-width', '2');
+                g.appendChild(rectBorder);
+
+                // Icon
+                const iconText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                iconText.setAttribute('x', stage.x + 100);
+                iconText.setAttribute('y', 30);
+                iconText.setAttribute('text-anchor', 'middle');
+                iconText.setAttribute('font-size', '28');
+                iconText.textContent = stage.icon;
+                g.appendChild(iconText);
+
+                // Title
+                const titleText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                titleText.setAttribute('x', stage.x + 100);
+                titleText.setAttribute('y', 58);
+                titleText.setAttribute('text-anchor', 'middle');
+                titleText.setAttribute('font-size', '12');
+                titleText.setAttribute('font-weight', '600');
+                titleText.setAttribute('fill', '#242424');
+                titleText.textContent = stage.title;
+                g.appendChild(titleText);
+
+                // Arrow (if not last)
+                if (idx < stages.length - 1) {
+                    const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    arrow.setAttribute('x', stage.x + 220);
+                    arrow.setAttribute('y', 80);
+                    arrow.setAttribute('font-size', '18');
+                    arrow.setAttribute('fill', '#e0ab4c');
+                    arrow.setAttribute('font-weight', 'bold');
+                    arrow.textContent = '→';
+                    g.appendChild(arrow);
+                }
+            });
+
+            svg.appendChild(g);
+        }
+
+        // Initial render
+        renderAlumniLocator();
+
+        renderAllCharts();
+    </script>
+</body>
+</html>
