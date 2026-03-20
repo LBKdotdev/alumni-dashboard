@@ -24,6 +24,10 @@
             --bg: #faf9f7;
         }
 
+        html, body {
+            overflow-x: hidden;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             background-color: var(--bg);
@@ -1056,6 +1060,50 @@
             .enrichment-pipeline {
                 padding: 16px 12px;
             }
+
+            /* Alumni Locator hero */
+            .locator-hero {
+                padding: 20px 16px !important;
+                border-radius: 8px !important;
+            }
+
+            .locator-hero-title {
+                font-size: 20px !important;
+                max-width: 100% !important;
+            }
+
+            .locator-hero p {
+                font-size: 13px !important;
+                max-width: 100% !important;
+            }
+
+            .locator-stats-row {
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+
+            .locator-stat-pill {
+                display: flex !important;
+                align-items: center !important;
+                width: 100% !important;
+                padding: 10px 14px !important;
+            }
+
+            /* SVG flowchart — constrain to viewport */
+            #enrichment-flowchart {
+                height: auto !important;
+                max-height: 120px;
+            }
+
+            /* Section headers */
+            .section-header {
+                font-size: 16px;
+            }
+
+            /* NPI description text */
+            #locator p {
+                font-size: 13px !important;
+            }
         }
 
         /* Engagement Distribution Legend */
@@ -1674,21 +1722,21 @@
         <!-- ALUMNI LOCATOR TAB -->
         <div class="tab-content" id="locator">
             <!-- Hero Banner -->
-            <div style="background: linear-gradient(135deg, #58001b, #8b2230); border-radius: 12px; padding: 32px; margin-bottom: 32px; position: relative; overflow: hidden;">
+            <div class="locator-hero" style="background: linear-gradient(135deg, #58001b, #8b2230); border-radius: 12px; padding: 32px; margin-bottom: 32px; position: relative; overflow: hidden;">
                 <div style="position: absolute; right: 24px; top: 50%; transform: translateY(-50%); font-size: 80px; opacity: 0.15;">🔍</div>
                 <p style="font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #e0ab4c; margin: 0 0 8px;">The Core Challenge</p>
-                <h2 style="font-size: 24px; font-weight: 700; color: #fff; margin: 0 0 12px; max-width: 700px;">Where are your 2,665 alumni — and how do you reach them?</h2>
+                <h2 class="locator-hero-title" style="font-size: 24px; font-weight: 700; color: #fff; margin: 0 0 12px; max-width: 700px;">Where are your 2,665 alumni — and how do you reach them?</h2>
                 <p style="font-size: 15px; color: rgba(255,255,255,0.75); margin: 0 0 20px; max-width: 600px; line-height: 1.6;">Most medical schools lose track of graduates within 5 years of commencement. Using free federal databases and public records, we estimate locating 75–85% of COMP alumni — automatically, legally, and at zero data cost. Exact match rate validated in Phase 1.</p>
-                <div style="display: flex; gap: 24px;">
-                    <div style="padding: 12px 20px; background: rgba(224,171,76,0.15); border: 1px solid rgba(224,171,76,0.3); border-radius: 8px;">
+                <div class="locator-stats-row" style="display: flex; gap: 24px; flex-wrap: wrap;">
+                    <div class="locator-stat-pill" style="padding: 12px 20px; background: rgba(224,171,76,0.15); border: 1px solid rgba(224,171,76,0.3); border-radius: 8px;">
                         <span style="font-size: 22px; font-weight: 700; color: #e0ab4c;">75–85%</span>
                         <span style="font-size: 12px; color: rgba(255,255,255,0.6); margin-left: 8px;">Est. NPI match rate</span>
                     </div>
-                    <div style="padding: 12px 20px; background: rgba(224,171,76,0.15); border: 1px solid rgba(224,171,76,0.3); border-radius: 8px;">
+                    <div class="locator-stat-pill" style="padding: 12px 20px; background: rgba(224,171,76,0.15); border: 1px solid rgba(224,171,76,0.3); border-radius: 8px;">
                         <span style="font-size: 22px; font-weight: 700; color: #e0ab4c;">$0</span>
                         <span style="font-size: 12px; color: rgba(255,255,255,0.6); margin-left: 8px;">Data acquisition cost</span>
                     </div>
-                    <div style="padding: 12px 20px; background: rgba(224,171,76,0.15); border: 1px solid rgba(224,171,76,0.3); border-radius: 8px;">
+                    <div class="locator-stat-pill" style="padding: 12px 20px; background: rgba(224,171,76,0.15); border: 1px solid rgba(224,171,76,0.3); border-radius: 8px;">
                         <span style="font-size: 22px; font-weight: 700; color: #e0ab4c;">Monthly</span>
                         <span style="font-size: 12px; color: rgba(255,255,255,0.6); margin-left: 8px;">Auto-sync updates</span>
                     </div>
@@ -2405,8 +2453,12 @@
 
             svg.innerHTML = '';
 
-            const width = 1000, height = 350;
-            const margin = { top: 30, right: 30, bottom: 40, left: 60 };
+            const isMobile = window.innerWidth <= 480;
+            const width = isMobile ? 400 : 1000;
+            const height = isMobile ? 250 : 350;
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            svg.style.height = isMobile ? '220px' : '300px';
+            const margin = { top: 30, right: isMobile ? 15 : 30, bottom: 40, left: isMobile ? 40 : 60 };
             const chartWidth = width - margin.left - margin.right;
             const chartHeight = height - margin.top - margin.bottom;
 
@@ -2635,8 +2687,12 @@
 
             const data = currentCampus === 'all' ? residencyData.all : (currentCampus === 'pomona' ? residencyData.pomona : residencyData.lebanon);
 
-            const width = 1000, height = 350;
-            const margin = { top: 30, right: 30, bottom: 40, left: 60 };
+            const isMobile = window.innerWidth <= 480;
+            const width = isMobile ? 400 : 1000;
+            const height = isMobile ? 250 : 350;
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            svg.style.height = isMobile ? '220px' : '300px';
+            const margin = { top: 30, right: isMobile ? 15 : 30, bottom: 40, left: isMobile ? 40 : 60 };
             const chartWidth = width - margin.left - margin.right;
             const chartHeight = height - margin.top - margin.bottom;
 
@@ -2663,13 +2719,14 @@
             g.appendChild(xAxis);
 
             // Y axis labels (88-98%)
+            const labelFontSize = isMobile ? '10' : '11';
             for (let i = 88; i <= 98; i += 2) {
                 const y = chartHeight - ((i - 88) / 10) * chartHeight;
                 const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                text.setAttribute('x', '-10');
+                text.setAttribute('x', '-8');
                 text.setAttribute('y', y + 4);
                 text.setAttribute('text-anchor', 'end');
-                text.setAttribute('font-size', '11');
+                text.setAttribute('font-size', labelFontSize);
                 text.setAttribute('fill', '#999');
                 text.textContent = i + '%';
                 g.appendChild(text);
@@ -2725,19 +2782,20 @@
 
             // Legend
             if (currentCampus === 'all') {
+                const legOffset = isMobile ? 120 : 180;
                 const leg1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                leg1.setAttribute('x1', chartWidth - 180);
+                leg1.setAttribute('x1', chartWidth - legOffset);
                 leg1.setAttribute('y1', -20);
-                leg1.setAttribute('x2', chartWidth - 140);
+                leg1.setAttribute('x2', chartWidth - legOffset + 40);
                 leg1.setAttribute('y2', -20);
                 leg1.setAttribute('stroke', '#8b2230');
                 leg1.setAttribute('stroke-width', '3');
                 g.appendChild(leg1);
 
                 const leg1Text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-                leg1Text.setAttribute('x', chartWidth - 130);
+                leg1Text.setAttribute('x', chartWidth - legOffset + 50);
                 leg1Text.setAttribute('y', -14);
-                leg1Text.setAttribute('font-size', '12');
+                leg1Text.setAttribute('font-size', isMobile ? '10' : '12');
                 leg1Text.setAttribute('fill', '#666');
                 leg1Text.textContent = 'COMP';
                 g.appendChild(leg1Text);
@@ -2755,7 +2813,7 @@
                 const leg2Text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
                 leg2Text.setAttribute('x', chartWidth + 5);
                 leg2Text.setAttribute('y', -14);
-                leg2Text.setAttribute('font-size', '12');
+                leg2Text.setAttribute('font-size', isMobile ? '10' : '12');
                 leg2Text.setAttribute('fill', '#666');
                 leg2Text.textContent = 'National';
                 g.appendChild(leg2Text);
@@ -2897,8 +2955,12 @@
                 {year: 'Year 3', donors: 485, mentors: 680}
             ];
 
-            const width = 1000, height = 350;
-            const margin = { top: 30, right: 30, bottom: 40, left: 60 };
+            const isMobile = window.innerWidth <= 480;
+            const width = isMobile ? 400 : 1000;
+            const height = isMobile ? 250 : 350;
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            svg.style.height = isMobile ? '220px' : '300px';
+            const margin = { top: 30, right: isMobile ? 15 : 30, bottom: 40, left: isMobile ? 40 : 60 };
             const chartWidth = width - margin.left - margin.right;
             const chartHeight = height - margin.top - margin.bottom;
 
@@ -3203,13 +3265,83 @@
                 svg.removeChild(svg.firstChild);
             }
 
+            const isMobile = window.innerWidth <= 480;
+
             const stages = [
-                { icon: '🎓', title: 'University Records', desc: 'Graduation data, class year, degree, basic contact info', x: 50 },
-                { icon: '🏥', title: 'NPI Registry', desc: 'Practice mailing address, specialty taxonomy, credentials', x: 280 },
-                { icon: '📋', title: 'State Medical Boards', desc: 'License verification, practice location confirmation', x: 510 },
-                { icon: '👤', title: 'Voluntary Opt-In', desc: 'Alumni self-link Doximity, add research, update info', x: 740 },
-                { icon: '⭐', title: 'Enriched Alumni Profile', desc: 'Complete 360° view — location, specialty, engagement potential', x: 970 }
+                { icon: '🎓', title: 'University Records', desc: 'Graduation data, class year, degree, basic contact info' },
+                { icon: '🏥', title: 'NPI Registry', desc: 'Practice mailing address, specialty taxonomy, credentials' },
+                { icon: '📋', title: 'State Medical Boards', desc: 'License verification, practice location confirmation' },
+                { icon: '👤', title: 'Voluntary Opt-In', desc: 'Alumni self-link Doximity, add research, update info' },
+                { icon: '⭐', title: 'Enriched Alumni Profile', desc: 'Complete 360° view — location, specialty, engagement potential' }
             ];
+
+            if (isMobile) {
+                // Vertical stacked layout for mobile
+                const cardH = 70, gap = 12, cardW = 320;
+                const totalH = stages.length * cardH + (stages.length - 1) * gap + 40;
+                svg.setAttribute('viewBox', `0 0 360 ${totalH}`);
+                svg.style.height = totalH + 'px';
+
+                const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                g.setAttribute('transform', 'translate(15, 10)');
+
+                stages.forEach((stage, idx) => {
+                    const y = idx * (cardH + gap);
+
+                    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                    rect.setAttribute('x', 0);
+                    rect.setAttribute('y', y);
+                    rect.setAttribute('width', cardW);
+                    rect.setAttribute('height', cardH);
+                    rect.setAttribute('rx', '6');
+                    rect.setAttribute('fill', idx % 2 === 0 ? 'rgba(139,34,48,0.1)' : 'rgba(224,171,76,0.15)');
+                    rect.setAttribute('stroke', idx % 2 === 0 ? '#8b2230' : '#e0ab4c');
+                    rect.setAttribute('stroke-width', '1.5');
+                    g.appendChild(rect);
+
+                    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    icon.setAttribute('x', 20);
+                    icon.setAttribute('y', y + 28);
+                    icon.setAttribute('font-size', '18');
+                    icon.textContent = stage.icon;
+                    g.appendChild(icon);
+
+                    const title = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    title.setAttribute('x', 48);
+                    title.setAttribute('y', y + 26);
+                    title.setAttribute('font-size', '12');
+                    title.setAttribute('font-weight', '600');
+                    title.setAttribute('fill', '#242424');
+                    title.textContent = stage.title;
+                    g.appendChild(title);
+
+                    const desc = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    desc.setAttribute('x', 48);
+                    desc.setAttribute('y', y + 46);
+                    desc.setAttribute('font-size', '10');
+                    desc.setAttribute('fill', '#666');
+                    desc.textContent = stage.desc.length > 50 ? stage.desc.substring(0, 47) + '...' : stage.desc;
+                    g.appendChild(desc);
+
+                    // Arrow between cards
+                    if (idx < stages.length - 1) {
+                        const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                        arrow.setAttribute('x', cardW / 2);
+                        arrow.setAttribute('y', y + cardH + gap / 2 + 4);
+                        arrow.setAttribute('text-anchor', 'middle');
+                        arrow.setAttribute('font-size', '14');
+                        arrow.setAttribute('fill', '#e0ab4c');
+                        arrow.textContent = '↓';
+                        g.appendChild(arrow);
+                    }
+                });
+
+                svg.appendChild(g);
+                return;
+            }
+
+            // Desktop: horizontal layout
+            stages.forEach((s, i) => { s.x = 50 + i * 230; });
 
             const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
             g.setAttribute('transform', 'translate(10, 20)');
