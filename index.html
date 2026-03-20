@@ -1556,9 +1556,9 @@
                     <div class="stat-subtitle">Current contact info</div>
                 </div>
                 <div class="stat-card" data-emoji="⭐">
-                    <div class="stat-label">Avg Engagement</div>
+                    <div class="stat-label">Meaningful Engagement</div>
                     <div class="stat-value" style="color: var(--burgundy);">6.2/10</div>
-                    <div class="stat-subtitle">Network health score</div>
+                    <div class="stat-subtitle">Alumni who are connecting, mentoring, or giving back</div>
                 </div>
                 <div class="stat-card" data-emoji="🤝">
                     <div class="stat-label">Active Mentors</div>
@@ -1973,6 +1973,7 @@
             </div>
 
             <!-- Big Numbers -->
+            <div style="font-size: 12px; color: #78716c; text-align: center; margin-bottom: 12px; font-style: italic;">Projections based on peer institution benchmarks — validated against COMP data in Phase 1</div>
             <div class="big-numbers">
                 <div class="big-number-card">
                     <div class="big-number">93%</div>
@@ -1991,7 +1992,12 @@
             <!-- Why This Works -->
             <div class="why-works">
                 <div class="why-works-title">Why This Works</div>
+                <div style="font-size: 14px; font-style: italic; color: #78716c; text-align: center; margin: -8px 0 24px; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.6;">"Empowering our community to discover and share their talents, fostering meaningful engagement."</div>
                 <div class="why-works-grid">
+                    <div class="why-card">
+                        <div class="why-card-title">Relationships, Not Records</div>
+                        <div class="why-card-desc">The goal isn't a better spreadsheet. It's knowing when a graduate moves, earns a new credential, or enters a specialty where students need mentors — and having a reason to reach out that feels personal, not automated.</div>
+                    </div>
                     <div class="why-card">
                         <div class="why-card-title">Accreditation-Ready</div>
                         <div class="why-card-desc">Alumni outcomes data organized for COCA reporting — residency match rates, board pass rates, and practice locations updated continuously instead of scrambled before site visits.</div>
@@ -1999,10 +2005,6 @@
                     <div class="why-card">
                         <div class="why-card-title">Two Campuses, One View</div>
                         <div class="why-card-desc">Pomona and COMP-Northwest have different alumni profiles and different needs. The system surfaces those differences so each campus gets the attention it warrants.</div>
-                    </div>
-                    <div class="why-card">
-                        <div class="why-card-title">Relationships, Not Records</div>
-                        <div class="why-card-desc">The goal isn't a better spreadsheet. It's knowing when a graduate moves, earns a new credential, or enters a specialty where students need mentors — and having a reason to reach out.</div>
                     </div>
                 </div>
             </div>
@@ -2258,9 +2260,9 @@
                     <div class="stat-subtitle">Current contact info</div>
                 </div>
                 <div class="stat-card" data-emoji="⭐">
-                    <div class="stat-label">Avg Engagement</div>
+                    <div class="stat-label">Meaningful Engagement</div>
                     <div class="stat-value" style="color: var(--burgundy);">${data.avgEngagement}/10</div>
-                    <div class="stat-subtitle">Network health score</div>
+                    <div class="stat-subtitle">Alumni who are connecting, mentoring, or giving back</div>
                 </div>
                 <div class="stat-card" data-emoji="🤝">
                     <div class="stat-label">Active Mentors</div>
@@ -2312,50 +2314,50 @@
             if (currentCampus === 'all') {
                 opportunities = `
                     <div class="opportunity-card">
-                        <div class="opportunity-title">Re-engagement Initiative</div>
+                        <div class="opportunity-title">Reconnection Opportunity</div>
                         <div class="opportunity-stat">${data.engagement['Inactive']}</div>
-                        <div class="opportunity-desc">Inactive alumni represent greatest opportunity. Model recovery rate of 15-25% = ${Math.round(data.engagement['Inactive'] * 0.15)}-${Math.round(data.engagement['Inactive'] * 0.25)} reactivations.</div>
+                        <div class="opportunity-desc">Inactive alumni — people who haven't heard from the school in a meaningful way. A personal, well-timed outreach could bring ${Math.round(data.engagement['Inactive'] * 0.15)}–${Math.round(data.engagement['Inactive'] * 0.25)} back into the community.</div>
                     </div>
                     <div class="opportunity-card warm">
-                        <div class="opportunity-title">Warm → Engaged Conversion</div>
+                        <div class="opportunity-title">Ready to Engage Deeper</div>
                         <div class="opportunity-stat">${data.engagement['Warm']}</div>
-                        <div class="opportunity-desc">Highest ROI segment. Low friction, strong intent signals. Virtual events + peer intro campaigns historically show 40%+ conversion.</div>
+                        <div class="opportunity-desc">These alumni are already showing interest — opening emails, attending events. An invitation to mentor, speak, or connect could turn casual interest into meaningful engagement.</div>
                     </div>
                     <div class="opportunity-card lost">
-                        <div class="opportunity-title">Lost Contact Recovery</div>
+                        <div class="opportunity-title">Lost Contact — Finding Them Again</div>
                         <div class="opportunity-stat">${data.engagement['Lost Contact']}</div>
-                        <div class="opportunity-desc">Auto-enrichment via board directory, LinkedIn, alumni network. Expect 35-45% successful recontact rate.</div>
+                        <div class="opportunity-desc">Alumni the school has lost touch with entirely. Public records and voluntary opt-in channels can help locate 35–45% — and give the school a reason to reach out.</div>
                     </div>
                 `;
             } else if (currentCampus === 'pomona') {
                 opportunities = `
                     <div class="opportunity-card">
-                        <div class="opportunity-title">Re-engagement in Pomona</div>
+                        <div class="opportunity-title">Reconnecting Pomona Alumni</div>
                         <div class="opportunity-stat">${data.engagement['Inactive']}</div>
-                        <div class="opportunity-desc">Pomona inactive cohort shows stronger historical ties. Targeted reunion outreach + regional events recommended.</div>
+                        <div class="opportunity-desc">Pomona's inactive alumni have stronger historical ties to the school. Reunion outreach and regional events are natural ways to make them feel seen again.</div>
                     </div>
                     <div class="opportunity-card warm">
-                        <div class="opportunity-title">Warm → Engaged Conversion</div>
+                        <div class="opportunity-title">Ready to Engage Deeper</div>
                         <div class="opportunity-stat">${data.engagement['Warm']}</div>
-                        <div class="opportunity-desc">In-person regional events + mentorship matching drive highest conversion. Plan quarterly events in LA/San Diego corridor.</div>
+                        <div class="opportunity-desc">In-person regional events and mentorship matching are the most natural next step. Quarterly gatherings in the LA/San Diego corridor give alumni a reason to show up.</div>
                     </div>
                     <div class="opportunity-card lost">
-                        <div class="opportunity-title">Lost Contact Recovery</div>
+                        <div class="opportunity-title">Lost Contact — Finding Them Again</div>
                         <div class="opportunity-stat">${data.engagement['Lost Contact']}</div>
-                        <div class="opportunity-desc">CA board cross-reference database provides additional data points for re-discovery strategy.</div>
+                        <div class="opportunity-desc">California board records provide an additional path to locate alumni who've moved or changed practice — a starting point for reconnection.</div>
                     </div>
                 `;
             } else {
                 opportunities = `
                     <div class="opportunity-card">
-                        <div class="opportunity-title">Rural Disconnection Challenge</div>
+                        <div class="opportunity-title">Bridging the Distance</div>
                         <div class="opportunity-stat">${data.engagement['Inactive']}</div>
-                        <div class="opportunity-desc">Lebanon geography presents unique challenge. Virtual-first engagement model critical. Focus on asynchronous programs.</div>
+                        <div class="opportunity-desc">Lebanon's rural geography means alumni are more spread out. A virtual-first approach — asynchronous mentorship, online events — can make engagement meaningful regardless of distance.</div>
                     </div>
                     <div class="opportunity-card warm">
-                        <div class="opportunity-title">Virtual Events Critical</div>
+                        <div class="opportunity-title">Ready to Engage Deeper</div>
                         <div class="opportunity-stat">${data.engagement['Warm']}</div>
-                        <div class="opportunity-desc">Lebanon warm segment responds best to virtual speaker series, online mentorship, and webinar-based CME.</div>
+                        <div class="opportunity-desc">Lebanon's warm alumni respond to virtual speaker series, online mentorship, and CME webinars — formats that let them share their talents without leaving their practice.</div>
                     </div>
                     <div class="opportunity-card lost">
                         <div class="opportunity-title">Mentor Recruitment Gap</div>
@@ -2929,7 +2931,7 @@
                 {
                     num: 3,
                     title: 'Scale (Days 91-180)',
-                    items: ['AI-powered alumni search', 'Donor pipeline workflows', 'Recurring automation', 'Cross-campus collaboration tools', 'Executive reporting cadence']
+                    items: ['Smart alumni search & matching', 'Donor pipeline workflows', 'Recurring automation', 'Cross-campus collaboration tools', 'Executive reporting cadence']
                 }
             ];
 
@@ -3277,7 +3279,7 @@
                 { icon: '🏥', title: 'NPI Registry', desc: 'Practice mailing address, specialty taxonomy, credentials' },
                 { icon: '📋', title: 'State Medical Boards', desc: 'License verification, practice location confirmation' },
                 { icon: '👤', title: 'Voluntary Opt-In', desc: 'Alumni self-link Doximity, add research, update info' },
-                { icon: '⭐', title: 'Enriched Alumni Profile', desc: 'Complete 360° view — location, specialty, engagement potential' }
+                { icon: '⭐', title: 'Enriched Alumni Profile', desc: 'Complete 360° view — location, specialty, and a reason to reach out that fosters meaningful engagement' }
             ];
 
             if (isMobile) {
