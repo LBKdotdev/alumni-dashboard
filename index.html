@@ -1534,10 +1534,9 @@
             <button class="tab-button" data-tab="engagement">Engagement</button>
             <button class="tab-button" data-tab="coca">COCA Outcomes</button>
             <button class="tab-button" data-tab="mentorship">Mentorship</button>
-            <button class="tab-button" data-tab="donor">Donor Pipeline</button>
             <button class="tab-button" data-tab="records">Alumni Records</button>
             <button class="tab-button" data-tab="locator">Alumni Locator</button>
-            
+            <button class="tab-button" data-tab="donor">Donor Pipeline</button>
             <button class="tab-button" data-tab="roadmap">Roadmap</button>
         </div>
 
@@ -2740,8 +2739,8 @@
             }
 
             // Line plots
-            let compPath = 'M';
-            let nationalPath = currentCampus === 'all' ? 'M' : null;
+            let compPath = '';
+            let nationalPath = currentCampus === 'all' ? '' : null;
 
             data.forEach((d, i) => {
                 const x = (i / (data.length - 1)) * chartWidth;
