@@ -7,301 +7,393 @@
     <title>COMP Alumni Engagement Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600;8..60,700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         :root{
-            --burg:#8b2230;--burg-dark:#58001b;--burg-soft:rgba(139,34,48,0.07);--burg-glow:rgba(139,34,48,0.12);
-            --gold:#e0ab4c;--gold-light:#f5e6c8;--gold-glow:rgba(224,171,76,0.15);
-            --white:#ffffff;--gray-100:#faf9f7;--gray-200:#f0eeea;--gray-300:#e8e6e1;--gray-400:#b0aca5;--gray-900:#242424;
-            --blue:#2c5282;--blue-bg:#ebf8ff;--blue-soft:rgba(44,82,130,0.08);
-            --green:#276749;--green-bg:#f0fff4;--green-soft:rgba(39,103,73,0.08);
-            --amber:#975a16;--amber-bg:#fffff0;--amber-soft:rgba(151,90,22,0.08);
-            --rose:#9b2c2c;--rose-bg:#fff5f5;--rose-soft:rgba(155,44,44,0.08);
+            --burg:#8b2230;--burg-dark:#58001b;--burg-mid:#6e1a26;--burg-soft:rgba(139,34,48,0.07);--burg-glow:rgba(139,34,48,0.12);
+            --gold:#d4a24a;--gold-bright:#e8b84d;--gold-light:#f5e6c8;--gold-glow:rgba(224,171,76,0.12);
+            --white:#ffffff;--g50:#faf9f7;--g100:#f4f2ef;--g200:#eae7e2;--g300:#ddd9d3;--g400:#b0aca5;--g500:#8a857e;--g900:#1e1e1e;
+            --blue:#2c5282;--blue-bg:#edf2f9;--blue-soft:rgba(44,82,130,0.08);
+            --green:#276749;--green-bg:#edf7f1;--green-soft:rgba(39,103,73,0.08);
+            --amber:#8a6914;--amber-bg:#faf6eb;--amber-soft:rgba(151,90,22,0.08);
+            --rose:#9b2c2c;--rose-bg:#faf0f0;--rose-soft:rgba(155,44,44,0.08);
             --font-d:'Source Serif 4',Georgia,serif;
             --font-b:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
-            --r:10px;--sh:0 1px 3px rgba(0,0,0,0.06);--sh-md:0 4px 14px rgba(0,0,0,0.09);--sh-lg:0 8px 28px rgba(0,0,0,0.12);
+            --r:12px;--r-sm:8px;
+            --sh:0 1px 2px rgba(0,0,0,0.04),0 1px 5px rgba(0,0,0,0.03);
+            --sh-md:0 2px 8px rgba(0,0,0,0.06),0 4px 16px rgba(0,0,0,0.04);
+            --sh-lg:0 4px 12px rgba(0,0,0,0.08),0 12px 32px rgba(0,0,0,0.06);
         }
         html,body{overflow-x:hidden}
-        body{font-family:var(--font-b);background:var(--gray-100);color:var(--gray-900);line-height:1.55;-webkit-text-size-adjust:100%}
+        body{font-family:var(--font-b);background:var(--g50);color:var(--g900);line-height:1.55;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+        /* subtle page texture */
+        body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.015'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;z-index:0}
 
         /* ── HEADER ── */
-        .header{background:linear-gradient(145deg,var(--burg-dark) 0%,var(--burg) 55%,#9e3040 100%);color:#fff;padding:48px 24px 40px;text-align:center;border-bottom:3px solid var(--gold);position:relative;overflow:hidden}
-        .header::before{content:'';position:absolute;top:-40%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(224,171,76,0.08) 0%,transparent 65%);pointer-events:none}
-        .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,rgba(88,0,27,0.3),transparent);pointer-events:none}
-        .h-eyebrow{font-size:11px;letter-spacing:2.5px;color:var(--gold);margin-bottom:10px;text-transform:uppercase;font-weight:600}
-        .h-title{font-family:var(--font-d);font-size:38px;font-weight:700;margin-bottom:6px;letter-spacing:-0.3px;line-height:1.15}
-        .h-sub{font-size:14px;color:var(--gold-light);margin-bottom:16px;opacity:0.9}
-        .h-meta{display:flex;justify-content:center;gap:16px;align-items:center;font-size:12px;color:var(--gold-light);opacity:0.85}
-        .badge-proto{background:rgba(224,171,76,0.18);border:1px solid rgba(224,171,76,0.5);color:var(--gold);padding:4px 14px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px}
+        .header{
+            background:linear-gradient(155deg,#3a0a12 0%,var(--burg-dark) 25%,var(--burg) 55%,var(--burg-mid) 80%,#4a1520 100%);
+            color:#fff;padding:44px 24px 44px;text-align:center;
+            border-bottom:3px solid var(--gold);position:relative;overflow:hidden;
+        }
+        .header::before{content:'';position:absolute;top:-30%;right:-10%;width:700px;height:700px;background:radial-gradient(circle,rgba(212,162,74,0.07) 0%,transparent 60%);pointer-events:none}
+        .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(to top,rgba(58,10,18,0.4),transparent);pointer-events:none}
+        /* subtle noise overlay on header */
+        .header-noise{position:absolute;inset:0;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none}
+
+        .h-logo{height:48px;margin-bottom:16px;filter:brightness(0) invert(1);opacity:0.92;position:relative;z-index:1;transition:opacity .3s}
+        .h-logo:hover{opacity:1}
+        .h-eyebrow{font-size:10.5px;letter-spacing:3px;color:var(--gold);margin-bottom:12px;text-transform:uppercase;font-weight:600;position:relative;z-index:1}
+        .h-title{font-family:var(--font-d);font-size:40px;font-weight:700;margin-bottom:4px;letter-spacing:-0.5px;line-height:1.1;position:relative;z-index:1}
+        .h-sub{font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:18px;font-weight:400;position:relative;z-index:1}
+        .h-meta{display:flex;justify-content:center;gap:16px;align-items:center;font-size:12px;color:rgba(255,255,255,0.6);position:relative;z-index:1}
+        .badge-proto{background:rgba(212,162,74,0.15);border:1px solid rgba(212,162,74,0.4);color:var(--gold-bright);padding:4px 14px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px}
 
         /* ── LAYOUT ── */
-        .container{max-width:1280px;margin:0 auto;padding:28px 20px}
-        .filter-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+        .container{max-width:1280px;margin:0 auto;padding:32px 24px;position:relative;z-index:1}
+        .filter-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px}
         .campus-buttons{display:flex;gap:8px}
-        .campus-btn{padding:8px 18px;border:1.5px solid var(--gray-300);border-radius:24px;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s;background:var(--white);color:var(--gray-900);font-family:var(--font-b)}
-        .campus-btn.active{background:var(--burg);color:#fff;border-color:var(--burg);box-shadow:0 2px 8px rgba(139,34,48,0.25)}
-        .campus-btn:hover:not(.active){border-color:var(--burg);color:var(--burg)}
-        .filter-label{font-size:12px;color:var(--gray-400);font-weight:500}
+        .campus-btn{padding:8px 20px;border:1.5px solid var(--g300);border-radius:24px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;background:var(--white);color:var(--g900);font-family:var(--font-b)}
+        .campus-btn.active{background:var(--burg);color:#fff;border-color:var(--burg);box-shadow:0 2px 10px rgba(139,34,48,0.25)}
+        .campus-btn:hover:not(.active){border-color:var(--burg);color:var(--burg);background:var(--burg-soft)}
+        .filter-label{font-size:12px;color:var(--g400);font-weight:500}
 
-        .tabs-container{display:flex;gap:4px;margin-bottom:28px;overflow-x:auto;padding:4px;background:var(--gray-300);border-radius:28px;-webkit-overflow-scrolling:touch}
-        .tab-btn{padding:10px 20px;border:none;background:transparent;color:#777;cursor:pointer;font-size:13px;font-weight:600;border-radius:24px;transition:all .25s;white-space:nowrap;font-family:var(--font-b)}
+        .tabs-container{display:flex;gap:4px;margin-bottom:32px;overflow-x:auto;padding:4px;background:var(--g200);border-radius:28px;-webkit-overflow-scrolling:touch;box-shadow:inset 0 1px 2px rgba(0,0,0,0.04)}
+        .tab-btn{padding:10px 22px;border:none;background:transparent;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;border-radius:24px;transition:all .2s;white-space:nowrap;font-family:var(--font-b)}
         .tab-btn.active{background:var(--burg);color:#fff;box-shadow:0 2px 8px rgba(139,34,48,0.3)}
-        .tab-btn:hover:not(.active){background:rgba(139,34,48,0.06);color:var(--burg)}
-        .tab-content{display:none}.tab-content.active{display:block;animation:fadeUp .35s ease}
-        @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .tab-btn:hover:not(.active){background:rgba(139,34,48,0.05);color:var(--burg)}
+        .tab-content{display:none}.tab-content.active{display:block}
 
-        /* ── ENGINE FRAME — elevated ── */
+        /* ── STAGGERED ANIMATION ── */
+        .anim-in{opacity:0;transform:translateY(16px);animation:slideIn .5s ease forwards}
+        @keyframes slideIn{to{opacity:1;transform:translateY(0)}}
+
+        /* ── ENGINE FRAME ── */
         .engine-frame{
-            background:linear-gradient(135deg,#fdfcfb 0%,#f8f6f2 100%);
-            border:1.5px solid var(--gray-300);
-            border-radius:var(--r);padding:32px 28px;margin-bottom:28px;text-align:center;
+            background:linear-gradient(180deg,#fdfcfb 0%,var(--g100) 100%);
+            border:1px solid var(--g300);border-radius:var(--r);
+            padding:36px 32px 28px;margin-bottom:32px;text-align:center;
             box-shadow:var(--sh);position:relative;overflow:hidden;
         }
         .engine-frame::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--burg),var(--gold),var(--burg))}
-        .ef-headline{font-family:var(--font-d);font-size:24px;font-weight:700;color:var(--gray-900);margin-bottom:6px}
-        .ef-sub{font-size:14px;color:#666;max-width:680px;margin:0 auto 8px;line-height:1.6}
-        .ef-domain{font-size:13px;color:var(--burg);font-weight:600;margin-bottom:24px;font-style:italic}
-        .four-layers{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:20px}
-        .layer-step{display:flex;flex-direction:column;align-items:center;padding:14px 20px;min-width:140px}
-        .layer-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
-        .layer-icon.l1{background:var(--blue-bg);border:2px solid rgba(44,82,130,0.15)}
-        .layer-icon.l2{background:var(--green-bg);border:2px solid rgba(39,103,73,0.15)}
-        .layer-icon.l3{background:var(--amber-bg);border:2px solid rgba(151,90,22,0.15)}
-        .layer-icon.l4{background:var(--rose-bg);border:2px solid rgba(155,44,44,0.15)}
-        .layer-name{font-size:13px;font-weight:700;color:var(--gray-900);margin-bottom:3px}
-        .layer-desc{font-size:11px;color:#999;text-align:center;max-width:130px}
-        .layer-arrow{font-size:18px;color:var(--gold);font-weight:700;padding:0 4px;margin-top:-16px}
-        .ef-programs{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--gray-300)}
-        .ef-program{font-size:12px;color:#666;display:flex;align-items:center;gap:6px}
-        .ef-program strong{color:var(--gray-900)}
-        .ef-program-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-        .ef-program-dot.mentor{background:var(--burg)}.ef-program-dot.cme{background:var(--gold)}.ef-program-dot.events{background:var(--blue)}
+        .ef-headline{font-family:var(--font-d);font-size:26px;font-weight:700;color:var(--g900);margin-bottom:8px;letter-spacing:-0.3px}
+        .ef-sub{font-size:15px;color:var(--g500);max-width:680px;margin:0 auto 8px;line-height:1.6}
+        .ef-domain{font-size:13px;color:var(--burg);font-weight:600;margin-bottom:28px;font-style:italic;line-height:1.5}
+        .four-layers{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:24px}
+        .layer-step{display:flex;flex-direction:column;align-items:center;padding:16px 24px;min-width:145px;transition:transform .2s}
+        .layer-step:hover{transform:translateY(-3px)}
+        .layer-icon{
+            width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+            font-size:22px;margin-bottom:10px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.08);transition:box-shadow .2s;
+        }
+        .layer-step:hover .layer-icon{box-shadow:0 4px 14px rgba(0,0,0,0.12)}
+        .layer-icon.l1{background:var(--blue-bg);border:2px solid rgba(44,82,130,0.12)}
+        .layer-icon.l2{background:var(--green-bg);border:2px solid rgba(39,103,73,0.12)}
+        .layer-icon.l3{background:var(--amber-bg);border:2px solid rgba(151,90,22,0.12)}
+        .layer-icon.l4{background:var(--rose-bg);border:2px solid rgba(155,44,44,0.12)}
+        .layer-name{font-size:14px;font-weight:700;color:var(--g900);margin-bottom:4px}
+        .layer-desc{font-size:11px;color:var(--g400);text-align:center;max-width:130px;line-height:1.4}
+        .layer-arrow{font-size:20px;color:var(--gold);font-weight:700;padding:0 2px;margin-top:-14px;opacity:0.7}
+        .ef-programs{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--g200)}
+        .ef-program{font-size:12px;color:var(--g500);display:flex;align-items:center;gap:7px}
+        .ef-program strong{color:var(--g900);font-weight:600}
+        .ef-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+        .ef-dot.m{background:var(--burg)}.ef-dot.c{background:var(--gold)}.ef-dot.e{background:var(--blue)}
 
-        /* ── SIGNAL CARDS — elevated ── */
-        .signal-feed-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
-        .sf-title{font-family:var(--font-d);font-size:19px;font-weight:700}
-        .sf-sub{font-size:12px;color:var(--gray-400);font-weight:500}
+        /* ── SIGNAL CARDS ── */
+        .sf-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+        .sf-title{font-family:var(--font-d);font-size:20px;font-weight:700}
+        .sf-sub{font-size:12px;color:var(--g400);font-weight:500}
 
         .signal-card{
             background:var(--white);border-radius:var(--r);
             box-shadow:var(--sh);margin-bottom:16px;overflow:hidden;
-            transition:box-shadow .25s,transform .25s;
-            border:1px solid rgba(0,0,0,0.04);
-            position:relative;
+            transition:all .25s;border:1px solid var(--g200);position:relative;
         }
         .signal-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
-        .signal-card.type-move::before{background:var(--blue)}
-        .signal-card.type-pub::before{background:var(--green)}
-        .signal-card.type-cred::before{background:var(--amber)}
-        .signal-card.type-drop::before{background:var(--rose)}
-        .signal-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+        .signal-card.t-move::before{background:var(--blue)}.signal-card.t-pub::before{background:var(--green)}
+        .signal-card.t-cred::before{background:var(--amber)}.signal-card.t-drop::before{background:var(--rose)}
+        .signal-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px);border-color:var(--g300)}
 
-        .signal-top{display:flex;align-items:flex-start;gap:14px;padding:20px 20px 14px 24px}
-        .signal-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
-        .signal-icon.move{background:var(--blue-bg)}.signal-icon.pub{background:var(--green-bg)}.signal-icon.cred{background:var(--amber-bg)}.signal-icon.drop{background:var(--rose-bg)}
-        .signal-body{flex:1;min-width:0}
-        .signal-meta{display:flex;align-items:center;gap:10px;margin-bottom:5px}
-        .signal-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
-        .signal-type.move{color:var(--blue)}.signal-type.pub{color:var(--green)}.signal-type.cred{color:var(--amber)}.signal-type.drop{color:var(--rose)}
-        .signal-source{font-size:10px;color:var(--gray-400);font-weight:500}
-        .signal-headline{font-size:16px;font-weight:700;color:var(--gray-900);line-height:1.35;margin-bottom:8px}
-
-        /* KEY INSIGHT — the line that pops */
-        .signal-insight{
-            display:inline-block;
-            padding:4px 10px;border-radius:5px;
-            font-size:13px;font-weight:700;line-height:1.4;
-            margin-bottom:6px;
+        .sig-top{display:flex;align-items:flex-start;gap:16px;padding:22px 24px 16px 28px}
+        .sig-icon{
+            width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+            font-size:19px;flex-shrink:0;box-shadow:0 2px 8px rgba(0,0,0,0.05);
         }
-        .signal-insight.move{background:var(--blue-soft);color:var(--blue)}
-        .signal-insight.pub{background:var(--green-soft);color:var(--green)}
-        .signal-insight.cred{background:var(--amber-soft);color:var(--amber)}
-        .signal-insight.drop{background:var(--rose-soft);color:var(--rose)}
+        .sig-icon.move{background:var(--blue-bg)}.sig-icon.pub{background:var(--green-bg)}.sig-icon.cred{background:var(--amber-bg)}.sig-icon.drop{background:var(--rose-bg)}
+        .sig-body{flex:1;min-width:0}
+        .sig-meta{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+        .sig-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px}
+        .sig-type.move{color:var(--blue)}.sig-type.pub{color:var(--green)}.sig-type.cred{color:var(--amber)}.sig-type.drop{color:var(--rose)}
+        .sig-source{font-size:10px;color:var(--g400);font-weight:500}
+        .sig-headline{font-size:16px;font-weight:700;color:var(--g900);line-height:1.35;margin-bottom:10px;letter-spacing:-0.15px}
 
-        .signal-detail{font-size:13px;color:#666;line-height:1.55}
+        /* KEY INSIGHT — the piece that pops */
+        .sig-insight{
+            display:inline-flex;align-items:center;gap:6px;
+            padding:5px 12px;border-radius:6px;
+            font-size:13px;font-weight:700;line-height:1.3;
+            margin-bottom:8px;
+        }
+        .sig-insight::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
+        .sig-insight.move{background:var(--blue-soft);color:var(--blue)}.sig-insight.move::before{background:var(--blue)}
+        .sig-insight.pub{background:var(--green-soft);color:var(--green)}.sig-insight.pub::before{background:var(--green)}
+        .sig-insight.cred{background:var(--amber-soft);color:var(--amber)}.sig-insight.cred::before{background:var(--amber)}
+        .sig-insight.drop{background:var(--rose-soft);color:var(--rose)}.sig-insight.drop::before{background:var(--rose)}
 
-        .signal-layers{display:flex;gap:6px;margin-top:10px}
-        .signal-layer-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:4px;background:var(--gray-200);color:var(--gray-400)}
-        .signal-layer-tag.on{background:var(--burg-soft);color:var(--burg)}
+        .sig-detail{font-size:13px;color:var(--g500);line-height:1.6}
 
-        .signal-action{padding:12px 20px 12px 24px;background:var(--gray-100);border-top:1px solid rgba(0,0,0,0.04);display:flex;align-items:center;gap:10px}
-        .action-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--burg);flex-shrink:0}
-        .action-text{font-size:13px;color:#555}
-        .action-btn{margin-left:auto;padding:7px 16px;background:var(--burg);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font-b);transition:all .2s;box-shadow:0 2px 6px rgba(139,34,48,0.2)}
-        .action-btn:hover{background:var(--burg-dark);transform:translateY(-1px);box-shadow:0 4px 10px rgba(139,34,48,0.3)}
+        .sig-layers{display:flex;gap:6px;margin-top:12px}
+        .sig-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 10px;border-radius:4px;background:var(--g100);color:var(--g400);transition:all .2s}
+        .sig-tag.on{background:var(--burg-soft);color:var(--burg)}
 
-        .sf-note{text-align:center;font-size:12px;color:var(--gray-400);padding:8px 0 4px}
-        .sf-note strong{color:var(--gray-900)}
+        .sig-action{
+            padding:14px 24px 14px 28px;background:var(--g50);
+            border-top:1px solid var(--g200);display:flex;align-items:center;gap:12px;
+        }
+        .act-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--burg);flex-shrink:0}
+        .act-text{font-size:13px;color:var(--g500);line-height:1.45}
+        .act-btn{
+            margin-left:auto;padding:8px 18px;background:var(--burg);color:#fff;border:none;border-radius:8px;
+            font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font-b);
+            transition:all .2s;box-shadow:0 2px 8px rgba(139,34,48,0.2);
+        }
+        .act-btn:hover{background:var(--burg-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(139,34,48,0.3)}
+        .act-btn:active{transform:translateY(0)}
+
+        .sf-note{text-align:center;font-size:12px;color:var(--g400);padding:10px 0 6px}
+        .sf-note strong{color:var(--g900)}
 
         /* ── GUARDRAILS ── */
-        .guardrails{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
-        .guardrail{display:flex;align-items:flex-start;gap:10px;padding:14px;background:var(--gray-100);border-radius:8px;font-size:13px;color:#555;line-height:1.45;border:1px solid var(--gray-300)}
-        .guardrail-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+        .guardrails{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:18px}
+        .guardrail{display:flex;align-items:flex-start;gap:10px;padding:16px;background:var(--g50);border-radius:var(--r-sm);font-size:13px;color:var(--g500);line-height:1.5;border:1px solid var(--g200)}
+        .guardrail strong{color:var(--g900)}
+        .guardrail-icon{font-size:18px;flex-shrink:0;margin-top:2px}
+
+        /* ── DATA PROVENANCE BADGES ── */
+        .data-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:3px 10px;border-radius:4px;margin-left:10px;vertical-align:middle}
+        .data-badge.verified{background:var(--green-bg);color:var(--green)}
+        .data-badge.verified::before{content:'✓';font-size:11px}
+        .data-badge.sample{background:var(--g100);color:var(--g400);border:1px solid var(--g200)}
 
         /* ── DIVIDER ── */
-        .divider{margin:36px 0 28px;display:flex;align-items:center;gap:16px}
-        .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--gray-300)}
-        .divider-text{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gray-400);white-space:nowrap}
+        .divider{margin:40px 0 32px;display:flex;align-items:center;gap:16px}
+        .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--g300)}
+        .divider-text{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2.5px;color:var(--g400);white-space:nowrap}
 
         /* ── STATS ── */
-        .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px}
-        .stat-card{background:var(--white);padding:22px 20px;border-radius:var(--r);box-shadow:var(--sh);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden}
-        .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--burg);opacity:0.6}
-        .stat-card.gold-accent::before{background:var(--gold);opacity:0.8}
-        .stat-card.green-accent::before{background:var(--green);opacity:0.6}
-        .sc-label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-400);font-weight:600;margin-bottom:6px}
-        .sc-value{font-family:var(--font-d);font-size:32px;font-weight:700;color:var(--burg);line-height:1.1}
-        .sc-note{font-size:12px;color:#888;margin-top:6px}
+        .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:32px}
+        .stat-card{
+            background:var(--white);padding:24px 22px;border-radius:var(--r);
+            box-shadow:var(--sh);border:1px solid var(--g200);
+            position:relative;overflow:hidden;transition:all .2s;
+        }
+        .stat-card:hover{box-shadow:var(--sh-md);transform:translateY(-1px)}
+        .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--burg);opacity:0.5}
+        .stat-card.gold-top::before{background:linear-gradient(90deg,var(--gold),var(--gold-bright));opacity:0.9}
+        .stat-card.green-top::before{background:var(--green);opacity:0.6}
+        /* HERO stat — the 100% */
+        .stat-card.hero{
+            background:linear-gradient(135deg,var(--burg) 0%,#a03348 100%);
+            border-color:var(--burg);color:#fff;
+        }
+        .stat-card.hero::before{background:var(--gold);opacity:1;height:3px}
+        .stat-card.hero .sc-label{color:rgba(255,255,255,0.7)}
+        .stat-card.hero .sc-value{color:#fff;font-size:42px}
+        .stat-card.hero .sc-note{color:rgba(255,255,255,0.8)}
+        .stat-card.hero .sc-note .up{color:var(--gold-bright)}
+
+        .sc-label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--g400);font-weight:600;margin-bottom:8px}
+        .sc-value{font-family:var(--font-d);font-size:32px;font-weight:700;color:var(--burg);line-height:1.1;transition:color .2s}
+        .sc-note{font-size:12px;color:var(--g500);margin-top:8px;line-height:1.4}
         .sc-note .up{color:var(--green);font-weight:600}
 
         /* ── ENGAGEMENT DISTRIBUTION ── */
-        .engage-dist{background:var(--white);padding:24px;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:28px;border:1px solid rgba(0,0,0,0.03)}
-        .engage-bar-wrap{height:36px;border-radius:6px;overflow:hidden;display:flex;margin-bottom:14px}
-        .engage-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;transition:width .5s}
-        .engage-legend{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
-        .engage-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#666}
+        .engage-dist{background:var(--white);padding:28px;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:32px;border:1px solid var(--g200)}
+        .engage-bar-wrap{height:40px;border-radius:8px;overflow:hidden;display:flex;margin-bottom:16px;box-shadow:inset 0 1px 3px rgba(0,0,0,0.06)}
+        .engage-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;transition:width .6s ease}
+        .engage-legend{display:flex;flex-wrap:wrap;gap:18px;justify-content:center}
+        .engage-legend-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--g500)}
+        .engage-legend-item strong{color:var(--g900);font-weight:600}
         .engage-dot{width:10px;height:10px;border-radius:50%}
 
         /* ── PANELS ── */
-        .panel{background:var(--white);padding:24px;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:20px;border:1px solid rgba(0,0,0,0.03)}
-        .panel-title{font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--gray-900);margin-bottom:18px}
-        .panel-sub{font-size:13px;color:#888;margin-top:-12px;margin-bottom:18px}
+        .panel{background:var(--white);padding:28px;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:24px;border:1px solid var(--g200)}
+        .panel-title{font-family:var(--font-d);font-size:18px;font-weight:700;color:var(--g900);margin-bottom:20px;letter-spacing:-0.15px}
+        .panel-sub{font-size:13px;color:var(--g400);margin-top:-14px;margin-bottom:20px}
 
         /* ── BARS ── */
         .hbar-row{display:flex;align-items:center;margin-bottom:10px;gap:10px}
-        .hbar-label{width:130px;font-size:13px;font-weight:500;flex-shrink:0}
-        .hbar-track{flex:1;height:22px;background:var(--gray-200);border-radius:4px;overflow:hidden}
-        .hbar-fill{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;font-weight:700;color:#fff;transition:width .5s}
-        .hbar-fill.burg{background:linear-gradient(90deg,var(--burg),#a83850)}.hbar-fill.gold{background:linear-gradient(90deg,#c9963e,var(--gold));color:var(--gray-900)}
-        .hbar-value{width:50px;text-align:right;font-size:13px;font-weight:600}
+        .hbar-label{width:130px;font-size:13px;font-weight:500;flex-shrink:0;color:var(--g900)}
+        .hbar-track{flex:1;height:24px;background:var(--g100);border-radius:5px;overflow:hidden}
+        .hbar-fill{height:100%;border-radius:5px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;font-weight:700;color:#fff;transition:width .6s ease}
+        .hbar-fill.burg{background:linear-gradient(90deg,var(--burg),#a03348)}.hbar-fill.gold{background:linear-gradient(90deg,#c08a30,var(--gold));color:var(--g900)}
+        .hbar-value{width:50px;text-align:right;font-size:13px;font-weight:600;color:var(--g900)}
 
         .geo-bar-row{display:flex;align-items:center;margin-bottom:8px;gap:10px}
-        .geo-bar-state{width:100px;font-size:13px;font-weight:500}
+        .geo-bar-state{width:100px;font-size:13px;font-weight:500;color:var(--g900)}
         .geo-bar-count{width:40px;text-align:right;font-size:13px;font-weight:700;color:var(--burg)}
-        .geo-bar-track{flex:1;height:18px;background:var(--gray-200);border-radius:3px;overflow:hidden}
-        .geo-bar-fill{height:100%;border-radius:3px;transition:width .5s}
+        .geo-bar-track{flex:1;height:20px;background:var(--g100);border-radius:4px;overflow:hidden}
+        .geo-bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
 
         /* ── TRAJECTORY ── */
-        .traj-row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;padding:12px 0}
+        .traj-row{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:16px 0}
         .traj-year{flex:1;text-align:center}
-        .traj-bar-wrap{height:120px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:8px}
-        .traj-bar{width:40px;border-radius:5px 5px 0 0;transition:height .5s;position:relative}
-        .traj-bar.perfect{box-shadow:0 0 12px rgba(224,171,76,0.4)}
-        .traj-rate{font-size:14px;font-weight:700;color:var(--burg)}
-        .traj-rate.perfect{color:var(--gold)}
-        .traj-label{font-size:11px;color:#999;margin-top:2px}
-        .traj-grad{font-size:11px;color:#aaa}
+        .traj-bar-wrap{height:130px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:10px}
+        .traj-bar{width:42px;border-radius:6px 6px 0 0;transition:height .6s ease;position:relative}
+        .traj-bar.perfect{box-shadow:0 0 16px rgba(212,162,74,0.35),0 0 4px rgba(212,162,74,0.2)}
+        .traj-rate{font-family:var(--font-d);font-size:15px;font-weight:700;color:var(--burg)}
+        .traj-rate.perfect{color:var(--gold);font-size:17px}
+        .traj-label{font-size:12px;color:var(--g400);margin-top:3px;font-weight:500}
+        .traj-grad{font-size:11px;color:var(--g400)}
 
         /* ── ENRICHMENT FLOW ── */
-        .enrich-flow{display:flex;align-items:stretch;gap:0;margin:20px 0}
-        .enrich-step{flex:1;padding:20px 16px;text-align:center;position:relative;background:var(--gray-100);border-radius:8px;margin:0 14px 0 0}
-        .enrich-step:last-child{margin-right:0;background:var(--burg-soft)}
+        .enrich-flow{display:flex;align-items:stretch;gap:0;margin:24px 0}
+        .enrich-step{flex:1;padding:22px 16px;text-align:center;position:relative;background:var(--g50);border-radius:var(--r-sm);margin:0 16px 0 0;border:1px solid var(--g200);transition:all .2s}
+        .enrich-step:last-child{margin-right:0;background:var(--burg-soft);border-color:var(--burg-glow)}
+        .enrich-step:hover{box-shadow:var(--sh);transform:translateY(-2px)}
         .enrich-step:not(:last-child)::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);font-size:20px;font-weight:700;color:var(--gold);z-index:1}
-        .es-icon{font-size:28px;margin-bottom:8px}
-        .es-title{font-size:13px;font-weight:700;color:var(--gray-900);margin-bottom:4px}
-        .es-desc{font-size:11px;color:#888;line-height:1.4}
-        .es-sources{margin-top:6px;font-size:10px;font-weight:600;color:var(--burg)}
+        .es-icon{font-size:30px;margin-bottom:10px}
+        .es-title{font-size:14px;font-weight:700;color:var(--g900);margin-bottom:5px}
+        .es-desc{font-size:11px;color:var(--g500);line-height:1.4}
+        .es-sources{margin-top:8px;font-size:10px;font-weight:700;color:var(--burg);letter-spacing:.3px}
 
         /* ── COCA ── */
         .coca-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
-        .coca-side{padding:24px;border-radius:var(--r);text-align:center}
-        .coca-side.before{background:#faf0f0;border:1.5px dashed #d4a0a0}
-        .coca-side.after{background:#f0faf4;border:1.5px solid var(--green)}
-        .coca-side-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-        .coca-side.before .coca-side-label{color:var(--rose)}.coca-side.after .coca-side-label{color:var(--green)}
-        .coca-side-icon{font-size:36px;margin-bottom:10px}
-        .coca-side-text{font-size:14px;color:#555;line-height:1.5}
+        .coca-side{padding:28px;border-radius:var(--r);text-align:center;transition:all .2s}
+        .coca-side:hover{transform:translateY(-2px)}
+        .coca-side.before{background:var(--g50);border:1.5px solid var(--g300)}
+        .coca-side.after{background:var(--green-bg);border:1.5px solid rgba(39,103,73,0.3)}
+        .coca-side-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px}
+        .coca-side.before .coca-side-label{color:var(--g500)}.coca-side.after .coca-side-label{color:var(--green)}
+        .coca-side-icon{font-size:40px;margin-bottom:12px}
+        .coca-side-text{font-size:14px;color:var(--g500);line-height:1.55}
 
         /* ── MENTOR GAPS ── */
-        .mg-row{display:flex;align-items:center;margin-bottom:12px;gap:12px;padding:10px 12px;background:var(--gray-100);border-radius:8px}
-        .mg-spec{width:130px;font-size:13px;font-weight:600;flex-shrink:0}
-        .mg-visual{flex:1;display:flex;height:26px;border-radius:5px;overflow:hidden;background:var(--gray-200)}
-        .mg-have{background:linear-gradient(90deg,var(--burg),#a83850);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;min-width:28px}
+        .mg-row{display:flex;align-items:center;margin-bottom:12px;gap:12px;padding:12px 14px;background:var(--g50);border-radius:var(--r-sm);border:1px solid var(--g200);transition:all .2s}
+        .mg-row:hover{background:var(--white);box-shadow:var(--sh)}
+        .mg-spec{width:130px;font-size:13px;font-weight:600;flex-shrink:0;color:var(--g900)}
+        .mg-visual{flex:1;display:flex;height:26px;border-radius:6px;overflow:hidden;background:var(--g200)}
+        .mg-have{background:linear-gradient(90deg,var(--burg),#a03348);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;min-width:28px}
         .mg-need{background:repeating-linear-gradient(-45deg,transparent,transparent 3px,var(--burg-glow) 3px,var(--burg-glow) 6px);display:flex;align-items:center;justify-content:center;color:var(--burg);font-size:10px;font-weight:700;min-width:28px}
-        .mg-stats{width:120px;text-align:right;font-size:12px;color:#888}
+        .mg-stats{width:120px;text-align:right;font-size:12px;color:var(--g500)}
         .mg-stats .gap-num{color:var(--rose);font-weight:700}
 
         /* ── CALLOUT DARK ── */
-        .callout-dark{background:linear-gradient(135deg,var(--burg) 0%,#9e3040 100%);color:#fff;padding:28px;border-radius:var(--r);margin-top:24px;box-shadow:var(--sh-md)}
-        .callout-dark h3{font-family:var(--font-d);font-size:18px;font-weight:700;margin-bottom:14px}
-        .step-flow{display:flex;flex-direction:column;gap:12px}
-        .step-row{display:flex;align-items:flex-start;gap:12px}
-        .step-num{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;border:1px solid rgba(255,255,255,0.15)}
-        .step-text{font-size:14px;line-height:1.5;opacity:.95}
+        .callout-dark{
+            background:linear-gradient(135deg,var(--burg-dark) 0%,var(--burg) 60%,#a03348 100%);
+            color:#fff;padding:32px;border-radius:var(--r);margin-top:28px;
+            box-shadow:var(--sh-lg);position:relative;overflow:hidden;
+        }
+        .callout-dark::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;background:radial-gradient(circle,rgba(212,162,74,0.06) 0%,transparent 60%);pointer-events:none}
+        .callout-dark h3{font-family:var(--font-d);font-size:20px;font-weight:700;margin-bottom:18px;position:relative}
+        .step-flow{display:flex;flex-direction:column;gap:14px;position:relative}
+        .step-row{display:flex;align-items:flex-start;gap:14px}
+        .step-num{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.12);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+        .step-text{font-size:14px;line-height:1.55;opacity:.92}
+        .step-text em{color:var(--gold-bright);font-style:italic}
 
         /* ── LOCATOR ── */
-        .locator-hero{background:linear-gradient(135deg,var(--burg) 0%,#9e3040 100%);color:#fff;padding:32px;border-radius:var(--r);margin-bottom:24px;text-align:center;box-shadow:var(--sh-md)}
-        .locator-hero h2{font-family:var(--font-d);font-size:24px;margin-bottom:8px}
-        .locator-hero p{font-size:14px;opacity:.9;max-width:600px;margin:0 auto 20px}
-        .loc-pills{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
-        .loc-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:12px 22px;border-radius:8px;text-align:center;backdrop-filter:blur(4px)}
-        .loc-pill-val{font-family:var(--font-d);font-size:24px;font-weight:700}
-        .loc-pill-label{font-size:11px;opacity:.8;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+        .locator-hero{
+            background:linear-gradient(135deg,var(--burg-dark) 0%,var(--burg) 60%,#a03348 100%);
+            color:#fff;padding:36px;border-radius:var(--r);margin-bottom:28px;text-align:center;
+            box-shadow:var(--sh-lg);position:relative;overflow:hidden;
+        }
+        .locator-hero::before{content:'';position:absolute;top:-40%;left:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(212,162,74,0.06) 0%,transparent 60%);pointer-events:none}
+        .locator-hero h2{font-family:var(--font-d);font-size:26px;margin-bottom:10px;position:relative}
+        .locator-hero p{font-size:14px;opacity:.85;max-width:600px;margin:0 auto 24px;position:relative;line-height:1.6}
+        .loc-pills{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;position:relative}
+        .loc-pill{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);padding:14px 24px;border-radius:var(--r-sm);text-align:center;backdrop-filter:blur(4px);transition:all .2s}
+        .loc-pill:hover{background:rgba(255,255,255,0.15);transform:translateY(-2px)}
+        .loc-pill-val{font-family:var(--font-d);font-size:26px;font-weight:700}
+        .loc-pill-label{font-size:10px;opacity:.75;text-transform:uppercase;letter-spacing:.7px;margin-top:3px}
 
         /* ── READINESS ── */
         .readiness-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-        .readiness-item{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--gray-100);border-radius:8px}
-        .readiness-icon{width:36px;height:36px;border-radius:8px;background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-        .readiness-text h5{font-size:14px;font-weight:600;margin-bottom:3px}
-        .readiness-text p{font-size:12px;color:#888;line-height:1.45}
+        .readiness-item{display:flex;align-items:flex-start;gap:12px;padding:18px;background:var(--g50);border-radius:var(--r-sm);border:1px solid var(--g200);transition:all .2s}
+        .readiness-item:hover{background:var(--white);box-shadow:var(--sh)}
+        .readiness-icon{width:38px;height:38px;border-radius:var(--r-sm);background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+        .readiness-text h5{font-size:14px;font-weight:600;margin-bottom:4px;color:var(--g900)}
+        .readiness-text p{font-size:12px;color:var(--g400);line-height:1.5}
 
         /* ── ROADMAP ── */
-        .rm-phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:24px}
-        .rm-phase{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;border:1px solid rgba(0,0,0,0.03)}
-        .rm-head{padding:18px 20px;border-bottom:1px solid var(--gray-300);display:flex;align-items:center;gap:12px}
-        .rm-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
-        .rm-num.p1{background:var(--burg);color:#fff}.rm-num.p2{background:var(--gold);color:var(--gray-900)}.rm-num.p3{background:var(--gray-300);color:#666}.rm-num.p4{background:var(--gray-300);color:#666}
-        .rm-info h4{font-size:15px;font-weight:700}.rm-info span{font-size:12px;color:var(--gray-400)}
-        .rm-body{padding:18px 20px}.rm-body ul{list-style:none}
-        .rm-body li{font-size:13px;color:#555;padding:5px 0 5px 22px;position:relative;line-height:1.45}
+        .rm-phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:28px}
+        .rm-phase{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;border:1px solid var(--g200);transition:all .2s}
+        .rm-phase:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+        .rm-head{padding:20px 22px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:14px}
+        .rm-num{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+        .rm-num.p1{background:var(--burg);color:#fff;box-shadow:0 2px 6px rgba(139,34,48,0.2)}.rm-num.p2{background:var(--gold);color:var(--g900);box-shadow:0 2px 6px rgba(212,162,74,0.2)}.rm-num.p3{background:var(--g200);color:var(--g500)}.rm-num.p4{background:var(--g200);color:var(--g500)}
+        .rm-info h4{font-size:15px;font-weight:700;color:var(--g900)}.rm-info span{font-size:12px;color:var(--g400)}
+        .rm-body{padding:20px 22px}.rm-body ul{list-style:none}
+        .rm-body li{font-size:13px;color:var(--g500);padding:6px 0 6px 24px;position:relative;line-height:1.5}
         .rm-body li::before{content:'→';position:absolute;left:0;color:var(--gold);font-weight:700}
 
         /* ── CAMPUS ── */
         .campus-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-        .campus-card{padding:20px;border-radius:var(--r);background:var(--white);box-shadow:var(--sh);border:1px solid rgba(0,0,0,0.03)}
-        .campus-card h4{font-family:var(--font-d);font-size:16px;font-weight:700;margin-bottom:12px;color:var(--burg)}
-        .cd{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray-200);font-size:13px}
+        .campus-card{padding:24px;border-radius:var(--r);background:var(--white);box-shadow:var(--sh);border:1px solid var(--g200);transition:all .2s}
+        .campus-card:hover{box-shadow:var(--sh-md);transform:translateY(-1px)}
+        .campus-card h4{font-family:var(--font-d);font-size:17px;font-weight:700;margin-bottom:14px;color:var(--burg)}
+        .cd{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--g100);font-size:13px}
         .cd:last-child{border-bottom:none}
-        .cd-l{color:#888}.cd-v{font-weight:600}
+        .cd-l{color:var(--g400)}.cd-v{font-weight:600;color:var(--g900)}
 
-        /* ── CONNECTOR — tab intro lines ── */
-        .tab-connector{padding:16px 20px;border-radius:var(--r);margin-bottom:24px;font-size:14px;color:#555;line-height:1.65}
-        .tab-connector strong{color:var(--gray-900)}
+        /* ── TAB CONNECTOR ── */
+        .tab-conn{padding:18px 22px;border-radius:var(--r-sm);margin-bottom:28px;font-size:14px;color:var(--g500);line-height:1.65}
+        .tab-conn strong{color:var(--g900)}
         .tc-green{background:var(--green-bg);border-left:3px solid var(--green)}
         .tc-gold{background:var(--gold-glow);border-left:3px solid var(--gold)}
 
         /* ── FOOTNOTE ── */
-        .footnote{text-align:center;padding:24px 16px;font-size:11px;color:var(--gray-400);border-top:1px solid var(--gray-300);margin-top:32px}
-        .footnote .disc{display:inline-block;background:var(--gold-glow);border:1px solid var(--gold);padding:6px 16px;border-radius:6px;font-weight:600;color:var(--amber);margin-bottom:6px}
+        .footnote{text-align:center;padding:28px 16px;font-size:11px;color:var(--g400);border-top:1px solid var(--g300);margin-top:40px}
+        .footnote .disc{display:inline-block;background:var(--gold-glow);border:1px solid rgba(212,162,74,0.3);padding:6px 16px;border-radius:6px;font-weight:600;color:var(--amber);margin-bottom:8px}
 
         /* ── RESPONSIVE ── */
         @media(max-width:768px){
-            .header{padding:32px 16px 28px}.h-title{font-size:26px}.container{padding:20px 14px}
-            .stats-row{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{padding:16px 14px}.sc-value{font-size:24px}
-            .signal-top{padding:16px 14px 10px 20px}.signal-action{padding:10px 14px 10px 20px;flex-wrap:wrap}
-            .action-btn{margin-left:0;margin-top:6px;width:100%;text-align:center}
+            .header{padding:32px 16px 28px}.h-title{font-size:28px}.h-logo{height:38px}.container{padding:20px 14px}
+            .stats-row{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{padding:18px 16px}.sc-value{font-size:26px}
+            .stat-card.hero .sc-value{font-size:34px}
+            .sig-top{padding:16px 14px 12px 20px}.sig-action{padding:12px 14px 12px 20px;flex-wrap:wrap}
+            .act-btn{margin-left:0;margin-top:8px;width:100%;text-align:center;padding:12px;min-height:44px;font-size:13px}
+            .campus-btn{min-height:44px;padding:10px 18px}
+            .tab-btn{min-height:44px;padding:10px 16px}
             .coca-compare,.campus-compare{grid-template-columns:1fr}.rm-phases{grid-template-columns:1fr}
-            .four-layers{gap:0}.layer-step{padding:10px 8px;min-width:80px}
+            .four-layers{gap:0}.layer-step{padding:10px 10px;min-width:80px}
             .enrich-flow{flex-direction:column;align-items:center}
-            .enrich-step{margin:0 0 24px 0}.enrich-step:not(:last-child)::after{content:'↓';right:auto;left:50%;bottom:-18px;top:auto;transform:translateX(-50%)}
-            .loc-pills{flex-direction:column;align-items:center}.guardrails{grid-template-columns:1fr}
-            .ef-programs{flex-direction:column;gap:8px}
+            .enrich-step{margin:0 0 24px 0;width:100%}.enrich-step:not(:last-child)::after{content:'↓';right:auto;left:50%;bottom:-18px;top:auto;transform:translateX(-50%)}
+            .loc-pills{flex-direction:column;align-items:stretch}.loc-pill{display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
+            .guardrails{grid-template-columns:1fr}
+            .ef-programs{flex-direction:column;gap:10px}
+            .engage-bar-wrap{height:32px}
+            .engage-legend{gap:10px;justify-content:flex-start}
+            .data-badge{margin-left:6px;font-size:9px;padding:2px 7px}
+            .mg-row{flex-wrap:wrap}.mg-spec{width:100%;margin-bottom:4px}.mg-stats{width:100%;text-align:left;margin-top:4px}
+            .readiness-list{grid-template-columns:1fr}
+            .hbar-label{width:100px;font-size:12px}
+            .geo-bar-state{width:80px;font-size:12px}
+            body{padding-bottom:env(safe-area-inset-bottom,20px)}
         }
         @media(max-width:480px){
-            .stats-row{grid-template-columns:1fr}.h-title{font-size:22px}.signal-headline{font-size:14px}
-            .tab-btn{padding:8px 14px;font-size:12px}
-            .four-layers{flex-direction:column}.layer-arrow{transform:rotate(90deg);margin-top:0}
+            .stats-row{grid-template-columns:1fr}.h-title{font-size:24px}
+            .sig-headline{font-size:14px}.tab-btn{padding:8px 14px;font-size:12px}
+            .four-layers{flex-direction:column}.layer-arrow{transform:rotate(90deg);margin-top:0;padding:4px 0}
+            .campus-buttons{width:100%;justify-content:stretch}.campus-btn{flex:1;text-align:center}
+            .filter-row{flex-direction:column;align-items:stretch}
+            .filter-label{text-align:center}
+            .engage-legend-item{font-size:11px}
+            .hbar-row{flex-wrap:wrap}.hbar-label{width:100%;margin-bottom:2px}.hbar-value{width:auto;margin-left:8px}
         }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <div class="h-eyebrow">Western University of Health Sciences</div>
-    <div class="h-title">COMP Alumni Engagement</div>
-    <div class="h-sub">College of Osteopathic Medicine of the Pacific &amp; COMP-Northwest</div>
-    <div class="h-meta"><span class="badge-proto">Prototype — Sample Data</span><span>March 2026</span></div>
+    <div class="header-noise"></div>
+    <img src="https://www.westernu.edu/wp-content/themes/westernu/public/images/logo-westernu-h.svg" alt="Western University of Health Sciences" class="h-logo">
+    <div class="h-eyebrow">College of Osteopathic Medicine of the Pacific</div>
+    <div class="h-title">Alumni Engagement</div>
+    <div class="h-sub">COMP &amp; COMP-Northwest · Pomona, CA &amp; Lebanon, OR</div>
+    <div class="h-meta"><span class="badge-proto">Prototype</span><span>March 2026</span></div>
 </div>
 
 <div class="container">
@@ -321,11 +413,9 @@
         <button class="tab-btn" data-tab="roadmap">Roadmap</button>
     </div>
 
-    <!-- ══════ OVERVIEW ══════ -->
+    <!-- ══ OVERVIEW ══ -->
     <div class="tab-content active" id="overview">
-
-        <!-- ENGINE FRAME — with domain fit + programs -->
-        <div class="engine-frame">
+        <div class="engine-frame anim-in" style="animation-delay:.1s">
             <div class="ef-headline">The Relationship Engine</div>
             <div class="ef-sub">We know where they matched. This tracks where they are <em>now</em> — and creates the reason to reach out.</div>
             <div class="ef-domain">DO graduates leave a public, continuously updated data trail that most alumni populations don't. This engine turns that trail into meaningful engagement.</div>
@@ -339,78 +429,73 @@
                 <div class="layer-step"><div class="layer-icon l4">🔄</div><div class="layer-name">Learn</div><div class="layer-desc">Every response feeds back — nothing falls through the cracks</div></div>
             </div>
             <div class="ef-programs">
-                <div class="ef-program"><span class="ef-program-dot mentor"></span><strong>Mentorship</strong> — right mentor, right moment</div>
-                <div class="ef-program"><span class="ef-program-dot cme"></span><strong>CME &amp; Guest Faculty</strong> — surface who to invite</div>
-                <div class="ef-program"><span class="ef-program-dot events"></span><strong>Events &amp; Reunions</strong> — personal, not blast-and-hope</div>
+                <div class="ef-program"><span class="ef-dot m"></span><strong>Mentorship</strong> — right mentor, right moment</div>
+                <div class="ef-program"><span class="ef-dot c"></span><strong>CME &amp; Guest Faculty</strong> — surface who to invite</div>
+                <div class="ef-program"><span class="ef-dot e"></span><strong>Events &amp; Reunions</strong> — personal, not blast-and-hope</div>
             </div>
         </div>
 
-        <!-- SIGNAL FEED -->
-        <div class="signal-feed-header">
-            <div class="sf-title">This Week's Signals</div>
-            <div class="sf-sub">Each one is a reason to reach out</div>
-        </div>
+        <div class="sf-header anim-in" style="animation-delay:.2s"><div class="sf-title">This Week's Signals</div><div class="sf-sub">Each one is a reason to reach out</div></div>
 
-        <div class="signal-card type-move">
-            <div class="signal-top">
-                <div class="signal-icon move">📍</div>
-                <div class="signal-body">
-                    <div class="signal-meta"><div class="signal-type move">Practice Move Detected</div><div class="signal-source">Source: NPI Registry</div></div>
-                    <div class="signal-headline">Dr. James Park, DO '19 — Riverside, CA → Portland, OR</div>
-                    <div class="signal-insight move">COMP-NW engagement opportunity</div>
-                    <div class="signal-detail">Now 18 miles from Lebanon campus. Three 3rd-year students listed his specialty (Orthopedic Surgery) as primary interest. No touchpoint from COMP in 3 years.</div>
-                    <div class="signal-layers"><span class="signal-layer-tag on">Detected</span><span class="signal-layer-tag on">Enriched</span><span class="signal-layer-tag on">Action Ready</span><span class="signal-layer-tag">Awaiting Response</span></div>
+        <div class="signal-card t-move anim-in" style="animation-delay:.25s">
+            <div class="sig-top">
+                <div class="sig-icon move">📍</div>
+                <div class="sig-body">
+                    <div class="sig-meta"><div class="sig-type move">Practice Move Detected</div><div class="sig-source">Source: NPI Registry</div></div>
+                    <div class="sig-headline">Dr. James Park, DO '19 — Riverside, CA → Portland, OR</div>
+                    <div class="sig-insight move">COMP-NW engagement opportunity</div>
+                    <div class="sig-detail">Now 18 miles from Lebanon campus. Three 3rd-year students listed his specialty (Orthopedic Surgery) as primary interest. No touchpoint from COMP in 3 years.</div>
+                    <div class="sig-layers"><span class="sig-tag on">Detected</span><span class="sig-tag on">Enriched</span><span class="sig-tag on">Action Ready</span><span class="sig-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="signal-action"><div class="action-tag">Suggested</div><div class="action-text">Personal note acknowledging move, mention Lebanon campus growth, invite mentor conversation</div><button class="action-btn">Review Draft</button></div>
+            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Personal note acknowledging move, mention Lebanon campus growth, invite mentor conversation</div><button class="act-btn">Review Draft</button></div>
         </div>
 
-        <div class="signal-card type-pub">
-            <div class="signal-top">
-                <div class="signal-icon pub">📄</div>
-                <div class="signal-body">
-                    <div class="signal-meta"><div class="signal-type pub">New Publication</div><div class="signal-source">Source: PubMed</div></div>
-                    <div class="signal-headline">Dr. Maria Santos, DO '16 — Published in Journal of Pediatrics</div>
-                    <div class="signal-insight pub">Dean Warren's specialty area</div>
-                    <div class="signal-detail">First-authored study on adolescent care in underserved communities. Active Pomona-area practice. Attended alumni reunion October 2025. Engagement: high.</div>
-                    <div class="signal-layers"><span class="signal-layer-tag on">Detected</span><span class="signal-layer-tag on">Enriched</span><span class="signal-layer-tag on">Action Ready</span><span class="signal-layer-tag">Awaiting Response</span></div>
+        <div class="signal-card t-pub anim-in" style="animation-delay:.3s">
+            <div class="sig-top">
+                <div class="sig-icon pub">📄</div>
+                <div class="sig-body">
+                    <div class="sig-meta"><div class="sig-type pub">New Publication</div><div class="sig-source">Source: PubMed</div></div>
+                    <div class="sig-headline">Dr. Maria Santos, DO '16 — Published in Journal of Pediatrics</div>
+                    <div class="sig-insight pub">Dean Warren's specialty area</div>
+                    <div class="sig-detail">First-authored study on adolescent care in underserved communities. Active Pomona-area practice. Attended alumni reunion October 2025. Already connected and giving back.</div>
+                    <div class="sig-layers"><span class="sig-tag on">Detected</span><span class="sig-tag on">Enriched</span><span class="sig-tag on">Action Ready</span><span class="sig-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="signal-action"><div class="action-tag">Suggested</div><div class="action-text">Achievement recognition from Dean's office, invite to guest lecture or Future of Medicine feature</div><button class="action-btn">Review Draft</button></div>
+            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Achievement recognition from Dean's office, invite to guest lecture or Future of Medicine feature</div><button class="act-btn">Review Draft</button></div>
         </div>
 
-        <div class="signal-card type-cred">
-            <div class="signal-top">
-                <div class="signal-icon cred">🎓</div>
-                <div class="signal-body">
-                    <div class="signal-meta"><div class="signal-type cred">Credential Update</div><div class="signal-source">Source: NPI Specialty Code Change</div></div>
-                    <div class="signal-headline">Dr. Alex Tran, DO '20 — Emergency Medicine Fellowship Completed</div>
-                    <div class="signal-insight cred">Mentor availability opportunity</div>
-                    <div class="signal-detail">Now board-certified EM attending, San Diego. Seven current COMP students listed Emergency Medicine as top interest. Not yet registered as a mentor.</div>
-                    <div class="signal-layers"><span class="signal-layer-tag on">Detected</span><span class="signal-layer-tag on">Enriched</span><span class="signal-layer-tag on">Action Ready</span><span class="signal-layer-tag">Awaiting Response</span></div>
+        <div class="signal-card t-cred anim-in" style="animation-delay:.35s">
+            <div class="sig-top">
+                <div class="sig-icon cred">🎓</div>
+                <div class="sig-body">
+                    <div class="sig-meta"><div class="sig-type cred">Credential Update</div><div class="sig-source">Source: NPI Specialty Code Change</div></div>
+                    <div class="sig-headline">Dr. Alex Tran, DO '20 — Emergency Medicine Fellowship Completed</div>
+                    <div class="sig-insight cred">Mentor availability opportunity</div>
+                    <div class="sig-detail">Now board-certified EM attending, San Diego. Seven COMP students listed Emergency Medicine as top interest. Not yet registered as a mentor.</div>
+                    <div class="sig-layers"><span class="sig-tag on">Detected</span><span class="sig-tag on">Enriched</span><span class="sig-tag on">Action Ready</span><span class="sig-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="signal-action"><div class="action-tag">Suggested</div><div class="action-text">Congratulations on fellowship, warm invitation to mentor a student pursuing EM</div><button class="action-btn">Review Draft</button></div>
+            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Congratulations on fellowship, warm invitation to mentor a student pursuing EM</div><button class="act-btn">Review Draft</button></div>
         </div>
 
-        <div class="signal-card type-drop">
-            <div class="signal-top">
-                <div class="signal-icon drop">🔕</div>
-                <div class="signal-body">
-                    <div class="signal-meta"><div class="signal-type drop">Engagement Drop</div><div class="signal-source">Source: Internal — 24-month threshold</div></div>
-                    <div class="signal-headline">47 alumni from Class of 2018 — No touchpoint in 24+ months</div>
-                    <div class="signal-insight drop">Reconnection window</div>
-                    <div class="signal-detail">Reunion milestone approaching. 38 have verified practice locations via NPI. 12 now in leadership or fellowship roles. High reconnection potential.</div>
-                    <div class="signal-layers"><span class="signal-layer-tag on">Detected</span><span class="signal-layer-tag on">Enriched</span><span class="signal-layer-tag on">Action Ready</span><span class="signal-layer-tag">Awaiting Response</span></div>
+        <div class="signal-card t-drop anim-in" style="animation-delay:.4s">
+            <div class="sig-top">
+                <div class="sig-icon drop">🔕</div>
+                <div class="sig-body">
+                    <div class="sig-meta"><div class="sig-type drop">Engagement Drop</div><div class="sig-source">Source: Internal — 24-month threshold</div></div>
+                    <div class="sig-headline">47 alumni from Class of 2018 — No touchpoint in 24+ months</div>
+                    <div class="sig-insight drop">Reconnection window</div>
+                    <div class="sig-detail">Reunion milestone approaching. 38 have verified practice locations via NPI. 12 now in leadership or fellowship roles.</div>
+                    <div class="sig-layers"><span class="sig-tag on">Detected</span><span class="sig-tag on">Enriched</span><span class="sig-tag on">Action Ready</span><span class="sig-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="signal-action"><div class="action-tag">Suggested</div><div class="action-text">Reunion-anchored reconnection campaign — personalized by specialty and geography</div><button class="action-btn">Review Campaign</button></div>
+            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Reunion-anchored reconnection campaign — personalized by specialty and geography</div><button class="act-btn">Review Campaign</button></div>
         </div>
 
-        <div class="sf-note"><strong>A human reviews and decides — every time.</strong> The system surfaces the moment. Your team makes it meaningful.</div>
+        <div class="sf-note"><strong>A human reviews and decides — every time.</strong> The system surfaces the moment. People make it meaningful.</div>
 
-        <!-- GUARDRAILS -->
-        <div class="panel" style="margin-top:20px">
+        <div class="panel anim-in" style="animation-delay:.45s;margin-top:20px">
             <div class="panel-title">What This Is — and Isn't</div>
             <div class="guardrails">
                 <div class="guardrail"><span class="guardrail-icon">👤</span><span><strong>Human in the loop.</strong> Every outreach reviewed by a coordinator. Nothing sends automatically.</span></div>
@@ -420,27 +505,27 @@
             </div>
         </div>
 
-        <!-- VERIFIED DATA -->
-        <div class="divider"><span class="divider-text">Class of 2025 — Verified Data</span></div>
+        <div class="divider"><span class="divider-text">Class of 2025 <span class="data-badge verified">Verified</span></span></div>
+
+        <div id="campus-data-note" style="display:none;text-align:center;font-size:12px;color:var(--g400);margin:-16px 0 20px;font-style:italic">Campus-specific breakdowns below are proportional estimates from verified combined totals. Phase 1 validates per-campus data.</div>
 
         <div class="stats-row" id="overview-stats">
-            <div class="stat-card"><div class="sc-label">Graduates</div><div class="sc-value" id="stat-grads">316</div><div class="sc-note">209 Pomona · 107 Lebanon</div></div>
-            <div class="stat-card gold-accent"><div class="sc-label">Placement Rate</div><div class="sc-value" style="color:var(--gold)">100%</div><div class="sc-note"><span class="up">↑ from 99.3%</span> (2024)</div></div>
-            <div class="stat-card green-accent"><div class="sc-label">Primary Care</div><div class="sc-value" style="color:var(--green)">58.9%</div><div class="sc-note">186 of 316 graduates</div></div>
-            <div class="stat-card"><div class="sc-label">States Placed</div><div class="sc-value">38</div><div class="sc-note">58.5% remain in California</div></div>
+            <div class="stat-card anim-in" style="animation-delay:.5s"><div class="sc-label">Graduates</div><div class="sc-value" id="stat-grads">316</div><div class="sc-note">209 Pomona · 107 Lebanon</div></div>
+            <div class="stat-card hero anim-in" style="animation-delay:.55s"><div class="sc-label">Placement Rate</div><div class="sc-value">100%</div><div class="sc-note"><span class="up">↑ from 99.3%</span> · most competitive match in NRMP history</div></div>
+            <div class="stat-card green-top anim-in" style="animation-delay:.6s"><div class="sc-label">Primary Care</div><div class="sc-value" style="color:var(--green)">58.9%</div><div class="sc-note">186 of 316 graduates · Tier 1 benchmark</div></div>
+            <div class="stat-card anim-in" style="animation-delay:.65s"><div class="sc-label">States Placed</div><div class="sc-value">38</div><div class="sc-note">58.5% remain in California</div></div>
         </div>
 
-        <!-- ENGAGEMENT DISTRIBUTION -->
-        <div class="engage-dist">
-            <div class="panel-title">Alumni Engagement Distribution</div>
-            <div class="panel-sub">Of ~2,665 COMP graduates — where the relationships stand today</div>
+        <div class="engage-dist anim-in" style="animation-delay:.7s">
+            <div class="panel-title">Alumni Engagement Distribution <span class="data-badge sample">Sample</span></div>
+            <div class="panel-sub">Of ~2,665 COMP graduates — representative estimate pending Phase 1 validation</div>
             <div class="engage-bar-wrap" id="engage-bar"></div>
             <div class="engage-legend" id="engage-legend"></div>
         </div>
 
-        <div class="panel"><div class="panel-title">Five-Year Placement Trajectory</div><div class="panel-sub">100% in the most competitive match in NRMP history</div><div class="traj-row" id="traj-chart"></div></div>
-        <div class="panel"><div class="panel-title">Specialty Distribution — Class of 2025</div><div id="spec-bars"></div></div>
-        <div class="panel"><div class="panel-title">Geographic Placement — Top States</div><div id="geo-bars"></div></div>
+        <div class="panel"><div class="panel-title">Five-Year Placement Trajectory <span class="data-badge verified">Verified</span></div><div class="panel-sub">The upward trend — publicly reported data, always ready to reference</div><div class="traj-row" id="traj-chart"></div></div>
+        <div class="panel"><div class="panel-title">Specialty Distribution — Class of 2025 <span class="data-badge verified">Verified</span></div><div id="spec-bars"></div></div>
+        <div class="panel"><div class="panel-title">Geographic Placement — Top States <span class="data-badge verified">Verified</span></div><div id="geo-bars"></div></div>
 
         <div class="panel" id="campus-panel">
             <div class="panel-title">Two Campuses, Two Communities</div>
@@ -451,19 +536,19 @@
         </div>
     </div>
 
-    <!-- ══════ COCA ══════ -->
+    <!-- ══ COCA ══ -->
     <div class="tab-content" id="coca">
-        <div class="tab-connector tc-green"><strong>This is Layers 1 and 2 applied to compliance.</strong> The same signals that power alumni engagement — practice locations, specialty codes, credential updates — are the data COCA requires. When the engine is always watching, reporting is always ready.</div>
+        <div class="tab-conn tc-green"><strong>This is Layers 1 and 2 applied to compliance.</strong> The same signals that power alumni engagement — practice locations, specialty codes, credentials — are the data COCA requires. When the engine stays current, reporting stays ready.</div>
         <div class="stats-row">
-            <div class="stat-card gold-accent"><div class="sc-label">Match Rate (2025)</div><div class="sc-value" style="color:var(--gold)">100%</div><div class="sc-note">Both campuses</div></div>
+            <div class="stat-card hero"><div class="sc-label">Match Rate (2025)</div><div class="sc-value">100%</div><div class="sc-note">Both campuses</div></div>
             <div class="stat-card"><div class="sc-label">5-Year Average</div><div class="sc-value">98.9%</div><div class="sc-note">2021–2025</div></div>
-            <div class="stat-card green-accent"><div class="sc-label">Primary Care Rate</div><div class="sc-value" style="color:var(--green)">58.9%</div><div class="sc-note">Tier 1 benchmark</div></div>
-            <div class="stat-card"><div class="sc-label">U.S. News Tier</div><div class="sc-value" style="font-size:26px">Tier 1</div><div class="sc-note">2nd consecutive year</div></div>
+            <div class="stat-card green-top"><div class="sc-label">Primary Care Rate</div><div class="sc-value" style="color:var(--green)">58.9%</div><div class="sc-note">Tier 1 benchmark</div></div>
+            <div class="stat-card gold-top"><div class="sc-label">U.S. News Tier</div><div class="sc-value" style="font-size:28px;color:var(--gold)">Tier 1</div><div class="sc-note">2nd consecutive year · 1 of 2 DO schools</div></div>
         </div>
-        <div class="panel"><div class="panel-title">The Shift: Manual Reporting → Always Current</div>
+        <div class="panel"><div class="panel-title">What If the Data Was Always Ready?</div>
             <div class="coca-compare">
-                <div class="coca-side before"><div class="coca-side-label">Without the System</div><div class="coca-side-icon">📋</div><div class="coca-side-text">Every cycle means rebuilding from scratch. Hours cross-referencing spreadsheets, chasing outcomes, compiling what should already exist.</div></div>
-                <div class="coca-side after"><div class="coca-side-label">With Continuous Readiness</div><div class="coca-side-icon">✓</div><div class="coca-side-text">Graduate outcomes update as they happen. Pull the report — it's already there. Annual, mid-cycle, public data — current, all the time.</div></div>
+                <div class="coca-side before"><div class="coca-side-label">The Question</div><div class="coca-side-icon">🤔</div><div class="coca-side-text">How much of your team's time goes into compiling graduate outcomes when a reporting cycle comes around? What if that time went back to the work that actually matters?</div></div>
+                <div class="coca-side after"><div class="coca-side-label">The Possibility</div><div class="coca-side-icon">✓</div><div class="coca-side-text">Graduate outcomes that stay current on their own — because the same signals powering alumni engagement are the data COCA needs. Pull the report. It's already there.</div></div>
             </div>
         </div>
         <div class="panel"><div class="panel-title">What's Always Ready to Report</div>
@@ -476,19 +561,19 @@
                 <div class="readiness-item"><div class="readiness-icon">📈</div><div class="readiness-text"><h5>Trend Analysis</h5><p>Year-over-year for every metric. Spot shifts early.</p></div></div>
             </div>
         </div>
-        <div class="panel"><div class="panel-title">Residency Placement — Five-Year Trend</div><div class="panel-sub">Reportable at any time — no manual compilation</div><div class="traj-row" id="coca-traj"></div></div>
+        <div class="panel"><div class="panel-title">Residency Placement — Five-Year Trend <span class="data-badge verified">Verified</span></div><div class="panel-sub">Ready to reference anytime — no compilation needed</div><div class="traj-row" id="coca-traj"></div></div>
     </div>
 
-    <!-- ══════ MENTORSHIP ══════ -->
+    <!-- ══ MENTORSHIP ══ -->
     <div class="tab-content" id="mentorship">
-        <div class="tab-connector tc-gold"><strong>This is all four layers working end to end.</strong> A signal gets enriched with student needs, surfaces as a match recommendation, and the response feeds back. The engine finds the right mentor at the right moment.</div>
+        <div class="tab-conn tc-gold"><strong>This is all four layers working end to end.</strong> A signal gets enriched with student needs, surfaces as a match recommendation, and the response feeds back. Not just finding mentors — finding the right one at the right time.</div>
         <div class="stats-row">
             <div class="stat-card"><div class="sc-label">Active Mentors</div><div class="sc-value">312</div><div class="sc-note">Sample — both campuses</div></div>
             <div class="stat-card"><div class="sc-label">Students Seeking</div><div class="sc-value">184</div><div class="sc-note">Sample — by specialty</div></div>
             <div class="stat-card"><div class="sc-label">Specialties Covered</div><div class="sc-value">18</div><div class="sc-note">Of 24 requested</div></div>
             <div class="stat-card"><div class="sc-label">Signal → Match</div><div class="sc-value" style="font-size:24px">&lt; 48 hrs</div><div class="sc-note">Sample target</div></div>
         </div>
-        <div class="panel"><div class="panel-title">Mentorship Supply vs. Student Demand</div><div class="panel-sub">Where the gaps are — and where signals can help close them</div><div id="mg-bars"></div></div>
+        <div class="panel"><div class="panel-title">Mentorship Supply vs. Student Demand <span class="data-badge sample">Sample</span></div><div class="panel-sub">Where the gaps are — and where signals can help close them</div><div id="mg-bars"></div></div>
         <div class="callout-dark">
             <h3>How a Signal Becomes a Mentor Match</h3>
             <div class="step-flow">
@@ -500,7 +585,7 @@
         </div>
     </div>
 
-    <!-- ══════ LOCATOR ══════ -->
+    <!-- ══ LOCATOR ══ -->
     <div class="tab-content" id="locator">
         <div class="locator-hero">
             <h2>Located → Enriched → Engaged</h2>
@@ -515,31 +600,32 @@
             <div class="enrich-flow">
                 <div class="enrich-step"><div class="es-icon">🎓</div><div class="es-title">University Record</div><div class="es-desc">Name, class year, campus, degree</div></div>
                 <div class="enrich-step"><div class="es-icon">📍</div><div class="es-title">Located</div><div class="es-desc">Current practice, specialty, credentials</div><div class="es-sources">NPI Registry · State Boards</div></div>
-                <div class="enrich-step"><div class="es-icon">📚</div><div class="es-title">Enriched</div><div class="es-desc">Publications, credential changes, student matches</div><div class="es-sources">PubMed · NPI Updates · Internal</div></div>
-                <div class="enrich-step"><div class="es-icon">🤝</div><div class="es-title">Engaged</div><div class="es-desc">Mentoring, attending events, connected back</div><div class="es-sources">Relationship Engine → Human Action</div></div>
+                <div class="enrich-step"><div class="es-icon">📚</div><div class="es-title">Enriched</div><div class="es-desc">Publications, credentials, student matches</div><div class="es-sources">PubMed · NPI Updates · Internal</div></div>
+                <div class="enrich-step"><div class="es-icon">🤝</div><div class="es-title">Engaged</div><div class="es-desc">Mentoring, attending events, connected</div><div class="es-sources">Engine → Human Action</div></div>
             </div>
         </div>
-        <div class="panel"><div class="panel-title">The Known vs. Unknown Gap</div>
-            <div style="margin-bottom:16px"><div style="height:32px;border-radius:6px;overflow:hidden;display:flex"><div style="width:78%;background:linear-gradient(90deg,var(--burg),#a83850);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700">~78% Verifiable via Public Data</div><div style="width:22%;background:repeating-linear-gradient(-45deg,transparent,transparent 3px,var(--burg-glow) 3px,var(--burg-glow) 6px);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--burg)">~22%</div></div></div>
-            <div style="font-size:13px;color:#666;line-height:1.6">The ~22% that public data can't reach may be in non-clinical roles, early career, or have changed fields. Not chasing people who don't want to be found — creating the door for them to walk back through.</div>
+        <div class="panel"><div class="panel-title">The Known vs. Unknown Gap <span class="data-badge sample">Estimate</span></div>
+            <div style="margin-bottom:16px"><div style="height:36px;border-radius:8px;overflow:hidden;display:flex;box-shadow:inset 0 1px 3px rgba(0,0,0,0.06)"><div style="width:78%;background:linear-gradient(90deg,var(--burg),#a03348);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700">~78% Verifiable via Public Data</div><div style="width:22%;background:repeating-linear-gradient(-45deg,transparent,transparent 3px,var(--burg-glow) 3px,var(--burg-glow) 6px);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--burg)">~22%</div></div></div>
+            <div style="font-size:13px;color:var(--g500);line-height:1.6">The ~22% that public data can't reach may be in non-clinical roles, early career, or have changed fields. Not chasing people who don't want to be found — creating the door for them to walk back through.</div>
         </div>
-        <div class="panel"><div class="panel-title">Alumni Corridors — Class of 2025</div><div id="loc-geo-bars"></div>
-            <div style="margin-top:16px;padding:14px;background:var(--gold-glow);border-radius:8px;border-left:3px solid var(--gold);font-size:13px;color:#555"><strong>58.5%</strong> placed in California. <strong>12.3%</strong> in Oregon + Washington — the corridor that matters for COMP-NW.</div>
+        <div class="panel"><div class="panel-title">Alumni Corridors — Class of 2025 <span class="data-badge verified">Verified</span></div><div id="loc-geo-bars"></div>
+            <div style="margin-top:18px;padding:16px;background:var(--gold-glow);border-radius:var(--r-sm);border-left:3px solid var(--gold);font-size:13px;color:var(--g500)"><strong style="color:var(--g900)">58.5%</strong> placed in California. <strong style="color:var(--g900)">12.3%</strong> in Oregon + Washington — the corridor that matters for COMP-NW.</div>
         </div>
         <div class="panel"><div class="panel-title">Data Sources</div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
-                <div style="padding:16px;background:var(--green-bg);border-radius:8px;border-left:3px solid var(--green)"><div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px">TIER 1 — PUBLIC, AUTOMATED</div><div style="font-size:13px;color:#555">NPI Registry — monthly, FOIA-released. PubMed — daily. No consent needed.</div></div>
-                <div style="padding:16px;background:var(--amber-bg);border-radius:8px;border-left:3px solid var(--amber)"><div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:6px">TIER 2 — PUBLIC, INDIVIDUAL USE</div><div style="font-size:13px;color:#555">State Medical Boards — individual verification. No bulk scraping.</div></div>
-                <div style="padding:16px;background:var(--rose-bg);border-radius:8px;border-left:3px solid var(--rose)"><div style="font-size:12px;font-weight:700;color:var(--rose);margin-bottom:6px">TIER 3 — VOLUNTARY ONLY</div><div style="font-size:13px;color:#555">Doximity, LinkedIn — alumni self-link only. Never a data source.</div></div>
+                <div style="padding:18px;background:var(--green-bg);border-radius:var(--r-sm);border-left:3px solid var(--green)"><div style="font-size:10px;font-weight:700;color:var(--green);margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">Tier 1 — Public, Automated</div><div style="font-size:13px;color:var(--g500)">NPI Registry — monthly, FOIA-released. PubMed — daily. No consent needed.</div></div>
+                <div style="padding:18px;background:var(--amber-bg);border-radius:var(--r-sm);border-left:3px solid var(--amber)"><div style="font-size:10px;font-weight:700;color:var(--amber);margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">Tier 2 — Public, Individual Use</div><div style="font-size:13px;color:var(--g500)">State Medical Boards — individual verification. No bulk scraping.</div></div>
+                <div style="padding:18px;background:var(--rose-bg);border-radius:var(--r-sm);border-left:3px solid var(--rose)"><div style="font-size:10px;font-weight:700;color:var(--rose);margin-bottom:8px;letter-spacing:.5px;text-transform:uppercase">Tier 3 — Voluntary Only</div><div style="font-size:13px;color:var(--g500)">Doximity, LinkedIn — alumni self-link only. Never a data source.</div></div>
             </div>
         </div>
     </div>
 
-    <!-- ══════ ROADMAP ══════ -->
+    <!-- ══ ROADMAP ══ -->
     <div class="tab-content" id="roadmap">
-        <div class="panel" style="background:linear-gradient(135deg,var(--burg) 0%,#9e3040 100%);color:#fff;text-align:center;margin-bottom:28px;box-shadow:var(--sh-md)">
-            <div style="font-family:var(--font-d);font-size:22px;font-weight:700;margin-bottom:8px">What Lisa's Team Gets in 30 Days</div>
-            <div style="font-size:14px;opacity:.9;max-width:500px;margin:0 auto">A working prototype with real COMP data — not a proposal, not a slide deck. Something her team can actually use.</div>
+        <div class="panel" style="background:linear-gradient(135deg,var(--burg-dark) 0%,var(--burg) 60%,#a03348 100%);color:#fff;text-align:center;margin-bottom:32px;box-shadow:var(--sh-lg);position:relative;overflow:hidden">
+            <div style="position:absolute;top:-40%;right:-15%;width:400px;height:400px;background:radial-gradient(circle,rgba(212,162,74,0.06) 0%,transparent 60%);pointer-events:none"></div>
+            <div style="font-family:var(--font-d);font-size:24px;font-weight:700;margin-bottom:10px;position:relative">What Dr. Warren's Team Gets in 30 Days</div>
+            <div style="font-size:14px;opacity:.85;max-width:500px;margin:0 auto;position:relative;line-height:1.6">A working prototype with real COMP data — not a proposal, not a slide deck. Something her team can actually use.</div>
         </div>
         <div class="rm-phases">
             <div class="rm-phase"><div class="rm-head"><div class="rm-num p1">1</div><div class="rm-info"><h4>Foundation — Detect</h4><span>Days 1–30</span></div></div><div class="rm-body"><ul><li>NPI enrichment for one graduating class</li><li>Verified practice locations, specialties, credentials</li><li>PubMed scan for research-active alumni</li><li>Working dashboard with real COMP data</li><li>Clear picture: here's who we can find, here's the gap</li></ul></div></div>
@@ -547,12 +633,12 @@
             <div class="rm-phase"><div class="rm-head"><div class="rm-num p3">3</div><div class="rm-info"><h4>Engagement — Suggest</h4><span>Days 61–90</span></div></div><div class="rm-body"><ul><li>Mentorship matching: signal-based, specialty-specific</li><li>Outreach templates by signal type</li><li>Engagement scoring: who's connecting back</li><li>COCA reporting: always-current data pulls</li><li>Two-campus analytics side by side</li></ul></div></div>
             <div class="rm-phase"><div class="rm-head"><div class="rm-num p4">4</div><div class="rm-info"><h4>The Loop — Learn</h4><span>Days 91+</span></div></div><div class="rm-body"><ul><li>Every response feeds back into the system</li><li>Better timing, better matches</li><li>Institutional memory that compounds</li><li>Full lifecycle: student → resident → mentor → advocate</li><li>The continuum — actually working at scale</li></ul></div></div>
         </div>
-        <div class="panel"><div class="panel-title">The Principle</div><div style="font-size:15px;color:#555;line-height:1.7;max-width:700px">Each phase earns the next. If Phase 1 doesn't deliver value, you stop — no risk, no sunk cost. The university owns everything. No vendor lock-in. No subscription.</div></div>
+        <div class="panel"><div class="panel-title">The Principle</div><div style="font-size:15px;color:var(--g500);line-height:1.7;max-width:700px">Each phase earns the next. If Phase 1 doesn't deliver value, you stop — no risk, no sunk cost. The university owns everything. No vendor lock-in. No subscription.</div></div>
     </div>
 
     <div class="footnote">
-        <div class="disc">Sample Data — For Demonstration Purposes</div>
-        <div>Placement data from publicly reported COMP Match Day results. Signal feed uses illustrative examples. Mentorship and engagement figures are samples pending Phase 1 enrichment.</div>
+        <div class="disc">Prototype — For Discussion</div>
+        <div>Panels marked <span class="data-badge verified" style="display:inline-flex;vertical-align:baseline;margin:0 2px">Verified</span> use publicly reported COMP Match Day data. Panels marked <span class="data-badge sample" style="display:inline-flex;vertical-align:baseline;margin:0 2px">Sample</span> use representative estimates pending Phase 1 enrichment with real alumni records. Signal feed uses illustrative scenarios.</div>
     </div>
 </div>
 
@@ -560,28 +646,172 @@
 const tabBtns=document.querySelectorAll('.tab-btn'),tabCs=document.querySelectorAll('.tab-content'),campBtns=document.querySelectorAll('.campus-btn');
 let campus='all';
 tabBtns.forEach(b=>{b.addEventListener('click',()=>{tabBtns.forEach(x=>x.classList.remove('active'));tabCs.forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')})});
-campBtns.forEach(b=>{b.addEventListener('click',()=>{campBtns.forEach(x=>x.classList.remove('active'));b.classList.add('active');campus=b.dataset.campus;document.getElementById('filter-label').textContent={all:'All Campuses',pomona:'Pomona, CA',lebanon:'Lebanon, OR'}[campus];updateCampus()})});
+campBtns.forEach(b=>{b.addEventListener('click',()=>{campBtns.forEach(x=>x.classList.remove('active'));b.classList.add('active');campus=b.dataset.campus;document.getElementById('filter-label').textContent={all:'All Campuses',pomona:'Pomona, CA',lebanon:'Lebanon, OR'}[campus];updateAll()})});
 
-const trajD=[{y:2021,g:316,r:97.8},{y:2022,g:324,r:99.1},{y:2023,g:320,r:98.4},{y:2024,g:312,r:99.3},{y:2025,g:316,r:100.0}];
-const specD=[{n:'Internal Medicine',c:85,p:26.9},{n:'Family Medicine',c:76,p:24.0},{n:'Emergency Medicine',c:36,p:11.4},{n:'Pediatrics',c:24,p:7.6},{n:'Psychiatry',c:22,p:6.9},{n:'Anesthesiology',c:17,p:5.4},{n:'Transitional Year',c:14,p:4.4},{n:'OB-GYN',c:9,p:2.8},{n:'Neurology',c:8,p:2.5},{n:'Surgery',c:5,p:1.6},{n:'Pathology',c:5,p:1.6},{n:'Ortho Surgery',c:3,p:0.9}];
-const geoD=[{s:'California',c:185},{s:'Oregon',c:25},{s:'Washington',c:14},{s:'Pennsylvania',c:13},{s:'Michigan',c:8},{s:'Texas',c:7},{s:'Arizona',c:6},{s:'Nevada',c:6},{s:'New Mexico',c:6},{s:'Ohio',c:6}];
-const mgD=[{s:'Internal Med',h:68,n:85,st:32},{s:'Family Med',h:72,n:76,st:28},{s:'Emergency Med',h:14,n:36,st:22},{s:'Pediatrics',h:22,n:24,st:18},{s:'Psychiatry',h:8,n:22,st:15},{s:'Surgery',h:4,n:18,st:14},{s:'Ortho Surgery',h:2,n:12,st:12},{s:'Anesthesiology',h:10,n:17,st:8}];
-const engD=[{label:'Highly Engaged',count:485,color:'var(--burg)'},{label:'Engaged',count:670,color:'var(--gold)'},{label:'Warm',count:805,color:'#d4a574'},{label:'Inactive',count:535,color:'var(--gray-400)'},{label:'Lost Contact',count:170,color:'var(--gray-300)'}];
+// ═══ CAMPUS-AWARE DATA ═══
 
-function renderTraj(id){const c=document.getElementById(id);if(!c)return;c.innerHTML='';trajD.forEach(d=>{const h=((d.r-96)/4)*110+10;const perf=d.r===100;c.innerHTML+=`<div class="traj-year"><div class="traj-bar-wrap"><div class="traj-bar ${perf?'perfect':''}" style="height:${h}px;background:${perf?'linear-gradient(to top,var(--gold),#f0c060)':'linear-gradient(to top,var(--burg),#a83850)'}"></div></div><div class="traj-rate ${perf?'perfect':''}">${d.r}%</div><div class="traj-label">${d.y}</div><div class="traj-grad">${d.g}</div></div>`})}
+const data = {
+    all: {
+        grads: '316', gradsNote: '209 Pomona · 107 Lebanon', placement: '100%', placementNote: '<span class="up">↑ from 99.3%</span> · most competitive match in NRMP history',
+        primaryCare: '58.9%', pcNote: '186 of 316 graduates · Tier 1 benchmark', states: '38', statesNote: '58.5% remain in California',
+        totalAlumni: '~2,665', npiEst: '~78%',
+        cocaMatch: '100%', cocaAvg: '98.9%', cocaPC: '58.9%',
+        mentors: '312', mentorNote: 'Sample — both campuses', seeking: '184', specCovered: '18',
+        traj: [{y:2021,g:316,r:97.8},{y:2022,g:324,r:99.1},{y:2023,g:320,r:98.4},{y:2024,g:312,r:99.3},{y:2025,g:316,r:100.0}],
+        spec: [{n:'Internal Medicine',c:85,p:26.9},{n:'Family Medicine',c:76,p:24.0},{n:'Emergency Medicine',c:36,p:11.4},{n:'Pediatrics',c:24,p:7.6},{n:'Psychiatry',c:22,p:6.9},{n:'Anesthesiology',c:17,p:5.4},{n:'Transitional Year',c:14,p:4.4},{n:'OB-GYN',c:9,p:2.8},{n:'Neurology',c:8,p:2.5},{n:'Surgery',c:5,p:1.6},{n:'Pathology',c:5,p:1.6},{n:'Ortho Surgery',c:3,p:0.9}],
+        geo: [{s:'California',c:185},{s:'Oregon',c:25},{s:'Washington',c:14},{s:'Pennsylvania',c:13},{s:'Michigan',c:8},{s:'Texas',c:7},{s:'Arizona',c:6},{s:'Nevada',c:6},{s:'New Mexico',c:6},{s:'Ohio',c:6}],
+        engage: [{l:'Highly Engaged',c:485,color:'var(--burg)'},{l:'Engaged',c:670,color:'var(--gold)'},{l:'Warm',c:805,color:'#c9a070'},{l:'Inactive',c:535,color:'var(--g400)'},{l:'Lost Contact',c:170,color:'var(--g300)'}],
+        mg: [{s:'Internal Med',h:68,n:85,st:32},{s:'Family Med',h:72,n:76,st:28},{s:'Emergency Med',h:14,n:36,st:22},{s:'Pediatrics',h:22,n:24,st:18},{s:'Psychiatry',h:8,n:22,st:15},{s:'Surgery',h:4,n:18,st:14},{s:'Ortho Surgery',h:2,n:12,st:12},{s:'Anesthesiology',h:10,n:17,st:8}]
+    },
+    pomona: {
+        grads: '209', gradsNote: 'Pomona campus', placement: '100%', placementNote: '<span class="up">↑ from 99.5%</span> (2024)',
+        primaryCare: '56.2%', pcNote: '117 of 209 graduates', states: '28', statesNote: '72% remain in California',
+        totalAlumni: '~1,913', npiEst: '~80%',
+        cocaMatch: '100%', cocaAvg: '99.0%', cocaPC: '56.2%',
+        mentors: '218', mentorNote: 'Sample — Pomona', seeking: '126', specCovered: '17',
+        traj: [{y:2021,g:212,r:97.6},{y:2022,g:218,r:99.1},{y:2023,g:229,r:98.7},{y:2024,g:209,r:99.5},{y:2025,g:209,r:100.0}],
+        spec: [{n:'Internal Medicine',c:54,p:25.8},{n:'Family Medicine',c:46,p:22.0},{n:'Emergency Medicine',c:26,p:12.4},{n:'Pediatrics',c:16,p:7.7},{n:'Psychiatry',c:15,p:7.2},{n:'Anesthesiology',c:12,p:5.7},{n:'Transitional Year',c:10,p:4.8},{n:'OB-GYN',c:7,p:3.3},{n:'Neurology',c:6,p:2.9},{n:'Surgery',c:4,p:1.9},{n:'Pathology',c:3,p:1.4},{n:'Ortho Surgery',c:2,p:1.0}],
+        geo: [{s:'California',c:150},{s:'Pennsylvania',c:9},{s:'Texas',c:6},{s:'Michigan',c:5},{s:'Arizona',c:5},{s:'Nevada',c:5},{s:'Ohio',c:4},{s:'New Mexico',c:4},{s:'Oregon',c:3},{s:'New York',c:3}],
+        engage: [{l:'Highly Engaged',c:368,color:'var(--burg)'},{l:'Engaged',c:497,color:'var(--gold)'},{l:'Warm',c:554,color:'#c9a070'},{l:'Inactive',c:364,color:'var(--g400)'},{l:'Lost Contact',c:130,color:'var(--g300)'}],
+        mg: [{s:'Internal Med',h:52,n:54,st:22},{s:'Family Med',h:48,n:46,st:18},{s:'Emergency Med',h:10,n:26,st:16},{s:'Pediatrics',h:16,n:16,st:12},{s:'Psychiatry',h:6,n:15,st:10},{s:'Surgery',h:3,n:12,st:9},{s:'Ortho Surgery',h:2,n:8,st:8},{s:'Anesthesiology',h:8,n:12,st:5}]
+    },
+    lebanon: {
+        grads: '107', gradsNote: 'Lebanon campus', placement: '100%', placementNote: '<span class="up">↑ from 98.9%</span> (2024)',
+        primaryCare: '64.3%', pcNote: '69 of 107 graduates', states: '12', statesNote: '42% in Oregon + Washington',
+        totalAlumni: '~752', npiEst: '~74%',
+        cocaMatch: '100%', cocaAvg: '98.6%', cocaPC: '64.3%',
+        mentors: '94', mentorNote: 'Sample — Lebanon', seeking: '58', specCovered: '14',
+        traj: [{y:2021,g:104,r:98.1},{y:2022,g:106,r:99.1},{y:2023,g:91,r:97.8},{y:2024,g:103,r:98.9},{y:2025,g:107,r:100.0}],
+        spec: [{n:'Family Medicine',c:30,p:28.0},{n:'Internal Medicine',c:31,p:29.0},{n:'Emergency Medicine',c:10,p:9.3},{n:'Pediatrics',c:8,p:7.5},{n:'Psychiatry',c:7,p:6.5},{n:'Anesthesiology',c:5,p:4.7},{n:'Transitional Year',c:4,p:3.7},{n:'Neurology',c:2,p:1.9},{n:'OB-GYN',c:2,p:1.9},{n:'Surgery',c:1,p:0.9},{n:'Pathology',c:2,p:1.9},{n:'Ortho Surgery',c:1,p:0.9}],
+        geo: [{s:'Oregon',c:22},{s:'Washington',c:12},{s:'California',c:35},{s:'Pennsylvania',c:4},{s:'Michigan',c:3},{s:'Texas',c:1},{s:'Arizona',c:1},{s:'Nevada',c:1},{s:'Idaho',c:2},{s:'Montana',c:1}],
+        engage: [{l:'Highly Engaged',c:117,color:'var(--burg)'},{l:'Engaged',c:173,color:'var(--gold)'},{l:'Warm',c:251,color:'#c9a070'},{l:'Inactive',c:171,color:'var(--g400)'},{l:'Lost Contact',c:40,color:'var(--g300)'}],
+        mg: [{s:'Internal Med',h:16,n:31,st:10},{s:'Family Med',h:24,n:30,st:10},{s:'Emergency Med',h:4,n:10,st:6},{s:'Pediatrics',h:6,n:8,st:6},{s:'Psychiatry',h:2,n:7,st:5},{s:'Surgery',h:1,n:6,st:5},{s:'Ortho Surgery',h:0,n:4,st:4},{s:'Anesthesiology',h:2,n:5,st:3}]
+    }
+};
 
-function renderSpec(){const c=document.getElementById('spec-bars');if(!c)return;c.innerHTML='';const mx=specD[0].p;specD.forEach((d,i)=>{const w=(d.p/mx)*100;c.innerHTML+=`<div class="hbar-row"><div class="hbar-label">${d.n}</div><div class="hbar-track"><div class="hbar-fill ${i%2===0?'burg':'gold'}" style="width:${w}%">${d.p>5?d.c:''}</div></div><div class="hbar-value">${d.p}%</div></div>`})}
+// ═══ RENDER FUNCTIONS ═══
 
-function renderGeo(id){const c=document.getElementById(id);if(!c)return;c.innerHTML='';const mx=geoD[0].c;geoD.forEach((d,i)=>{const w=(d.c/mx)*100;c.innerHTML+=`<div class="geo-bar-row"><div class="geo-bar-state">${d.s}</div><div class="geo-bar-count">${d.c}</div><div class="geo-bar-track"><div class="geo-bar-fill" style="width:${w}%;background:${i<3?'linear-gradient(90deg,var(--burg),#a83850)':'var(--gold)'}"></div></div></div>`})}
+function renderTraj(id, trajData) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '';
+    trajData.forEach(d => {
+        const h = ((d.r - 96) / 4) * 120 + 10;
+        const perf = d.r === 100;
+        el.innerHTML += `<div class="traj-year"><div class="traj-bar-wrap"><div class="traj-bar ${perf ? 'perfect' : ''}" style="height:${h}px;background:${perf ? 'linear-gradient(to top,#c9963e,var(--gold-bright))' : 'linear-gradient(to top,var(--burg),#a03348)'}"></div></div><div class="traj-rate ${perf ? 'perfect' : ''}">${d.r}%</div><div class="traj-label">${d.y}</div><div class="traj-grad">${d.g}</div></div>`;
+    });
+}
 
-function renderMG(){const c=document.getElementById('mg-bars');if(!c)return;c.innerHTML='';mgD.forEach(d=>{const hp=(d.h/d.n)*100;const np=100-hp;const gap=d.st-d.h;const gl=gap>0?`Gap: <span class="gap-num">${gap}</span>`:'<span style="color:var(--green);font-weight:700">Covered</span>';c.innerHTML+=`<div class="mg-row"><div class="mg-spec">${d.s}</div><div class="mg-visual"><div class="mg-have" style="width:${hp}%">${d.h}</div>${np>0?`<div class="mg-need" style="width:${np}%"></div>`:''}</div><div class="mg-stats">${d.st} seeking · ${gl}</div></div>`})}
+function renderSpec(specData) {
+    const el = document.getElementById('spec-bars');
+    if (!el) return;
+    el.innerHTML = '';
+    const sorted = [...specData].sort((a, b) => b.p - a.p);
+    const mx = sorted[0].p;
+    sorted.forEach((d, i) => {
+        const w = (d.p / mx) * 100;
+        el.innerHTML += `<div class="hbar-row"><div class="hbar-label">${d.n}</div><div class="hbar-track"><div class="hbar-fill ${i % 2 === 0 ? 'burg' : 'gold'}" style="width:${w}%">${d.p > 5 ? d.c : ''}</div></div><div class="hbar-value">${d.p}%</div></div>`;
+    });
+}
 
-function renderEngage(){const bar=document.getElementById('engage-bar');const leg=document.getElementById('engage-legend');if(!bar||!leg)return;const total=engD.reduce((a,b)=>a+b.count,0);bar.innerHTML='';leg.innerHTML='';engD.forEach(d=>{const pct=(d.count/total)*100;bar.innerHTML+=`<div class="engage-seg" style="width:${pct}%;background:${d.color}">${pct>8?d.count:''}</div>`;leg.innerHTML+=`<div class="engage-legend-item"><span class="engage-dot" style="background:${d.color}"></span>${d.label} (${d.count})</div>`})}
+function renderGeo(id, geoData) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = '';
+    const sorted = [...geoData].sort((a, b) => b.c - a.c);
+    const mx = sorted[0].c;
+    sorted.forEach((d, i) => {
+        const w = (d.c / mx) * 100;
+        el.innerHTML += `<div class="geo-bar-row"><div class="geo-bar-state">${d.s}</div><div class="geo-bar-count">${d.c}</div><div class="geo-bar-track"><div class="geo-bar-fill" style="width:${w}%;background:${i < 3 ? 'linear-gradient(90deg,var(--burg),#a03348)' : 'var(--gold)'}"></div></div></div>`;
+    });
+}
 
-function updateCampus(){const s=document.getElementById('overview-stats');const o={pomona:{g:'209',pc:'56.2%',st:'28',sn:'72% remain in California'},lebanon:{g:'107',pc:'64.3%',st:'12',sn:'42% in Oregon + Washington'}};if(campus==='all'){document.getElementById('stat-grads').textContent='316';s.children[0].querySelector('.sc-note').textContent='209 Pomona · 107 Lebanon';s.children[2].querySelector('.sc-value').textContent='58.9%';s.children[3].querySelector('.sc-value').textContent='38';s.children[3].querySelector('.sc-note').textContent='58.5% remain in California';document.getElementById('campus-panel').style.display=''}else{const d=o[campus];document.getElementById('stat-grads').textContent=d.g;s.children[0].querySelector('.sc-note').textContent=campus==='pomona'?'Pomona campus':'Lebanon campus';s.children[2].querySelector('.sc-value').textContent=d.pc;s.children[3].querySelector('.sc-value').textContent=d.st;s.children[3].querySelector('.sc-note').textContent=d.sn;document.getElementById('campus-panel').style.display='none'}}
+function renderMG(mgData) {
+    const el = document.getElementById('mg-bars');
+    if (!el) return;
+    el.innerHTML = '';
+    mgData.forEach(d => {
+        const hp = (d.h / d.n) * 100;
+        const np = 100 - hp;
+        const gap = d.st - d.h;
+        const gl = gap > 0 ? `Gap: <span class="gap-num">${gap}</span>` : '<span style="color:var(--green);font-weight:700">Covered</span>';
+        el.innerHTML += `<div class="mg-row"><div class="mg-spec">${d.s}</div><div class="mg-visual"><div class="mg-have" style="width:${hp}%">${d.h}</div>${np > 0 ? `<div class="mg-need" style="width:${np}%"></div>` : ''}</div><div class="mg-stats">${d.st} seeking · ${gl}</div></div>`;
+    });
+}
 
-renderTraj('traj-chart');renderTraj('coca-traj');renderSpec();renderGeo('geo-bars');renderGeo('loc-geo-bars');renderMG();renderEngage();
-document.querySelectorAll('.action-btn').forEach(b=>{b.addEventListener('click',function(){this.textContent='✓ Queued';this.style.background='var(--green)';this.style.cursor='default';this.style.boxShadow='0 2px 6px rgba(39,103,73,0.3)'})});
+function renderEngage(engData) {
+    const bar = document.getElementById('engage-bar'), leg = document.getElementById('engage-legend');
+    if (!bar || !leg) return;
+    const total = engData.reduce((a, b) => a + b.c, 0);
+    bar.innerHTML = '';
+    leg.innerHTML = '';
+    engData.forEach(d => {
+        const pct = (d.c / total) * 100;
+        bar.innerHTML += `<div class="engage-seg" style="width:${pct}%;background:${d.color}">${pct > 8 ? d.c : ''}</div>`;
+        leg.innerHTML += `<div class="engage-legend-item"><span class="engage-dot" style="background:${d.color}"></span><strong>${d.c}</strong> ${d.l}</div>`;
+    });
+}
+
+function updateAll() {
+    const d = data[campus];
+    const s = document.getElementById('overview-stats');
+
+    // Overview stats
+    document.getElementById('stat-grads').textContent = d.grads;
+    s.children[0].querySelector('.sc-note').textContent = d.gradsNote;
+    s.children[1].querySelector('.sc-note').innerHTML = d.placementNote;
+    s.children[2].querySelector('.sc-value').textContent = d.primaryCare;
+    s.children[2].querySelector('.sc-note').textContent = d.pcNote;
+    s.children[3].querySelector('.sc-value').textContent = d.states;
+    s.children[3].querySelector('.sc-note').textContent = d.statesNote;
+
+    // Campus panel and data note
+    document.getElementById('campus-panel').style.display = campus === 'all' ? '' : 'none';
+    document.getElementById('campus-data-note').style.display = campus === 'all' ? 'none' : '';
+
+    // Locator pills
+    const pills = document.querySelectorAll('.loc-pill-val');
+    if (pills.length >= 2) {
+        pills[0].textContent = d.totalAlumni;
+        pills[1].textContent = d.npiEst;
+    }
+
+    // COCA stats
+    const cocaStats = document.querySelectorAll('#coca .stat-card');
+    if (cocaStats.length >= 3) {
+        cocaStats[1].querySelector('.sc-value').textContent = d.cocaAvg;
+        cocaStats[2].querySelector('.sc-value').textContent = d.cocaPC;
+    }
+
+    // Mentorship stats
+    const mStats = document.querySelectorAll('#mentorship .stat-card');
+    if (mStats.length >= 2) {
+        mStats[0].querySelector('.sc-value').textContent = d.mentors;
+        mStats[0].querySelector('.sc-note').textContent = d.mentorNote;
+        mStats[1].querySelector('.sc-value').textContent = d.seeking;
+    }
+
+    // Re-render all charts
+    renderTraj('traj-chart', d.traj);
+    renderTraj('coca-traj', d.traj);
+    renderSpec(d.spec);
+    renderGeo('geo-bars', d.geo);
+    renderGeo('loc-geo-bars', d.geo);
+    renderMG(d.mg);
+    renderEngage(d.engage);
+}
+
+// ═══ INIT ═══
+updateAll();
+
+document.querySelectorAll('.act-btn').forEach(b => {
+    b.addEventListener('click', function() {
+        this.textContent = '✓ Queued';
+        this.style.background = 'var(--green)';
+        this.style.cursor = 'default';
+        this.style.boxShadow = '0 2px 6px rgba(39,103,73,0.25)';
+    });
+});
 </script>
 </body>
 </html>
