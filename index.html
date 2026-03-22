@@ -68,38 +68,55 @@
         .anim-in{opacity:0;transform:translateY(16px);animation:slideIn .5s ease forwards}
         @keyframes slideIn{to{opacity:1;transform:translateY(0)}}
 
-        /* ── ENGINE FRAME ── */
+        /* ── ENGINE FRAME — THE CROWN JEWEL ── */
         .engine-frame{
-            background:linear-gradient(180deg,#fdfcfb 0%,var(--g100) 100%);
-            border:1px solid var(--g300);border-radius:var(--r);
-            padding:36px 32px 28px;margin-bottom:32px;text-align:center;
-            box-shadow:var(--sh);position:relative;overflow:hidden;
+            background:linear-gradient(155deg,#2a0810 0%,var(--burg-dark) 30%,var(--burg) 65%,var(--burg-mid) 100%);
+            border:none;border-radius:16px;
+            padding:44px 36px 32px;margin-bottom:36px;text-align:center;
+            box-shadow:0 4px 20px rgba(88,0,27,0.25),0 12px 40px rgba(88,0,27,0.15);
+            position:relative;overflow:hidden;color:#fff;
         }
-        .engine-frame::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--burg),var(--gold),var(--burg))}
-        .ef-headline{font-family:var(--font-d);font-size:26px;font-weight:700;color:var(--g900);margin-bottom:8px;letter-spacing:-0.3px}
-        .ef-sub{font-size:15px;color:var(--g500);max-width:680px;margin:0 auto 8px;line-height:1.6}
-        .ef-domain{font-size:13px;color:var(--burg);font-weight:600;margin-bottom:28px;font-style:italic;line-height:1.5}
-        .four-layers{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:24px}
-        .layer-step{display:flex;flex-direction:column;align-items:center;padding:16px 24px;min-width:145px;transition:transform .2s}
-        .layer-step:hover{transform:translateY(-3px)}
+        .engine-frame::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+        .engine-frame::after{content:'';position:absolute;top:-30%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(212,162,74,0.07) 0%,transparent 60%);pointer-events:none}
+        .ef-noise{position:absolute;inset:0;opacity:0.03;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");pointer-events:none}
+        .ef-headline{font-family:var(--font-d);font-size:30px;font-weight:700;color:#fff;margin-bottom:10px;letter-spacing:-0.3px;position:relative}
+        .ef-sub{font-size:15px;color:rgba(255,255,255,0.75);max-width:620px;margin:0 auto 12px;line-height:1.6;position:relative}
+        .ef-sub em{color:rgba(255,255,255,0.95);font-style:italic}
+        .ef-domain{
+            font-size:14px;color:var(--gold-bright);font-weight:600;margin-bottom:32px;
+            font-style:italic;line-height:1.5;position:relative;
+            max-width:640px;margin-left:auto;margin-right:auto;
+        }
+        /* Layer flow with connecting track */
+        .four-layers{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:28px;position:relative}
+        .layer-step{display:flex;flex-direction:column;align-items:center;padding:16px 24px;min-width:145px;transition:transform .2s;position:relative;z-index:1}
+        .layer-step:hover{transform:translateY(-4px)}
         .layer-icon{
-            width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
-            font-size:22px;margin-bottom:10px;
-            box-shadow:0 3px 10px rgba(0,0,0,0.08);transition:box-shadow .2s;
+            width:58px;height:58px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+            font-size:24px;margin-bottom:12px;
+            box-shadow:0 4px 16px rgba(0,0,0,0.2),0 0 0 3px rgba(255,255,255,0.08);
+            transition:all .3s;position:relative;
         }
-        .layer-step:hover .layer-icon{box-shadow:0 4px 14px rgba(0,0,0,0.12)}
-        .layer-icon.l1{background:var(--blue-bg);border:2px solid rgba(44,82,130,0.12)}
-        .layer-icon.l2{background:var(--green-bg);border:2px solid rgba(39,103,73,0.12)}
-        .layer-icon.l3{background:var(--amber-bg);border:2px solid rgba(151,90,22,0.12)}
-        .layer-icon.l4{background:var(--rose-bg);border:2px solid rgba(155,44,44,0.12)}
-        .layer-name{font-size:14px;font-weight:700;color:var(--g900);margin-bottom:4px}
-        .layer-desc{font-size:11px;color:var(--g400);text-align:center;max-width:130px;line-height:1.4}
-        .layer-arrow{font-size:20px;color:var(--gold);font-weight:700;padding:0 2px;margin-top:-14px;opacity:0.7}
-        .ef-programs{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;padding-top:20px;border-top:1px solid var(--g200)}
-        .ef-program{font-size:12px;color:var(--g500);display:flex;align-items:center;gap:7px}
-        .ef-program strong{color:var(--g900);font-weight:600}
+        .layer-step:hover .layer-icon{box-shadow:0 6px 20px rgba(0,0,0,0.3),0 0 0 3px rgba(255,255,255,0.15);transform:scale(1.05)}
+        .layer-icon.l1{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border:2px solid rgba(44,82,130,0.2)}
+        .layer-icon.l2{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border:2px solid rgba(39,103,73,0.2)}
+        .layer-icon.l3{background:linear-gradient(135deg,#fef9c3,#fde68a);border:2px solid rgba(151,90,22,0.2)}
+        .layer-icon.l4{background:linear-gradient(135deg,#ffe4e6,#fecdd3);border:2px solid rgba(155,44,44,0.2)}
+        /* Subtle pulse on icons */
+        @keyframes gentlePulse{0%,100%{box-shadow:0 4px 16px rgba(0,0,0,0.2),0 0 0 3px rgba(255,255,255,0.08)}50%{box-shadow:0 4px 20px rgba(0,0,0,0.25),0 0 0 5px rgba(255,255,255,0.12)}}
+        .layer-icon{animation:gentlePulse 3s ease-in-out infinite}
+        .layer-step:nth-child(3) .layer-icon{animation-delay:.4s}
+        .layer-step:nth-child(5) .layer-icon{animation-delay:.8s}
+        .layer-step:nth-child(7) .layer-icon{animation-delay:1.2s}
+        .layer-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:4px}
+        .layer-desc{font-size:11px;color:rgba(255,255,255,0.55);text-align:center;max-width:130px;line-height:1.4}
+        .layer-arrow{font-size:22px;color:var(--gold);font-weight:700;padding:0 4px;margin-top:-14px;opacity:0.6;position:relative;z-index:1}
+        /* Programs bar */
+        .ef-programs{display:flex;justify-content:center;gap:28px;flex-wrap:wrap;padding-top:22px;border-top:1px solid rgba(255,255,255,0.1);position:relative}
+        .ef-program{font-size:12px;color:rgba(255,255,255,0.6);display:flex;align-items:center;gap:7px}
+        .ef-program strong{color:rgba(255,255,255,0.9);font-weight:600}
         .ef-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-        .ef-dot.m{background:var(--burg)}.ef-dot.c{background:var(--gold)}.ef-dot.e{background:var(--blue)}
+        .ef-dot.m{background:#e8a0a8}.ef-dot.c{background:var(--gold-bright)}.ef-dot.e{background:#93b5e0}
 
         /* ── SIGNAL CARDS ── */
         .sf-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
@@ -351,6 +368,8 @@
         /* ── RESPONSIVE ── */
         @media(max-width:768px){
             .header{padding:32px 16px 28px}.h-title{font-size:28px}.h-logo{height:38px}.container{padding:20px 14px}
+            .engine-frame{padding:28px 20px 24px;border-radius:12px;margin-bottom:28px}
+            .ef-headline{font-size:24px}.ef-domain{font-size:12px;margin-bottom:24px}
             .stats-row{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{padding:18px 16px}.sc-value{font-size:26px}
             .stat-card.hero .sc-value{font-size:34px}
             .sig-top{padding:16px 14px 12px 20px}.sig-action{padding:12px 14px 12px 20px;flex-wrap:wrap}
@@ -358,7 +377,7 @@
             .campus-btn{min-height:44px;padding:10px 18px}
             .tab-btn{min-height:44px;padding:10px 16px}
             .coca-compare,.campus-compare{grid-template-columns:1fr}.rm-phases{grid-template-columns:1fr}
-            .four-layers{gap:0}.layer-step{padding:10px 10px;min-width:80px}
+            .four-layers{gap:0}.layer-step{padding:10px 10px;min-width:80px}.layer-icon{width:48px;height:48px;font-size:20px}
             .enrich-flow{flex-direction:column;align-items:center}
             .enrich-step{margin:0 0 24px 0;width:100%}.enrich-step:not(:last-child)::after{content:'↓';right:auto;left:50%;bottom:-18px;top:auto;transform:translateX(-50%)}
             .loc-pills{flex-direction:column;align-items:stretch}.loc-pill{display:flex;align-items:center;justify-content:space-between;padding:14px 20px}
@@ -377,6 +396,8 @@
             .stats-row{grid-template-columns:1fr}.h-title{font-size:24px}
             .sig-headline{font-size:14px}.tab-btn{padding:8px 14px;font-size:12px}
             .four-layers{flex-direction:column}.layer-arrow{transform:rotate(90deg);margin-top:0;padding:4px 0}
+            .layer-icon{width:52px;height:52px}
+            .ef-headline{font-size:22px}
             .campus-buttons{width:100%;justify-content:stretch}.campus-btn{flex:1;text-align:center}
             .filter-row{flex-direction:column;align-items:stretch}
             .filter-label{text-align:center}
@@ -416,6 +437,7 @@
     <!-- ══ OVERVIEW ══ -->
     <div class="tab-content active" id="overview">
         <div class="engine-frame anim-in" style="animation-delay:.1s">
+            <div class="ef-noise"></div>
             <div class="ef-headline">The Relationship Engine</div>
             <div class="ef-sub">We know where they matched. This tracks where they are <em>now</em> — and creates the reason to reach out.</div>
             <div class="ef-domain">DO graduates leave a public, continuously updated data trail that most alumni populations don't. This engine turns that trail into meaningful engagement.</div>
