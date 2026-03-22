@@ -4,1012 +4,307 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>COMP Alumni Engagement Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        :root {
-            --burgundy: #8b2230;
-            --dark-burgundy: #58001b;
-            --burgundy-soft: rgba(139, 34, 48, 0.08);
-            --gold: #e0ab4c;
-            --gold-light: #f5e6c8;
-            --gold-glow: rgba(224, 171, 76, 0.15);
-            --white: #ffffff;
-            --light-gray: #e8e6e1;
-            --mid-gray: #b0aca5;
-            --dark-gray: #242424;
-            --bg: #faf9f7;
-            --signal-blue: #2c5282;
-            --signal-green: #276749;
-            --signal-amber: #975a16;
-            --signal-rose: #9b2c2c;
-            --font-display: 'Source Serif 4', Georgia, serif;
-            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            --radius: 10px;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 8px 24px rgba(0,0,0,0.1);
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --burg:#8b2230;--burg-dark:#58001b;--burg-soft:rgba(139,34,48,0.07);--burg-glow:rgba(139,34,48,0.12);
+            --gold:#e0ab4c;--gold-light:#f5e6c8;--gold-glow:rgba(224,171,76,0.15);
+            --white:#ffffff;--gray-100:#faf9f7;--gray-200:#f0eeea;--gray-300:#e8e6e1;--gray-400:#b0aca5;--gray-900:#242424;
+            --blue:#2c5282;--blue-bg:#ebf8ff;--blue-soft:rgba(44,82,130,0.08);
+            --green:#276749;--green-bg:#f0fff4;--green-soft:rgba(39,103,73,0.08);
+            --amber:#975a16;--amber-bg:#fffff0;--amber-soft:rgba(151,90,22,0.08);
+            --rose:#9b2c2c;--rose-bg:#fff5f5;--rose-soft:rgba(155,44,44,0.08);
+            --font-d:'Source Serif 4',Georgia,serif;
+            --font-b:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+            --r:10px;--sh:0 1px 3px rgba(0,0,0,0.06);--sh-md:0 4px 14px rgba(0,0,0,0.09);--sh-lg:0 8px 28px rgba(0,0,0,0.12);
         }
-
-        html, body { overflow-x: hidden; }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg);
-            color: var(--dark-gray);
-            line-height: 1.55;
-            -webkit-text-size-adjust: 100%;
-            -webkit-tap-highlight-color: transparent;
-            padding-bottom: env(safe-area-inset-bottom, 0px);
-        }
+        html,body{overflow-x:hidden}
+        body{font-family:var(--font-b);background:var(--gray-100);color:var(--gray-900);line-height:1.55;-webkit-text-size-adjust:100%}
 
         /* ── HEADER ── */
-        .header {
-            background: linear-gradient(145deg, var(--dark-burgundy) 0%, var(--burgundy) 60%, #9e3040 100%);
-            color: var(--white);
-            padding: 48px 24px 40px;
-            text-align: center;
-            position: relative;
-            border-bottom: 3px solid var(--gold);
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -20%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(224,171,76,0.06) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .header-eyebrow {
-            font-family: var(--font-body);
-            font-size: 11px;
-            letter-spacing: 2.5px;
-            color: var(--gold);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .header-title {
-            font-family: var(--font-display);
-            font-size: 38px;
-            font-weight: 700;
-            margin-bottom: 6px;
-            letter-spacing: -0.3px;
-            line-height: 1.15;
-        }
-
-        .header-subtitle {
-            font-family: var(--font-body);
-            font-size: 14px;
-            font-weight: 400;
-            color: var(--gold-light);
-            margin-bottom: 16px;
-            opacity: 0.9;
-        }
-
-        .header-meta {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            align-items: center;
-            font-size: 12px;
-            color: var(--gold-light);
-            opacity: 0.85;
-        }
-
-        .prototype-badge {
-            background: rgba(224, 171, 76, 0.18);
-            border: 1px solid rgba(224, 171, 76, 0.5);
-            color: var(--gold);
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-        }
-
-        /* ── CONTAINER ── */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 28px 20px;
-        }
-
-        /* ── CAMPUS FILTER ── */
-        .filter-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .campus-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .campus-btn {
-            padding: 8px 18px;
-            border: 1.5px solid var(--light-gray);
-            border-radius: 24px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            background: var(--white);
-            color: var(--dark-gray);
-            font-family: var(--font-body);
-        }
-
-        .campus-btn.active {
-            background: var(--burgundy);
-            color: var(--white);
-            border-color: var(--burgundy);
-            box-shadow: 0 2px 8px rgba(139,34,48,0.25);
-        }
-
-        .campus-btn:hover:not(.active) {
-            border-color: var(--burgundy);
-            color: var(--burgundy);
-        }
-
-        .filter-label {
-            font-size: 12px;
-            color: var(--mid-gray);
-            font-weight: 500;
-        }
-
-        /* ── TABS ── */
-        .tabs-container {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 28px;
-            overflow-x: auto;
-            padding: 4px;
-            background: var(--light-gray);
-            border-radius: 28px;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .tab-button {
-            padding: 10px 20px;
-            border: none;
-            background: transparent;
-            color: #777;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            border-radius: 24px;
-            transition: all 0.25s ease;
-            white-space: nowrap;
-            font-family: var(--font-body);
-        }
-
-        .tab-button.active {
-            background: var(--burgundy);
-            color: var(--white);
-            box-shadow: 0 2px 8px rgba(139,34,48,0.3);
-        }
-
-        .tab-button:hover:not(.active) {
-            background: rgba(139,34,48,0.06);
-            color: var(--burgundy);
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; animation: fadeUp 0.35s ease; }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── SIGNAL FEED ── */
-        .signal-feed-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 18px;
-        }
-
-        .signal-feed-title {
-            font-family: var(--font-display);
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--dark-gray);
-        }
-
-        .signal-feed-subtitle {
-            font-size: 12px;
-            color: var(--mid-gray);
-            font-weight: 500;
-        }
-
-        .signal-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 14px;
-            overflow: hidden;
-            transition: box-shadow 0.25s ease, transform 0.25s ease;
-            border: 1px solid rgba(0,0,0,0.04);
-        }
-
-        .signal-card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-1px);
-        }
-
-        .signal-top {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            padding: 20px 20px 14px;
-        }
-
-        .signal-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .signal-icon.move { background: #ebf8ff; }
-        .signal-icon.pub { background: #f0fff4; }
-        .signal-icon.cred { background: #fffff0; }
-        .signal-icon.drop { background: #fff5f5; }
-
-        .signal-body { flex: 1; min-width: 0; }
-
-        .signal-type {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 4px;
-        }
-
-        .signal-type.move { color: var(--signal-blue); }
-        .signal-type.pub { color: var(--signal-green); }
-        .signal-type.cred { color: var(--signal-amber); }
-        .signal-type.drop { color: var(--signal-rose); }
-
-        .signal-headline {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--dark-gray);
-            line-height: 1.4;
-            margin-bottom: 6px;
-        }
-
-        .signal-context {
-            font-size: 13px;
-            color: #666;
-            line-height: 1.55;
-        }
-
-        .signal-context strong {
-            color: var(--dark-gray);
-            font-weight: 600;
-        }
-
-        .signal-action {
-            padding: 12px 20px;
-            background: var(--bg);
-            border-top: 1px solid rgba(0,0,0,0.04);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .action-tag {
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--burgundy);
-            flex-shrink: 0;
-        }
-
-        .action-text {
-            font-size: 13px;
-            color: #555;
-        }
-
-        .action-btn {
-            margin-left: auto;
-            padding: 6px 14px;
-            background: var(--burgundy);
-            color: var(--white);
-            border: none;
-            border-radius: 6px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-            font-family: var(--font-body);
-            transition: background 0.2s ease;
-        }
-
-        .action-btn:hover { background: var(--dark-burgundy); }
-
-        .signal-feed-note {
-            text-align: center;
-            font-size: 12px;
-            color: var(--mid-gray);
-            padding: 10px 0 6px;
-            font-style: italic;
-        }
-
-        /* ── SECTION DIVIDER ── */
-        .section-divider {
-            margin: 36px 0 28px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .section-divider::before,
-        .section-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--light-gray);
-        }
-
-        .section-divider-text {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--mid-gray);
-            white-space: nowrap;
-        }
-
-        /* ── STAT CARDS ── */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin-bottom: 28px;
-        }
-
-        .stat-card {
-            background: var(--white);
-            padding: 22px 20px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0,0,0,0.03);
-        }
-
-        .stat-card-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--mid-gray);
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .stat-card-value {
-            font-family: var(--font-display);
-            font-size: 30px;
-            font-weight: 700;
-            color: var(--burgundy);
-            line-height: 1.1;
-        }
-
-        .stat-card-note {
-            font-size: 12px;
-            color: #888;
-            margin-top: 6px;
-        }
-
-        .stat-card-note .up { color: var(--signal-green); font-weight: 600; }
-
-        /* ── CHART PANELS ── */
-        .panel {
-            background: var(--white);
-            padding: 24px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 20px;
-            border: 1px solid rgba(0,0,0,0.03);
-        }
-
-        .panel-title {
-            font-family: var(--font-display);
-            font-size: 17px;
-            font-weight: 700;
-            color: var(--dark-gray);
-            margin-bottom: 18px;
-        }
-
-        .panel-subtitle {
-            font-size: 13px;
-            color: #888;
-            margin-top: -12px;
-            margin-bottom: 18px;
-        }
-
-        /* ── HORIZONTAL BARS ── */
-        .hbar-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            gap: 10px;
-        }
-
-        .hbar-label {
-            width: 130px;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--dark-gray);
-            flex-shrink: 0;
-        }
-
-        .hbar-track {
-            flex: 1;
-            height: 22px;
-            background: #f0eeea;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .hbar-fill {
-            height: 100%;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding-right: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--white);
-            transition: width 0.5s ease;
-        }
-
-        .hbar-fill.burg { background: var(--burgundy); }
-        .hbar-fill.gold { background: var(--gold); color: var(--dark-gray); }
-
-        .hbar-value {
-            width: 50px;
-            text-align: right;
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--dark-gray);
-        }
-
-        /* ── GEO BARS ── */
-        .geo-bar-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            gap: 10px;
-        }
-
-        .geo-bar-state {
-            width: 100px;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .geo-bar-count {
-            width: 40px;
-            text-align: right;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--burgundy);
-        }
-
-        .geo-bar-track {
-            flex: 1;
-            height: 18px;
-            background: #f0eeea;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .geo-bar-fill {
-            height: 100%;
-            border-radius: 3px;
-            transition: width 0.5s ease;
-        }
-
-        /* ── PLACEMENT TRAJECTORY ── */
-        .trajectory-row {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 8px;
-            padding: 12px 0;
-        }
-
-        .trajectory-year {
-            flex: 1;
-            text-align: center;
-        }
-
-        .trajectory-bar-wrap {
-            height: 120px;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            margin-bottom: 8px;
-        }
-
-        .trajectory-bar {
-            width: 36px;
-            border-radius: 4px 4px 0 0;
-            transition: height 0.5s ease;
-        }
-
-        .trajectory-rate {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--burgundy);
-        }
-
-        .trajectory-label {
-            font-size: 11px;
-            color: #999;
-            margin-top: 2px;
-        }
-
-        .trajectory-grad {
-            font-size: 11px;
-            color: #aaa;
-        }
-
-        /* ── COCA COMPARISON ── */
-        .coca-compare {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 24px;
-        }
-
-        .coca-side {
-            padding: 24px;
-            border-radius: var(--radius);
-            text-align: center;
-        }
-
-        .coca-side.before {
-            background: #faf0f0;
-            border: 1.5px dashed #d4a0a0;
-        }
-
-        .coca-side.after {
-            background: #f0faf4;
-            border: 1.5px solid var(--signal-green);
-        }
-
-        .coca-side-label {
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .coca-side.before .coca-side-label { color: var(--signal-rose); }
-        .coca-side.after .coca-side-label { color: var(--signal-green); }
-
-        .coca-side-icon {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-
-        .coca-side-text {
-            font-size: 14px;
-            color: #555;
-            line-height: 1.5;
-        }
-
-        /* ── MENTORSHIP GAP BARS ── */
-        .mentor-gap-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            gap: 12px;
-            padding: 10px 12px;
-            background: var(--bg);
-            border-radius: 8px;
-        }
-
-        .mentor-gap-spec {
-            width: 130px;
-            font-size: 13px;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-
-        .mentor-gap-visual {
-            flex: 1;
-            display: flex;
-            height: 24px;
-            border-radius: 4px;
-            overflow: hidden;
-            background: #f0eeea;
-        }
-
-        .mentor-gap-have {
-            background: var(--burgundy);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            min-width: 28px;
-        }
-
-        .mentor-gap-need {
-            background: repeating-linear-gradient(
-                -45deg,
-                transparent,
-                transparent 3px,
-                rgba(139,34,48,0.12) 3px,
-                rgba(139,34,48,0.12) 6px
-            );
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--burgundy);
-            font-size: 10px;
-            font-weight: 700;
-            min-width: 28px;
-        }
-
-        .mentor-gap-stats {
-            width: 120px;
-            text-align: right;
-            font-size: 12px;
-            color: #888;
-        }
-
-        .mentor-gap-stats .gap-num {
-            color: var(--signal-rose);
-            font-weight: 700;
-        }
-
-        /* ── SIGNAL EXAMPLE IN MENTORSHIP ── */
-        .mentor-signal-example {
-            background: linear-gradient(135deg, var(--burgundy) 0%, #9e3040 100%);
-            color: var(--white);
-            padding: 28px;
-            border-radius: var(--radius);
-            margin-top: 24px;
-        }
-
-        .mentor-signal-example h3 {
-            font-family: var(--font-display);
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 14px;
-        }
-
-        .mentor-signal-flow {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .msf-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .msf-num {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .msf-text {
-            font-size: 14px;
-            line-height: 1.5;
-            opacity: 0.95;
-        }
-
-        /* ── ALUMNI LOCATOR ── */
-        .locator-hero {
-            background: linear-gradient(135deg, var(--burgundy) 0%, #9e3040 100%);
-            color: var(--white);
-            padding: 32px;
-            border-radius: var(--radius);
-            margin-bottom: 24px;
-            text-align: center;
-        }
-
-        .locator-hero h2 {
-            font-family: var(--font-display);
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        .locator-hero p {
-            font-size: 14px;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto 20px;
-        }
-
-        .locator-pills {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
-        }
-
-        .locator-pill {
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.25);
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .locator-pill-value {
-            font-family: var(--font-display);
-            font-size: 22px;
-            font-weight: 700;
-        }
-
-        .locator-pill-label {
-            font-size: 11px;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        .header{background:linear-gradient(145deg,var(--burg-dark) 0%,var(--burg) 55%,#9e3040 100%);color:#fff;padding:48px 24px 40px;text-align:center;border-bottom:3px solid var(--gold);position:relative;overflow:hidden}
+        .header::before{content:'';position:absolute;top:-40%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(224,171,76,0.08) 0%,transparent 65%);pointer-events:none}
+        .header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(to top,rgba(88,0,27,0.3),transparent);pointer-events:none}
+        .h-eyebrow{font-size:11px;letter-spacing:2.5px;color:var(--gold);margin-bottom:10px;text-transform:uppercase;font-weight:600}
+        .h-title{font-family:var(--font-d);font-size:38px;font-weight:700;margin-bottom:6px;letter-spacing:-0.3px;line-height:1.15}
+        .h-sub{font-size:14px;color:var(--gold-light);margin-bottom:16px;opacity:0.9}
+        .h-meta{display:flex;justify-content:center;gap:16px;align-items:center;font-size:12px;color:var(--gold-light);opacity:0.85}
+        .badge-proto{background:rgba(224,171,76,0.18);border:1px solid rgba(224,171,76,0.5);color:var(--gold);padding:4px 14px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px}
+
+        /* ── LAYOUT ── */
+        .container{max-width:1280px;margin:0 auto;padding:28px 20px}
+        .filter-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+        .campus-buttons{display:flex;gap:8px}
+        .campus-btn{padding:8px 18px;border:1.5px solid var(--gray-300);border-radius:24px;font-size:13px;font-weight:600;cursor:pointer;transition:all .25s;background:var(--white);color:var(--gray-900);font-family:var(--font-b)}
+        .campus-btn.active{background:var(--burg);color:#fff;border-color:var(--burg);box-shadow:0 2px 8px rgba(139,34,48,0.25)}
+        .campus-btn:hover:not(.active){border-color:var(--burg);color:var(--burg)}
+        .filter-label{font-size:12px;color:var(--gray-400);font-weight:500}
+
+        .tabs-container{display:flex;gap:4px;margin-bottom:28px;overflow-x:auto;padding:4px;background:var(--gray-300);border-radius:28px;-webkit-overflow-scrolling:touch}
+        .tab-btn{padding:10px 20px;border:none;background:transparent;color:#777;cursor:pointer;font-size:13px;font-weight:600;border-radius:24px;transition:all .25s;white-space:nowrap;font-family:var(--font-b)}
+        .tab-btn.active{background:var(--burg);color:#fff;box-shadow:0 2px 8px rgba(139,34,48,0.3)}
+        .tab-btn:hover:not(.active){background:rgba(139,34,48,0.06);color:var(--burg)}
+        .tab-content{display:none}.tab-content.active{display:block;animation:fadeUp .35s ease}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+        /* ── ENGINE FRAME — elevated ── */
+        .engine-frame{
+            background:linear-gradient(135deg,#fdfcfb 0%,#f8f6f2 100%);
+            border:1.5px solid var(--gray-300);
+            border-radius:var(--r);padding:32px 28px;margin-bottom:28px;text-align:center;
+            box-shadow:var(--sh);position:relative;overflow:hidden;
+        }
+        .engine-frame::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--burg),var(--gold),var(--burg))}
+        .ef-headline{font-family:var(--font-d);font-size:24px;font-weight:700;color:var(--gray-900);margin-bottom:6px}
+        .ef-sub{font-size:14px;color:#666;max-width:680px;margin:0 auto 8px;line-height:1.6}
+        .ef-domain{font-size:13px;color:var(--burg);font-weight:600;margin-bottom:24px;font-style:italic}
+        .four-layers{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;margin-bottom:20px}
+        .layer-step{display:flex;flex-direction:column;align-items:center;padding:14px 20px;min-width:140px}
+        .layer-icon{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px;box-shadow:0 2px 8px rgba(0,0,0,0.08)}
+        .layer-icon.l1{background:var(--blue-bg);border:2px solid rgba(44,82,130,0.15)}
+        .layer-icon.l2{background:var(--green-bg);border:2px solid rgba(39,103,73,0.15)}
+        .layer-icon.l3{background:var(--amber-bg);border:2px solid rgba(151,90,22,0.15)}
+        .layer-icon.l4{background:var(--rose-bg);border:2px solid rgba(155,44,44,0.15)}
+        .layer-name{font-size:13px;font-weight:700;color:var(--gray-900);margin-bottom:3px}
+        .layer-desc{font-size:11px;color:#999;text-align:center;max-width:130px}
+        .layer-arrow{font-size:18px;color:var(--gold);font-weight:700;padding:0 4px;margin-top:-16px}
+        .ef-programs{display:flex;justify-content:center;gap:24px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--gray-300)}
+        .ef-program{font-size:12px;color:#666;display:flex;align-items:center;gap:6px}
+        .ef-program strong{color:var(--gray-900)}
+        .ef-program-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+        .ef-program-dot.mentor{background:var(--burg)}.ef-program-dot.cme{background:var(--gold)}.ef-program-dot.events{background:var(--blue)}
+
+        /* ── SIGNAL CARDS — elevated ── */
+        .signal-feed-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+        .sf-title{font-family:var(--font-d);font-size:19px;font-weight:700}
+        .sf-sub{font-size:12px;color:var(--gray-400);font-weight:500}
+
+        .signal-card{
+            background:var(--white);border-radius:var(--r);
+            box-shadow:var(--sh);margin-bottom:16px;overflow:hidden;
+            transition:box-shadow .25s,transform .25s;
+            border:1px solid rgba(0,0,0,0.04);
+            position:relative;
+        }
+        .signal-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px}
+        .signal-card.type-move::before{background:var(--blue)}
+        .signal-card.type-pub::before{background:var(--green)}
+        .signal-card.type-cred::before{background:var(--amber)}
+        .signal-card.type-drop::before{background:var(--rose)}
+        .signal-card:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+
+        .signal-top{display:flex;align-items:flex-start;gap:14px;padding:20px 20px 14px 24px}
+        .signal-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+        .signal-icon.move{background:var(--blue-bg)}.signal-icon.pub{background:var(--green-bg)}.signal-icon.cred{background:var(--amber-bg)}.signal-icon.drop{background:var(--rose-bg)}
+        .signal-body{flex:1;min-width:0}
+        .signal-meta{display:flex;align-items:center;gap:10px;margin-bottom:5px}
+        .signal-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+        .signal-type.move{color:var(--blue)}.signal-type.pub{color:var(--green)}.signal-type.cred{color:var(--amber)}.signal-type.drop{color:var(--rose)}
+        .signal-source{font-size:10px;color:var(--gray-400);font-weight:500}
+        .signal-headline{font-size:16px;font-weight:700;color:var(--gray-900);line-height:1.35;margin-bottom:8px}
+
+        /* KEY INSIGHT — the line that pops */
+        .signal-insight{
+            display:inline-block;
+            padding:4px 10px;border-radius:5px;
+            font-size:13px;font-weight:700;line-height:1.4;
+            margin-bottom:6px;
+        }
+        .signal-insight.move{background:var(--blue-soft);color:var(--blue)}
+        .signal-insight.pub{background:var(--green-soft);color:var(--green)}
+        .signal-insight.cred{background:var(--amber-soft);color:var(--amber)}
+        .signal-insight.drop{background:var(--rose-soft);color:var(--rose)}
+
+        .signal-detail{font-size:13px;color:#666;line-height:1.55}
+
+        .signal-layers{display:flex;gap:6px;margin-top:10px}
+        .signal-layer-tag{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 9px;border-radius:4px;background:var(--gray-200);color:var(--gray-400)}
+        .signal-layer-tag.on{background:var(--burg-soft);color:var(--burg)}
+
+        .signal-action{padding:12px 20px 12px 24px;background:var(--gray-100);border-top:1px solid rgba(0,0,0,0.04);display:flex;align-items:center;gap:10px}
+        .action-tag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--burg);flex-shrink:0}
+        .action-text{font-size:13px;color:#555}
+        .action-btn{margin-left:auto;padding:7px 16px;background:var(--burg);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:var(--font-b);transition:all .2s;box-shadow:0 2px 6px rgba(139,34,48,0.2)}
+        .action-btn:hover{background:var(--burg-dark);transform:translateY(-1px);box-shadow:0 4px 10px rgba(139,34,48,0.3)}
+
+        .sf-note{text-align:center;font-size:12px;color:var(--gray-400);padding:8px 0 4px}
+        .sf-note strong{color:var(--gray-900)}
+
+        /* ── GUARDRAILS ── */
+        .guardrails{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:16px}
+        .guardrail{display:flex;align-items:flex-start;gap:10px;padding:14px;background:var(--gray-100);border-radius:8px;font-size:13px;color:#555;line-height:1.45;border:1px solid var(--gray-300)}
+        .guardrail-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+
+        /* ── DIVIDER ── */
+        .divider{margin:36px 0 28px;display:flex;align-items:center;gap:16px}
+        .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--gray-300)}
+        .divider-text{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--gray-400);white-space:nowrap}
+
+        /* ── STATS ── */
+        .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:28px}
+        .stat-card{background:var(--white);padding:22px 20px;border-radius:var(--r);box-shadow:var(--sh);border:1px solid rgba(0,0,0,0.03);position:relative;overflow:hidden}
+        .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--burg);opacity:0.6}
+        .stat-card.gold-accent::before{background:var(--gold);opacity:0.8}
+        .stat-card.green-accent::before{background:var(--green);opacity:0.6}
+        .sc-label{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--gray-400);font-weight:600;margin-bottom:6px}
+        .sc-value{font-family:var(--font-d);font-size:32px;font-weight:700;color:var(--burg);line-height:1.1}
+        .sc-note{font-size:12px;color:#888;margin-top:6px}
+        .sc-note .up{color:var(--green);font-weight:600}
+
+        /* ── ENGAGEMENT DISTRIBUTION ── */
+        .engage-dist{background:var(--white);padding:24px;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:28px;border:1px solid rgba(0,0,0,0.03)}
+        .engage-bar-wrap{height:36px;border-radius:6px;overflow:hidden;display:flex;margin-bottom:14px}
+        .engage-seg{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;transition:width .5s}
+        .engage-legend{display:flex;flex-wrap:wrap;gap:16px;justify-content:center}
+        .engage-legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#666}
+        .engage-dot{width:10px;height:10px;border-radius:50%}
+
+        /* ── PANELS ── */
+        .panel{background:var(--white);padding:24px;border-radius:var(--r);box-shadow:var(--sh);margin-bottom:20px;border:1px solid rgba(0,0,0,0.03)}
+        .panel-title{font-family:var(--font-d);font-size:17px;font-weight:700;color:var(--gray-900);margin-bottom:18px}
+        .panel-sub{font-size:13px;color:#888;margin-top:-12px;margin-bottom:18px}
+
+        /* ── BARS ── */
+        .hbar-row{display:flex;align-items:center;margin-bottom:10px;gap:10px}
+        .hbar-label{width:130px;font-size:13px;font-weight:500;flex-shrink:0}
+        .hbar-track{flex:1;height:22px;background:var(--gray-200);border-radius:4px;overflow:hidden}
+        .hbar-fill{height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-size:11px;font-weight:700;color:#fff;transition:width .5s}
+        .hbar-fill.burg{background:linear-gradient(90deg,var(--burg),#a83850)}.hbar-fill.gold{background:linear-gradient(90deg,#c9963e,var(--gold));color:var(--gray-900)}
+        .hbar-value{width:50px;text-align:right;font-size:13px;font-weight:600}
+
+        .geo-bar-row{display:flex;align-items:center;margin-bottom:8px;gap:10px}
+        .geo-bar-state{width:100px;font-size:13px;font-weight:500}
+        .geo-bar-count{width:40px;text-align:right;font-size:13px;font-weight:700;color:var(--burg)}
+        .geo-bar-track{flex:1;height:18px;background:var(--gray-200);border-radius:3px;overflow:hidden}
+        .geo-bar-fill{height:100%;border-radius:3px;transition:width .5s}
+
+        /* ── TRAJECTORY ── */
+        .traj-row{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;padding:12px 0}
+        .traj-year{flex:1;text-align:center}
+        .traj-bar-wrap{height:120px;display:flex;align-items:flex-end;justify-content:center;margin-bottom:8px}
+        .traj-bar{width:40px;border-radius:5px 5px 0 0;transition:height .5s;position:relative}
+        .traj-bar.perfect{box-shadow:0 0 12px rgba(224,171,76,0.4)}
+        .traj-rate{font-size:14px;font-weight:700;color:var(--burg)}
+        .traj-rate.perfect{color:var(--gold)}
+        .traj-label{font-size:11px;color:#999;margin-top:2px}
+        .traj-grad{font-size:11px;color:#aaa}
+
+        /* ── ENRICHMENT FLOW ── */
+        .enrich-flow{display:flex;align-items:stretch;gap:0;margin:20px 0}
+        .enrich-step{flex:1;padding:20px 16px;text-align:center;position:relative;background:var(--gray-100);border-radius:8px;margin:0 14px 0 0}
+        .enrich-step:last-child{margin-right:0;background:var(--burg-soft)}
+        .enrich-step:not(:last-child)::after{content:'→';position:absolute;right:-14px;top:50%;transform:translateY(-50%);font-size:20px;font-weight:700;color:var(--gold);z-index:1}
+        .es-icon{font-size:28px;margin-bottom:8px}
+        .es-title{font-size:13px;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+        .es-desc{font-size:11px;color:#888;line-height:1.4}
+        .es-sources{margin-top:6px;font-size:10px;font-weight:600;color:var(--burg)}
+
+        /* ── COCA ── */
+        .coca-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+        .coca-side{padding:24px;border-radius:var(--r);text-align:center}
+        .coca-side.before{background:#faf0f0;border:1.5px dashed #d4a0a0}
+        .coca-side.after{background:#f0faf4;border:1.5px solid var(--green)}
+        .coca-side-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+        .coca-side.before .coca-side-label{color:var(--rose)}.coca-side.after .coca-side-label{color:var(--green)}
+        .coca-side-icon{font-size:36px;margin-bottom:10px}
+        .coca-side-text{font-size:14px;color:#555;line-height:1.5}
+
+        /* ── MENTOR GAPS ── */
+        .mg-row{display:flex;align-items:center;margin-bottom:12px;gap:12px;padding:10px 12px;background:var(--gray-100);border-radius:8px}
+        .mg-spec{width:130px;font-size:13px;font-weight:600;flex-shrink:0}
+        .mg-visual{flex:1;display:flex;height:26px;border-radius:5px;overflow:hidden;background:var(--gray-200)}
+        .mg-have{background:linear-gradient(90deg,var(--burg),#a83850);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:700;min-width:28px}
+        .mg-need{background:repeating-linear-gradient(-45deg,transparent,transparent 3px,var(--burg-glow) 3px,var(--burg-glow) 6px);display:flex;align-items:center;justify-content:center;color:var(--burg);font-size:10px;font-weight:700;min-width:28px}
+        .mg-stats{width:120px;text-align:right;font-size:12px;color:#888}
+        .mg-stats .gap-num{color:var(--rose);font-weight:700}
+
+        /* ── CALLOUT DARK ── */
+        .callout-dark{background:linear-gradient(135deg,var(--burg) 0%,#9e3040 100%);color:#fff;padding:28px;border-radius:var(--r);margin-top:24px;box-shadow:var(--sh-md)}
+        .callout-dark h3{font-family:var(--font-d);font-size:18px;font-weight:700;margin-bottom:14px}
+        .step-flow{display:flex;flex-direction:column;gap:12px}
+        .step-row{display:flex;align-items:flex-start;gap:12px}
+        .step-num{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;border:1px solid rgba(255,255,255,0.15)}
+        .step-text{font-size:14px;line-height:1.5;opacity:.95}
+
+        /* ── LOCATOR ── */
+        .locator-hero{background:linear-gradient(135deg,var(--burg) 0%,#9e3040 100%);color:#fff;padding:32px;border-radius:var(--r);margin-bottom:24px;text-align:center;box-shadow:var(--sh-md)}
+        .locator-hero h2{font-family:var(--font-d);font-size:24px;margin-bottom:8px}
+        .locator-hero p{font-size:14px;opacity:.9;max-width:600px;margin:0 auto 20px}
+        .loc-pills{display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+        .loc-pill{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:12px 22px;border-radius:8px;text-align:center;backdrop-filter:blur(4px)}
+        .loc-pill-val{font-family:var(--font-d);font-size:24px;font-weight:700}
+        .loc-pill-label{font-size:11px;opacity:.8;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+        /* ── READINESS ── */
+        .readiness-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+        .readiness-item{display:flex;align-items:flex-start;gap:12px;padding:16px;background:var(--gray-100);border-radius:8px}
+        .readiness-icon{width:36px;height:36px;border-radius:8px;background:var(--green-bg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+        .readiness-text h5{font-size:14px;font-weight:600;margin-bottom:3px}
+        .readiness-text p{font-size:12px;color:#888;line-height:1.45}
 
         /* ── ROADMAP ── */
-        .roadmap-phases {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 20px;
-            margin-bottom: 24px;
-        }
+        .rm-phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;margin-bottom:24px}
+        .rm-phase{background:var(--white);border-radius:var(--r);box-shadow:var(--sh);overflow:hidden;border:1px solid rgba(0,0,0,0.03)}
+        .rm-head{padding:18px 20px;border-bottom:1px solid var(--gray-300);display:flex;align-items:center;gap:12px}
+        .rm-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+        .rm-num.p1{background:var(--burg);color:#fff}.rm-num.p2{background:var(--gold);color:var(--gray-900)}.rm-num.p3{background:var(--gray-300);color:#666}.rm-num.p4{background:var(--gray-300);color:#666}
+        .rm-info h4{font-size:15px;font-weight:700}.rm-info span{font-size:12px;color:var(--gray-400)}
+        .rm-body{padding:18px 20px}.rm-body ul{list-style:none}
+        .rm-body li{font-size:13px;color:#555;padding:5px 0 5px 22px;position:relative;line-height:1.45}
+        .rm-body li::before{content:'→';position:absolute;left:0;color:var(--gold);font-weight:700}
 
-        .roadmap-phase {
-            background: var(--white);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.03);
-        }
+        /* ── CAMPUS ── */
+        .campus-compare{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .campus-card{padding:20px;border-radius:var(--r);background:var(--white);box-shadow:var(--sh);border:1px solid rgba(0,0,0,0.03)}
+        .campus-card h4{font-family:var(--font-d);font-size:16px;font-weight:700;margin-bottom:12px;color:var(--burg)}
+        .cd{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray-200);font-size:13px}
+        .cd:last-child{border-bottom:none}
+        .cd-l{color:#888}.cd-v{font-weight:600}
 
-        .roadmap-phase-head {
-            padding: 18px 20px;
-            border-bottom: 1px solid var(--light-gray);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .roadmap-phase-num {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: 700;
-            flex-shrink: 0;
-        }
-
-        .roadmap-phase-num.p1 { background: var(--burgundy); color: white; }
-        .roadmap-phase-num.p2 { background: var(--gold); color: var(--dark-gray); }
-        .roadmap-phase-num.p3 { background: var(--light-gray); color: #666; }
-        .roadmap-phase-num.p4 { background: var(--light-gray); color: #666; }
-
-        .roadmap-phase-info h4 {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--dark-gray);
-        }
-
-        .roadmap-phase-info span {
-            font-size: 12px;
-            color: var(--mid-gray);
-        }
-
-        .roadmap-phase-body {
-            padding: 18px 20px;
-        }
-
-        .roadmap-phase-body ul {
-            list-style: none;
-        }
-
-        .roadmap-phase-body li {
-            font-size: 13px;
-            color: #555;
-            padding: 5px 0 5px 22px;
-            position: relative;
-            line-height: 1.45;
-        }
-
-        .roadmap-phase-body li::before {
-            content: '→';
-            position: absolute;
-            left: 0;
-            color: var(--gold);
-            font-weight: 700;
-        }
-
-        /* ── CAMPUS COMPARISON ── */
-        .campus-compare {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .campus-card {
-            padding: 20px;
-            border-radius: var(--radius);
-            background: var(--white);
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0,0,0,0.03);
-        }
-
-        .campus-card h4 {
-            font-family: var(--font-display);
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--burgundy);
-        }
-
-        .campus-detail {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            border-bottom: 1px solid #f0eeea;
-            font-size: 13px;
-        }
-
-        .campus-detail:last-child { border-bottom: none; }
-
-        .campus-detail-label { color: #888; }
-        .campus-detail-value { font-weight: 600; }
+        /* ── CONNECTOR — tab intro lines ── */
+        .tab-connector{padding:16px 20px;border-radius:var(--r);margin-bottom:24px;font-size:14px;color:#555;line-height:1.65}
+        .tab-connector strong{color:var(--gray-900)}
+        .tc-green{background:var(--green-bg);border-left:3px solid var(--green)}
+        .tc-gold{background:var(--gold-glow);border-left:3px solid var(--gold)}
 
         /* ── FOOTNOTE ── */
-        .footnote {
-            text-align: center;
-            padding: 24px 16px;
-            font-size: 11px;
-            color: var(--mid-gray);
-            border-top: 1px solid var(--light-gray);
-            margin-top: 32px;
-        }
-
-        .footnote .disclaimer {
-            display: inline-block;
-            background: var(--gold-glow);
-            border: 1px solid var(--gold);
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            color: var(--signal-amber);
-            margin-bottom: 6px;
-        }
-
-        /* ── COCA data readiness list ── */
-        .readiness-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 14px;
-        }
-
-        .readiness-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 16px;
-            background: var(--bg);
-            border-radius: 8px;
-        }
-
-        .readiness-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: #f0faf4;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .readiness-text h5 {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 3px;
-        }
-
-        .readiness-text p {
-            font-size: 12px;
-            color: #888;
-            line-height: 1.45;
-        }
+        .footnote{text-align:center;padding:24px 16px;font-size:11px;color:var(--gray-400);border-top:1px solid var(--gray-300);margin-top:32px}
+        .footnote .disc{display:inline-block;background:var(--gold-glow);border:1px solid var(--gold);padding:6px 16px;border-radius:6px;font-weight:600;color:var(--amber);margin-bottom:6px}
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 768px) {
-            .header { padding: 32px 16px 28px; }
-            .header-title { font-size: 26px; }
-            .header-subtitle { font-size: 13px; }
-            .container { padding: 20px 14px; }
-            .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .stat-card { padding: 16px 14px; }
-            .stat-card-value { font-size: 24px; }
-            .signal-top { padding: 16px 14px 10px; }
-            .signal-action { padding: 10px 14px; flex-wrap: wrap; }
-            .action-btn { margin-left: 0; margin-top: 6px; width: 100%; text-align: center; }
-            .coca-compare { grid-template-columns: 1fr; }
-            .campus-compare { grid-template-columns: 1fr; }
-            .roadmap-phases { grid-template-columns: 1fr; }
-            .hbar-label { width: 100px; font-size: 12px; }
-            .mentor-gap-spec { width: 100px; font-size: 12px; }
-            .mentor-gap-stats { width: auto; }
-            .locator-pills { flex-direction: column; align-items: center; }
+        @media(max-width:768px){
+            .header{padding:32px 16px 28px}.h-title{font-size:26px}.container{padding:20px 14px}
+            .stats-row{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{padding:16px 14px}.sc-value{font-size:24px}
+            .signal-top{padding:16px 14px 10px 20px}.signal-action{padding:10px 14px 10px 20px;flex-wrap:wrap}
+            .action-btn{margin-left:0;margin-top:6px;width:100%;text-align:center}
+            .coca-compare,.campus-compare{grid-template-columns:1fr}.rm-phases{grid-template-columns:1fr}
+            .four-layers{gap:0}.layer-step{padding:10px 8px;min-width:80px}
+            .enrich-flow{flex-direction:column;align-items:center}
+            .enrich-step{margin:0 0 24px 0}.enrich-step:not(:last-child)::after{content:'↓';right:auto;left:50%;bottom:-18px;top:auto;transform:translateX(-50%)}
+            .loc-pills{flex-direction:column;align-items:center}.guardrails{grid-template-columns:1fr}
+            .ef-programs{flex-direction:column;gap:8px}
         }
-
-        @media (max-width: 480px) {
-            .stats-row { grid-template-columns: 1fr; }
-            .header-title { font-size: 22px; }
-            .signal-headline { font-size: 14px; }
-            .tabs-container { gap: 2px; }
-            .tab-button { padding: 8px 14px; font-size: 12px; }
+        @media(max-width:480px){
+            .stats-row{grid-template-columns:1fr}.h-title{font-size:22px}.signal-headline{font-size:14px}
+            .tab-btn{padding:8px 14px;font-size:12px}
+            .four-layers{flex-direction:column}.layer-arrow{transform:rotate(90deg);margin-top:0}
         }
     </style>
 </head>
 <body>
 
-<!-- ═══════ HEADER ═══════ -->
 <div class="header">
-    <div class="header-eyebrow">Western University of Health Sciences</div>
-    <div class="header-title">COMP Alumni Engagement</div>
-    <div class="header-subtitle">College of Osteopathic Medicine of the Pacific &amp; COMP-Northwest</div>
-    <div class="header-meta">
-        <span class="prototype-badge">Prototype — Sample Data</span>
-        <span>March 2026</span>
-    </div>
+    <div class="h-eyebrow">Western University of Health Sciences</div>
+    <div class="h-title">COMP Alumni Engagement</div>
+    <div class="h-sub">College of Osteopathic Medicine of the Pacific &amp; COMP-Northwest</div>
+    <div class="h-meta"><span class="badge-proto">Prototype — Sample Data</span><span>March 2026</span></div>
 </div>
 
-<!-- ═══════ MAIN ═══════ -->
 <div class="container">
-
-    <!-- Campus Filter -->
     <div class="filter-row">
         <div class="campus-buttons">
             <button class="campus-btn active" data-campus="all">All Campuses</button>
@@ -1018,738 +313,275 @@
         </div>
         <div class="filter-label" id="filter-label">All Campuses</div>
     </div>
-
-    <!-- Tabs -->
     <div class="tabs-container">
-        <button class="tab-button active" data-tab="overview">Overview</button>
-        <button class="tab-button" data-tab="coca">COCA Readiness</button>
-        <button class="tab-button" data-tab="mentorship">Mentorship</button>
-        <button class="tab-button" data-tab="locator">Alumni Locator</button>
-        <button class="tab-button" data-tab="roadmap">Roadmap</button>
+        <button class="tab-btn active" data-tab="overview">Overview</button>
+        <button class="tab-btn" data-tab="coca">COCA Readiness</button>
+        <button class="tab-btn" data-tab="mentorship">Mentorship</button>
+        <button class="tab-btn" data-tab="locator">Alumni Locator</button>
+        <button class="tab-btn" data-tab="roadmap">Roadmap</button>
     </div>
 
-    <!-- ═══════════════════════════════════════ -->
-    <!-- OVERVIEW TAB                            -->
-    <!-- ═══════════════════════════════════════ -->
+    <!-- ══════ OVERVIEW ══════ -->
     <div class="tab-content active" id="overview">
 
-        <!-- SIGNAL FEED — THE CENTERPIECE -->
-        <div class="signal-feed-header">
-            <div class="signal-feed-title">Relationship Engine</div>
-            <div class="signal-feed-subtitle">Signals detected this week</div>
+        <!-- ENGINE FRAME — with domain fit + programs -->
+        <div class="engine-frame">
+            <div class="ef-headline">The Relationship Engine</div>
+            <div class="ef-sub">We know where they matched. This tracks where they are <em>now</em> — and creates the reason to reach out.</div>
+            <div class="ef-domain">DO graduates leave a public, continuously updated data trail that most alumni populations don't. This engine turns that trail into meaningful engagement.</div>
+            <div class="four-layers">
+                <div class="layer-step"><div class="layer-icon l1">📡</div><div class="layer-name">Detect</div><div class="layer-desc">Something changed — a move, a publication, a credential</div></div>
+                <div class="layer-arrow">→</div>
+                <div class="layer-step"><div class="layer-icon l2">🔍</div><div class="layer-name">Enrich</div><div class="layer-desc">Who is this person? What students match? What's the history?</div></div>
+                <div class="layer-arrow">→</div>
+                <div class="layer-step"><div class="layer-icon l3">💬</div><div class="layer-name">Suggest</div><div class="layer-desc">Draft outreach ready for review — right message, right moment</div></div>
+                <div class="layer-arrow">→</div>
+                <div class="layer-step"><div class="layer-icon l4">🔄</div><div class="layer-name">Learn</div><div class="layer-desc">Every response feeds back — nothing falls through the cracks</div></div>
+            </div>
+            <div class="ef-programs">
+                <div class="ef-program"><span class="ef-program-dot mentor"></span><strong>Mentorship</strong> — right mentor, right moment</div>
+                <div class="ef-program"><span class="ef-program-dot cme"></span><strong>CME &amp; Guest Faculty</strong> — surface who to invite</div>
+                <div class="ef-program"><span class="ef-program-dot events"></span><strong>Events &amp; Reunions</strong> — personal, not blast-and-hope</div>
+            </div>
         </div>
 
-        <!-- Signal 1: Dr. Park Practice Move -->
-        <div class="signal-card">
+        <!-- SIGNAL FEED -->
+        <div class="signal-feed-header">
+            <div class="sf-title">This Week's Signals</div>
+            <div class="sf-sub">Each one is a reason to reach out</div>
+        </div>
+
+        <div class="signal-card type-move">
             <div class="signal-top">
                 <div class="signal-icon move">📍</div>
                 <div class="signal-body">
-                    <div class="signal-type move">Practice Move Detected</div>
+                    <div class="signal-meta"><div class="signal-type move">Practice Move Detected</div><div class="signal-source">Source: NPI Registry</div></div>
                     <div class="signal-headline">Dr. James Park, DO '19 — Riverside, CA → Portland, OR</div>
-                    <div class="signal-context">
-                        <strong>COMP-NW engagement opportunity.</strong> Dr. Park is now 18 miles from Lebanon campus. Three 3rd-year students at Lebanon listed his specialty (Orthopedic Surgery) as their primary interest. No touchpoint from COMP in 3 years.
-                    </div>
+                    <div class="signal-insight move">COMP-NW engagement opportunity</div>
+                    <div class="signal-detail">Now 18 miles from Lebanon campus. Three 3rd-year students listed his specialty (Orthopedic Surgery) as primary interest. No touchpoint from COMP in 3 years.</div>
+                    <div class="signal-layers"><span class="signal-layer-tag on">Detected</span><span class="signal-layer-tag on">Enriched</span><span class="signal-layer-tag on">Action Ready</span><span class="signal-layer-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="signal-action">
-                <div class="action-tag">Suggested</div>
-                <div class="action-text">Personal note acknowledging his move, mention Lebanon campus growth, invite mentor conversation</div>
-                <button class="action-btn">Review Draft</button>
-            </div>
+            <div class="signal-action"><div class="action-tag">Suggested</div><div class="action-text">Personal note acknowledging move, mention Lebanon campus growth, invite mentor conversation</div><button class="action-btn">Review Draft</button></div>
         </div>
 
-        <!-- Signal 2: Dr. Santos Publication -->
-        <div class="signal-card">
+        <div class="signal-card type-pub">
             <div class="signal-top">
                 <div class="signal-icon pub">📄</div>
                 <div class="signal-body">
-                    <div class="signal-type pub">New Publication</div>
+                    <div class="signal-meta"><div class="signal-type pub">New Publication</div><div class="signal-source">Source: PubMed</div></div>
                     <div class="signal-headline">Dr. Maria Santos, DO '16 — Published in Journal of Pediatrics</div>
-                    <div class="signal-context">
-                        <strong>Dean Warren's specialty area.</strong> First authored a study on adolescent care outcomes in underserved communities. Active Pomona-area practice, attended alumni reunion in October. Engagement score: high.
-                    </div>
+                    <div class="signal-insight pub">Dean Warren's specialty area</div>
+                    <div class="signal-detail">First-authored study on adolescent care in underserved communities. Active Pomona-area practice. Attended alumni reunion October 2025. Engagement: high.</div>
+                    <div class="signal-layers"><span class="signal-layer-tag on">Detected</span><span class="signal-layer-tag on">Enriched</span><span class="signal-layer-tag on">Action Ready</span><span class="signal-layer-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="signal-action">
-                <div class="action-tag">Suggested</div>
-                <div class="action-text">Achievement recognition from the Dean's office, invite to guest lecture or Future of Medicine feature</div>
-                <button class="action-btn">Review Draft</button>
-            </div>
+            <div class="signal-action"><div class="action-tag">Suggested</div><div class="action-text">Achievement recognition from Dean's office, invite to guest lecture or Future of Medicine feature</div><button class="action-btn">Review Draft</button></div>
         </div>
 
-        <!-- Signal 3: Dr. Tran Credential -->
-        <div class="signal-card">
+        <div class="signal-card type-cred">
             <div class="signal-top">
                 <div class="signal-icon cred">🎓</div>
                 <div class="signal-body">
-                    <div class="signal-type cred">Credential Update</div>
+                    <div class="signal-meta"><div class="signal-type cred">Credential Update</div><div class="signal-source">Source: NPI Specialty Code Change</div></div>
                     <div class="signal-headline">Dr. Alex Tran, DO '20 — Emergency Medicine Fellowship Completed</div>
-                    <div class="signal-context">
-                        <strong>Mentor availability opportunity.</strong> Now board-certified EM attending in San Diego. 7 current COMP students listed Emergency Medicine as top interest. Not yet registered as a mentor.
-                    </div>
+                    <div class="signal-insight cred">Mentor availability opportunity</div>
+                    <div class="signal-detail">Now board-certified EM attending, San Diego. Seven current COMP students listed Emergency Medicine as top interest. Not yet registered as a mentor.</div>
+                    <div class="signal-layers"><span class="signal-layer-tag on">Detected</span><span class="signal-layer-tag on">Enriched</span><span class="signal-layer-tag on">Action Ready</span><span class="signal-layer-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="signal-action">
-                <div class="action-tag">Suggested</div>
-                <div class="action-text">Congratulations on fellowship, warm invitation to mentor a student pursuing EM</div>
-                <button class="action-btn">Review Draft</button>
-            </div>
+            <div class="signal-action"><div class="action-tag">Suggested</div><div class="action-text">Congratulations on fellowship, warm invitation to mentor a student pursuing EM</div><button class="action-btn">Review Draft</button></div>
         </div>
 
-        <!-- Signal 4: Engagement Drop -->
-        <div class="signal-card">
+        <div class="signal-card type-drop">
             <div class="signal-top">
                 <div class="signal-icon drop">🔕</div>
                 <div class="signal-body">
-                    <div class="signal-type drop">Engagement Drop</div>
+                    <div class="signal-meta"><div class="signal-type drop">Engagement Drop</div><div class="signal-source">Source: Internal — 24-month threshold</div></div>
                     <div class="signal-headline">47 alumni from Class of 2018 — No touchpoint in 24+ months</div>
-                    <div class="signal-context">
-                        <strong>Reconnection window.</strong> Class of 2018 is approaching their reunion milestone. 38 have verified practice locations via NPI. 12 are now in leadership or fellowship roles. High reconnection potential.
-                    </div>
+                    <div class="signal-insight drop">Reconnection window</div>
+                    <div class="signal-detail">Reunion milestone approaching. 38 have verified practice locations via NPI. 12 now in leadership or fellowship roles. High reconnection potential.</div>
+                    <div class="signal-layers"><span class="signal-layer-tag on">Detected</span><span class="signal-layer-tag on">Enriched</span><span class="signal-layer-tag on">Action Ready</span><span class="signal-layer-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="signal-action">
-                <div class="action-tag">Suggested</div>
-                <div class="action-text">Reunion-anchored reconnection campaign — personalized by specialty cluster and geography</div>
-                <button class="action-btn">Review Campaign</button>
+            <div class="signal-action"><div class="action-tag">Suggested</div><div class="action-text">Reunion-anchored reconnection campaign — personalized by specialty and geography</div><button class="action-btn">Review Campaign</button></div>
+        </div>
+
+        <div class="sf-note"><strong>A human reviews and decides — every time.</strong> The system surfaces the moment. Your team makes it meaningful.</div>
+
+        <!-- GUARDRAILS -->
+        <div class="panel" style="margin-top:20px">
+            <div class="panel-title">What This Is — and Isn't</div>
+            <div class="guardrails">
+                <div class="guardrail"><span class="guardrail-icon">👤</span><span><strong>Human in the loop.</strong> Every outreach reviewed by a coordinator. Nothing sends automatically.</span></div>
+                <div class="guardrail"><span class="guardrail-icon">📂</span><span><strong>Public data only.</strong> NPI Registry, PubMed, state boards — federally released or public record.</span></div>
+                <div class="guardrail"><span class="guardrail-icon">🚪</span><span><strong>Opt-out, always.</strong> One-click opt-out in every outreach. Alumni who decline are fully removed.</span></div>
+                <div class="guardrail"><span class="guardrail-icon">🏛️</span><span><strong>University-owned.</strong> No vendor lock-in. No subscription. Everything belongs to WesternU.</span></div>
             </div>
         </div>
 
-        <div class="signal-feed-note">
-            Every signal surfaces a reason to reach out. A human reviews and decides — every time.
-        </div>
+        <!-- VERIFIED DATA -->
+        <div class="divider"><span class="divider-text">Class of 2025 — Verified Data</span></div>
 
-        <!-- DIVIDER: Real Data Section -->
-        <div class="section-divider">
-            <span class="section-divider-text">Class of 2025 — Verified Data</span>
-        </div>
-
-        <!-- Stats Row -->
         <div class="stats-row" id="overview-stats">
-            <div class="stat-card">
-                <div class="stat-card-label">Graduates</div>
-                <div class="stat-card-value" id="stat-grads">316</div>
-                <div class="stat-card-note">209 Pomona · 107 Lebanon</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-label">Placement Rate</div>
-                <div class="stat-card-value">100%</div>
-                <div class="stat-card-note"><span class="up">↑ from 99.3%</span> (2024)</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-label">Primary Care</div>
-                <div class="stat-card-value">58.9%</div>
-                <div class="stat-card-note">186 of 316 graduates</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-label">States Placed</div>
-                <div class="stat-card-value">38</div>
-                <div class="stat-card-note">58.5% remain in California</div>
-            </div>
+            <div class="stat-card"><div class="sc-label">Graduates</div><div class="sc-value" id="stat-grads">316</div><div class="sc-note">209 Pomona · 107 Lebanon</div></div>
+            <div class="stat-card gold-accent"><div class="sc-label">Placement Rate</div><div class="sc-value" style="color:var(--gold)">100%</div><div class="sc-note"><span class="up">↑ from 99.3%</span> (2024)</div></div>
+            <div class="stat-card green-accent"><div class="sc-label">Primary Care</div><div class="sc-value" style="color:var(--green)">58.9%</div><div class="sc-note">186 of 316 graduates</div></div>
+            <div class="stat-card"><div class="sc-label">States Placed</div><div class="sc-value">38</div><div class="sc-note">58.5% remain in California</div></div>
         </div>
 
-        <!-- Five-Year Placement Trajectory -->
-        <div class="panel">
-            <div class="panel-title">Five-Year Placement Trajectory</div>
-            <div class="panel-subtitle">100% in the most competitive match in NRMP history</div>
-            <div class="trajectory-row" id="trajectory-chart"></div>
+        <!-- ENGAGEMENT DISTRIBUTION -->
+        <div class="engage-dist">
+            <div class="panel-title">Alumni Engagement Distribution</div>
+            <div class="panel-sub">Of ~2,665 COMP graduates — where the relationships stand today</div>
+            <div class="engage-bar-wrap" id="engage-bar"></div>
+            <div class="engage-legend" id="engage-legend"></div>
         </div>
 
-        <!-- Specialty Breakdown -->
-        <div class="panel">
-            <div class="panel-title">Specialty Distribution — Class of 2025</div>
-            <div id="specialty-bars"></div>
-        </div>
+        <div class="panel"><div class="panel-title">Five-Year Placement Trajectory</div><div class="panel-sub">100% in the most competitive match in NRMP history</div><div class="traj-row" id="traj-chart"></div></div>
+        <div class="panel"><div class="panel-title">Specialty Distribution — Class of 2025</div><div id="spec-bars"></div></div>
+        <div class="panel"><div class="panel-title">Geographic Placement — Top States</div><div id="geo-bars"></div></div>
 
-        <!-- Geographic Distribution -->
-        <div class="panel">
-            <div class="panel-title">Geographic Placement — Top States</div>
-            <div id="geo-bars"></div>
-        </div>
-
-        <!-- Campus Comparison -->
-        <div class="panel" id="campus-compare-panel">
+        <div class="panel" id="campus-panel">
             <div class="panel-title">Two Campuses, Two Communities</div>
             <div class="campus-compare">
-                <div class="campus-card">
-                    <h4>Pomona, CA</h4>
-                    <div class="campus-detail"><span class="campus-detail-label">Total Alumni</span><span class="campus-detail-value">~1,913</span></div>
-                    <div class="campus-detail"><span class="campus-detail-label">Class of 2025</span><span class="campus-detail-value">209</span></div>
-                    <div class="campus-detail"><span class="campus-detail-label">Primary Corridor</span><span class="campus-detail-value">LA / San Diego</span></div>
-                    <div class="campus-detail"><span class="campus-detail-label">Engagement Style</span><span class="campus-detail-value">In-person + virtual</span></div>
-                    <div class="campus-detail"><span class="campus-detail-label">Founded</span><span class="campus-detail-value">1977</span></div>
-                </div>
-                <div class="campus-card">
-                    <h4>Lebanon, OR</h4>
-                    <div class="campus-detail"><span class="campus-detail-label">Total Alumni</span><span class="campus-detail-value">~752</span></div>
-                    <div class="campus-detail"><span class="campus-detail-label">Class of 2025</span><span class="campus-detail-value">107</span></div>
-                    <div class="campus-detail"><span class="campus-detail-label">Primary Corridor</span><span class="campus-detail-value">OR / WA / PNW</span></div>
-                    <div class="campus-detail"><span class="campus-detail-label">Engagement Style</span><span class="campus-detail-value">Virtual-first</span></div>
-                    <div class="campus-detail"><span class="campus-detail-label">Founded</span><span class="campus-detail-value">2011</span></div>
-                </div>
+                <div class="campus-card"><h4>Pomona, CA</h4><div class="cd"><span class="cd-l">Total Alumni</span><span class="cd-v">~1,913</span></div><div class="cd"><span class="cd-l">Class of 2025</span><span class="cd-v">209</span></div><div class="cd"><span class="cd-l">Primary Corridor</span><span class="cd-v">LA / San Diego</span></div><div class="cd"><span class="cd-l">Engagement</span><span class="cd-v">In-person + virtual</span></div><div class="cd"><span class="cd-l">Founded</span><span class="cd-v">1977</span></div></div>
+                <div class="campus-card"><h4>Lebanon, OR</h4><div class="cd"><span class="cd-l">Total Alumni</span><span class="cd-v">~752</span></div><div class="cd"><span class="cd-l">Class of 2025</span><span class="cd-v">107</span></div><div class="cd"><span class="cd-l">Primary Corridor</span><span class="cd-v">OR / WA / PNW</span></div><div class="cd"><span class="cd-l">Engagement</span><span class="cd-v">Virtual-first</span></div><div class="cd"><span class="cd-l">Founded</span><span class="cd-v">2011</span></div></div>
             </div>
         </div>
-
-    </div><!-- /overview -->
-
-    <!-- ═══════════════════════════════════════ -->
-    <!-- COCA READINESS TAB                      -->
-    <!-- ═══════════════════════════════════════ -->
-    <div class="tab-content" id="coca">
-
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-card-label">Match Rate (2025)</div>
-                <div class="stat-card-value">100%</div>
-                <div class="stat-card-note">Both campuses combined</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-label">5-Year Average</div>
-                <div class="stat-card-value">98.9%</div>
-                <div class="stat-card-note">2021–2025</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-label">Primary Care Rate</div>
-                <div class="stat-card-value">58.9%</div>
-                <div class="stat-card-note">Tier 1 ranking benchmark</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-label">U.S. News Tier</div>
-                <div class="stat-card-value" style="font-size: 26px;">Tier 1</div>
-                <div class="stat-card-note">2nd consecutive year</div>
-            </div>
-        </div>
-
-        <!-- Before / After -->
-        <div class="panel">
-            <div class="panel-title">The Shift: Manual Reporting → Always Current</div>
-            <div class="coca-compare">
-                <div class="coca-side before">
-                    <div class="coca-side-label">Without the System</div>
-                    <div class="coca-side-icon">📋</div>
-                    <div class="coca-side-text">
-                        Every reporting cycle means rebuilding data from scratch. Staff hours spent cross-referencing spreadsheets, chasing down outcomes, compiling what should already exist.
-                    </div>
-                </div>
-                <div class="coca-side after">
-                    <div class="coca-side-label">With Continuous Readiness</div>
-                    <div class="coca-side-icon">✓</div>
-                    <div class="coca-side-text">
-                        Graduate outcomes update as they happen. Pull the report — it's already there. Annual reports, mid-cycle, public data requirements — all current, all the time.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Data Readiness Grid -->
-        <div class="panel">
-            <div class="panel-title">What's Always Ready to Report</div>
-            <div class="readiness-list">
-                <div class="readiness-item">
-                    <div class="readiness-icon">📊</div>
-                    <div class="readiness-text">
-                        <h5>Match Rates by Year</h5>
-                        <p>Four-year rolling averages, updated each Match Day. Public reporting requirement met automatically.</p>
-                    </div>
-                </div>
-                <div class="readiness-item">
-                    <div class="readiness-icon">🏥</div>
-                    <div class="readiness-text">
-                        <h5>Graduate Practice Locations</h5>
-                        <p>NPI registry tracks where graduates practice. Billing requires accuracy — the data maintains itself.</p>
-                    </div>
-                </div>
-                <div class="readiness-item">
-                    <div class="readiness-icon">🎯</div>
-                    <div class="readiness-text">
-                        <h5>Specialty Distribution</h5>
-                        <p>Primary care percentages, surgical, subspecialty breakdowns — all derived from verified NPI taxonomy codes.</p>
-                    </div>
-                </div>
-                <div class="readiness-item">
-                    <div class="readiness-icon">🗺️</div>
-                    <div class="readiness-text">
-                        <h5>Geographic Outcomes</h5>
-                        <p>Where graduates practice by state and region. Underserved area tracking. Campus-specific breakdowns.</p>
-                    </div>
-                </div>
-                <div class="readiness-item">
-                    <div class="readiness-icon">📈</div>
-                    <div class="readiness-text">
-                        <h5>Trend Analysis</h5>
-                        <p>Year-over-year trajectory for every metric. Spot shifts before they become problems.</p>
-                    </div>
-                </div>
-                <div class="readiness-item">
-                    <div class="readiness-icon">🏛️</div>
-                    <div class="readiness-text">
-                        <h5>Campus Comparisons</h5>
-                        <p>Pomona and Lebanon side by side — same metrics, different community profiles. One report, both stories.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Placement Trajectory (repeated for COCA context) -->
-        <div class="panel">
-            <div class="panel-title">Residency Placement — Five-Year Trend</div>
-            <div class="panel-subtitle">Reportable at any time, no manual compilation</div>
-            <div class="trajectory-row" id="coca-trajectory-chart"></div>
-        </div>
-
-    </div><!-- /coca -->
-
-    <!-- ═══════════════════════════════════════ -->
-    <!-- MENTORSHIP TAB                          -->
-    <!-- ═══════════════════════════════════════ -->
-    <div class="tab-content" id="mentorship">
-
-        <div class="stats-row">
-            <div class="stat-card">
-                <div class="stat-card-label">Active Mentors</div>
-                <div class="stat-card-value">312</div>
-                <div class="stat-card-note">Sample — across both campuses</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-label">Students Seeking Mentors</div>
-                <div class="stat-card-value">184</div>
-                <div class="stat-card-note">Sample — by specialty interest</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-label">Specialties Covered</div>
-                <div class="stat-card-value">18</div>
-                <div class="stat-card-note">Of 24 student-requested</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-card-label">Avg. Match Time</div>
-                <div class="stat-card-value" style="font-size: 26px;">< 48 hrs</div>
-                <div class="stat-card-note">Sample — signal to recommendation</div>
-            </div>
-        </div>
-
-        <!-- Specialty Gap Visualization -->
-        <div class="panel">
-            <div class="panel-title">Mentorship Supply vs. Student Demand</div>
-            <div class="panel-subtitle">Where the gaps are — and where signals can help</div>
-            <div id="mentor-gap-bars"></div>
-        </div>
-
-        <!-- Signal Example: Dr. Park in action -->
-        <div class="mentor-signal-example">
-            <h3>How a Signal Becomes a Mentor Match</h3>
-            <div class="mentor-signal-flow">
-                <div class="msf-step">
-                    <div class="msf-num">1</div>
-                    <div class="msf-text"><strong>Signal detected:</strong> Dr. James Park, DO '19 (Orthopedic Surgery) moves from Riverside, CA to Portland, OR</div>
-                </div>
-                <div class="msf-step">
-                    <div class="msf-num">2</div>
-                    <div class="msf-text"><strong>Context added:</strong> Three 3rd-year Lebanon students listed orthopedic surgery as primary interest. No ortho mentor within 50 miles of campus. Dr. Park is now 18 miles away.</div>
-                </div>
-                <div class="msf-step">
-                    <div class="msf-num">3</div>
-                    <div class="msf-text"><strong>Action suggested:</strong> Draft outreach acknowledging move, mentioning Lebanon's growth, inviting conversation with a student. Placed in coordinator's queue.</div>
-                </div>
-                <div class="msf-step">
-                    <div class="msf-num">4</div>
-                    <div class="msf-text"><strong>Human decides:</strong> Coordinator personalizes one line, reviews, sends. Dr. Park thinks: "My school still sees me."</div>
-                </div>
-            </div>
-        </div>
-
-    </div><!-- /mentorship -->
-
-    <!-- ═══════════════════════════════════════ -->
-    <!-- ALUMNI LOCATOR TAB                      -->
-    <!-- ═══════════════════════════════════════ -->
-    <div class="tab-content" id="locator">
-
-        <div class="locator-hero">
-            <h2>Finding Them Is Layer 1</h2>
-            <p>Every practicing physician has an NPI number maintained by the federal government because billing depends on it. The medical profession is the most trackable alumni population in higher education.</p>
-            <div class="locator-pills">
-                <div class="locator-pill">
-                    <div class="locator-pill-value">~2,665</div>
-                    <div class="locator-pill-label">Total COMP Graduates</div>
-                </div>
-                <div class="locator-pill">
-                    <div class="locator-pill-value" id="loc-npi-est">2,000–2,265</div>
-                    <div class="locator-pill-label">Est. NPI Matchable</div>
-                </div>
-                <div class="locator-pill">
-                    <div class="locator-pill-value">38</div>
-                    <div class="locator-pill-label">States Represented</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel">
-            <div class="panel-title">The Known vs. Unknown Gap</div>
-            <div class="panel-subtitle">What public data can verify — and where outreach fills the rest</div>
-            <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 200px;">
-                    <div style="height: 32px; border-radius: 6px; overflow: hidden; display: flex;">
-                        <div style="width: 78%; background: var(--burgundy); display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 700;">~78% Verifiable via Public Data</div>
-                        <div style="width: 22%; background: repeating-linear-gradient(-45deg, transparent, transparent 3px, rgba(139,34,48,0.15) 3px, rgba(139,34,48,0.15) 6px); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--burgundy);">~22%</div>
-                    </div>
-                </div>
-            </div>
-            <div style="font-size: 13px; color: #666; line-height: 1.6;">
-                <strong style="color: var(--dark-gray);">Layer 1 (Public):</strong> NPI Registry, PubMed, State Medical Boards — locate and verify current practice, specialty, credentials. No consent required for public FOIA data.<br>
-                <strong style="color: var(--dark-gray);">Layer 2 (Voluntary):</strong> The remaining ~22% require alumni outreach. These may be in non-clinical roles, early career, or have changed fields. The relationship engine turns "located" into "engaged."
-            </div>
-        </div>
-
-        <!-- Geo Bars (reuse from overview) -->
-        <div class="panel">
-            <div class="panel-title">Alumni Corridors — Class of 2025 Placement</div>
-            <div id="locator-geo-bars"></div>
-            <div style="margin-top: 16px; padding: 14px; background: var(--gold-glow); border-radius: 8px; border-left: 3px solid var(--gold); font-size: 13px; color: #555; line-height: 1.5;">
-                <strong style="color: var(--dark-gray);">58.5%</strong> of 2025 graduates placed in California. <strong style="color: var(--dark-gray);">12.3%</strong> in Oregon + Washington — the Pacific Northwest corridor critical for COMP-NW engagement.
-            </div>
-        </div>
-
-        <!-- Data Source Transparency -->
-        <div class="panel">
-            <div class="panel-title">Data Sources — Full Transparency</div>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px;">
-                <div style="padding: 16px; background: #f0faf4; border-radius: 8px; border-left: 3px solid var(--signal-green);">
-                    <div style="font-size: 12px; font-weight: 700; color: var(--signal-green); margin-bottom: 6px;">TIER 1 — PUBLIC, AUTOMATED</div>
-                    <div style="font-size: 13px; color: #555;">NPI Registry (NPPES) — FOIA-released, monthly updates. PubMed — daily publication index. Free, no consent needed.</div>
-                </div>
-                <div style="padding: 16px; background: #fffff0; border-radius: 8px; border-left: 3px solid var(--signal-amber);">
-                    <div style="font-size: 12px; font-weight: 700; color: var(--signal-amber); margin-bottom: 6px;">TIER 2 — PUBLIC, CAREFUL USE</div>
-                    <div style="font-size: 13px; color: #555;">State Medical Boards — individual license verification OK. No bulk scraping. Confirms practice status.</div>
-                </div>
-                <div style="padding: 16px; background: #fff5f5; border-radius: 8px; border-left: 3px solid var(--signal-rose);">
-                    <div style="font-size: 12px; font-weight: 700; color: var(--signal-rose); margin-bottom: 6px;">TIER 3 — VOLUNTARY ONLY</div>
-                    <div style="font-size: 13px; color: #555;">Doximity, LinkedIn — alumni self-link only. Terms of service prohibit scraping. Never positioned as a data source.</div>
-                </div>
-            </div>
-        </div>
-
-    </div><!-- /locator -->
-
-    <!-- ═══════════════════════════════════════ -->
-    <!-- ROADMAP TAB                             -->
-    <!-- ═══════════════════════════════════════ -->
-    <div class="tab-content" id="roadmap">
-
-        <div class="panel" style="background: linear-gradient(135deg, var(--burgundy) 0%, #9e3040 100%); color: white; text-align: center; margin-bottom: 28px;">
-            <div style="font-family: var(--font-display); font-size: 22px; font-weight: 700; margin-bottom: 8px;">What Lisa's Team Gets in 30 Days</div>
-            <div style="font-size: 14px; opacity: 0.9; max-width: 500px; margin: 0 auto;">A working prototype with real COMP data — not a proposal, not a slide deck. Something her team can actually use.</div>
-        </div>
-
-        <div class="roadmap-phases">
-            <!-- Phase 1 -->
-            <div class="roadmap-phase">
-                <div class="roadmap-phase-head">
-                    <div class="roadmap-phase-num p1">1</div>
-                    <div class="roadmap-phase-info">
-                        <h4>Foundation</h4>
-                        <span>Days 1–30</span>
-                    </div>
-                </div>
-                <div class="roadmap-phase-body">
-                    <ul>
-                        <li>NPI enrichment for one graduating class</li>
-                        <li>Verified practice locations, specialties, credentials</li>
-                        <li>PubMed publication scan for research-active alumni</li>
-                        <li>Working dashboard with real COMP data</li>
-                        <li>Clear picture: here's who we can find, here's the gap</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Phase 2 -->
-            <div class="roadmap-phase">
-                <div class="roadmap-phase-head">
-                    <div class="roadmap-phase-num p2">2</div>
-                    <div class="roadmap-phase-info">
-                        <h4>Signal Engine</h4>
-                        <span>Days 31–60</span>
-                    </div>
-                </div>
-                <div class="roadmap-phase-body">
-                    <ul>
-                        <li>Automated monitoring: practice moves, publications, credentials</li>
-                        <li>Signal notification feed — live, not sample data</li>
-                        <li>Context enrichment: cross-reference against student needs</li>
-                        <li>Daily coordinator queue: signals waiting for human review</li>
-                        <li>First real outreach recommendations</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Phase 3 -->
-            <div class="roadmap-phase">
-                <div class="roadmap-phase-head">
-                    <div class="roadmap-phase-num p3">3</div>
-                    <div class="roadmap-phase-info">
-                        <h4>Engagement Layer</h4>
-                        <span>Days 61–90</span>
-                    </div>
-                </div>
-                <div class="roadmap-phase-body">
-                    <ul>
-                        <li>Mentorship matching: signal-based, specialty-specific</li>
-                        <li>Outreach templates personalized by signal type</li>
-                        <li>Engagement scoring: track who's connecting back</li>
-                        <li>COCA reporting: always-current data pulls</li>
-                        <li>Two-campus analytics: Pomona and Lebanon side by side</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Phase 4 -->
-            <div class="roadmap-phase">
-                <div class="roadmap-phase-head">
-                    <div class="roadmap-phase-num p4">4</div>
-                    <div class="roadmap-phase-info">
-                        <h4>The Loop</h4>
-                        <span>Days 91+</span>
-                    </div>
-                </div>
-                <div class="roadmap-phase-body">
-                    <ul>
-                        <li>Every alumni response feeds back into the system</li>
-                        <li>The engine learns: better timing, better matches</li>
-                        <li>Institutional memory that compounds — nothing falls through</li>
-                        <li>Full alumni lifecycle: student → resident → mentor → advocate</li>
-                        <li>The continuum Lisa described — actually working at scale</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="panel">
-            <div class="panel-title">The Principle</div>
-            <div style="font-size: 15px; color: #555; line-height: 1.7; max-width: 700px;">
-                Each phase earns the next. If Phase 1 doesn't deliver value, you stop — no risk, no sunk cost. The university owns everything that's built. No vendor lock-in. No subscription. The system grows with COMP's needs, not around a product's limitations.
-            </div>
-        </div>
-
-    </div><!-- /roadmap -->
-
-    <!-- FOOTNOTE -->
-    <div class="footnote">
-        <div class="disclaimer">Sample Data — For Demonstration Purposes</div>
-        <div>Placement data from publicly reported COMP Match Day results. Signal feed uses illustrative examples. All other figures are representative samples pending Phase 1 enrichment with real COMP alumni records.</div>
     </div>
 
-</div><!-- /container -->
+    <!-- ══════ COCA ══════ -->
+    <div class="tab-content" id="coca">
+        <div class="tab-connector tc-green"><strong>This is Layers 1 and 2 applied to compliance.</strong> The same signals that power alumni engagement — practice locations, specialty codes, credential updates — are the data COCA requires. When the engine is always watching, reporting is always ready.</div>
+        <div class="stats-row">
+            <div class="stat-card gold-accent"><div class="sc-label">Match Rate (2025)</div><div class="sc-value" style="color:var(--gold)">100%</div><div class="sc-note">Both campuses</div></div>
+            <div class="stat-card"><div class="sc-label">5-Year Average</div><div class="sc-value">98.9%</div><div class="sc-note">2021–2025</div></div>
+            <div class="stat-card green-accent"><div class="sc-label">Primary Care Rate</div><div class="sc-value" style="color:var(--green)">58.9%</div><div class="sc-note">Tier 1 benchmark</div></div>
+            <div class="stat-card"><div class="sc-label">U.S. News Tier</div><div class="sc-value" style="font-size:26px">Tier 1</div><div class="sc-note">2nd consecutive year</div></div>
+        </div>
+        <div class="panel"><div class="panel-title">The Shift: Manual Reporting → Always Current</div>
+            <div class="coca-compare">
+                <div class="coca-side before"><div class="coca-side-label">Without the System</div><div class="coca-side-icon">📋</div><div class="coca-side-text">Every cycle means rebuilding from scratch. Hours cross-referencing spreadsheets, chasing outcomes, compiling what should already exist.</div></div>
+                <div class="coca-side after"><div class="coca-side-label">With Continuous Readiness</div><div class="coca-side-icon">✓</div><div class="coca-side-text">Graduate outcomes update as they happen. Pull the report — it's already there. Annual, mid-cycle, public data — current, all the time.</div></div>
+            </div>
+        </div>
+        <div class="panel"><div class="panel-title">What's Always Ready to Report</div>
+            <div class="readiness-list">
+                <div class="readiness-item"><div class="readiness-icon">📊</div><div class="readiness-text"><h5>Match Rates by Year</h5><p>Four-year rolling averages, updated each Match Day.</p></div></div>
+                <div class="readiness-item"><div class="readiness-icon">🏥</div><div class="readiness-text"><h5>Graduate Practice Locations</h5><p>Verified through NPI address data. Billing keeps it current.</p></div></div>
+                <div class="readiness-item"><div class="readiness-icon">🎯</div><div class="readiness-text"><h5>Specialty Distribution</h5><p>Derived from NPI taxonomy codes, not self-reported surveys.</p></div></div>
+                <div class="readiness-item"><div class="readiness-icon">🗺️</div><div class="readiness-text"><h5>Geographic Outcomes</h5><p>By state, region, and underserved area. Campus-specific.</p></div></div>
+                <div class="readiness-item"><div class="readiness-icon">📚</div><div class="readiness-text"><h5>Research Activity</h5><p>PubMed publications — who's publishing, in what journals, on what topics.</p></div></div>
+                <div class="readiness-item"><div class="readiness-icon">📈</div><div class="readiness-text"><h5>Trend Analysis</h5><p>Year-over-year for every metric. Spot shifts early.</p></div></div>
+            </div>
+        </div>
+        <div class="panel"><div class="panel-title">Residency Placement — Five-Year Trend</div><div class="panel-sub">Reportable at any time — no manual compilation</div><div class="traj-row" id="coca-traj"></div></div>
+    </div>
+
+    <!-- ══════ MENTORSHIP ══════ -->
+    <div class="tab-content" id="mentorship">
+        <div class="tab-connector tc-gold"><strong>This is all four layers working end to end.</strong> A signal gets enriched with student needs, surfaces as a match recommendation, and the response feeds back. The engine finds the right mentor at the right moment.</div>
+        <div class="stats-row">
+            <div class="stat-card"><div class="sc-label">Active Mentors</div><div class="sc-value">312</div><div class="sc-note">Sample — both campuses</div></div>
+            <div class="stat-card"><div class="sc-label">Students Seeking</div><div class="sc-value">184</div><div class="sc-note">Sample — by specialty</div></div>
+            <div class="stat-card"><div class="sc-label">Specialties Covered</div><div class="sc-value">18</div><div class="sc-note">Of 24 requested</div></div>
+            <div class="stat-card"><div class="sc-label">Signal → Match</div><div class="sc-value" style="font-size:24px">&lt; 48 hrs</div><div class="sc-note">Sample target</div></div>
+        </div>
+        <div class="panel"><div class="panel-title">Mentorship Supply vs. Student Demand</div><div class="panel-sub">Where the gaps are — and where signals can help close them</div><div id="mg-bars"></div></div>
+        <div class="callout-dark">
+            <h3>How a Signal Becomes a Mentor Match</h3>
+            <div class="step-flow">
+                <div class="step-row"><div class="step-num">1</div><div class="step-text"><strong>Detect:</strong> Dr. James Park, DO '19 (Orthopedic Surgery) moves from Riverside, CA to Portland, OR. <em>Source: NPI Registry address change.</em></div></div>
+                <div class="step-row"><div class="step-num">2</div><div class="step-text"><strong>Enrich:</strong> Three 3rd-year Lebanon students listed ortho as primary interest. No ortho mentor within 50 miles. Dr. Park is now 18 miles away. Last COMP touchpoint: 3 years ago.</div></div>
+                <div class="step-row"><div class="step-num">3</div><div class="step-text"><strong>Suggest:</strong> Draft outreach acknowledging move, mentioning Lebanon growth, inviting student conversation. In the coordinator's morning queue.</div></div>
+                <div class="step-row"><div class="step-num">4</div><div class="step-text"><strong>Human decides:</strong> Coordinator personalizes one line. Reviews. Sends. Dr. Park thinks: <em>"How did they even know? My school still sees me."</em></div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════ LOCATOR ══════ -->
+    <div class="tab-content" id="locator">
+        <div class="locator-hero">
+            <h2>Located → Enriched → Engaged</h2>
+            <p>Finding them is Layer 1. Turning that into something meaningful — a mentorship, a reconnection, a moment where someone feels seen — that's the rest of the engine.</p>
+            <div class="loc-pills">
+                <div class="loc-pill"><div class="loc-pill-val">~2,665</div><div class="loc-pill-label">Total Graduates</div></div>
+                <div class="loc-pill"><div class="loc-pill-val">~78%</div><div class="loc-pill-label">Verifiable via Public Data</div></div>
+                <div class="loc-pill"><div class="loc-pill-val">38</div><div class="loc-pill-label">States Represented</div></div>
+            </div>
+        </div>
+        <div class="panel"><div class="panel-title">The Enrichment Pipeline</div><div class="panel-sub">How a name becomes a relationship</div>
+            <div class="enrich-flow">
+                <div class="enrich-step"><div class="es-icon">🎓</div><div class="es-title">University Record</div><div class="es-desc">Name, class year, campus, degree</div></div>
+                <div class="enrich-step"><div class="es-icon">📍</div><div class="es-title">Located</div><div class="es-desc">Current practice, specialty, credentials</div><div class="es-sources">NPI Registry · State Boards</div></div>
+                <div class="enrich-step"><div class="es-icon">📚</div><div class="es-title">Enriched</div><div class="es-desc">Publications, credential changes, student matches</div><div class="es-sources">PubMed · NPI Updates · Internal</div></div>
+                <div class="enrich-step"><div class="es-icon">🤝</div><div class="es-title">Engaged</div><div class="es-desc">Mentoring, attending events, connected back</div><div class="es-sources">Relationship Engine → Human Action</div></div>
+            </div>
+        </div>
+        <div class="panel"><div class="panel-title">The Known vs. Unknown Gap</div>
+            <div style="margin-bottom:16px"><div style="height:32px;border-radius:6px;overflow:hidden;display:flex"><div style="width:78%;background:linear-gradient(90deg,var(--burg),#a83850);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700">~78% Verifiable via Public Data</div><div style="width:22%;background:repeating-linear-gradient(-45deg,transparent,transparent 3px,var(--burg-glow) 3px,var(--burg-glow) 6px);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--burg)">~22%</div></div></div>
+            <div style="font-size:13px;color:#666;line-height:1.6">The ~22% that public data can't reach may be in non-clinical roles, early career, or have changed fields. Not chasing people who don't want to be found — creating the door for them to walk back through.</div>
+        </div>
+        <div class="panel"><div class="panel-title">Alumni Corridors — Class of 2025</div><div id="loc-geo-bars"></div>
+            <div style="margin-top:16px;padding:14px;background:var(--gold-glow);border-radius:8px;border-left:3px solid var(--gold);font-size:13px;color:#555"><strong>58.5%</strong> placed in California. <strong>12.3%</strong> in Oregon + Washington — the corridor that matters for COMP-NW.</div>
+        </div>
+        <div class="panel"><div class="panel-title">Data Sources</div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px">
+                <div style="padding:16px;background:var(--green-bg);border-radius:8px;border-left:3px solid var(--green)"><div style="font-size:12px;font-weight:700;color:var(--green);margin-bottom:6px">TIER 1 — PUBLIC, AUTOMATED</div><div style="font-size:13px;color:#555">NPI Registry — monthly, FOIA-released. PubMed — daily. No consent needed.</div></div>
+                <div style="padding:16px;background:var(--amber-bg);border-radius:8px;border-left:3px solid var(--amber)"><div style="font-size:12px;font-weight:700;color:var(--amber);margin-bottom:6px">TIER 2 — PUBLIC, INDIVIDUAL USE</div><div style="font-size:13px;color:#555">State Medical Boards — individual verification. No bulk scraping.</div></div>
+                <div style="padding:16px;background:var(--rose-bg);border-radius:8px;border-left:3px solid var(--rose)"><div style="font-size:12px;font-weight:700;color:var(--rose);margin-bottom:6px">TIER 3 — VOLUNTARY ONLY</div><div style="font-size:13px;color:#555">Doximity, LinkedIn — alumni self-link only. Never a data source.</div></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════ ROADMAP ══════ -->
+    <div class="tab-content" id="roadmap">
+        <div class="panel" style="background:linear-gradient(135deg,var(--burg) 0%,#9e3040 100%);color:#fff;text-align:center;margin-bottom:28px;box-shadow:var(--sh-md)">
+            <div style="font-family:var(--font-d);font-size:22px;font-weight:700;margin-bottom:8px">What Lisa's Team Gets in 30 Days</div>
+            <div style="font-size:14px;opacity:.9;max-width:500px;margin:0 auto">A working prototype with real COMP data — not a proposal, not a slide deck. Something her team can actually use.</div>
+        </div>
+        <div class="rm-phases">
+            <div class="rm-phase"><div class="rm-head"><div class="rm-num p1">1</div><div class="rm-info"><h4>Foundation — Detect</h4><span>Days 1–30</span></div></div><div class="rm-body"><ul><li>NPI enrichment for one graduating class</li><li>Verified practice locations, specialties, credentials</li><li>PubMed scan for research-active alumni</li><li>Working dashboard with real COMP data</li><li>Clear picture: here's who we can find, here's the gap</li></ul></div></div>
+            <div class="rm-phase"><div class="rm-head"><div class="rm-num p2">2</div><div class="rm-info"><h4>Signal Engine — Enrich</h4><span>Days 31–60</span></div></div><div class="rm-body"><ul><li>Automated monitoring: moves, publications, credentials</li><li>Live signal feed — not sample data</li><li>Context enrichment against student needs</li><li>Daily coordinator queue with full context</li><li>First real outreach recommendations</li></ul></div></div>
+            <div class="rm-phase"><div class="rm-head"><div class="rm-num p3">3</div><div class="rm-info"><h4>Engagement — Suggest</h4><span>Days 61–90</span></div></div><div class="rm-body"><ul><li>Mentorship matching: signal-based, specialty-specific</li><li>Outreach templates by signal type</li><li>Engagement scoring: who's connecting back</li><li>COCA reporting: always-current data pulls</li><li>Two-campus analytics side by side</li></ul></div></div>
+            <div class="rm-phase"><div class="rm-head"><div class="rm-num p4">4</div><div class="rm-info"><h4>The Loop — Learn</h4><span>Days 91+</span></div></div><div class="rm-body"><ul><li>Every response feeds back into the system</li><li>Better timing, better matches</li><li>Institutional memory that compounds</li><li>Full lifecycle: student → resident → mentor → advocate</li><li>The continuum — actually working at scale</li></ul></div></div>
+        </div>
+        <div class="panel"><div class="panel-title">The Principle</div><div style="font-size:15px;color:#555;line-height:1.7;max-width:700px">Each phase earns the next. If Phase 1 doesn't deliver value, you stop — no risk, no sunk cost. The university owns everything. No vendor lock-in. No subscription.</div></div>
+    </div>
+
+    <div class="footnote">
+        <div class="disc">Sample Data — For Demonstration Purposes</div>
+        <div>Placement data from publicly reported COMP Match Day results. Signal feed uses illustrative examples. Mentorship and engagement figures are samples pending Phase 1 enrichment.</div>
+    </div>
+</div>
 
 <script>
-    // ══════════════════════════════
-    // TAB & CAMPUS SWITCHING
-    // ══════════════════════════════
+const tabBtns=document.querySelectorAll('.tab-btn'),tabCs=document.querySelectorAll('.tab-content'),campBtns=document.querySelectorAll('.campus-btn');
+let campus='all';
+tabBtns.forEach(b=>{b.addEventListener('click',()=>{tabBtns.forEach(x=>x.classList.remove('active'));tabCs.forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')})});
+campBtns.forEach(b=>{b.addEventListener('click',()=>{campBtns.forEach(x=>x.classList.remove('active'));b.classList.add('active');campus=b.dataset.campus;document.getElementById('filter-label').textContent={all:'All Campuses',pomona:'Pomona, CA',lebanon:'Lebanon, OR'}[campus];updateCampus()})});
 
-    const tabButtons = document.querySelectorAll('.tab-button');
-    const tabContents = document.querySelectorAll('.tab-content');
-    const campusButtons = document.querySelectorAll('.campus-btn');
+const trajD=[{y:2021,g:316,r:97.8},{y:2022,g:324,r:99.1},{y:2023,g:320,r:98.4},{y:2024,g:312,r:99.3},{y:2025,g:316,r:100.0}];
+const specD=[{n:'Internal Medicine',c:85,p:26.9},{n:'Family Medicine',c:76,p:24.0},{n:'Emergency Medicine',c:36,p:11.4},{n:'Pediatrics',c:24,p:7.6},{n:'Psychiatry',c:22,p:6.9},{n:'Anesthesiology',c:17,p:5.4},{n:'Transitional Year',c:14,p:4.4},{n:'OB-GYN',c:9,p:2.8},{n:'Neurology',c:8,p:2.5},{n:'Surgery',c:5,p:1.6},{n:'Pathology',c:5,p:1.6},{n:'Ortho Surgery',c:3,p:0.9}];
+const geoD=[{s:'California',c:185},{s:'Oregon',c:25},{s:'Washington',c:14},{s:'Pennsylvania',c:13},{s:'Michigan',c:8},{s:'Texas',c:7},{s:'Arizona',c:6},{s:'Nevada',c:6},{s:'New Mexico',c:6},{s:'Ohio',c:6}];
+const mgD=[{s:'Internal Med',h:68,n:85,st:32},{s:'Family Med',h:72,n:76,st:28},{s:'Emergency Med',h:14,n:36,st:22},{s:'Pediatrics',h:22,n:24,st:18},{s:'Psychiatry',h:8,n:22,st:15},{s:'Surgery',h:4,n:18,st:14},{s:'Ortho Surgery',h:2,n:12,st:12},{s:'Anesthesiology',h:10,n:17,st:8}];
+const engD=[{label:'Highly Engaged',count:485,color:'var(--burg)'},{label:'Engaged',count:670,color:'var(--gold)'},{label:'Warm',count:805,color:'#d4a574'},{label:'Inactive',count:535,color:'var(--gray-400)'},{label:'Lost Contact',count:170,color:'var(--gray-300)'}];
 
-    let currentCampus = 'all';
+function renderTraj(id){const c=document.getElementById(id);if(!c)return;c.innerHTML='';trajD.forEach(d=>{const h=((d.r-96)/4)*110+10;const perf=d.r===100;c.innerHTML+=`<div class="traj-year"><div class="traj-bar-wrap"><div class="traj-bar ${perf?'perfect':''}" style="height:${h}px;background:${perf?'linear-gradient(to top,var(--gold),#f0c060)':'linear-gradient(to top,var(--burg),#a83850)'}"></div></div><div class="traj-rate ${perf?'perfect':''}">${d.r}%</div><div class="traj-label">${d.y}</div><div class="traj-grad">${d.g}</div></div>`})}
 
-    tabButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            tabButtons.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
-            btn.classList.add('active');
-            document.getElementById(btn.dataset.tab).classList.add('active');
-        });
-    });
+function renderSpec(){const c=document.getElementById('spec-bars');if(!c)return;c.innerHTML='';const mx=specD[0].p;specD.forEach((d,i)=>{const w=(d.p/mx)*100;c.innerHTML+=`<div class="hbar-row"><div class="hbar-label">${d.n}</div><div class="hbar-track"><div class="hbar-fill ${i%2===0?'burg':'gold'}" style="width:${w}%">${d.p>5?d.c:''}</div></div><div class="hbar-value">${d.p}%</div></div>`})}
 
-    campusButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            campusButtons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentCampus = btn.dataset.campus;
-            const labels = { all: 'All Campuses', pomona: 'Pomona, CA', lebanon: 'Lebanon, OR' };
-            document.getElementById('filter-label').textContent = labels[currentCampus];
-            updateCampusData();
-        });
-    });
+function renderGeo(id){const c=document.getElementById(id);if(!c)return;c.innerHTML='';const mx=geoD[0].c;geoD.forEach((d,i)=>{const w=(d.c/mx)*100;c.innerHTML+=`<div class="geo-bar-row"><div class="geo-bar-state">${d.s}</div><div class="geo-bar-count">${d.c}</div><div class="geo-bar-track"><div class="geo-bar-fill" style="width:${w}%;background:${i<3?'linear-gradient(90deg,var(--burg),#a83850)':'var(--gold)'}"></div></div></div>`})}
 
-    // ══════════════════════════════
-    // DATA
-    // ══════════════════════════════
+function renderMG(){const c=document.getElementById('mg-bars');if(!c)return;c.innerHTML='';mgD.forEach(d=>{const hp=(d.h/d.n)*100;const np=100-hp;const gap=d.st-d.h;const gl=gap>0?`Gap: <span class="gap-num">${gap}</span>`:'<span style="color:var(--green);font-weight:700">Covered</span>';c.innerHTML+=`<div class="mg-row"><div class="mg-spec">${d.s}</div><div class="mg-visual"><div class="mg-have" style="width:${hp}%">${d.h}</div>${np>0?`<div class="mg-need" style="width:${np}%"></div>`:''}</div><div class="mg-stats">${d.st} seeking · ${gl}</div></div>`})}
 
-    const trajectoryData = [
-        { year: 2021, grads: 316, rate: 97.8 },
-        { year: 2022, grads: 324, rate: 99.1 },
-        { year: 2023, grads: 320, rate: 98.4 },
-        { year: 2024, grads: 312, rate: 99.3 },
-        { year: 2025, grads: 316, rate: 100.0 }
-    ];
+function renderEngage(){const bar=document.getElementById('engage-bar');const leg=document.getElementById('engage-legend');if(!bar||!leg)return;const total=engD.reduce((a,b)=>a+b.count,0);bar.innerHTML='';leg.innerHTML='';engD.forEach(d=>{const pct=(d.count/total)*100;bar.innerHTML+=`<div class="engage-seg" style="width:${pct}%;background:${d.color}">${pct>8?d.count:''}</div>`;leg.innerHTML+=`<div class="engage-legend-item"><span class="engage-dot" style="background:${d.color}"></span>${d.label} (${d.count})</div>`})}
 
-    const specialtyData = [
-        { name: 'Internal Medicine', count: 85, pct: 26.9 },
-        { name: 'Family Medicine', count: 76, pct: 24.0 },
-        { name: 'Emergency Medicine', count: 36, pct: 11.4 },
-        { name: 'Pediatrics', count: 24, pct: 7.6 },
-        { name: 'Psychiatry', count: 22, pct: 6.9 },
-        { name: 'Anesthesiology', count: 17, pct: 5.4 },
-        { name: 'Transitional Year', count: 14, pct: 4.4 },
-        { name: 'OB-GYN', count: 9, pct: 2.8 },
-        { name: 'Neurology', count: 8, pct: 2.5 },
-        { name: 'Surgery', count: 5, pct: 1.6 },
-        { name: 'Pathology', count: 5, pct: 1.6 },
-        { name: 'Orthopedic Surgery', count: 3, pct: 0.9 }
-    ];
+function updateCampus(){const s=document.getElementById('overview-stats');const o={pomona:{g:'209',pc:'56.2%',st:'28',sn:'72% remain in California'},lebanon:{g:'107',pc:'64.3%',st:'12',sn:'42% in Oregon + Washington'}};if(campus==='all'){document.getElementById('stat-grads').textContent='316';s.children[0].querySelector('.sc-note').textContent='209 Pomona · 107 Lebanon';s.children[2].querySelector('.sc-value').textContent='58.9%';s.children[3].querySelector('.sc-value').textContent='38';s.children[3].querySelector('.sc-note').textContent='58.5% remain in California';document.getElementById('campus-panel').style.display=''}else{const d=o[campus];document.getElementById('stat-grads').textContent=d.g;s.children[0].querySelector('.sc-note').textContent=campus==='pomona'?'Pomona campus':'Lebanon campus';s.children[2].querySelector('.sc-value').textContent=d.pc;s.children[3].querySelector('.sc-value').textContent=d.st;s.children[3].querySelector('.sc-note').textContent=d.sn;document.getElementById('campus-panel').style.display='none'}}
 
-    const geoData = [
-        { state: 'California', count: 185, pct: 58.5 },
-        { state: 'Oregon', count: 25, pct: 7.9 },
-        { state: 'Washington', count: 14, pct: 4.4 },
-        { state: 'Pennsylvania', count: 13, pct: 4.1 },
-        { state: 'Michigan', count: 8, pct: 2.5 },
-        { state: 'Texas', count: 7, pct: 2.2 },
-        { state: 'Arizona', count: 6, pct: 1.9 },
-        { state: 'Nevada', count: 6, pct: 1.9 },
-        { state: 'New Mexico', count: 6, pct: 1.9 },
-        { state: 'Ohio', count: 6, pct: 1.9 }
-    ];
-
-    const mentorGapData = [
-        { spec: 'Internal Medicine', have: 68, need: 85, students: 32 },
-        { spec: 'Family Medicine', have: 72, need: 76, students: 28 },
-        { spec: 'Emergency Medicine', have: 14, need: 36, students: 22 },
-        { spec: 'Pediatrics', have: 22, need: 24, students: 18 },
-        { spec: 'Psychiatry', have: 8, need: 22, students: 15 },
-        { spec: 'Surgery', have: 4, need: 18, students: 14 },
-        { spec: 'Orthopedic Surgery', have: 2, need: 12, students: 12 },
-        { spec: 'Anesthesiology', have: 10, need: 17, students: 8 }
-    ];
-
-    // Campus-specific overrides (sample)
-    const campusOverrides = {
-        pomona: { grads: '209', placement: '100%', primaryCare: '56.2%', states: '28', statesNote: '72% remain in California' },
-        lebanon: { grads: '107', placement: '100%', primaryCare: '64.3%', states: '12', statesNote: '42% in Oregon + Washington' }
-    };
-
-    // ══════════════════════════════
-    // RENDERERS
-    // ══════════════════════════════
-
-    function renderTrajectory(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        container.innerHTML = '';
-        const minRate = 96;
-        trajectoryData.forEach(d => {
-            const barHeight = ((d.rate - minRate) / (100 - minRate)) * 110 + 10;
-            const color = d.rate === 100 ? 'var(--gold)' : 'var(--burgundy)';
-            container.innerHTML += `
-                <div class="trajectory-year">
-                    <div class="trajectory-bar-wrap">
-                        <div class="trajectory-bar" style="height:${barHeight}px; background:${color};"></div>
-                    </div>
-                    <div class="trajectory-rate">${d.rate}%</div>
-                    <div class="trajectory-label">${d.year}</div>
-                    <div class="trajectory-grad">${d.grads} grads</div>
-                </div>`;
-        });
-    }
-
-    function renderSpecialtyBars(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        container.innerHTML = '';
-        const maxPct = specialtyData[0].pct;
-        specialtyData.forEach((d, i) => {
-            const w = (d.pct / maxPct) * 100;
-            const cls = i % 2 === 0 ? 'burg' : 'gold';
-            container.innerHTML += `
-                <div class="hbar-row">
-                    <div class="hbar-label">${d.name}</div>
-                    <div class="hbar-track">
-                        <div class="hbar-fill ${cls}" style="width:${w}%;">${d.pct > 5 ? d.count : ''}</div>
-                    </div>
-                    <div class="hbar-value">${d.pct}%</div>
-                </div>`;
-        });
-    }
-
-    function renderGeoBars(containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        container.innerHTML = '';
-        const maxCount = geoData[0].count;
-        geoData.forEach((d, i) => {
-            const w = (d.count / maxCount) * 100;
-            const color = i < 3 ? 'var(--burgundy)' : 'var(--gold)';
-            container.innerHTML += `
-                <div class="geo-bar-row">
-                    <div class="geo-bar-state">${d.state}</div>
-                    <div class="geo-bar-count">${d.count}</div>
-                    <div class="geo-bar-track">
-                        <div class="geo-bar-fill" style="width:${w}%; background:${color};"></div>
-                    </div>
-                </div>`;
-        });
-    }
-
-    function renderMentorGaps() {
-        const container = document.getElementById('mentor-gap-bars');
-        if (!container) return;
-        container.innerHTML = '';
-        mentorGapData.forEach(d => {
-            const total = d.need;
-            const havePct = (d.have / total) * 100;
-            const needPct = 100 - havePct;
-            const gap = d.students - d.have;
-            const gapLabel = gap > 0 ? `Gap: <span class="gap-num">${gap}</span>` : '<span style="color:var(--signal-green);font-weight:700;">Covered</span>';
-            container.innerHTML += `
-                <div class="mentor-gap-row">
-                    <div class="mentor-gap-spec">${d.spec}</div>
-                    <div class="mentor-gap-visual">
-                        <div class="mentor-gap-have" style="width:${havePct}%;">${d.have}</div>
-                        ${needPct > 0 ? `<div class="mentor-gap-need" style="width:${needPct}%;"></div>` : ''}
-                    </div>
-                    <div class="mentor-gap-stats">${d.students} seeking · ${gapLabel}</div>
-                </div>`;
-        });
-    }
-
-    function updateCampusData() {
-        const statCards = document.getElementById('overview-stats');
-        if (currentCampus === 'all') {
-            document.getElementById('stat-grads').textContent = '316';
-            statCards.children[0].querySelector('.stat-card-note').textContent = '209 Pomona · 107 Lebanon';
-            statCards.children[3].querySelector('.stat-card-value').textContent = '38';
-            statCards.children[3].querySelector('.stat-card-note').textContent = '58.5% remain in California';
-            statCards.children[2].querySelector('.stat-card-value').textContent = '58.9%';
-            document.getElementById('campus-compare-panel').style.display = '';
-        } else {
-            const d = campusOverrides[currentCampus];
-            document.getElementById('stat-grads').textContent = d.grads;
-            statCards.children[0].querySelector('.stat-card-note').textContent = currentCampus === 'pomona' ? 'Pomona campus' : 'Lebanon campus';
-            statCards.children[3].querySelector('.stat-card-value').textContent = d.states;
-            statCards.children[3].querySelector('.stat-card-note').textContent = d.statesNote;
-            statCards.children[2].querySelector('.stat-card-value').textContent = d.primaryCare;
-            document.getElementById('campus-compare-panel').style.display = 'none';
-        }
-    }
-
-    // ══════════════════════════════
-    // INITIALIZE
-    // ══════════════════════════════
-
-    renderTrajectory('trajectory-chart');
-    renderTrajectory('coca-trajectory-chart');
-    renderSpecialtyBars('specialty-bars');
-    renderGeoBars('geo-bars');
-    renderGeoBars('locator-geo-bars');
-    renderMentorGaps();
-
-    // Review Draft buttons — just a demo interaction
-    document.querySelectorAll('.action-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            this.textContent = '✓ Queued';
-            this.style.background = 'var(--signal-green)';
-            this.style.cursor = 'default';
-        });
-    });
+renderTraj('traj-chart');renderTraj('coca-traj');renderSpec();renderGeo('geo-bars');renderGeo('loc-geo-bars');renderMG();renderEngage();
+document.querySelectorAll('.action-btn').forEach(b=>{b.addEventListener('click',function(){this.textContent='✓ Queued';this.style.background='var(--green)';this.style.cursor='default';this.style.boxShadow='0 2px 6px rgba(39,103,73,0.3)'})});
 </script>
 </body>
 </html>
