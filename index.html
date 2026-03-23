@@ -182,6 +182,30 @@
         .sf-note{text-align:center;font-size:12px;color:var(--g400);padding:10px 0 6px}
         .sf-note strong{color:var(--g900)}
 
+        /* ── DRAFT PANEL ── */
+        .draft-panel{
+            max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s ease;
+            background:var(--white);border-top:1px dashed var(--g300);
+        }
+        .draft-panel.open{max-height:600px;padding:20px 24px 20px 28px}
+        .draft-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--burg);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+        .draft-label::before{content:'✉';font-size:14px}
+        .draft-to{font-size:12px;color:var(--g400);margin-bottom:4px}
+        .draft-subject{font-size:14px;font-weight:700;color:var(--g900);margin-bottom:12px}
+        .draft-body{font-size:13px;color:var(--g500);line-height:1.7;max-width:640px}
+        .draft-body p{margin-bottom:10px}
+        .draft-body .sig-line{color:var(--g400);font-style:italic;margin-top:16px;padding-top:12px;border-top:1px solid var(--g200);font-size:12px}
+        .draft-body .opt-out{font-size:11px;color:var(--g400);margin-top:12px}
+        .draft-actions{display:flex;gap:10px;margin-top:16px;padding-top:14px;border-top:1px solid var(--g200)}
+        .draft-actions button{padding:8px 18px;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font-b);transition:all .2s;border:none}
+        .draft-btn-send{background:var(--burg);color:#fff;box-shadow:0 2px 6px rgba(139,34,48,0.2)}
+        .draft-btn-send:hover{background:var(--burg-dark)}
+        .draft-btn-edit{background:var(--g100);color:var(--g900);border:1px solid var(--g300)}
+        .draft-btn-edit:hover{background:var(--g200)}
+        .draft-btn-skip{background:transparent;color:var(--g400)}
+        .draft-btn-skip:hover{color:var(--g900)}
+        .draft-note{font-size:11px;color:var(--g400);font-style:italic;margin-top:10px}
+
         /* ── GUARDRAILS ── */
         .guardrails{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:18px}
         .guardrail{display:flex;align-items:flex-start;gap:10px;padding:16px;background:var(--g50);border-radius:var(--r-sm);font-size:13px;color:var(--g500);line-height:1.5;border:1px solid var(--g200)}
@@ -374,6 +398,8 @@
             .stat-card.hero .sc-value{font-size:34px}
             .sig-top{padding:16px 14px 12px 20px}.sig-action{padding:12px 14px 12px 20px;flex-wrap:wrap}
             .act-btn{margin-left:0;margin-top:8px;width:100%;text-align:center;padding:12px;min-height:44px;font-size:13px}
+            .draft-panel.open{padding:16px 16px 16px 20px}
+            .draft-actions{flex-wrap:wrap}.draft-actions button{flex:1;min-width:100px;min-height:44px}
             .campus-btn{min-height:44px;padding:10px 18px}
             .tab-btn{min-height:44px;padding:10px 16px}
             .coca-compare,.campus-compare{grid-template-columns:1fr}.rm-phases{grid-template-columns:1fr}
@@ -470,7 +496,29 @@
                     <div class="sig-layers"><span class="sig-tag on">Detected</span><span class="sig-tag on">Enriched</span><span class="sig-tag on">Action Ready</span><span class="sig-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Personal note acknowledging move, mention Lebanon campus growth, invite mentor conversation</div><button class="act-btn">Review Draft</button></div>
+            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Personal note acknowledging move, mention Lebanon campus growth, invite mentor conversation</div><button class="act-btn" onclick="toggleDraft(this)">Review Draft</button></div>
+            <div class="draft-panel">
+                <div class="draft-label">Draft Outreach — Ready for Review</div>
+                <div class="draft-to">To: Dr. James Park, DO '19</div>
+                <div class="draft-subject">Subject: Congratulations on the move to Portland</div>
+                <div class="draft-body">
+                    <p>Dear Dr. Park,</p>
+                    <p>I hope this message finds you well. We noticed your recent move to Portland — congratulations on this new chapter.</p>
+                    <p>You may not know that our COMP-Northwest campus in Lebanon is just 18 miles south of you now. The campus is growing, and I'm especially excited about the students we have this year — several with a strong interest in orthopedic surgery and a real passion for the work.</p>
+                    <p>It always starts with the people around you — the individuals who influence and inspire. For our students, that connection with someone who's walked the path they're just beginning can be truly meaningful. Even a brief conversation can help them find the right place for the right passions.</p>
+                    <p>Would you be open to connecting with a student? No commitment required — just a conversation. We'd handle all the coordination.</p>
+                    <p>We're proud to count you among our graduates, and it's wonderful to have you closer to the COMP-Northwest community.</p>
+                    <p>With warm regards,</p>
+                    <p class="sig-line">Office of the Dean<br>College of Osteopathic Medicine of the Pacific</p>
+                    <p class="opt-out">If you'd prefer not to receive outreach from COMP, you can opt out here with one click. No questions asked.</p>
+                </div>
+                <div class="draft-actions">
+                    <button class="draft-btn-send" onclick="approveDraft(this)">Approve &amp; Send</button>
+                    <button class="draft-btn-edit">Edit Before Sending</button>
+                    <button class="draft-btn-skip">Skip This One</button>
+                </div>
+                <div class="draft-note">A coordinator reviews every draft before it sends. This is a sample — the live system personalizes based on real data.</div>
+            </div>
         </div>
 
         <div class="signal-card t-pub anim-in" style="animation-delay:.3s">
@@ -484,7 +532,28 @@
                     <div class="sig-layers"><span class="sig-tag on">Detected</span><span class="sig-tag on">Enriched</span><span class="sig-tag on">Action Ready</span><span class="sig-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Achievement recognition from Dean's office, invite to guest lecture or Future of Medicine feature</div><button class="act-btn">Review Draft</button></div>
+            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Achievement recognition from Dean's office, invite to guest lecture or Future of Medicine feature</div><button class="act-btn" onclick="toggleDraft(this)">Review Draft</button></div>
+            <div class="draft-panel">
+                <div class="draft-label">Draft Outreach — Ready for Review</div>
+                <div class="draft-to">To: Dr. Maria Santos, DO '16</div>
+                <div class="draft-subject">Subject: Your recent publication — well done</div>
+                <div class="draft-body">
+                    <p>Dear Dr. Santos,</p>
+                    <p>I wanted to reach out personally to congratulate you on your recent publication in the Journal of Pediatrics. A first-authored study on adolescent care outcomes in underserved communities — that is exactly the kind of work that makes me deeply proud to be connected to our COMP graduates.</p>
+                    <p>It was also wonderful to see you at the alumni reunion in October. Your continued connection to our community means more than you know.</p>
+                    <p>I'd love to explore a couple of possibilities with you, if you're open to it. We're always looking for alumni whose work and experience can inspire our current students — whether through a guest lecture, a feature in our Future of Medicine magazine, or simply sharing your story with students who are finding their own path in pediatrics.</p>
+                    <p>The world needs the kind of physician you've become. Our students would benefit from hearing how you got there.</p>
+                    <p>With warm regards,</p>
+                    <p class="sig-line">Office of the Dean<br>College of Osteopathic Medicine of the Pacific</p>
+                    <p class="opt-out">If you'd prefer not to receive outreach from COMP, you can opt out here with one click. No questions asked.</p>
+                </div>
+                <div class="draft-actions">
+                    <button class="draft-btn-send" onclick="approveDraft(this)">Approve &amp; Send</button>
+                    <button class="draft-btn-edit">Edit Before Sending</button>
+                    <button class="draft-btn-skip">Skip This One</button>
+                </div>
+                <div class="draft-note">A coordinator reviews every draft before it sends. This is a sample — the live system personalizes based on real data.</div>
+            </div>
         </div>
 
         <div class="signal-card t-cred anim-in" style="animation-delay:.35s">
@@ -498,7 +567,28 @@
                     <div class="sig-layers"><span class="sig-tag on">Detected</span><span class="sig-tag on">Enriched</span><span class="sig-tag on">Action Ready</span><span class="sig-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Congratulations on fellowship, warm invitation to mentor a student pursuing EM</div><button class="act-btn">Review Draft</button></div>
+            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Congratulations on fellowship, warm invitation to mentor a student pursuing EM</div><button class="act-btn" onclick="toggleDraft(this)">Review Draft</button></div>
+            <div class="draft-panel">
+                <div class="draft-label">Draft Outreach — Ready for Review</div>
+                <div class="draft-to">To: Dr. Alex Tran, DO '20</div>
+                <div class="draft-subject">Subject: Fellowship complete — congratulations, Dr. Tran</div>
+                <div class="draft-body">
+                    <p>Dear Dr. Tran,</p>
+                    <p>Congratulations on completing your Emergency Medicine fellowship. That is a significant milestone, and I am deeply proud to see a COMP graduate reach it.</p>
+                    <p>I'm reaching out because we have seven current students who've listed Emergency Medicine as their top interest. They're dedicated, motivated, and working hard to earn their place — and I know from experience that the right mentor at the right moment can shape an entire career.</p>
+                    <p>You carry with you not just the clinical expertise but the experience of having walked this path yourself. That perspective is something our students can't get from a textbook.</p>
+                    <p>Would you be open to connecting with a student? Even a single conversation can make a meaningful difference. We'd take care of all the coordination.</p>
+                    <p>With warm regards,</p>
+                    <p class="sig-line">Office of the Dean<br>College of Osteopathic Medicine of the Pacific</p>
+                    <p class="opt-out">If you'd prefer not to receive outreach from COMP, you can opt out here with one click. No questions asked.</p>
+                </div>
+                <div class="draft-actions">
+                    <button class="draft-btn-send" onclick="approveDraft(this)">Approve &amp; Send</button>
+                    <button class="draft-btn-edit">Edit Before Sending</button>
+                    <button class="draft-btn-skip">Skip This One</button>
+                </div>
+                <div class="draft-note">A coordinator reviews every draft before it sends. This is a sample — the live system personalizes based on real data.</div>
+            </div>
         </div>
 
         <div class="signal-card t-drop anim-in" style="animation-delay:.4s">
@@ -512,7 +602,32 @@
                     <div class="sig-layers"><span class="sig-tag on">Detected</span><span class="sig-tag on">Enriched</span><span class="sig-tag on">Action Ready</span><span class="sig-tag">Awaiting Response</span></div>
                 </div>
             </div>
-            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Reunion-anchored reconnection campaign — personalized by specialty and geography</div><button class="act-btn">Review Campaign</button></div>
+            <div class="sig-action"><div class="act-tag">Suggested</div><div class="act-text">Reunion-anchored reconnection campaign — personalized by specialty and geography</div><button class="act-btn" onclick="toggleDraft(this)">Review Campaign</button></div>
+            <div class="draft-panel">
+                <div class="draft-label">Campaign Brief — Ready for Review</div>
+                <div class="draft-to">To: 47 alumni, Class of 2018 — segmented by specialty cluster and region</div>
+                <div class="draft-subject">Subject: It's been a while — your reunion year is coming up</div>
+                <div class="draft-body">
+                    <p>Dear Dr. [Name],</p>
+                    <p>It's been a while since we've connected, and I wanted to reach out. Your reunion milestone is approaching, and it felt like the right time.</p>
+                    <p>A lot has happened at COMP since you graduated — and I'd imagine a lot has happened for you, too. Whether you're [practicing specialty] in [city/state], exploring new opportunities, or simply open to reconnecting, I want you to know there's a place for you here. There always is.</p>
+                    <p>It always starts with the people around you. Our community is stronger when graduates like you stay connected — to each other, to our current students, and to the mission that brought us all here in the first place.</p>
+                    <p>A few things that might interest you:</p>
+                    <p>• COMP-Northwest in Lebanon, OR is growing — if you're in the Pacific Northwest, there's a community forming that would welcome you<br>
+                    • Several of our current students are pursuing [specialty] and would deeply benefit from your mentorship and experience<br>
+                    • Your reunion is coming up — details to follow, but I wanted you to hear it from us first</p>
+                    <p>No ask here. Just an open door, whenever you'd like to walk through it.</p>
+                    <p>With warm regards,</p>
+                    <p class="sig-line">Office of the Dean<br>College of Osteopathic Medicine of the Pacific</p>
+                    <p class="opt-out">If you'd prefer not to receive outreach from COMP, you can opt out here with one click. No questions asked.</p>
+                </div>
+                <div class="draft-actions">
+                    <button class="draft-btn-send" onclick="approveDraft(this)">Approve Campaign</button>
+                    <button class="draft-btn-edit">Edit Template</button>
+                    <button class="draft-btn-skip">Skip This Cycle</button>
+                </div>
+                <div class="draft-note">Each message personalizes automatically — [Name], [specialty], [city/state] populated from alumni records. A coordinator reviews the template before any messages send.</div>
+            </div>
         </div>
 
         <div class="sf-note"><strong>A human reviews and decides — every time.</strong> The system surfaces the moment. People make it meaningful.</div>
@@ -826,14 +941,50 @@ function updateAll() {
 // ═══ INIT ═══
 updateAll();
 
-document.querySelectorAll('.act-btn').forEach(b => {
-    b.addEventListener('click', function() {
-        this.textContent = '✓ Queued';
-        this.style.background = 'var(--green)';
-        this.style.cursor = 'default';
-        this.style.boxShadow = '0 2px 6px rgba(39,103,73,0.25)';
+// ═══ DRAFT PANEL INTERACTIONS ═══
+function toggleDraft(btn) {
+    const card = btn.closest('.signal-card');
+    const panel = card.querySelector('.draft-panel');
+    const isOpen = panel.classList.contains('open');
+
+    // Close all other open drafts first
+    document.querySelectorAll('.draft-panel.open').forEach(p => {
+        if (p !== panel) {
+            p.classList.remove('open');
+            const ob = p.closest('.signal-card').querySelector('.act-btn');
+            if (ob && ob !== btn) { ob.textContent = ob.dataset.label || 'Review Draft'; ob.style.background = ''; }
+        }
     });
-});
+
+    if (isOpen) {
+        panel.classList.remove('open');
+        btn.textContent = btn.dataset.label || 'Review Draft';
+        btn.style.background = '';
+    } else {
+        if (!btn.dataset.label) btn.dataset.label = btn.textContent;
+        panel.classList.add('open');
+        btn.textContent = 'Close';
+        btn.style.background = 'var(--g500)';
+        setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 150);
+    }
+}
+
+function approveDraft(btn) {
+    const panel = btn.closest('.draft-panel');
+    const card = panel.closest('.signal-card');
+    const actBtn = card.querySelector('.act-btn');
+
+    actBtn.textContent = '✓ Sent';
+    actBtn.style.background = 'var(--green)';
+    actBtn.style.boxShadow = '0 2px 6px rgba(39,103,73,0.25)';
+    actBtn.style.cursor = 'default';
+    actBtn.onclick = null;
+
+    const tags = card.querySelectorAll('.sig-tag');
+    if (tags.length >= 4) { tags[3].textContent = 'Sent'; tags[3].classList.add('on'); }
+
+    setTimeout(() => panel.classList.remove('open'), 300);
+}
 </script>
 </body>
 </html>
