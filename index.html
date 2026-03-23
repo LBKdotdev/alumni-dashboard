@@ -446,11 +446,11 @@
 <div class="container">
     <div class="filter-row">
         <div class="campus-buttons">
-            <button class="campus-btn active" data-campus="all">All Campuses</button>
+            <button class="campus-btn active" data-campus="all">Both Campuses</button>
             <button class="campus-btn" data-campus="pomona">Pomona</button>
             <button class="campus-btn" data-campus="lebanon">Lebanon</button>
         </div>
-        <div class="filter-label" id="filter-label">All Campuses</div>
+        <div class="filter-label" id="filter-label">Both Campuses</div>
     </div>
     <div class="tabs-container">
         <button class="tab-btn active" data-tab="overview">Overview</button>
@@ -479,7 +479,7 @@
             <div class="ef-programs">
                 <div class="ef-program"><span class="ef-dot m"></span><strong>Mentorship</strong> — right mentor, right moment</div>
                 <div class="ef-program"><span class="ef-dot c"></span><strong>CME &amp; Guest Faculty</strong> — surface who to invite</div>
-                <div class="ef-program"><span class="ef-dot e"></span><strong>Events &amp; Reunions</strong> — personal, not blast-and-hope</div>
+                <div class="ef-program"><span class="ef-dot e"></span><strong>Events &amp; Reunions</strong> — the right people in the right room</div>
             </div>
         </div>
 
@@ -563,7 +563,7 @@
                     <div class="sig-meta"><div class="sig-type cred">Credential Update</div><div class="sig-source">Source: NPI Specialty Code Change</div></div>
                     <div class="sig-headline">Dr. Alex Tran, DO '20 — Emergency Medicine Fellowship Completed</div>
                     <div class="sig-insight cred">Mentor availability opportunity</div>
-                    <div class="sig-detail">Now board-certified EM attending, San Diego. Seven COMP students listed Emergency Medicine as top interest. Not yet registered as a mentor.</div>
+                    <div class="sig-detail">Now board-certified EM attending, San Diego. Seven COMP students listed Emergency Medicine as top interest. Not currently connected as a mentor.</div>
                     <div class="sig-layers"><span class="sig-tag on">Detected</span><span class="sig-tag on">Enriched</span><span class="sig-tag on">Action Ready</span><span class="sig-tag">Awaiting Response</span></div>
                 </div>
             </div>
@@ -688,7 +688,7 @@
                 <div class="coca-side after"><div class="coca-side-label">The Possibility</div><div class="coca-side-icon">✓</div><div class="coca-side-text">Graduate outcomes that stay current on their own — because the same signals powering alumni engagement are the data COCA needs. Pull the report. It's already there.</div></div>
             </div>
         </div>
-        <div class="panel"><div class="panel-title">What's Always Ready to Report</div>
+        <div class="panel"><div class="panel-title">What This Makes Ready to Report</div>
             <div class="readiness-list">
                 <div class="readiness-item"><div class="readiness-icon">📊</div><div class="readiness-text"><h5>Match Rates by Year</h5><p>Four-year rolling averages, updated each Match Day.</p></div></div>
                 <div class="readiness-item"><div class="readiness-icon">🏥</div><div class="readiness-text"><h5>Graduate Practice Locations</h5><p>Verified through NPI address data. Billing keeps it current.</p></div></div>
@@ -783,7 +783,7 @@
 const tabBtns=document.querySelectorAll('.tab-btn'),tabCs=document.querySelectorAll('.tab-content'),campBtns=document.querySelectorAll('.campus-btn');
 let campus='all';
 tabBtns.forEach(b=>{b.addEventListener('click',()=>{tabBtns.forEach(x=>x.classList.remove('active'));tabCs.forEach(x=>x.classList.remove('active'));b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active')})});
-campBtns.forEach(b=>{b.addEventListener('click',()=>{campBtns.forEach(x=>x.classList.remove('active'));b.classList.add('active');campus=b.dataset.campus;document.getElementById('filter-label').textContent={all:'All Campuses',pomona:'Pomona, CA',lebanon:'Lebanon, OR'}[campus];updateAll()})});
+campBtns.forEach(b=>{b.addEventListener('click',()=>{campBtns.forEach(x=>x.classList.remove('active'));b.classList.add('active');campus=b.dataset.campus;document.getElementById('filter-label').textContent={all:'Both Campuses',pomona:'Pomona, CA',lebanon:'Lebanon, OR'}[campus];updateAll()})});
 
 // ═══ CAMPUS-AWARE DATA ═══
 
