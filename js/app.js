@@ -9,6 +9,7 @@ import { renderQueue, wireQueueEvents } from './views/queue.js'
 import { renderDirectory, wireDirectoryEvents } from './views/directory.js'
 import { renderProfile, wireProfileEvents } from './views/profile.js'
 import { renderDashboard, wireDashboardEvents } from './views/dashboard.js'
+import { renderProjects, wireProjectsEvents } from './views/projects.js'
 import { renderOutreachPanel, closeOutreachPanel } from './panels/outreach.js'
 
 // ── Data Init ──
@@ -95,6 +96,9 @@ function render() {
     case 'dashboard':
       root.innerHTML = renderDashboard(state)
       break
+    case 'projects':
+      root.innerHTML = renderProjects(state)
+      break
     default:
       root.innerHTML = renderQueue(state)
   }
@@ -150,6 +154,7 @@ function wireEvents() {
     case 'directory': wireDirectoryEvents(state); break
     case 'profile': wireProfileEvents(state); break
     case 'dashboard': wireDashboardEvents(state); break
+    case 'projects': wireProjectsEvents(state); break
   }
 }
 

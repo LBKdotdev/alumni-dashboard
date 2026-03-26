@@ -2,13 +2,13 @@
 
 ## Board 1: Projects Foundation (18 pts)
 ### Ready
-- {projects landing view, add to, js/views/} · 5 · ~A
 - {AACOM Vegas seed data, add to, projects.json} · 3 · ~A
 ### In Progress
 ### Done
 - {projects.json data file, add to, data/} · 3 · ~A ✅
 - {projects nav item, add to, sidebar + mobile nav} · 3 · ~A ✅
 - {projects state management, add to, state.js} · 3 · ~A ✅
+- {projects landing view, add to, js/views/} · 5 · ~A ✅
 
 ## Board 2: Project Detail View (21 pts)
 ### Ready
