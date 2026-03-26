@@ -198,5 +198,9 @@ export function wireDirectoryEvents(state) {
   const prevBtn = document.querySelector('[data-action="page-prev"]')
   const nextBtn = document.querySelector('[data-action="page-next"]')
   if (prevBtn) prevBtn.addEventListener('click', () => { if (currentPage > 0) { currentPage--; forceRender() } })
-  if (nextBtn) nextBtn.addEventListener('click', () => { currentPage++; forceRender() })
+  if (nextBtn) nextBtn.addEventListener('click', () => {
+    const filtered = sortAlumni(filterAlumni(state.alumni, state.directoryFilters, state.directorySearch), state.directorySortBy)
+    const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
+    if (currentPage < totalPages - 1) { currentPage++; forceRender() }
+  })
 }

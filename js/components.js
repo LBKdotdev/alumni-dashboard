@@ -130,7 +130,7 @@ export function renderStatusDot(status, size = 'sm') {
 
 export function renderSOAPCard() {
   const mentors = [
-    { name: 'Dr. Maria Santos', detail: "Family Medicine, Bakersfield \u2014 SOAP '21", id: 'alumni_003' },
+    { name: 'Dr. Maria Santos', detail: "Family Medicine, Bakersfield \u2014 SOAP '21", id: null },
     { name: 'Dr. Ryan Park', detail: "Internal Medicine, Portland \u2014 SOAP '20", id: null },
     { name: 'Dr. Nicole Adams', detail: "Pediatrics, Eugene \u2014 SOAP '22", id: null },
   ]
@@ -169,10 +169,9 @@ export function renderSOAPCard() {
             "I was in your shoes three years ago. It turned out to be the best thing that ever happened to me."
           </blockquote>
 
-          <button class="flex items-center gap-1 text-sm font-semibold text-burgundy" data-action="navigate" data-view="profile" data-id="alumni_003" style="transition:color 0.15s;">
-            View SOAP mentor profiles
-            <svg class="icon icon-sm"><use href="./css/icons.svg#chevron-right"></use></svg>
-          </button>
+          <span class="flex items-center gap-1 text-sm font-semibold text-gray-400" style="font-style:italic;">
+            SOAP mentor profiles &mdash; available when pipeline is live
+          </span>
         </div>
       </div>
     </div>
@@ -193,7 +192,7 @@ export function renderHumanReviewsBadge() {
 }
 
 export function renderSampleDataDisclaimer() {
-  return `<p class="disclaimer">All data shown is sample/illustrative. Built to demonstrate system capabilities using realistic scenarios. No actual alumni records are included.</p>`
+  return `<p class="disclaimer">Alumni data sourced from public federal NPPES database. Trigger scenarios are illustrative, demonstrating system capabilities. Personal details are voluntary and revocable.</p>`
 }
 
 export function renderFerpaNotice() {

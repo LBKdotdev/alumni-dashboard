@@ -69,10 +69,10 @@ export function renderOutreachPanel(state) {
             <svg class="icon icon-sm"><use href="./css/icons.svg#copy"></use></svg>
             <span id="copy-label">Copy to Clipboard</span>
           </button>
-          <button id="outreach-send" class="btn btn-primary" style="flex:1;justify-content:center">
+          ${draft.alumniId ? `<button id="outreach-send" class="btn btn-primary" style="flex:1;justify-content:center">
             <svg class="icon icon-sm"><use href="./css/icons.svg#send"></use></svg>
             <span id="send-label">Mark as Sent</span>
-          </button>
+          </button>` : `<span class="text-xs text-gray-400" style="flex:1;text-align:center;padding:8px">Group outreach \u2014 copy and send via your email client</span>`}
         </div>
         <button data-action="close-outreach" class="w-full text-center text-sm text-gray-400" style="padding:4px;transition:color 0.15s">
           Cancel

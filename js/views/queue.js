@@ -221,8 +221,9 @@ export function wireQueueEvents(state) {
     if (trigger?.suggested_outreach) {
       el.addEventListener('click', () => openOutreach({
         ...trigger.suggested_outreach,
-        alumniId: trigger.alumni_id,
+        alumniId: trigger.alumni_id || null,
         alumniName: trigger.alumni_name,
+        isGroupTrigger: !trigger.alumni_id,
       }))
     }
   })
