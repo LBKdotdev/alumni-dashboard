@@ -2,13 +2,13 @@
 
 ## Board 1: Projects Foundation (18 pts)
 ### Ready
-- {AACOM Vegas seed data, add to, projects.json} · 3 · ~A
 ### In Progress
 ### Done
 - {projects.json data file, add to, data/} · 3 · ~A ✅
 - {projects nav item, add to, sidebar + mobile nav} · 3 · ~A ✅
 - {projects state management, add to, state.js} · 3 · ~A ✅
 - {projects landing view, add to, js/views/} · 5 · ~A ✅
+- {AACOM Vegas seed data, add to, projects.json} · 3 · ~A ✅
 
 ## Board 2: Project Detail View (21 pts)
 ### Ready
@@ -19,7 +19,7 @@
 - {project intel brief tab, add to, project detail view} · 3 · ~A
 ### In Progress
 ### Done
-⛔ blocked by Board 1
+✅ unblocked — Board 1 complete
 
 ## Board 3: Visual Hierarchy (18 pts)
 ### Ready

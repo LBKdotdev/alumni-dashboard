@@ -120,6 +120,11 @@ export function filterAlumni(alumniList, filters, search) {
     result = result.filter(a => a.class_year === year)
   }
 
+  // State (practice_state)
+  if (filters.state && filters.state !== 'all') {
+    result = result.filter(a => a.professional.practice_state === filters.state)
+  }
+
   return result
 }
 

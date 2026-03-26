@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": "proj_vegas_2026",
+    "name": "AACOM Vegas 2026",
+    "type": "conference",
+    "date_range": {
+      "start": "2026-04-22",
+      "end": "2026-04-24"
+    },
+    "location": "Caesars Palace, Las Vegas",
+    "description": "AACOM Annual Conference — largest gathering of osteopathic medical educators. Dr. Warren's opportunity to reconnect with Nevada-based alumni, recruit dinner attendees, and strengthen COMP's alumni network presence in the Vegas metro.",
+    "filter": {
+      "state": "NV",
+      "campus": "all",
+      "specialty": "all",
+      "engagementType": [],
+      "tags": [],
+      "classYear": "all"
+    },
+    "checklist": [
+      { "task": "Pull Nevada alumni list", "done": true, "due_date": "2026-03-25" },
+      { "task": "Identify top 20 priority alumni for dinner", "done": false, "due_date": "2026-04-01" },
+      { "task": "Draft personalized outreach for priority alumni", "done": false, "due_date": "2026-04-05" },
+      { "task": "Send first wave of invitations", "done": false, "due_date": "2026-04-08" },
+      { "task": "Reserve dinner venue at Caesars", "done": false, "due_date": "2026-04-10" },
+      { "task": "Follow up with non-responders", "done": false, "due_date": "2026-04-15" },
+      { "task": "Finalize attendee list and seating", "done": false, "due_date": "2026-04-18" },
+      { "task": "Prepare talking points and intel briefs", "done": false, "due_date": "2026-04-20" }
+    ],
+    "outreach_template": {
+      "subject": "COMP Alumni Dinner at AACOM Vegas — You're Invited",
+      "body": "Dear Dr. {{last_name}},\n\nI hope this finds you well. As a fellow COMP graduate practicing in Nevada, I wanted to personally invite you to an alumni dinner we're hosting during the AACOM conference in Las Vegas.\n\nDate: Wednesday, April 22, 2026\nVenue: Caesars Palace\nTime: 7:00 PM\n\nThis is an informal gathering — a chance to reconnect with fellow DOs, hear about what's happening at Western U, and strengthen our alumni community in the region.\n\nI'd love to catch up and hear about your practice. Would you be able to join us?\n\nWarm regards,\nDr. Paula Warren\nAssociate Dean, Alumni Affairs\nWestern University of Health Sciences — COMP"
+    },
+    "brief": "## AACOM Vegas 2026 — Intel Brief\n\n**Conference:** AACOM Annual Meeting, April 22–24, Caesars Palace, Las Vegas\n\n**Our alumni in Nevada:** 168 COMP graduates practice in NV, with 134 in the Las Vegas metro area. Top specialties: Internal Medicine, Family Medicine, Emergency Medicine, Anesthesiology.\n\n**Key talking points:**\n- COMP's 2026 match rate and residency placement stats\n- New simulation center opening\n- Alumni mentorship program expansion\n- SOAP support outcomes\n\n**Priority reconnections:**\n- Alumni who haven't been contacted in 2+ years\n- High-engagement alumni (mentors, donors, preceptors) for recognition\n- Notable alumni for potential guest speaker invitations\n\n**Goal:** Secure 15–20 attendees for the alumni dinner. Reactivate dormant relationships. Identify 3–5 new mentors or advisory board candidates.",
+    "alumni_status": {}
+  }
+]
