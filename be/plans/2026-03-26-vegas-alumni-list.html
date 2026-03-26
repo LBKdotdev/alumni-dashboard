@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vegas Alumni — AACOM 2026</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #f8f7f5; color: #333; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .header {
+    background: #1a1a2e; color: #fff; padding: 24px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  }
+  .header-inner { max-width: 1000px; margin: 0 auto; }
+  .header h1 { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+  .header .subtitle { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .header .event-badge {
+    display: inline-block; margin-top: 8px; padding: 4px 12px;
+    background: rgba(111,195,223,0.15); border: 1px solid rgba(111,195,223,0.3);
+    border-radius: 20px; font-size: 11px; font-weight: 600; color: #6FC3DF;
+    letter-spacing: 0.03em;
+  }
+  .stats {
+    background: #fff; border-bottom: 1px solid #e5e5e5; padding: 16px 24px;
+  }
+  .stats-inner {
+    max-width: 1000px; margin: 0 auto;
+    display: flex; gap: 24px; flex-wrap: wrap;
+  }
+  .stat { text-align: center; }
+  .stat .num { font-size: 24px; font-weight: 800; color: #1a1a2e; }
+  .stat .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; }
+  .controls {
+    max-width: 1000px; margin: 0 auto; padding: 20px 24px 0;
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+  }
+  .search-box {
+    flex: 1; min-width: 200px; padding: 10px 16px; border: 1px solid #ddd;
+    border-radius: 8px; font-size: 14px; background: #fff;
+    transition: border-color 0.2s;
+  }
+  .search-box:focus { outline: none; border-color: #6FC3DF; }
+  .filter-select {
+    padding: 10px 16px; border: 1px solid #ddd; border-radius: 8px;
+    font-size: 13px; background: #fff; color: #555; cursor: pointer;
+  }
+  .result-count { font-size: 12px; color: #999; margin-left: auto; }
+  .table-wrap {
+    max-width: 1000px; margin: 16px auto 0; padding: 0 24px;
+  }
+  .section-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: #1a1a2e; margin: 24px 0 12px;
+    padding-bottom: 8px; border-bottom: 2px solid #1a1a2e;
+  }
+  .section-label span { color: #6FC3DF; margin-left: 8px; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: left; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: #999; padding: 8px 12px; border-bottom: 1px solid #e5e5e5;
+    background: #f8f7f5;
+  }
+  td { padding: 12px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+  tr:hover { background: rgba(111,195,223,0.04); }
+  .alumni-name { font-size: 14px; font-weight: 600; color: #1a1a2e; }
+  .alumni-meta { font-size: 12px; color: #999; margin-top: 2px; }
+  .spec-cell { font-size: 13px; color: #555; }
+  .phone-cell { font-size: 13px; white-space: nowrap; }
+  .pub-cell { font-size: 12px; color: #888; }
+  .phone-link { color: #1a6b8a; text-decoration: none; font-weight: 500; }
+  .phone-link:hover { text-decoration: underline; }
+  .no-data { color: #ddd; }
+  .resident-tag {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 11px; font-weight: 600; background: #f0e6ff; color: #7c3aed;
+  }
+  .resident-row { opacity: 0.6; }
+  tr.hidden-row { display: none; }
+  .footer {
+    max-width: 1000px; margin: 0 auto; padding: 32px 24px;
+    font-size: 11px; color: #bbb; text-align: center;
+    border-top: 1px solid #e5e5e5; margin-top: 32px;
+  }
+  .footer strong { color: #999; }
+  @media (max-width: 768px) {
+    .stats-inner { gap: 16px; }
+    .stat .num { font-size: 20px; }
+    th:nth-child(4), td:nth-child(4) { display: none; }
+    .controls { padding: 16px; }
+    .table-wrap { padding: 0 12px; }
+    td { padding: 10px 8px; }
+    .alumni-name { font-size: 13px; }
+  }
+  @media (max-width: 480px) {
+    th:nth-child(2), td:nth-child(2) { display: none; }
+    .header h1 { font-size: 17px; }
+  }
+  @media print {
+    .header { position: static; background: #fff; color: #000; box-shadow: none; border-bottom: 2px solid #000; }
+    .header .subtitle, .header .event-badge { color: #666; }
+    .controls { display: none; }
+    .stats { border: 1px solid #ccc; }
+    body { background: #fff; }
+    .phone-link { color: #000; }
+    .footer { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <h1>COMP Alumni in Nevada</h1>
+    <div class="subtitle">Western University of Health Sciences &mdash; College of Osteopathic Medicine</div>
+    <span class="event-badge">AACOM Educating Leaders &middot; April 22&ndash;24, 2026 &middot; Caesars Palace</span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat"><div class="num">134</div><div class="label">Vegas Metro</div></div>
+    <div class="stat"><div class="num">34</div><div class="label">Other Nevada</div></div>
+    <div class="stat"><div class="num">20</div><div class="label">Specialties</div></div>
+    <div class="stat"><div class="num">122</div><div class="label">Published</div></div>
+  </div>
+</div>
+
+<div class="controls">
+  <input type="text" class="search-box" id="search" placeholder="Search by name, specialty, or city..." autocomplete="off">
+  <select class="filter-select" id="spec-filter">
+    <option value="all">All Specialties</option>
+    <option value="no-students">Practicing Alumni Only</option>
+    <option value="Anesthesiology">Anesthesiology</option>
+<option value="Dermatology">Dermatology</option>
+<option value="Emergency Medicine">Emergency Medicine</option>
+<option value="Family Medicine">Family Medicine</option>
+<option value="General Practice">General Practice</option>
+<option value="Hospitalist">Hospitalist</option>
+<option value="Internal Medicine">Internal Medicine</option>
+<option value="OB/GYN">OB/GYN</option>
+<option value="Ophthalmology">Ophthalmology</option>
+<option value="Orthopedic Surgery">Orthopedic Surgery</option>
+<option value="Pain Medicine, Interventional Pain Medicine">Pain Medicine, Interventional Pain Medicine</option>
+<option value="Pediatrics">Pediatrics</option>
+<option value="Physical Medicine & Rehabilitation">Physical Medicine & Rehabilitation</option>
+<option value="Preventive Medicine, Occupational Medicine">Preventive Medicine, Occupational Medicine</option>
+<option value="Psychiatry">Psychiatry</option>
+<option value="Radiology, Diagnostic Radiology">Radiology, Diagnostic Radiology</option>
+<option value="Surgery">Surgery</option>
+<option value="Thoracic Surgery (Cardiothoracic Vascular Surgery)">Thoracic Surgery (Cardiothoracic Vascular Surgery)</option>
+<option value="Urology">Urology</option>
+  </select>
+  <span class="result-count" id="count">Showing 168 alumni</span>
+</div>
+
+<div class="table-wrap">
+  <div class="section-label">Las Vegas Metro<span>134</span></div>
+  <table id="vegas-table">
+    <thead><tr><th>Name</th><th>Specialty</th><th>Phone</th><th>Publications</th></tr></thead>
+    <tbody>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. andrewston ting" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Andrewston Ting, DO</div>
+        <div class="alumni-meta">Class of 2019 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-878-0070" class="phone-link">702-878-0070</a></td>
+      <td class="pub-cell">820 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. barry ewell" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Barry Ewell, D.O.</div>
+        <div class="alumni-meta">Class of 2002 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-383-2000" class="phone-link">702-383-2000</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. brian hager" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Brian Hager, DO</div>
+        <div class="alumni-meta">Class of 1988 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-686-9347" class="phone-link">702-686-9347</a></td>
+      <td class="pub-cell">98 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. david hammer" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. David Hammer, DO</div>
+        <div class="alumni-meta">Class of 2000 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-386-4700" class="phone-link">702-386-4700</a></td>
+      <td class="pub-cell">617 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. derek goffstein" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. DeRek Goffstein, D.O.</div>
+        <div class="alumni-meta">Class of 2004 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-878-0070" class="phone-link">702-878-0070</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. donald frank" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Donald Frank, DO</div>
+        <div class="alumni-meta">Class of 2001 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-877-8660" class="phone-link">702-877-8660</a></td>
+      <td class="pub-cell">2059 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. edward solis" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Edward Solis, DO</div>
+        <div class="alumni-meta">Class of 2004 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-386-4700" class="phone-link">702-386-4700</a></td>
+      <td class="pub-cell">167 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. gregson porteous" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Gregson Porteous, DO</div>
+        <div class="alumni-meta">Class of 1989 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-386-4700" class="phone-link">702-386-4700</a></td>
+      <td class="pub-cell">9 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. mark olson" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Mark Olson, DO</div>
+        <div class="alumni-meta">Class of 2020 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-562-5519" class="phone-link">702-562-5519</a></td>
+      <td class="pub-cell">2359 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. paul lee" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Paul Lee, Medical Doctor</div>
+        <div class="alumni-meta">Class of 2009 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:909-499-7767" class="phone-link">909-499-7767</a></td>
+      <td class="pub-cell">13831 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. rita ishkhanian" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Rita Ishkhanian, DO</div>
+        <div class="alumni-meta">Class of 2019 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-878-0070" class="phone-link">702-878-0070</a></td>
+      <td class="pub-cell">4 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. stephanie davidson" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Stephanie Davidson, DO</div>
+        <div class="alumni-meta">Class of 1995 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-878-0070" class="phone-link">702-878-0070</a></td>
+      <td class="pub-cell">1893 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. vincent lau" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Vincent Lau, D.O.</div>
+        <div class="alumni-meta">Class of 2017 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:408-887-9697" class="phone-link">408-887-9697</a></td>
+      <td class="pub-cell">307 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Dermatology" data-name="dr. alison tam" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Alison Tam, D.O.</div>
+        <div class="alumni-meta">Class of 2001 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Dermatology</td>
+      <td class="phone-cell"><a href="tel:702-822-2100" class="phone-link">702-822-2100</a></td>
+      <td class="pub-cell">924 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Dermatology" data-name="dr. andrea fong" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Andrea Fong, D.O.</div>
+        <div class="alumni-meta">Class of 1989 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Dermatology</td>
+      <td class="phone-cell"><a href="tel:702-796-7546" class="phone-link">702-796-7546</a></td>
+      <td class="pub-cell">689 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. christopher gadomski" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Christopher Gadomski, DO</div>
+        <div class="alumni-meta">Class of 2001 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-877-5114" class="phone-link">702-877-5114</a></td>
+      <td class="pub-cell">4 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. dale carrison" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Dale Carrison, DO</div>
+        <div class="alumni-meta">Class of 1987 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:330-493-4443" class="phone-link">330-493-4443</a></td>
+      <td class="pub-cell">7 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. darrin houston" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Darrin Houston, DO</div>
+        <div class="alumni-meta">Class of 1996 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-388-4500" class="phone-link">702-388-4500</a></td>
+      <td class="pub-cell">626 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. david obert" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. David Obert, DO</div>
+        <div class="alumni-meta">Class of 2002 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-383-1958" class="phone-link">702-383-1958</a></td>
+      <td class="pub-cell">44 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. jessica leduc" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jessica Leduc, D.O.</div>
+        <div class="alumni-meta">Class of 2007 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-259-1228" class="phone-link">702-259-1228</a></td>
+      <td class="pub-cell">4 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. kenneth chang" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kenneth Chang, DO</div>
+        <div class="alumni-meta">Class of 2019 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:800-342-2898" class="phone-link">800-342-2898</a></td>
+      <td class="pub-cell">11063 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. kevin slaughter" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kevin Slaughter, DO</div>
+        <div class="alumni-meta">Class of 1996 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-388-4500" class="phone-link">702-388-4500</a></td>
+      <td class="pub-cell">54 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. lance allgower" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Lance Allgower, DO</div>
+        <div class="alumni-meta">Class of 1998 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:972-915-3600" class="phone-link">972-915-3600</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. leslie denton" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Leslie DeNton, DO</div>
+        <div class="alumni-meta">Class of 2006 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-871-5005" class="phone-link">702-871-5005</a></td>
+      <td class="pub-cell">26 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. mehrdad ferdowsian" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Mehrdad Ferdowsian, DO</div>
+        <div class="alumni-meta">Class of 1997 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-802-5100" class="phone-link">702-802-5100</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. roya mahana" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Roya Mahana, D.O.</div>
+        <div class="alumni-meta">Class of 2016 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-961-5000" class="phone-link">702-961-5000</a></td>
+      <td class="pub-cell">1 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. russell lauver" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Russell Lauver, DO</div>
+        <div class="alumni-meta">Class of 2009 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-616-5815" class="phone-link">702-616-5815</a></td>
+      <td class="pub-cell">2 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. sean weaver" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Sean Weaver, D.O., M.P.H.</div>
+        <div class="alumni-meta">Class of 2013 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-383-7885" class="phone-link">702-383-7885</a></td>
+      <td class="pub-cell">1434 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. aron rogers" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Aron Rogers, DO</div>
+        <div class="alumni-meta">Class of 2000 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-992-6888" class="phone-link">702-992-6888</a></td>
+      <td class="pub-cell">3554 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. charlie lin" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Charlie Lin, D.O.</div>
+        <div class="alumni-meta">Class of 1998 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-952-9171" class="phone-link">702-952-9171</a></td>
+      <td class="pub-cell">50026 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. clement strumillo" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Clement Strumillo, D.O.</div>
+        <div class="alumni-meta">Class of 1988 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-315-4600" class="phone-link">702-315-4600</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. dana forte" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Dana Forte, DO</div>
+        <div class="alumni-meta">Class of 1992 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-240-8646" class="phone-link">702-240-8646</a></td>
+      <td class="pub-cell">160 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. daniel diaz" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Daniel Diaz, D.O.</div>
+        <div class="alumni-meta">Class of 2016 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-992-6888" class="phone-link">702-992-6888</a></td>
+      <td class="pub-cell">1113 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. daniel royal" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Daniel Royal, D.O.</div>
+        <div class="alumni-meta">Class of 1989 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-938-5055" class="phone-link">702-938-5055</a></td>
+      <td class="pub-cell">28 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. david gothelf" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. David Gothelf, D.O.</div>
+        <div class="alumni-meta">Class of 1988 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-269-9995" class="phone-link">702-269-9995</a></td>
+      <td class="pub-cell">214 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. david rivas" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. David Rivas, DO</div>
+        <div class="alumni-meta">Class of 1992 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-438-4003" class="phone-link">702-438-4003</a></td>
+      <td class="pub-cell">290 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. dylan rogers" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Dylan Rogers, DO</div>
+        <div class="alumni-meta">Class of 2019 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-990-2290" class="phone-link">702-990-2290</a></td>
+      <td class="pub-cell">1917 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. jason dorian" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jason Dorian, DO</div>
+        <div class="alumni-meta">Class of 2020 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-992-6888" class="phone-link">702-992-6888</a></td>
+      <td class="pub-cell">3 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. jason lao" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jason Lao, D.O.</div>
+        <div class="alumni-meta">Class of 2017 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-216-3346" class="phone-link">702-216-3346</a></td>
+      <td class="pub-cell">577 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. juan borja" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Juan Borja, DO</div>
+        <div class="alumni-meta">Class of 2006 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-655-0550" class="phone-link">702-655-0550</a></td>
+      <td class="pub-cell">162 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. karyn harries" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Karyn Harries, DO</div>
+        <div class="alumni-meta">Class of 1995 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:725-220-8706" class="phone-link">725-220-8706</a></td>
+      <td class="pub-cell">19 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. kevin urmaza" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kevin Urmaza, D.O.</div>
+        <div class="alumni-meta">Class of 2016 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-616-7049" class="phone-link">702-616-7049</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. kochy tang" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kochy Tang, DO</div>
+        <div class="alumni-meta">Class of 1998 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-837-1265" class="phone-link">702-837-1265</a></td>
+      <td class="pub-cell">6198 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. leroy fellows" data-city="north las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Leroy Fellows, DO</div>
+        <div class="alumni-meta">Class of 1998 &middot; North Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-791-9000" class="phone-link">702-791-9000</a></td>
+      <td class="pub-cell">178 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. lisa hohl" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Lisa Hohl, DO</div>
+        <div class="alumni-meta">Class of 1993 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-671-1000" class="phone-link">702-671-1000</a></td>
+      <td class="pub-cell">18 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. paul mchugh" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Paul McHugh, D.O.</div>
+        <div class="alumni-meta">Class of 1990 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-383-2000" class="phone-link">702-383-2000</a></td>
+      <td class="pub-cell">505 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. ronald hedger" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Ronald Hedger, DO</div>
+        <div class="alumni-meta">Class of 1984 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-777-1818" class="phone-link">702-777-1818</a></td>
+      <td class="pub-cell">64 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. stephanie lehrner" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Stephanie Lehrner, DO</div>
+        <div class="alumni-meta">Class of 2005 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-382-1599" class="phone-link">702-382-1599</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. tyler witzel" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Tyler Witzel, DO</div>
+        <div class="alumni-meta">Class of 2016 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-216-3346" class="phone-link">702-216-3346</a></td>
+      <td class="pub-cell">165 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. victor kim" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Victor Kim, DO</div>
+        <div class="alumni-meta">Class of 2011 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:725-205-2457" class="phone-link">725-205-2457</a></td>
+      <td class="pub-cell">957 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. yuan-chung chen" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Yuan-Chung Chen, D.O.</div>
+        <div class="alumni-meta">Class of 1995 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-260-7818" class="phone-link">702-260-7818</a></td>
+      <td class="pub-cell">32912 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="General Practice" data-name="dr. scott macleod" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Scott Macleod, D.O.</div>
+        <div class="alumni-meta">Class of 1990 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">General Practice</td>
+      <td class="phone-cell"><a href="tel:702-796-7546" class="phone-link">702-796-7546</a></td>
+      <td class="pub-cell">487 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Hospitalist" data-name="dr. brittnee zmuda" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Brittnee Zmuda, DO</div>
+        <div class="alumni-meta">Class of 2018 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Hospitalist</td>
+      <td class="phone-cell"><a href="tel:702-492-8592" class="phone-link">702-492-8592</a></td>
+      <td class="pub-cell">2 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Hospitalist" data-name="dr. kushal patel" data-city="north las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kushal Patel, DO</div>
+        <div class="alumni-meta">Class of 2019 &middot; North Las Vegas</div>
+      </td>
+      <td class="spec-cell">Hospitalist</td>
+      <td class="phone-cell"><a href="tel:702-791-9000" class="phone-link">702-791-9000</a></td>
+      <td class="pub-cell">9376 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. angela ortega-bermudez" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Angela Ortega-Bermudez, DO</div>
+        <div class="alumni-meta">Class of 2007 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:725-220-8477" class="phone-link">725-220-8477</a></td>
+      <td class="pub-cell">1543 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. anthony nguyen" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Anthony Nguyen, DO</div>
+        <div class="alumni-meta">Class of 2016 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-407-7700" class="phone-link">702-407-7700</a></td>
+      <td class="pub-cell">6597 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. anthony nguyen" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Anthony Nguyen, DO</div>
+        <div class="alumni-meta">Class of 2020 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-407-7700" class="phone-link">702-407-7700</a></td>
+      <td class="pub-cell">6597 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. anthony nguyen" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Anthony Nguyen, DO</div>
+        <div class="alumni-meta">Class of 2022 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-407-7700" class="phone-link">702-407-7700</a></td>
+      <td class="pub-cell">6597 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. aria fazlinejad" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Aria Fazlinejad, D.O</div>
+        <div class="alumni-meta">Class of 2016 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-800-5393" class="phone-link">702-800-5393</a></td>
+      <td class="pub-cell">10 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. branavan umakanthan" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Branavan Umakanthan, D.O.</div>
+        <div class="alumni-meta">Class of 2000 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-240-6482" class="phone-link">702-240-6482</a></td>
+      <td class="pub-cell">10 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. charles watt" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Charles Watt, D.O.</div>
+        <div class="alumni-meta">Class of 2004 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-450-1717" class="phone-link">702-450-1717</a></td>
+      <td class="pub-cell">345 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. david wichman" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. David Wichman, DO</div>
+        <div class="alumni-meta">Class of 1989 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-383-2273" class="phone-link">702-383-2273</a></td>
+      <td class="pub-cell">28 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. ernesto mccombs" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Ernesto McCombs, d.o.</div>
+        <div class="alumni-meta">Class of 1990 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-822-4441" class="phone-link">702-822-4441</a></td>
+      <td class="pub-cell">4 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. gopi narra" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Gopi Narra, DO</div>
+        <div class="alumni-meta">Class of 2020 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-800-5393" class="phone-link">702-800-5393</a></td>
+      <td class="pub-cell">2 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. iqra saqib" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Iqra Saqib, DO</div>
+        <div class="alumni-meta">Class of 2018 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-800-5393" class="phone-link">702-800-5393</a></td>
+      <td class="pub-cell">9 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. katherine mcclanahan" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Katherine McClanahan, D.O.</div>
+        <div class="alumni-meta">Class of 1999 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-800-5393" class="phone-link">702-800-5393</a></td>
+      <td class="pub-cell">36 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. kaveh kashani" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kaveh Kashani, D.O.</div>
+        <div class="alumni-meta">Class of 2005 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-840-4848" class="phone-link">702-840-4848</a></td>
+      <td class="pub-cell">453 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. kevin howard" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kevin Howard, DO</div>
+        <div class="alumni-meta">Class of 2014 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-388-8436" class="phone-link">702-388-8436</a></td>
+      <td class="pub-cell">1267 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. lonnie empey" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Lonnie Empey, D.O.</div>
+        <div class="alumni-meta">Class of 1994 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-207-8263" class="phone-link">702-207-8263</a></td>
+      <td class="pub-cell">14 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. michael sheinin" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Michael Sheinin, D.O.</div>
+        <div class="alumni-meta">Class of 2016 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-388-8436" class="phone-link">702-388-8436</a></td>
+      <td class="pub-cell">22 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. mike jeong" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Mike Jeong, DO</div>
+        <div class="alumni-meta">Class of 1995 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-304-2144" class="phone-link">702-304-2144</a></td>
+      <td class="pub-cell">3445 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. my huyen le" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. My Huyen Le, DO</div>
+        <div class="alumni-meta">Class of 2019 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-388-8000" class="phone-link">702-388-8000</a></td>
+      <td class="pub-cell">1901 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. osman rahimi" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Osman Rahimi, DO</div>
+        <div class="alumni-meta">Class of 2020 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-676-3650" class="phone-link">702-676-3650</a></td>
+      <td class="pub-cell">36 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. paul kalekas" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Paul Kalekas, D.O.</div>
+        <div class="alumni-meta">Class of 1986 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-588-7373" class="phone-link">702-588-7373</a></td>
+      <td class="pub-cell">3 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. raafat khani" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Raafat Khani, DO</div>
+        <div class="alumni-meta">Class of 1995 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:725-269-3368" class="phone-link">725-269-3368</a></td>
+      <td class="pub-cell">27 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. ryan hampton" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Ryan Hampton, D.O.</div>
+        <div class="alumni-meta">Class of 2015 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-800-5393" class="phone-link">702-800-5393</a></td>
+      <td class="pub-cell">285 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. tabreez ali" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Tabreez Ali, D.O.</div>
+        <div class="alumni-meta">Class of 2008 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-487-7055" class="phone-link">702-487-7055</a></td>
+      <td class="pub-cell">1644 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="OB/GYN" data-name="dr. daniel lott" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Daniel Lott, D.O.</div>
+        <div class="alumni-meta">Class of 1990 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">OB/GYN</td>
+      <td class="phone-cell"><a href="tel:703-380-7050" class="phone-link">703-380-7050</a></td>
+      <td class="pub-cell">262 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="OB/GYN" data-name="dr. gaynelle rolling" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Gaynelle Rolling, DO</div>
+        <div class="alumni-meta">Class of 1999 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">OB/GYN</td>
+      <td class="phone-cell"><a href="tel:702-255-3547" class="phone-link">702-255-3547</a></td>
+      <td class="pub-cell">1 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="OB/GYN" data-name="dr. paul daskalos" data-city="north las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Paul Daskalos, D.O.</div>
+        <div class="alumni-meta">Class of 1992 &middot; North Las Vegas</div>
+      </td>
+      <td class="spec-cell">OB/GYN</td>
+      <td class="phone-cell"><a href="tel:702-791-9000" class="phone-link">702-791-9000</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="OB/GYN" data-name="dr. samantha schoenhaus" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Samantha Schoenhaus, DO</div>
+        <div class="alumni-meta">Class of 2002 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">OB/GYN</td>
+      <td class="phone-cell"><a href="tel:702-862-8862" class="phone-link">702-862-8862</a></td>
+      <td class="pub-cell">4 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="OB/GYN" data-name="dr. stewart kernes" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Stewart Kernes, D.O.</div>
+        <div class="alumni-meta">Class of 1986 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">OB/GYN</td>
+      <td class="phone-cell"><a href="tel:702-892-0660" class="phone-link">702-892-0660</a></td>
+      <td class="pub-cell">3 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Ophthalmology" data-name="dr. gregory hsu" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Gregory Hsu, d.o.</div>
+        <div class="alumni-meta">Class of 1990 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Ophthalmology</td>
+      <td class="phone-cell"><a href="tel:702-450-6000" class="phone-link">702-450-6000</a></td>
+      <td class="pub-cell">345 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Ophthalmology" data-name="dr. nelson lopez" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Nelson Lopez, D.O.</div>
+        <div class="alumni-meta">Class of 2009 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Ophthalmology</td>
+      <td class="phone-cell"><a href="tel:702-384-2020" class="phone-link">702-384-2020</a></td>
+      <td class="pub-cell">973 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Orthopedic Surgery" data-name="dr. donald pennington" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Donald Pennington, D.O.</div>
+        <div class="alumni-meta">Class of 1999 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Orthopedic Surgery</td>
+      <td class="phone-cell"><a href="tel:029-339-3937" class="phone-link">029-339-3937</a></td>
+      <td class="pub-cell">455 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Orthopedic Surgery" data-name="dr. kevin mo" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kevin Mo, DO</div>
+        <div class="alumni-meta">Class of 2023 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Orthopedic Surgery</td>
+      <td class="phone-cell"><a href="tel:702-388-8436" class="phone-link">702-388-8436</a></td>
+      <td class="pub-cell">367 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Orthopedic Surgery" data-name="dr. william fang" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. William Fang, DO</div>
+        <div class="alumni-meta">Class of 2024 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Orthopedic Surgery</td>
+      <td class="phone-cell"><a href="tel:702-388-8436" class="phone-link">702-388-8436</a></td>
+      <td class="pub-cell">7600 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Orthopedic Surgery" data-name="dr. xin liu" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Xin Liu, DO</div>
+        <div class="alumni-meta">Class of 1999 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Orthopedic Surgery</td>
+      <td class="phone-cell"><a href="tel:702-740-5327" class="phone-link">702-740-5327</a></td>
+      <td class="pub-cell">160400 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Pain Medicine, Interventional Pain Medicine" data-name="dr. george tsao" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. George Tsao, D.O., M.P.H.</div>
+        <div class="alumni-meta">Class of 2004 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Pain Medicine, Interventional Pain Medicine</td>
+      <td class="phone-cell"><a href="tel:702-803-2222" class="phone-link">702-803-2222</a></td>
+      <td class="pub-cell">146 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Pediatrics" data-name="dr. jordan martinez" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jordan Martinez, DO</div>
+        <div class="alumni-meta">Class of 2017 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Pediatrics</td>
+      <td class="phone-cell"><a href="tel:702-564-8556" class="phone-link">702-564-8556</a></td>
+      <td class="pub-cell">9143 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Pediatrics" data-name="dr. ruchi garg" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Ruchi Garg, D.O.</div>
+        <div class="alumni-meta">Class of 2001 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Pediatrics</td>
+      <td class="phone-cell"><a href="tel:888-350-2911" class="phone-link">888-350-2911</a></td>
+      <td class="pub-cell">3171 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Physical Medicine & Rehabilitation" data-name="dr. daniel krauchuk" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Daniel Krauchuk, D.O.</div>
+        <div class="alumni-meta">Class of 2004 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Physical Medicine & Rehabilitation</td>
+      <td class="phone-cell"><a href="tel:702-870-3722" class="phone-link">702-870-3722</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Physical Medicine & Rehabilitation" data-name="dr. mark perkins" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Mark Perkins, DO</div>
+        <div class="alumni-meta">Class of 2024 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Physical Medicine & Rehabilitation</td>
+      <td class="phone-cell"><a href="tel:515-241-6636" class="phone-link">515-241-6636</a></td>
+      <td class="pub-cell">953 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Preventive Medicine, Occupational Medicine" data-name="dr. yudi wibisono" data-city="north las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Yudi Wibisono, DO</div>
+        <div class="alumni-meta">Class of 2017 &middot; North Las Vegas</div>
+      </td>
+      <td class="spec-cell">Preventive Medicine, Occupational Medicine</td>
+      <td class="phone-cell"><a href="tel:702-791-9000" class="phone-link">702-791-9000</a></td>
+      <td class="pub-cell">21 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. daniel park" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Daniel Park, D.O.</div>
+        <div class="alumni-meta">Class of 2008 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-485-2100" class="phone-link">702-485-2100</a></td>
+      <td class="pub-cell">11046 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. fan zhang" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Fan Zhang, DO</div>
+        <div class="alumni-meta">Class of 2017 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-432-2233" class="phone-link">702-432-2233</a></td>
+      <td class="pub-cell">99806 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. jason castillo" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jason Castillo, D.O.</div>
+        <div class="alumni-meta">Class of 2014 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-671-5127" class="phone-link">702-671-5127</a></td>
+      <td class="pub-cell">3350 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. jonathan wirjo" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jonathan Wirjo, DO</div>
+        <div class="alumni-meta">Class of 2008 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-790-2701" class="phone-link">702-790-2701</a></td>
+      <td class="pub-cell">1 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. marian orr" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Marian Orr, Marian M. Orr, DO</div>
+        <div class="alumni-meta">Class of 2003 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-222-1812" class="phone-link">702-222-1812</a></td>
+      <td class="pub-cell">768 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. mokhtar boukhari" data-city="henderson">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Mokhtar Boukhari, DO</div>
+        <div class="alumni-meta">Class of 2018 &middot; Henderson</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-790-1521" class="phone-link">702-790-1521</a></td>
+      <td class="pub-cell">13 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. mustafa rawaf" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Mustafa Rawaf, DO</div>
+        <div class="alumni-meta">Class of 2010 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-790-2701" class="phone-link">702-790-2701</a></td>
+      <td class="pub-cell">2 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. patrick bennet" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Patrick Bennet, D.O.</div>
+        <div class="alumni-meta">Class of 2011 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-790-2701" class="phone-link">702-790-2701</a></td>
+      <td class="pub-cell">65 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. paul smithedajkul" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Paul Smithedajkul, DO</div>
+        <div class="alumni-meta">Class of 2018 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-671-5127" class="phone-link">702-671-5127</a></td>
+      <td class="pub-cell">5 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. tarik alshaikh" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Tarik Alshaikh, D.O.</div>
+        <div class="alumni-meta">Class of 2011 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-790-2701" class="phone-link">702-790-2701</a></td>
+      <td class="pub-cell">15 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. timothy ebright" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Timothy Ebright, DO</div>
+        <div class="alumni-meta">Class of 2018 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-486-9691" class="phone-link">702-486-9691</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Psychiatry" data-name="dr. vincent ho" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Vincent Ho, DO</div>
+        <div class="alumni-meta">Class of 2009 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Psychiatry</td>
+      <td class="phone-cell"><a href="tel:702-671-6437" class="phone-link">702-671-6437</a></td>
+      <td class="pub-cell">1563 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Radiology, Diagnostic Radiology" data-name="dr. amir kilani" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Amir Kilani, DO</div>
+        <div class="alumni-meta">Class of 2022 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Radiology, Diagnostic Radiology</td>
+      <td class="phone-cell"><a href="tel:702-962-5000" class="phone-link">702-962-5000</a></td>
+      <td class="pub-cell">106 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Radiology, Diagnostic Radiology" data-name="dr. edward van vooren" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Edward Van Vooren, D.O.</div>
+        <div class="alumni-meta">Class of 1995 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Radiology, Diagnostic Radiology</td>
+      <td class="phone-cell"><a href="tel:702-759-8600" class="phone-link">702-759-8600</a></td>
+      <td class="pub-cell">3 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Radiology, Diagnostic Radiology" data-name="dr. joshua rosenberg" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Joshua Rosenberg, DO</div>
+        <div class="alumni-meta">Class of 2003 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Radiology, Diagnostic Radiology</td>
+      <td class="phone-cell"><a href="tel:702-759-8600" class="phone-link">702-759-8600</a></td>
+      <td class="pub-cell">2961 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Radiology, Diagnostic Radiology" data-name="dr. justin puopolo" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Justin Puopolo, D.O.</div>
+        <div class="alumni-meta">Class of 2009 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Radiology, Diagnostic Radiology</td>
+      <td class="phone-cell"><a href="tel:702-477-0772" class="phone-link">702-477-0772</a></td>
+      <td class="pub-cell">2 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. aaron ly" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Aaron Ly, DO</div>
+        <div class="alumni-meta">Class of 2022 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-388-8437" class="phone-link">702-388-8437</a></td>
+      <td class="pub-cell">537 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. alex wong" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Alex Wong, DO</div>
+        <div class="alumni-meta">Class of 2024 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-676-3650" class="phone-link">702-676-3650</a></td>
+      <td class="pub-cell">8019 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. andy ngo" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Andy Ngo, DO</div>
+        <div class="alumni-meta">Class of 2008 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-853-3561" class="phone-link">702-853-3561</a></td>
+      <td class="pub-cell">504 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. andy ngo" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Andy Ngo, DO</div>
+        <div class="alumni-meta">Class of 2025 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-853-3561" class="phone-link">702-853-3561</a></td>
+      <td class="pub-cell">504 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. bahar rohani" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Bahar Rohani, DO</div>
+        <div class="alumni-meta">Class of 2022 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:818-585-8554" class="phone-link">818-585-8554</a></td>
+      <td class="pub-cell">20 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. boris khanukayev" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Boris Khanukayev, DO</div>
+        <div class="alumni-meta">Class of 2024 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-962-5000" class="phone-link">702-962-5000</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. derek oh" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. DeRek Oh, DO</div>
+        <div class="alumni-meta">Class of 2022 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-962-9547" class="phone-link">702-962-9547</a></td>
+      <td class="pub-cell">4245 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. fardad moshtagh sisan" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Fardad Moshtagh Sisan, DO</div>
+        <div class="alumni-meta">Class of 2023 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-388-8437" class="phone-link">702-388-8437</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. hannah huntington" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Hannah Huntington, DO</div>
+        <div class="alumni-meta">Class of 2023 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-962-5000" class="phone-link">702-962-5000</a></td>
+      <td class="pub-cell">50 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. jennifer choi" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jennifer Choi, DO</div>
+        <div class="alumni-meta">Class of 2004 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-962-9540" class="phone-link">702-962-9540</a></td>
+      <td class="pub-cell">37722 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. jennifer choi" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jennifer Choi, DO</div>
+        <div class="alumni-meta">Class of 2020 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-962-9540" class="phone-link">702-962-9540</a></td>
+      <td class="pub-cell">37722 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. lily chen" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Lily Chen, DO</div>
+        <div class="alumni-meta">Class of 2003 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-388-4000" class="phone-link">702-388-4000</a></td>
+      <td class="pub-cell">101502 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. mariana lucero" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Mariana Lucero, DO, MS</div>
+        <div class="alumni-meta">Class of 2023 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-962-9546" class="phone-link">702-962-9546</a></td>
+      <td class="pub-cell">301 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. mirko mostaghimi" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Mirko Mostaghimi, DO</div>
+        <div class="alumni-meta">Class of 2023 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-388-4000" class="phone-link">702-388-4000</a></td>
+      <td class="pub-cell">11 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. saba saleem" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Saba Saleem, DO</div>
+        <div class="alumni-meta">Class of 2023 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-853-3561" class="phone-link">702-853-3561</a></td>
+      <td class="pub-cell">1358 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. sami borno" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Sami Borno, DO</div>
+        <div class="alumni-meta">Class of 2021 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:559-779-5270" class="phone-link">559-779-5270</a></td>
+      <td class="pub-cell">27 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. sarin pakhdikian" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Sarin Pakhdikian, DO</div>
+        <div class="alumni-meta">Class of 2022 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-671-5127" class="phone-link">702-671-5127</a></td>
+      <td class="pub-cell">1 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. shubman sidhu" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Shubman Sidhu, DO</div>
+        <div class="alumni-meta">Class of 2024 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-853-3567" class="phone-link">702-853-3567</a></td>
+      <td class="pub-cell">1256 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. umar ansari" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Umar Ansari, DO</div>
+        <div class="alumni-meta">Class of 2024 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:725-270-0193" class="phone-link">725-270-0193</a></td>
+      <td class="pub-cell">207 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. zade zahlan" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Zade Zahlan, DO</div>
+        <div class="alumni-meta">Class of 2023 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-962-9547" class="phone-link">702-962-9547</a></td>
+      <td class="pub-cell">2 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Surgery" data-name="dr. diana hung" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Diana Hung, DO</div>
+        <div class="alumni-meta">Class of 2019 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Surgery</td>
+      <td class="phone-cell"><a href="tel:702-990-6360" class="phone-link">702-990-6360</a></td>
+      <td class="pub-cell">635 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Surgery" data-name="dr. victor yoon" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Victor Yoon, D.O.</div>
+        <div class="alumni-meta">Class of 2011 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Surgery</td>
+      <td class="phone-cell"><a href="tel:702-258-7788" class="phone-link">702-258-7788</a></td>
+      <td class="pub-cell">14 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Thoracic Surgery (Cardiothoracic Vascular Surgery)" data-name="dr. nelly chow" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Nelly Chow, D.O.</div>
+        <div class="alumni-meta">Class of 2017 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Thoracic Surgery (Cardiothoracic Vascular Surgery)</td>
+      <td class="phone-cell"><a href="tel:702-962-5920" class="phone-link">702-962-5920</a></td>
+      <td class="pub-cell">388 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Urology" data-name="dr. joel abbott" data-city="las vegas">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Joel Abbott, D.O.</div>
+        <div class="alumni-meta">Class of 2009 &middot; Las Vegas</div>
+      </td>
+      <td class="spec-cell">Urology</td>
+      <td class="phone-cell"><a href="tel:725-225-5575" class="phone-link">725-225-5575</a></td>
+      <td class="pub-cell">1838 peer-reviewed paper(s)</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="section-label">Other Nevada<span>34</span></div>
+  <table id="other-table">
+    <thead><tr><th>Name</th><th>Specialty</th><th>Phone</th><th>Publications</th></tr></thead>
+    <tbody>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. kelly kaneshiro" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kelly Kaneshiro, DO</div>
+        <div class="alumni-meta">Class of 2020 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:775-258-1970" class="phone-link">775-258-1970</a></td>
+      <td class="pub-cell">110 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Anesthesiology" data-name="dr. spencer mellum" data-city="carson city">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Spencer Mellum, DO</div>
+        <div class="alumni-meta">Class of 2001 &middot; Carson City</div>
+      </td>
+      <td class="spec-cell">Anesthesiology</td>
+      <td class="phone-cell"><a href="tel:702-878-0070" class="phone-link">702-878-0070</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. jack schnurr" data-city="carson city">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jack Schnurr, DO</div>
+        <div class="alumni-meta">Class of 1987 &middot; Carson City</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:775-445-8733" class="phone-link">775-445-8733</a></td>
+      <td class="pub-cell">17 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Emergency Medicine" data-name="dr. robert foster" data-city="mesquite">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Robert Foster, DO</div>
+        <div class="alumni-meta">Class of 1999 &middot; Mesquite</div>
+      </td>
+      <td class="spec-cell">Emergency Medicine</td>
+      <td class="phone-cell"><a href="tel:702-345-4270" class="phone-link">702-345-4270</a></td>
+      <td class="pub-cell">2420 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. darla stupey" data-city="nellis afb">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Darla Stupey, DO</div>
+        <div class="alumni-meta">Class of 2007 &middot; Nellis Afb</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-653-2273" class="phone-link">702-653-2273</a></td>
+      <td class="pub-cell">3990 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. david sheen" data-city="nellis afb">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. David Sheen, DO</div>
+        <div class="alumni-meta">Class of 2004 &middot; Nellis Afb</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:702-653-2273" class="phone-link">702-653-2273</a></td>
+      <td class="pub-cell">88 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. jake dodge" data-city="nellis afb">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jake Dodge, DO</div>
+        <div class="alumni-meta">Class of 2018 &middot; Nellis Afb</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:915-540-1431" class="phone-link">915-540-1431</a></td>
+      <td class="pub-cell">689 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. james jempsa" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. James Jempsa, D.O.</div>
+        <div class="alumni-meta">Class of 1985 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:775-853-9959" class="phone-link">775-853-9959</a></td>
+      <td class="pub-cell">975 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. jason mckenzie" data-city="sparks">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jason McKenzie, DO</div>
+        <div class="alumni-meta">Class of 1996 &middot; Sparks</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:775-351-1300" class="phone-link">775-351-1300</a></td>
+      <td class="pub-cell">1428 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. jeffrey wachs" data-city="glenbrook">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jeffrey Wachs, DO</div>
+        <div class="alumni-meta">Class of 1987 &middot; Glenbrook</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:775-843-1754" class="phone-link">775-843-1754</a></td>
+      <td class="pub-cell">116 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. newton yco" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Newton Yco, DO</div>
+        <div class="alumni-meta">Class of 1997 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:775-853-8888" class="phone-link">775-853-8888</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. ralph herbig" data-city="gardnerville">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Ralph Herbig, D.O.</div>
+        <div class="alumni-meta">Class of 1997 &middot; Gardnerville</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:775-782-4030" class="phone-link">775-782-4030</a></td>
+      <td class="pub-cell">2 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. sangeeta wagner" data-city="sparks">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Sangeeta Wagner, DO</div>
+        <div class="alumni-meta">Class of 2000 &middot; Sparks</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:775-352-5335" class="phone-link">775-352-5335</a></td>
+      <td class="pub-cell">4107 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Family Medicine" data-name="dr. william miyazaki" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. William Miyazaki, D.O.</div>
+        <div class="alumni-meta">Class of 1983 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Family Medicine</td>
+      <td class="phone-cell"><a href="tel:775-972-9100" class="phone-link">775-972-9100</a></td>
+      <td class="pub-cell">60 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Homeopath" data-name="dr. david holt" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. David Holt, DO HMD</div>
+        <div class="alumni-meta">Class of 1996 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Homeopath</td>
+      <td class="phone-cell"><a href="tel:775-829-1009" class="phone-link">775-829-1009</a></td>
+      <td class="pub-cell">1227 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Hospitalist" data-name="dr. augen batou" data-city="nellis afb">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Augen Batou, D.O.</div>
+        <div class="alumni-meta">Class of 2012 &middot; Nellis Afb</div>
+      </td>
+      <td class="spec-cell">Hospitalist</td>
+      <td class="phone-cell"><a href="tel:702-653-3800" class="phone-link">702-653-3800</a></td>
+      <td class="pub-cell">1 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Hospitalist" data-name="dr. joseph jeppson" data-city="mesquite">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Joseph Jeppson, DO</div>
+        <div class="alumni-meta">Class of 2006 &middot; Mesquite</div>
+      </td>
+      <td class="spec-cell">Hospitalist</td>
+      <td class="phone-cell"><a href="tel:702-346-0800" class="phone-link">702-346-0800</a></td>
+      <td class="pub-cell">21 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Hospitalist" data-name="dr. natalie lewman" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Natalie Lewman, D.O.</div>
+        <div class="alumni-meta">Class of 2011 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Hospitalist</td>
+      <td class="phone-cell"><a href="tel:775-982-7878" class="phone-link">775-982-7878</a></td>
+      <td class="pub-cell"><span class="no-data">&mdash;</span></td>
+    </tr>
+<tr class="alumni-row" data-specialty="Hospitalist" data-name="dr. stephen hewitt" data-city="carson city">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Stephen Hewitt, DO</div>
+        <div class="alumni-meta">Class of 1994 &middot; Carson City</div>
+      </td>
+      <td class="spec-cell">Hospitalist</td>
+      <td class="phone-cell"><a href="tel:775-445-8795" class="phone-link">775-445-8795</a></td>
+      <td class="pub-cell">902 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. bruce fong" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Bruce Fong, DO</div>
+        <div class="alumni-meta">Class of 1997 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:775-828-5388" class="phone-link">775-828-5388</a></td>
+      <td class="pub-cell">243 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. bryon dorgan" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Bryon Dorgan, D.O</div>
+        <div class="alumni-meta">Class of 2008 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:775-982-2400" class="phone-link">775-982-2400</a></td>
+      <td class="pub-cell">4 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. damon zavala" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Damon Zavala, D.O.</div>
+        <div class="alumni-meta">Class of 1999 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:775-507-7024" class="phone-link">775-507-7024</a></td>
+      <td class="pub-cell">130 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. jared joffer" data-city="nellis afb">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Jared Joffer, DO</div>
+        <div class="alumni-meta">Class of 2015 &middot; Nellis Afb</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-653-3800" class="phone-link">702-653-3800</a></td>
+      <td class="pub-cell">6 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. michelle newkirk" data-city="nellis afb">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Michelle Newkirk, D.O.</div>
+        <div class="alumni-meta">Class of 2010 &middot; Nellis Afb</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:702-653-3193" class="phone-link">702-653-3193</a></td>
+      <td class="pub-cell">114 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. steven sundstrom" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Steven Sundstrom, DO</div>
+        <div class="alumni-meta">Class of 1993 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:775-982-5000" class="phone-link">775-982-5000</a></td>
+      <td class="pub-cell">118 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Internal Medicine" data-name="dr. tanya phares" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Tanya Phares, DO, MPH</div>
+        <div class="alumni-meta">Class of 2008 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Internal Medicine</td>
+      <td class="phone-cell"><a href="tel:775-982-5000" class="phone-link">775-982-5000</a></td>
+      <td class="pub-cell">50 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Neurological Surgery" data-name="dr. luigi mangiacotti" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Luigi Mangiacotti, DO</div>
+        <div class="alumni-meta">Class of 2020 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Neurological Surgery</td>
+      <td class="phone-cell"><a href="tel:775-982-7878" class="phone-link">775-982-7878</a></td>
+      <td class="pub-cell">12 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Orthopedic Surgery" data-name="dr. babe westlake" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Babe Westlake, DO</div>
+        <div class="alumni-meta">Class of 2017 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Orthopedic Surgery</td>
+      <td class="phone-cell"><a href="tel:775-982-5000" class="phone-link">775-982-5000</a></td>
+      <td class="pub-cell">24 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Orthopedic Surgery" data-name="dr. brandon mckinney" data-city="nellis afb">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Brandon McKinney, D.O.</div>
+        <div class="alumni-meta">Class of 2017 &middot; Nellis Afb</div>
+      </td>
+      <td class="spec-cell">Orthopedic Surgery</td>
+      <td class="phone-cell"><a href="tel:702-653-2273" class="phone-link">702-653-2273</a></td>
+      <td class="pub-cell">200 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Otolaryngology" data-name="dr. john gull" data-city="elko">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. John Gull, D.O.</div>
+        <div class="alumni-meta">Class of 2004 &middot; Elko</div>
+      </td>
+      <td class="spec-cell">Otolaryngology</td>
+      <td class="phone-cell"><a href="tel:775-738-2555" class="phone-link">775-738-2555</a></td>
+      <td class="pub-cell">15 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Physical Medicine & Rehabilitation" data-name="dr. kevin miles" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kevin Miles, D.O.</div>
+        <div class="alumni-meta">Class of 2000 &middot; Reno</div>
+      </td>
+      <td class="spec-cell">Physical Medicine & Rehabilitation</td>
+      <td class="phone-cell"><a href="tel:775-324-6300" class="phone-link">775-324-6300</a></td>
+      <td class="pub-cell">493 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. ashley maestas" data-city="reno">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Ashley Maestas, DO</div>
+        <div class="alumni-meta">Class of 2021 &middot; Reno</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-592-3033" class="phone-link">702-592-3033</a></td>
+      <td class="pub-cell">6 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row resident-row" data-specialty="Student in an Organized Health Care Education/Training Program" data-name="dr. steven mayberry" data-city="north nellis afb">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Steven Mayberry, DO</div>
+        <div class="alumni-meta">Class of 2024 &middot; North Nellis Afb</div>
+      </td>
+      <td class="spec-cell"><span class="resident-tag">Resident/Student</span></td>
+      <td class="phone-cell"><a href="tel:702-653-2273" class="phone-link">702-653-2273</a></td>
+      <td class="pub-cell">18 peer-reviewed paper(s)</td>
+    </tr>
+<tr class="alumni-row" data-specialty="Surgery" data-name="dr. kyle mecham" data-city="nellis afb">
+      <td class="name-cell">
+        <div class="alumni-name">Dr. Kyle Mecham, D.O.</div>
+        <div class="alumni-meta">Class of 2017 &middot; Nellis Afb</div>
+      </td>
+      <td class="spec-cell">Surgery</td>
+      <td class="phone-cell"><a href="tel:702-653-2273" class="phone-link">702-653-2273</a></td>
+      <td class="pub-cell">3 peer-reviewed paper(s)</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="footer">
+  <strong>Data source:</strong> NPI Registry (NPPES) + PubMed &middot; Last synced March 25, 2026<br>
+  Prepared for Dr. Lisa Warren, Dean, COMP &amp; COMP-Northwest
+</div>
+
+<script>
+const search = document.getElementById('search');
+const specFilter = document.getElementById('spec-filter');
+const countEl = document.getElementById('count');
+const rows = document.querySelectorAll('.alumni-row');
+
+function applyFilters() {
+  const q = search.value.toLowerCase();
+  const spec = specFilter.value;
+  let visible = 0;
+
+  rows.forEach(row => {
+    const name = row.dataset.name;
+    const specialty = row.dataset.specialty;
+    const city = row.dataset.city;
+
+    let show = true;
+    if (q && !(name.includes(q) || specialty.toLowerCase().includes(q) || city.includes(q))) show = false;
+    if (spec === 'no-students' && specialty.includes('Student')) show = false;
+    else if (spec !== 'all' && spec !== 'no-students' && specialty !== spec) show = false;
+
+    row.classList.toggle('hidden-row', !show);
+    if (show) visible++;
+  });
+
+  countEl.textContent = 'Showing ' + visible + ' alumni';
+}
+
+search.addEventListener('input', applyFilters);
+specFilter.addEventListener('change', applyFilters);
+</script>
+</body>
+</html>
