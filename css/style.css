@@ -828,6 +828,14 @@ body::before {
 .proj-tab:hover { color: var(--gray-600); }
 .proj-tab-active { color: var(--burgundy); border-bottom-color: var(--burgundy); }
 
+/* Project cards mobile */
+.proj-card-layout { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.proj-card-body { flex: 1; min-width: 0; }
+.proj-detail-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.proj-alumni-card { display: flex; align-items: center; gap: 12px; }
+.proj-alumni-info { flex: 1; min-width: 0; }
+.proj-alumni-meta { flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+
 /* Chart containers — prevent resize loops, GPU-composited for iOS */
 .chart-wrap { position: relative; -webkit-transform: translateZ(0); transform: translateZ(0); }
 .chart-wrap-bar { height: 400px; }
@@ -887,6 +895,13 @@ body::before {
   /* Charts — shorter on mobile since full width gives labels more room */
   .chart-wrap-bar { height: 350px; }
   .chart-wrap-pie { height: 220px; }
+
+  /* Projects — phone-first layout */
+  .proj-card-layout { flex-direction: column; gap: 8px; }
+  .proj-detail-header { flex-direction: column; gap: 8px; }
+  .proj-tab { padding: 10px 12px; font-size: 12px; }
+  .proj-alumni-card { flex-wrap: wrap; gap: 8px; }
+  .proj-alumni-meta { flex-direction: row; width: 100%; justify-content: space-between; margin-top: 4px; }
 }
 
 @media (max-width: 480px) {

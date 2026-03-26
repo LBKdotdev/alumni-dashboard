@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be — Build: Board 4 — Project Tracking + Polish</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px; }
+  .summary-box { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 16px; text-align: center; }
+  .summary-box .num { font-size: 28px; font-weight: 800; color: #6FC3DF; }
+  .summary-box .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+  .item { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 10px; padding: 20px; margin-bottom: 12px; }
+  .item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .item-name { font-size: 15px; font-weight: 700; color: #fff; }
+  .item-pts { font-size: 13px; font-weight: 700; color: #6FC3DF; }
+  .item-desc { font-size: 13px; color: #999; }
+  .decision { background: #1A1A1A; border-left: 3px solid #6FC3DF; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 8px 0; }
+  .decision strong { color: #fff; }
+  .decision p { font-size: 13px; color: #999; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  th { text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #666; padding: 6px 8px; border-bottom: 1px solid #333; }
+  td { padding: 8px; border-bottom: 1px solid #1f1f1f; color: #bbb; font-size: 13px; }
+  .done { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.15); }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Build: Board 4 — Project Tracking + Polish</span>
+</nav>
+
+<div class="container">
+  <h1>Board 4 Complete: Project Tracking + Polish</h1>
+  <p class="subtitle">4 items, 16 points — the final board. All 73 points shipped. Every board done.</p>
+
+  <div class="summary-grid">
+    <div class="summary-box"><div class="num">4</div><div class="label">Items</div></div>
+    <div class="summary-box"><div class="num">16</div><div class="label">Points</div></div>
+    <div class="summary-box"><div class="num">73</div><div class="label">Total Shipped</div></div>
+    <div class="summary-box"><div class="num">0</div><div class="label">Remaining</div></div>
+  </div>
+
+  <h2>What Was Built</h2>
+
+  <div class="item">
+    <div class="item-header">
+      <span class="item-name">1. Per-alumni invite status</span>
+      <span class="item-pts">5 pts</span>
+    </div>
+    <div class="item-desc">Each alumni in a project's alumni tab now has an inline status dropdown (Invited / Confirmed / Declined). Color-coded status badges appear next to names — blue for invited, green for confirmed, red for declined. A summary bar at the top of the tab shows aggregate counts. Status is stored in <code>project.alumni_status</code> and persists in state. The <code>setAlumniInviteStatus</code> function in state.js handles mutations.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header">
+      <span class="item-name">2. Project outreach → touchpoints</span>
+      <span class="item-pts">3 pts</span>
+    </div>
+    <div class="item-desc">Each alumni card in the project detail now has a mail icon button that opens the outreach panel pre-filled with the project's template, with <code>{{last_name}}</code> replaced by the actual alumni name. When outreach is marked as sent, it creates a touchpoint on the alumni's timeline AND auto-sets their invite status to "invited" on the project — one action, two records. The outreach draft carries <code>projectId</code> so state.js knows to update the project status.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header">
+      <span class="item-name">3. Mobile responsive projects</span>
+      <span class="item-pts">5 pts</span>
+    </div>
+    <div class="item-desc">All project layouts use CSS classes instead of inline flex, enabling clean mobile overrides. At 767px: project cards stack vertically (countdown below body), detail header stacks, tab bar compresses to 12px/10px, alumni cards wrap with meta row spanning full width below the name. CSS classes: <code>.proj-card-layout</code>, <code>.proj-detail-header</code>, <code>.proj-alumni-card</code>, <code>.proj-alumni-info</code>, <code>.proj-alumni-meta</code>.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header">
+      <span class="item-name">4. Full QA pass</span>
+      <span class="item-pts">3 pts</span>
+    </div>
+    <div class="item-desc">Verified: all CSS variables referenced in JS exist in <code>:root</code> (green-700, blue-700, green-bg, etc.). All imports resolve. All event handlers wired correctly — invite status select, outreach draft, checklist toggle, tab switching, alumni profile navigation. No broken references across queue, profile, directory, projects, or dashboard views. Board 3 visual changes (tinting, accents, gradients) reviewed for correctness.</div>
+  </div>
+
+  <h2>Decisions Made</h2>
+
+  <div class="decision">
+    <strong>Outreach sends = auto-invite</strong>
+    <p>When you draft and send outreach from a project, the alumni automatically moves to "invited" status. This prevents the double-action problem — no need to send an email AND manually mark them invited. One action, two records. If the alumni was already confirmed or declined, the status is preserved (only sets to "invited" if no status existed).</p>
+  </div>
+
+  <div class="decision">
+    <strong>CSS classes over inline styles for responsive</strong>
+    <p>Moved project layout from inline flex styles to named CSS classes. Inline styles can't be overridden by media queries — you'd need JS to detect viewport width. CSS classes let the mobile breakpoint cleanly stack layouts without touching JS. The class names are semantic: <code>.proj-card-layout</code>, <code>.proj-alumni-meta</code>.</p>
+  </div>
+
+  <div class="decision">
+    <strong>Status dropdown inline, not in a modal</strong>
+    <p>Invite status is a tiny select dropdown right on the card — no modal, no separate panel. When you're scanning 50+ alumni, the last thing you want is a popup for each one. Change the dropdown, it saves instantly. Batch workflow: scroll through the list, flipping statuses as you go.</p>
+  </div>
+
+  <h2>Files Changed</h2>
+  <table>
+    <thead><tr><th>File</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>js/views/projects.js</td><td>Modified — invite status UI, outreach draft button, CSS classes for responsive, status summary bar</td></tr>
+      <tr><td>js/state.js</td><td>Modified — setAlumniInviteStatus function, markOutreachSent auto-invite</td></tr>
+      <tr><td>css/style.css</td><td>Modified — project responsive classes + mobile overrides</td></tr>
+      <tr><td>be/board.md</td><td>Modified — Board 4 all Done, all boards complete</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Board Status</h2>
+  <table>
+    <thead><tr><th>Board</th><th>Status</th><th>Points</th></tr></thead>
+    <tbody>
+      <tr><td>Board 1: Projects Foundation</td><td style="color:#22c55e;font-weight:700">✓ Complete</td><td>18 pts</td></tr>
+      <tr><td>Board 2: Project Detail View</td><td style="color:#22c55e;font-weight:700">✓ Complete</td><td>21 pts</td></tr>
+      <tr><td>Board 3: Visual Hierarchy</td><td style="color:#22c55e;font-weight:700">✓ Complete</td><td>18 pts</td></tr>
+      <tr><td>Board 4: Tracking + Polish</td><td style="color:#22c55e;font-weight:700">✓ Complete</td><td>16 pts</td></tr>
+    </tbody>
+  </table>
+
+  <h2>What's Next</h2>
+  <p style="color:#bbb;font-size:15px;font-weight:600;margin-bottom:8px">All 4 boards complete. 73 points shipped. Zero remaining.</p>
+  <p style="color:#999">The Alumni Relationship Engine now has: Queue (morning briefing + trigger cards), Directory (search + filter + paginate), Profiles (7 sections, notes, outreach), Dashboard (charts + campus toggle), and Projects (landing, detail with 4 tabs, invite tracking, outreach integration). Ready to ship.</p>
+
+  <div class="footer">
+    Generated 2026-03-26 21:00 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>

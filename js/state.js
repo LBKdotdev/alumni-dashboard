@@ -201,6 +201,17 @@ export function markOutreachSent(alumniId) {
     outreach_history: [outreachEntry, ...a.outreach_history],
     touchpoints: [touchpoint, ...a.touchpoints],
   }))
+  // Auto-set invite status when outreach sent from a project
+  const projectId = _state.outreachDraft?.projectId
+  if (projectId && alumniId) {
+    const project = _state.projects.find(p => p.id === projectId)
+    if (project) {
+      if (!project.alumni_status) project.alumni_status = {}
+      if (!project.alumni_status[alumniId]) {
+        project.alumni_status[alumniId] = 'invited'
+      }
+    }
+  }
   update({ outreachPanelOpen: false, outreachDraft: null })
 }
 
@@ -216,6 +227,18 @@ export function selectProject(projectId) {
 
 export function clearProject() {
   update({ selectedProjectId: null })
+}
+
+export function setAlumniInviteStatus(projectId, alumniId, status) {
+  const project = _state.projects.find(p => p.id === projectId)
+  if (!project) return
+  if (!project.alumni_status) project.alumni_status = {}
+  if (status) {
+    project.alumni_status[alumniId] = status
+  } else {
+    delete project.alumni_status[alumniId]
+  }
+  if (_renderCallback) _renderCallback()
 }
 
 // ── Dashboard ──

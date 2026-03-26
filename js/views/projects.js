@@ -5,7 +5,7 @@
 
 import { filterAlumni, sortAlumni, formatDate, getLastTouchpoint } from '../utils/helpers.js'
 import { renderAvatar } from '../components.js'
-import { selectProject, clearProject, navigate, openOutreach } from '../state.js'
+import { selectProject, clearProject, navigate, openOutreach, setAlumniInviteStatus } from '../state.js'
 
 // Module-scoped tab state
 let activeTab = 'alumni'
@@ -113,8 +113,8 @@ function renderProjectCard(project, alumni, index) {
   return `
     <button class="w-full card card-hover animate-fade-up" style="text-align:left;padding:20px;animation-delay:${index * 0.05}s"
       data-action="open-project" data-project-id="${project.id}">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
-        <div style="flex:1;min-width:0">
+      <div class="proj-card-layout">
+        <div class="proj-card-body">
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
             <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${typeColor};flex-shrink:0"></span>
             <span class="text-xs font-bold" style="color:${typeColor};text-transform:uppercase;letter-spacing:0.05em">${typeLabel}</span>
@@ -182,7 +182,7 @@ function renderProjectDetail(project, state) {
 
     <!-- Project header -->
     <div class="card" style="padding:24px;margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+      <div class="proj-detail-header">
         <div>
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
             <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${typeColor}"></span>
@@ -207,6 +207,15 @@ function renderProjectDetail(project, state) {
 
 // ── Alumni Tab ──
 
+function getStatusStyle(status) {
+  const styles = {
+    invited: { bg: 'rgba(59,130,246,0.08)', color: 'var(--blue-700)', border: 'rgba(59,130,246,0.2)', label: 'Invited' },
+    confirmed: { bg: 'rgba(34,197,94,0.08)', color: 'var(--green-700)', border: 'rgba(34,197,94,0.2)', label: 'Confirmed' },
+    declined: { bg: 'rgba(239,68,68,0.06)', color: 'var(--red-600)', border: 'rgba(239,68,68,0.15)', label: 'Declined' },
+  }
+  return styles[status] || null
+}
+
 function renderAlumniTab(project, matched) {
   const sorted = sortAlumni(matched, 'name')
   if (sorted.length === 0) {
@@ -215,28 +224,62 @@ function renderAlumniTab(project, matched) {
     </div>`
   }
 
+  // Status summary
+  const statuses = project.alumni_status || {}
+  const invited = Object.values(statuses).filter(s => s === 'invited').length
+  const confirmed = Object.values(statuses).filter(s => s === 'confirmed').length
+  const declined = Object.values(statuses).filter(s => s === 'declined').length
+  const noStatus = sorted.length - invited - confirmed - declined
+
+  const statusSummary = (invited + confirmed + declined) > 0
+    ? `<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px">
+        ${confirmed ? `<span class="text-xs" style="color:var(--green-700)"><strong>${confirmed}</strong> confirmed</span>` : ''}
+        ${invited ? `<span class="text-xs" style="color:var(--blue-700)"><strong>${invited}</strong> invited</span>` : ''}
+        ${declined ? `<span class="text-xs" style="color:var(--red-600)"><strong>${declined}</strong> declined</span>` : ''}
+        ${noStatus ? `<span class="text-xs text-gray-400"><strong>${noStatus}</strong> not yet invited</span>` : ''}
+      </div>` : ''
+
   const cards = sorted.slice(0, 50).map((a, i) => {
-    const status = project.alumni_status?.[a.id]
-    const statusBadge = status
-      ? `<span class="pill pill-sm" style="font-size:10px">${status}</span>`
+    const status = statuses[a.id]
+    const sty = getStatusStyle(status)
+    const statusBadge = sty
+      ? `<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:${sty.bg};color:${sty.color};border:1px solid ${sty.border}">${sty.label}</span>`
       : ''
     const lastTp = getLastTouchpoint(a)
     const touchLine = lastTp ? `Last: ${formatDate(lastTp.date)}` : 'No touchpoints'
 
+    // Status dropdown options
+    const statusOptions = ['invited', 'confirmed', 'declined'].map(s => {
+      const sel = status === s ? 'font-weight:700;' : ''
+      return `<option value="${s}" ${status === s ? 'selected' : ''} style="${sel}">${s.charAt(0).toUpperCase() + s.slice(1)}</option>`
+    }).join('')
+
     return `
-      <div class="card card-hover" style="padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer"
-        data-action="proj-alumni-profile" data-alumni-id="${a.id}">
-        ${renderAvatar(a.name, 'sm')}
-        <div style="flex:1;min-width:0">
-          <div style="display:flex;align-items:center;gap:6px">
-            <span class="text-sm font-bold" style="color:var(--gray-900)">${a.name}, ${a.credentials}</span>
-            ${statusBadge}
+      <div class="card card-hover proj-alumni-card" style="padding:14px 16px">
+        <div class="proj-alumni-info" style="cursor:pointer" data-action="proj-alumni-profile" data-alumni-id="${a.id}">
+          <div style="display:flex;align-items:center;gap:8px">
+            ${renderAvatar(a.name, 'sm')}
+            <div style="flex:1;min-width:0">
+              <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+                <span class="text-sm font-bold" style="color:var(--gray-900)">${a.name}, ${a.credentials}</span>
+                ${statusBadge}
+              </div>
+              <p class="text-xs text-gray-400">${a.professional.specialty} &middot; ${a.professional.practice_city}</p>
+            </div>
           </div>
-          <p class="text-xs text-gray-400">${a.professional.specialty} &middot; ${a.professional.practice_city}</p>
         </div>
-        <div class="text-xs text-gray-400" style="flex-shrink:0;text-align:right">
-          <div>Class of ${a.class_year}</div>
-          <div>${touchLine}</div>
+        <div class="proj-alumni-meta">
+          <div style="display:flex;align-items:center;gap:4px">
+            <select class="select" style="font-size:11px;padding:3px 6px;min-width:auto;width:auto;border-radius:6px"
+              data-action="set-invite-status" data-alumni-id="${a.id}">
+              <option value="" ${!status ? 'selected' : ''}>—</option>
+              ${statusOptions}
+            </select>
+            <button class="btn btn-ghost btn-sm" style="padding:3px 6px;font-size:11px" data-action="proj-draft-outreach" data-alumni-id="${a.id}">
+              <svg class="icon" style="width:12px;height:12px"><use href="./css/icons.svg#mail"></use></svg>
+            </button>
+          </div>
+          <span class="text-xs text-gray-400">${touchLine}</span>
         </div>
       </div>`
   }).join('')
@@ -249,6 +292,7 @@ function renderAlumniTab(project, matched) {
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
       <span class="text-sm text-gray-500"><strong style="color:var(--gray-800)">${sorted.length}</strong> alumni in ${project.filter?.state || 'filter'}</span>
     </div>
+    ${statusSummary}
     <div class="space-y-2">${cards}</div>
     ${moreNote}`
 }
@@ -389,6 +433,33 @@ export function wireProjectsEvents(state) {
         project.checklist[idx].done = !project.checklist[idx].done
         selectProject(state.selectedProjectId) // re-render
       }
+    })
+  })
+
+  // Detail: invite status change
+  document.querySelectorAll('[data-action="set-invite-status"]').forEach(el => {
+    el.addEventListener('change', () => {
+      setAlumniInviteStatus(state.selectedProjectId, el.dataset.alumniId, el.value || null)
+    })
+  })
+
+  // Detail: draft outreach from project template
+  document.querySelectorAll('[data-action="proj-draft-outreach"]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation()
+      const project = state.projects.find(p => p.id === state.selectedProjectId)
+      const alumni = state.alumni.find(a => a.id === el.dataset.alumniId)
+      if (!project || !alumni) return
+      const template = project.outreach_template
+      const lastName = alumni.name.split(',')[0].replace(/^Dr\.\s*/, '')
+      openOutreach({
+        alumniId: alumni.id,
+        alumniName: alumni.name,
+        email: alumni.contact?.email || '',
+        subject: template?.subject || `${project.name} — Invitation`,
+        body: template?.body?.replace(/\{\{last_name\}\}/g, lastName) || `Dear Dr. ${lastName},\n\n`,
+        projectId: project.id,
+      })
     })
   })
 }

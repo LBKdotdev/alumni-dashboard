@@ -34,10 +34,10 @@
 
 ## Board 4: Project Tracking + Polish (16 pts)
 ### Ready
-- {per-alumni invite status, add to, project alumni list} · 5 · ~A
-- {project outreach to touchpoints, add to, state.js} · 3 · ~A
-- {mobile responsive projects, update with, phone-first layout} · 5 · ~U
-- {full QA pass, test across, all views on desktop + mobile} · 3 · ~T
 ### In Progress
 ### Done
 ✅ unblocked — Board 3 complete
+- {per-alumni invite status, add to, project alumni list} · 5 · ~A ✅
+- {project outreach to touchpoints, add to, state.js} · 3 · ~A ✅
+- {mobile responsive projects, update with, phone-first layout} · 5 · ~U ✅
+- {full QA pass, test across, all views on desktop + mobile} · 3 · ~T ✅
