@@ -240,7 +240,7 @@ function setupGlobalEvents() {
 function handleHashChange() {
   const hash = location.hash.slice(1) || 'queue'
   const [view, id] = hash.split('/')
-  const validViews = ['queue', 'directory', 'profile', 'dashboard']
+  const validViews = ['queue', 'directory', 'profile', 'dashboard', 'projects']
   if (validViews.includes(view)) {
     navigate(view, id || null)
   }
