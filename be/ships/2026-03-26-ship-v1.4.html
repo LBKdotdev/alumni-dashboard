@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ship v1.4: Visual Overhaul + Login Gate + Mission Briefing</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p, .card li { color: #bbb; font-size: 14px; }
+  .card ul { list-style: none; padding: 0; }
+  .card li { padding: 4px 0; }
+  .card li::before { content: ""; display: inline-block; width: 6px; height: 6px; background: #6FC3DF; border-radius: 50%; margin-right: 10px; vertical-align: middle; }
+  .stat { display: inline-block; background: #222; border: 1px solid #333; border-radius: 6px; padding: 8px 16px; margin: 4px 8px 4px 0; font-size: 14px; color: #fff; font-weight: 600; }
+  .stat span { color: #6FC3DF; }
+  .commit { font-family: monospace; font-size: 13px; color: #888; padding: 6px 0; border-bottom: 1px solid #1A1A1A; }
+  .commit .hash { color: #6FC3DF; }
+  .version { display: inline-block; background: rgba(111,195,223,0.15); color: #6FC3DF; font-weight: 700; font-size: 20px; padding: 8px 20px; border-radius: 8px; border: 1px solid rgba(111,195,223,0.3); }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report</span>
+</nav>
+<div class="container">
+  <h1>Ship v1.4</h1>
+  <p class="subtitle">Visual Overhaul, Mission Briefing, Login Gate, Enrichment in Projects</p>
+  <p><span class="version">v1.4</span></p>
+
+  <h2>What Shipped</h2>
+
+  <div class="card">
+    <h3>Login Gate</h3>
+    <p>Access code screen protects alumni PII. Adaptive UI: clean text input on desktop, numeric keypad on mobile. PIN dots fill gold as digits are entered. Auto-submits on 4th digit. Session-persistent via sessionStorage.</p>
+    <div style="margin-top:8px">
+      <span class="stat">Code: <span>2001</span></span>
+      <span class="stat">Auth: <span>sessionStorage</span></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Visual Overhaul</h3>
+    <ul>
+      <li>Dark sidebar (charcoal #0f1115) with burgundy active state and gold accent line</li>
+      <li>Dark mobile nav bar matching sidebar aesthetic</li>
+      <li>Deeper card hover glow with burgundy-tinted shadows</li>
+      <li>Stat cards with burgundy-to-gold gradient accent</li>
+      <li>Dark search input on sidebar with white text</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Mission Briefing Banner</h3>
+    <p>Replaced "Good morning, Dr. Warren" greeting with dynamic mission briefing. Dark hero with gold date, white headline showing the most urgent item, pulse line with priority count and project deadlines. Headline is clickable when it references a specific alumnus.</p>
+  </div>
+
+  <div class="card">
+    <h3>Enrichment in Projects View</h3>
+    <ul>
+      <li>Sort dropdown: Most Data First (default), Name, Engagement, Last Touchpoint</li>
+      <li>Filter dropdown with counts: All, Enriched, Has Email, Has Website, No Data Yet</li>
+      <li>Enrichment badges on alumni cards (Email, Website, Google rating)</li>
+      <li>Practice name inline on cards</li>
+      <li>Fixed duplicate "All Data Levels" in Directory dropdown</li>
+    </ul>
+  </div>
+
+  <h2>Commits Included</h2>
+  <div class="card" style="padding:12px 20px">
+    <div class="commit"><span class="hash">4f61124</span> ~U: split login, keypad on mobile, text input on desktop</div>
+    <div class="commit"><span class="hash">a89c98f</span> ~U: numeric keypad login, PIN dots, auto-submit</div>
+    <div class="commit"><span class="hash">349af7d</span> ~A: login gate, access code 2001, session-persistent</div>
+    <div class="commit"><span class="hash">692b95e</span> ~U: visual overhaul, dark sidebar, brand colors, mobile dark nav</div>
+    <div class="commit"><span class="hash">b72068e</span> ~U: mission briefing banner replaces greeting</div>
+    <div class="commit"><span class="hash">a29bea4</span> ~T: QA pass, dead import cleanup</div>
+    <div class="commit"><span class="hash">e50f643</span> ~U: enrichment filter+sort in Projects view, fix directory dropdown</div>
+  </div>
+
+  <h2>Version</h2>
+  <div class="card">
+    <p><strong>v1.4</strong> (from v1.3)</p>
+    <p>Deployed to: origin/main</p>
+    <p>Branch: main</p>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-27 00:45 &mdash; Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
