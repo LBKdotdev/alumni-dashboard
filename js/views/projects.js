@@ -3,13 +3,15 @@
 // Campaigns, events, initiatives — proactive work
 // ============================================================
 
-import { filterAlumni, sortAlumni, formatDate, getLastConnection } from '../utils/helpers.js'
+import { filterAlumni, sortAlumni, formatDate, getLastConnection, getEngagementCount } from '../utils/helpers.js'
 import { renderAvatar } from '../components.js'
 import { selectProject, clearProject, navigate, openOutreach, setAlumniInviteStatus } from '../state.js'
 
 // Module-scoped tab state
 let activeTab = 'alumni'
 let alumniPageSize = 50
+let alumniSortBy = 'enrichment'
+let alumniEnrichFilter = 'all'
 
 // ── Helpers ──
 
@@ -218,12 +220,25 @@ function getStatusStyle(status) {
 }
 
 function renderAlumniTab(project, matched) {
-  const sorted = sortAlumni(matched, 'name')
-  if (sorted.length === 0) {
+  // Apply enrichment filter
+  let filtered = matched
+  if (alumniEnrichFilter === 'enriched') filtered = matched.filter(a => a.contact.enriched)
+  else if (alumniEnrichFilter === 'has_email') filtered = matched.filter(a => a.contact.email)
+  else if (alumniEnrichFilter === 'has_website') filtered = matched.filter(a => a.professional.practice_website)
+  else if (alumniEnrichFilter === 'not_enriched') filtered = matched.filter(a => !a.contact.enriched)
+
+  const sorted = sortAlumni(filtered, alumniSortBy)
+
+  if (matched.length === 0) {
     return `<div class="card" style="padding:32px;text-align:center">
       <p class="text-sm text-gray-400">No alumni match this project's filter criteria.</p>
     </div>`
   }
+
+  // Enrichment counts (from full matched set, not filtered)
+  const enrichedCount = matched.filter(a => a.contact.enriched).length
+  const withEmail = matched.filter(a => a.contact.email).length
+  const withWebsite = matched.filter(a => a.professional.practice_website).length
 
   // Status summary
   const statuses = project.alumni_status || {}
@@ -239,6 +254,29 @@ function renderAlumniTab(project, matched) {
         ${declined ? `<span class="text-xs" style="color:var(--red-600)"><strong>${declined}</strong> declined</span>` : ''}
         ${noStatus ? `<span class="text-xs text-gray-400"><strong>${noStatus}</strong> not yet invited</span>` : ''}
       </div>` : ''
+
+  // Sort + filter bar
+  const sortOpts = [
+    { key: 'enrichment', label: 'Most Data First' },
+    { key: 'name', label: 'Name' },
+    { key: 'engagement', label: 'Engagement' },
+    { key: 'last_touchpoint', label: 'Last Touchpoint' },
+  ].map(o => `<option value="${o.key}" ${alumniSortBy === o.key ? 'selected' : ''}>Sort: ${o.label}</option>`).join('')
+
+  const filterOpts = [
+    { key: 'all', label: `All (${matched.length})` },
+    { key: 'enriched', label: `Enriched (${enrichedCount})` },
+    { key: 'has_email', label: `Has Email (${withEmail})` },
+    { key: 'has_website', label: `Has Website (${withWebsite})` },
+    { key: 'not_enriched', label: `No Data Yet (${matched.length - enrichedCount})` },
+  ].map(o => `<option value="${o.key}" ${alumniEnrichFilter === o.key ? 'selected' : ''}>${o.label}</option>`).join('')
+
+  const controlBar = `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+      <select class="select" data-action="proj-enrich-filter" style="font-size:12px;border-color:rgba(168,85,247,0.3);color:#a855f7">${filterOpts}</select>
+      <select class="select" data-action="proj-alumni-sort" style="font-size:12px">${sortOpts}</select>
+      <span class="text-xs text-gray-400 ml-auto">Showing ${Math.min(alumniPageSize, sorted.length)} of ${sorted.length}</span>
+    </div>`
 
   const cards = sorted.slice(0, alumniPageSize).map((a, i) => {
     const status = statuses[a.id]
@@ -265,7 +303,12 @@ function renderAlumniTab(project, matched) {
                 <span class="text-sm font-bold" style="color:var(--gray-900)">${a.name}, ${a.credentials}</span>
                 ${statusBadge}
               </div>
-              <p class="text-xs text-gray-400">${a.professional.specialty} &middot; ${a.professional.practice_city}</p>
+              <p class="text-xs text-gray-400">${a.professional.specialty} &middot; ${a.professional.practice_city}${a.professional.practice_name ? ` &middot; ${a.professional.practice_name}` : ''}</p>
+              <div style="display:flex;gap:4px;margin-top:3px;flex-wrap:wrap">
+                ${a.contact.email ? '<span style="font-size:10px;background:rgba(34,197,94,0.12);color:#4ade80;padding:1px 6px;border-radius:8px;font-weight:600">Email</span>' : ''}
+                ${a.professional.practice_website ? '<span style="font-size:10px;background:rgba(111,195,223,0.12);color:#6FC3DF;padding:1px 6px;border-radius:8px;font-weight:600">Website</span>' : ''}
+                ${a.professional.google_rating ? `<span style="font-size:10px;background:rgba(212,162,74,0.12);color:var(--gold);padding:1px 6px;border-radius:8px;font-weight:600">★ ${a.professional.google_rating}</span>` : ''}
+              </div>
             </div>
           </div>
         </div>
@@ -295,8 +338,9 @@ function renderAlumniTab(project, matched) {
 
   return `
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-      <span class="text-sm text-gray-500"><strong style="color:var(--gray-800)">${sorted.length}</strong> alumni in ${project.filter?.state || 'filter'}</span>
+      <span class="text-sm text-gray-500"><strong style="color:var(--gray-800)">${matched.length}</strong> alumni in ${project.filter?.state || 'filter'}${enrichedCount > 0 ? ` &middot; <span style="color:#a855f7;font-weight:600">${enrichedCount} enriched</span>` : ''}</span>
     </div>
+    ${controlBar}
     ${statusSummary}
     <div class="space-y-2">${cards}</div>
     ${moreNote}`
@@ -438,6 +482,8 @@ export function wireProjectsEvents(state) {
     el.addEventListener('click', () => {
       activeTab = 'alumni'
       alumniPageSize = 50
+      alumniSortBy = 'enrichment'
+      alumniEnrichFilter = 'all'
       selectProject(el.dataset.projectId)
     })
   })
@@ -479,6 +525,24 @@ export function wireProjectsEvents(state) {
   document.querySelectorAll('[data-action="set-invite-status"]').forEach(el => {
     el.addEventListener('change', () => {
       setAlumniInviteStatus(state.selectedProjectId, el.dataset.alumniId, el.value || null)
+    })
+  })
+
+  // Detail: alumni sort
+  document.querySelectorAll('[data-action="proj-alumni-sort"]').forEach(el => {
+    el.addEventListener('change', () => {
+      alumniSortBy = el.value
+      alumniPageSize = 50
+      selectProject(state.selectedProjectId)
+    })
+  })
+
+  // Detail: alumni enrichment filter
+  document.querySelectorAll('[data-action="proj-enrich-filter"]').forEach(el => {
+    el.addEventListener('change', () => {
+      alumniEnrichFilter = el.value
+      alumniPageSize = 50
+      selectProject(state.selectedProjectId)
     })
   })
 

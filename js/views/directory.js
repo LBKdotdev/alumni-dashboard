@@ -109,7 +109,7 @@ export function renderDirectory(state) {
       <select class="select" data-action="filter-engagement"><option value="all">All Engagement</option>${engOpts}</select>
       <select class="select" data-action="filter-year"><option value="all">All Class Years</option>${yearOpts}</select>
       <select class="select" data-action="filter-tags"><option value="all">All Tags</option>${tagOpts}</select>
-      <select class="select" data-action="filter-enrichment" style="border-color:rgba(168,85,247,0.3);color:#a855f7"><option value="all">All Data Levels</option>${enrichOpts}</select>
+      <select class="select" data-action="filter-enrichment" style="border-color:rgba(168,85,247,0.3);color:#a855f7">${enrichOpts}</select>
       <select class="select" data-action="sort-by">${sortOpts}</select>
       <span class="text-xs text-gray-400 ml-auto">Showing ${filtered.length} of ${alumni.length} alumni</span>
     </div>

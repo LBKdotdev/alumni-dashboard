@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~U: Enrichment in Projects View + Directory Fix</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p, .card li { color: #bbb; font-size: 14px; }
+  .card ul { list-style: none; padding: 0; }
+  .card li { padding: 4px 0; }
+  .card li::before { content: ""; display: inline-block; width: 6px; height: 6px; background: #6FC3DF; border-radius: 50%; margin-right: 10px; vertical-align: middle; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Build Report</span>
+</nav>
+<div class="container">
+  <h1>Enrichment in Projects + Directory Fix</h1>
+  <p class="subtitle">Enrichment filtering and sorting added to Projects alumni tab. Duplicate dropdown fixed in Directory.</p>
+
+  <h2>What Was Updated</h2>
+  <div class="card">
+    <h3>Projects Alumni Tab</h3>
+    <ul>
+      <li>Sort dropdown: Most Data First (default), Name, Engagement, Last Touchpoint</li>
+      <li>Filter dropdown: All, Enriched, Has Email, Has Website, No Data Yet (with counts)</li>
+      <li>Enrichment badges on each alumni card: green Email, blue Website, gold Google rating</li>
+      <li>Practice name shown inline on cards when available</li>
+      <li>Enriched count shown in the header ("168 alumni in NV, 100 enriched")</li>
+      <li>Default sort is "Most Data First" so enriched alumni surface immediately</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Directory Fix</h3>
+    <ul>
+      <li>Removed duplicate "All Data Levels" option from enrichment filter dropdown</li>
+      <li>Root cause: hardcoded first option + enrichmentOptions array both had "All Data Levels"</li>
+    </ul>
+  </div>
+
+  <h2>Files Changed</h2>
+  <div class="card">
+    <ul>
+      <li>js/views/projects.js: enrichment sort, filter, badges, control bar, event wiring</li>
+      <li>js/views/directory.js: removed duplicate "All Data Levels" option</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 23:55 &mdash; Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
