@@ -14,7 +14,7 @@ import { renderOutreachPanel, closeOutreachPanel } from './panels/outreach.js'
 // ── Data Init ──
 
 async function loadData() {
-  let alumni, triggers
+  let alumni, triggers, projects
 
   // Try API endpoint first (for when deployed with Worker)
   try {
@@ -24,6 +24,7 @@ async function loadData() {
       if (data.alumni) {
         alumni = data.alumni
         triggers = data.triggers || []
+        projects = data.projects || []
         console.log(`[Alumni Engine] Loaded ${alumni.length} records from API`)
       }
     }
@@ -34,21 +35,24 @@ async function loadData() {
   // Fall back to static JSON
   if (!alumni) {
     try {
-      const [alumniRes, triggersRes] = await Promise.all([
+      const [alumniRes, triggersRes, projectsRes] = await Promise.all([
         fetch('./data/alumni.json'),
         fetch('./data/triggers.json'),
+        fetch('./data/projects.json').catch(() => ({ json: () => [] })),
       ])
       alumni = await alumniRes.json()
       triggers = await triggersRes.json()
-      console.log(`[Alumni Engine] Loaded ${alumni.length} records from static JSON`)
+      projects = await projectsRes.json()
+      console.log(`[Alumni Engine] Loaded ${alumni.length} records, ${projects.length} projects from static JSON`)
     } catch (e) {
       console.error('[Alumni Engine] Failed to load data:', e)
       alumni = []
       triggers = []
+      projects = []
     }
   }
 
-  return { alumni, triggers }
+  return { alumni, triggers, projects }
 }
 
 // ── Render ──
@@ -317,8 +321,8 @@ function renderSearchResults(query, container, isMobile) {
 // ── Boot ──
 
 async function boot() {
-  const { alumni, triggers } = await loadData()
-  initState(alumni, triggers)
+  const { alumni, triggers, projects } = await loadData()
+  initState(alumni, triggers, projects)
   onRender(render)
   setupGlobalEvents()
   render()

@@ -6,7 +6,7 @@
 let _state = null
 let _renderCallback = null
 
-export function initState(alumni, triggers) {
+export function initState(alumni, triggers, projects) {
   _state = {
     // Navigation
     currentView: 'queue',
@@ -42,6 +42,10 @@ export function initState(alumni, triggers) {
 
     // Dashboard
     dashboardCampus: 'all',
+
+    // Projects
+    projects: projects || [],
+    selectedProjectId: null,
   }
   return _state
 }
@@ -203,6 +207,16 @@ export function markOutreachSent(alumniId) {
 // ── Profile ──
 
 export function setAddingNote(value) { update({ addingNote: value }) }
+
+// ── Projects ──
+
+export function selectProject(projectId) {
+  update({ selectedProjectId: projectId })
+}
+
+export function clearProject() {
+  update({ selectedProjectId: null })
+}
 
 // ── Dashboard ──
 
