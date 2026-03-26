@@ -154,7 +154,7 @@ export function renderProfile(alumni, state) {
               ${alumni.touchpoints.map((tp, i) => `
                 <div class="flex" style="position:relative;gap:16px;padding-bottom:${i < alumni.touchpoints.length - 1 ? '24px' : '0'}">
                   <div style="position:relative;z-index:1;width:32px;display:flex;justify-content:center;padding-top:4px">
-                    <div style="width:12px;height:12px;border-radius:50%;border:2px solid ${tp.source === 'manual' ? 'var(--burgundy)' : 'var(--gray-300)'};background:${tp.source === 'manual' ? 'var(--burgundy)' : '#fff'}"></div>
+                    <div style="width:12px;height:12px;border-radius:50%;border:2px solid ${tp.source === 'manual' ? 'var(--burgundy)' : 'var(--gray-300)'};background:${tp.source === 'manual' ? 'var(--burgundy)' : 'var(--surface-raised)'}"></div>
                   </div>
                   <div class="flex-1">
                     <div class="flex items-center gap-2 mb-1">

@@ -109,7 +109,7 @@ export function renderDashboard(state) {
 function renderStatCard(label, value, note, accent) {
   const bg = accent
     ? 'background:rgba(139,34,48,0.05);border-color:rgba(139,34,48,0.15)'
-    : 'background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.04)'
+    : 'background:var(--surface-raised);box-shadow:0 1px 3px rgba(0,0,0,0.03)'
   const valColor = accent ? 'color:var(--burgundy)' : 'color:var(--gray-800)'
 
   return `<div class="card" style="padding:20px;${bg}">
