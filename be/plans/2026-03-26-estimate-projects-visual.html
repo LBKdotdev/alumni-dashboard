@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be — Estimate: Projects + Visual Overhaul</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px; }
+  .summary-box { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 16px; text-align: center; }
+  .summary-box .num { font-size: 28px; font-weight: 800; color: #6FC3DF; }
+  .summary-box .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+
+  .board { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 10px; padding: 24px; margin-bottom: 16px; }
+  .board-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .board-name { font-size: 16px; font-weight: 700; color: #fff; }
+  .board-pts { font-size: 14px; font-weight: 700; color: #6FC3DF; }
+  .board-blocked { font-size: 11px; font-weight: 600; color: #ef4444; margin-top: 4px; }
+
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #666; padding: 6px 8px; border-bottom: 1px solid #333; }
+  td { padding: 8px; border-bottom: 1px solid #1f1f1f; color: #bbb; font-size: 13px; }
+  td:nth-child(3), th:nth-child(3) { text-align: center; width: 50px; }
+  td:nth-child(4), th:nth-child(4) { text-align: center; width: 50px; }
+  .pts { color: #6FC3DF; font-weight: 700; }
+  .cmd { color: #888; font-family: monospace; font-size: 12px; }
+
+  .value-section { margin-top: 24px; }
+  .value-item { background: #1A1A1A; border-left: 3px solid #6FC3DF; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 8px 0; }
+  .value-item strong { color: #fff; }
+  .value-item p { font-size: 13px; color: #999; margin-top: 4px; }
+
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Estimate: Projects + Visual Overhaul</span>
+</nav>
+
+<div class="container">
+  <h1>Sized Work Items</h1>
+  <p class="subtitle">4 boards, 19 items, 73 points total. Fibonacci 3s and 5s only.</p>
+
+  <div class="summary-grid">
+    <div class="summary-box"><div class="num">4</div><div class="label">Boards</div></div>
+    <div class="summary-box"><div class="num">19</div><div class="label">Items</div></div>
+    <div class="summary-box"><div class="num">73</div><div class="label">Points</div></div>
+    <div class="summary-box"><div class="num">27d</div><div class="label">To Vegas</div></div>
+  </div>
+
+  <!-- Board 1 -->
+  <div class="board">
+    <div class="board-header">
+      <div>
+        <div class="board-name">Board 1: Projects Foundation</div>
+      </div>
+      <div class="board-pts">18 pts</div>
+    </div>
+    <table>
+      <thead><tr><th>Item</th><th>Verb</th><th>Pts</th><th>Cmd</th></tr></thead>
+      <tbody>
+        <tr><td>projects.json data file</td><td>add to data/</td><td class="pts">3</td><td class="cmd">~A</td></tr>
+        <tr><td>Projects nav item</td><td>add to sidebar + mobile nav</td><td class="pts">3</td><td class="cmd">~A</td></tr>
+        <tr><td>Projects state management</td><td>add to state.js</td><td class="pts">3</td><td class="cmd">~A</td></tr>
+        <tr><td>Projects landing view</td><td>add to js/views/</td><td class="pts">5</td><td class="cmd">~A</td></tr>
+        <tr><td>AACOM Vegas seed data</td><td>add to projects.json</td><td class="pts">3</td><td class="cmd">~A</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Board 2 -->
+  <div class="board">
+    <div class="board-header">
+      <div>
+        <div class="board-name">Board 2: Project Detail View</div>
+        <div class="board-blocked">&#9940; blocked by Board 1</div>
+      </div>
+      <div class="board-pts">21 pts</div>
+    </div>
+    <table>
+      <thead><tr><th>Item</th><th>Verb</th><th>Pts</th><th>Cmd</th></tr></thead>
+      <tbody>
+        <tr><td>Project detail shell + tabs</td><td>add to views/projects.js</td><td class="pts">5</td><td class="cmd">~A</td></tr>
+        <tr><td>Alumni list tab (reuse directory)</td><td>add to project detail</td><td class="pts">5</td><td class="cmd">~A</td></tr>
+        <tr><td>Checklist tab</td><td>add to project detail</td><td class="pts">3</td><td class="cmd">~A</td></tr>
+        <tr><td>Outreach template tab</td><td>add to project detail</td><td class="pts">5</td><td class="cmd">~A</td></tr>
+        <tr><td>Intel brief tab</td><td>add to project detail</td><td class="pts">3</td><td class="cmd">~A</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Board 3 -->
+  <div class="board">
+    <div class="board-header">
+      <div>
+        <div class="board-name">Board 3: Visual Hierarchy</div>
+        <div class="board-blocked">&#9940; blocked by Board 2</div>
+      </div>
+      <div class="board-pts">18 pts (1 already shipped)</div>
+    </div>
+    <table>
+      <thead><tr><th>Item</th><th>Verb</th><th>Pts</th><th>Cmd</th></tr></thead>
+      <tbody>
+        <tr><td>Trigger card type-based bg tint</td><td>update CSS + queue.js</td><td class="pts">3</td><td class="cmd">~U</td></tr>
+        <tr><td>Trigger insight text contrast</td><td>update sizing + weight</td><td class="pts">3</td><td class="cmd">~U</td></tr>
+        <tr><td>Profile section accent headers</td><td>update profile.js + CSS</td><td class="pts">5</td><td class="cmd">~U</td></tr>
+        <tr><td>Queue morning header redesign</td><td>update queue.js + CSS</td><td class="pts">3</td><td class="cmd">~U</td></tr>
+        <tr><td>Directory notable alumni lift</td><td>update directory.js + CSS</td><td class="pts">3</td><td class="cmd">~U</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Board 4 -->
+  <div class="board">
+    <div class="board-header">
+      <div>
+        <div class="board-name">Board 4: Project Tracking + Polish</div>
+        <div class="board-blocked">&#9940; blocked by Board 3</div>
+      </div>
+      <div class="board-pts">16 pts</div>
+    </div>
+    <table>
+      <thead><tr><th>Item</th><th>Verb</th><th>Pts</th><th>Cmd</th></tr></thead>
+      <tbody>
+        <tr><td>Per-alumni invite status tracking</td><td>add to project alumni list</td><td class="pts">5</td><td class="cmd">~A</td></tr>
+        <tr><td>Project outreach &rarr; touchpoints</td><td>add to state.js</td><td class="pts">3</td><td class="cmd">~A</td></tr>
+        <tr><td>Mobile responsive projects</td><td>update to phone-first layout</td><td class="pts">5</td><td class="cmd">~U</td></tr>
+        <tr><td>Full QA pass all views</td><td>test desktop + mobile</td><td class="pts">3</td><td class="cmd">~T</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Value Rationale -->
+  <h2>Value Rationale</h2>
+
+  <div class="value-section">
+    <div class="value-item">
+      <strong>Board 1 first</strong> &mdash; Foundation. Nothing else works without nav, state, and data structure.
+      <p>Delivers: Dr. Warren can see the Projects tab and Vegas project card immediately.</p>
+    </div>
+    <div class="value-item">
+      <strong>Board 2 second</strong> &mdash; The "open the project" moment. This is the phone-at-dinner experience.
+      <p>Delivers: Tap Vegas project &rarr; see 134 alumni &rarr; search/filter &rarr; draft outreach. Core use case.</p>
+    </div>
+    <div class="value-item">
+      <strong>Board 3 third</strong> &mdash; Polish every view so nothing washes out. Fixes the "gray on gray" problem.
+      <p>Delivers: Every screen in the app is scannable at a glance. Details pop instead of fade.</p>
+    </div>
+    <div class="value-item">
+      <strong>Board 4 last</strong> &mdash; Tracking + mobile. Makes the project a true workflow, not just a filtered list.
+      <p>Delivers: "Who have I invited? Who confirmed? Who's left?" &mdash; answered in one tap.</p>
+    </div>
+  </div>
+
+  <!-- Dependencies -->
+  <h2>Dependencies</h2>
+  <table>
+    <thead><tr><th>Item</th><th>Depends On</th></tr></thead>
+    <tbody>
+      <tr><td>Project detail view</td><td>Projects state + nav (Board 1)</td></tr>
+      <tr><td>Alumni list tab</td><td>filterAlumni/sortAlumni from helpers.js (exists)</td></tr>
+      <tr><td>Outreach template tab</td><td>openOutreach from state.js (exists)</td></tr>
+      <tr><td>Per-alumni invite status</td><td>Project detail view (Board 2)</td></tr>
+      <tr><td>Visual hierarchy items</td><td>None &mdash; independent, but sequenced after features</td></tr>
+    </tbody>
+  </table>
+
+  <div class="footer">
+    Generated 2026-03-26 &mdash; Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
