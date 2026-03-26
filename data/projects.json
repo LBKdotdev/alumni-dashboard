@@ -8,7 +8,7 @@
       "end": "2026-04-24"
     },
     "location": "Caesars Palace, Las Vegas",
-    "description": "AACOM Annual Conference — largest gathering of osteopathic medical educators. Dr. Warren's opportunity to reconnect with Nevada-based alumni, recruit dinner attendees, and strengthen COMP's alumni network presence in the Vegas metro.",
+    "description": "AACOM Annual Conference, the largest gathering of osteopathic medical educators. Dr. Warren's opportunity to reconnect with Nevada-based alumni, recruit dinner attendees, and strengthen COMP's alumni network presence in the Vegas metro.",
     "filter": {
       "state": "NV",
       "campus": "all",
@@ -19,12 +19,12 @@
     },
     "checklist": [
       { "task": "Pull Nevada alumni list", "done": true, "due_date": "2026-03-25", "role": "dean" },
-      { "task": "Review list — flag top 20 priority reconnections", "done": false, "due_date": "2026-04-01", "role": "dean" },
+      { "task": "Review list, flag top 20 priority reconnections", "done": false, "due_date": "2026-04-01", "role": "dean" },
       { "task": "Approve outreach messaging and template", "done": false, "due_date": "2026-04-05", "role": "dean" },
       { "task": "Review and send personalized invitations to priority alumni", "done": false, "due_date": "2026-04-08", "role": "dean" },
       { "task": "Personal follow-up with VIPs who haven't responded", "done": false, "due_date": "2026-04-15", "role": "dean" },
       { "task": "Review intel brief and talking points", "done": false, "due_date": "2026-04-20", "role": "dean" },
-      { "task": "Post-dinner debrief — note new contacts, follow-up promises, next steps", "done": false, "due_date": "2026-04-25", "role": "dean" },
+      { "task": "Post-dinner debrief. Note new contacts, follow-up promises, next steps", "done": false, "due_date": "2026-04-25", "role": "dean" },
       { "task": "Reserve dinner venue at Caesars", "done": false, "due_date": "2026-04-01", "role": "staff" },
       { "task": "Coordinate Dean's travel and hotel", "done": false, "due_date": "2026-04-10", "role": "staff" },
       { "task": "Send bulk invitations to non-priority alumni", "done": false, "due_date": "2026-04-10", "role": "staff" },
@@ -33,10 +33,10 @@
       { "task": "Print name badges and prep welcome packets", "done": false, "due_date": "2026-04-20", "role": "staff" }
     ],
     "outreach_template": {
-      "subject": "COMP Alumni Dinner at AACOM Vegas — You're Invited",
-      "body": "Hi Dr. {{last_name}},\n\nI wanted to reach out because we're hosting an alumni dinner during the AACOM conference in Las Vegas, and as a fellow COMP graduate practicing in Nevada, I'd love for you to be there.\n\nDate: Wednesday, April 22, 2026\nVenue: Caesars Palace\nTime: 7:00 PM\n\nNothing formal — just good conversation, good company, and a chance to reconnect with fellow DOs and hear about where the college is headed.\n\nI'd really enjoy catching up and hearing about your practice. Let me know if you can make it.\n\nWarm regards,\nLisa Warren, DO, MBA\nDean, COMP & COMP-Northwest"
+      "subject": "COMP Alumni Dinner at AACOM Vegas, You're Invited",
+      "body": "Hi Dr. {{last_name}},\n\nI wanted to reach out because we're hosting an alumni dinner during the AACOM conference in Las Vegas, and as a fellow COMP graduate practicing in Nevada, I'd love for you to be there.\n\nDate: Wednesday, April 22, 2026\nVenue: Caesars Palace\nTime: 7:00 PM\n\nNothing formal. Just good conversation, good company, and a chance to reconnect with fellow DOs and hear about where the college is headed.\n\nI'd really enjoy catching up and hearing about your practice. Let me know if you can make it.\n\nWarm regards,\nLisa Warren, DO, MBA\nDean, COMP & COMP-Northwest"
     },
-    "brief": "## AACOM Vegas 2026 — Intel Brief\n\n**Conference:** AACOM Annual Meeting, April 22–24, Caesars Palace, Las Vegas\n\n**Our alumni in Nevada:** 168 COMP graduates practice in NV, with 134 in the Las Vegas metro area. Top specialties: Internal Medicine, Family Medicine, Emergency Medicine, Anesthesiology.\n\n**Key talking points:**\n- COMP's 2026 match rate and residency placement stats\n- New simulation center opening\n- Alumni mentorship program expansion\n- SOAP support outcomes\n\n**Priority reconnections:**\n- Alumni who haven't been contacted in 2+ years\n- High-engagement alumni (mentors, donors, preceptors) for recognition\n- Notable alumni for potential guest speaker invitations\n\n**Goal:** Secure 15–20 attendees for the alumni dinner. Reactivate dormant relationships. Identify 3–5 new mentors or advisory board candidates.",
+    "brief": "## AACOM Vegas 2026 Intel Brief\n\n**Conference:** AACOM Annual Meeting, April 22 to 24, Caesars Palace, Las Vegas\n\n**Our alumni in Nevada:** 168 COMP graduates practice in NV, with 134 in the Las Vegas metro area. Top specialties: Internal Medicine, Family Medicine, Emergency Medicine, Anesthesiology.\n\n**Key talking points:**\n- COMP's 2026 match rate and residency placement stats\n- New simulation center opening\n- Alumni mentorship program expansion\n- SOAP support outcomes\n\n**Priority reconnections:**\n- Alumni who haven't been contacted in 2+ years\n- High-engagement alumni (mentors, donors, preceptors) for recognition\n- Notable alumni for potential guest speaker invitations\n\n**Goal:** Secure 15 to 20 attendees for the alumni dinner. Reactivate dormant relationships. Identify 3 to 5 new mentors or advisory board candidates.",
     "alumni_status": {}
   }
 ]

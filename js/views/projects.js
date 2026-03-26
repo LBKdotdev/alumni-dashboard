@@ -503,7 +503,7 @@ export function wireProjectsEvents(state) {
         alumniId: alumni.id,
         alumniName: alumni.name,
         email: alumni.contact?.email || '',
-        subject: template?.subject || `${project.name} — Invitation`,
+        subject: template?.subject || `${project.name}, Invitation`,
         body: template?.body?.replace(/\{\{last_name\}\}/g, lastName) || `Hi Dr. ${lastName},\n\nI wanted to reach out about ${project.name}. I think you'd be a great fit and I'd love for you to be part of it.\n\nLet me know if you're interested and I'll send over the details.\n\nWarm regards,\nLisa Warren, DO, MBA\nDean, COMP & COMP-Northwest`,
         projectId: project.id,
       })
