@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be — Build: Board 3 — Visual Hierarchy</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 32px; }
+  .summary-box { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 16px; text-align: center; }
+  .summary-box .num { font-size: 28px; font-weight: 800; color: #6FC3DF; }
+  .summary-box .label { font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+  .item { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 10px; padding: 20px; margin-bottom: 12px; }
+  .item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .item-name { font-size: 15px; font-weight: 700; color: #fff; }
+  .item-pts { font-size: 13px; font-weight: 700; color: #6FC3DF; }
+  .item-desc { font-size: 13px; color: #999; }
+  .decision { background: #1A1A1A; border-left: 3px solid #6FC3DF; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 8px 0; }
+  .decision strong { color: #fff; }
+  .decision p { font-size: 13px; color: #999; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  th { text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #666; padding: 6px 8px; border-bottom: 1px solid #333; }
+  td { padding: 8px; border-bottom: 1px solid #1f1f1f; color: #bbb; font-size: 13px; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Build: Board 3 — Visual Hierarchy</span>
+</nav>
+
+<div class="container">
+  <h1>Board 3 Complete: Visual Hierarchy</h1>
+  <p class="subtitle">5 items, 18 points — every screen scannable at a glance. Board 4 unblocked.</p>
+
+  <div class="summary-grid">
+    <div class="summary-box"><div class="num">5</div><div class="label">Items</div></div>
+    <div class="summary-box"><div class="num">18</div><div class="label">Points</div></div>
+    <div class="summary-box"><div class="num">3</div><div class="label">Views Touched</div></div>
+    <div class="summary-box"><div class="num">16</div><div class="label">Pts Remaining</div></div>
+  </div>
+
+  <h2>What Was Built</h2>
+
+  <div class="item">
+    <div class="item-header">
+      <span class="item-name">1. Trigger card tinting</span>
+      <span class="item-pts">3 pts</span>
+    </div>
+    <div class="item-desc">Added <code>triggerBgTint(type)</code> — each trigger type now gets a subtle background tint (4-6% opacity) matching its border color. Practice moves get blue wash, credentials get gold, follow-ups get red, etc. Inner div gets a rounded right edge to complement the left border. Cards are now instantly scannable by color without reading labels.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header">
+      <span class="item-name">2. Trigger insight text</span>
+      <span class="item-pts">3 pts</span>
+    </div>
+    <div class="item-desc">Insight dots bumped from 6px to 8px for better visibility. Text promoted from gray-500/gray-400 to gray-700 with font-weight 500 — campus proximity and student match insights now pop instead of fading into the card. Overdue text bumped to weight 600. Font size unified at 13px across all insight lines.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header">
+      <span class="item-name">3. Profile section headers</span>
+      <span class="item-pts">5 pts</span>
+    </div>
+    <div class="item-desc">All 6 profile sections now have left accent bars: burgundy for Engagement, Timeline, and Outreach (action sections), gold for Notables and Personal Notes (relationship sections), gray for Data Sources (reference). Consistent 3px bar width + 12px padding-left creates visual rhythm that guides the eye down the profile without reading every heading.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header">
+      <span class="item-name">4. Queue morning header</span>
+      <span class="item-pts">3 pts</span>
+    </div>
+    <div class="item-desc">Morning greeting now sits in a warm gradient card — gold-to-burgundy at 6-8% opacity with rounded corners and a subtle gold border. Date shows in burgundy instead of gray. Headline bumped to 26px/800 weight. The queue now opens with warmth instead of a flat gray header. Feels like opening a briefing, not a spreadsheet.</div>
+  </div>
+
+  <div class="item">
+    <div class="item-header">
+      <span class="item-name">5. Directory card elevation</span>
+      <span class="item-pts">3 pts</span>
+    </div>
+    <div class="item-desc">Alumni with notables or VIP status now get elevated cards — warm gold box-shadow (8px spread at 12% opacity) plus a subtle gold border (18% opacity). Notable alumni visually rise off the page. Regular alumni cards stay flat. The hierarchy is immediate: the people worth knowing catch your eye first.</div>
+  </div>
+
+  <h2>Decisions Made</h2>
+
+  <div class="decision">
+    <strong>Color semantics: burgundy = action, gold = relationship</strong>
+    <p>Profile accent bars follow a deliberate color code. Burgundy marks sections where Dr. Warren takes action (engagement, outreach, timeline). Gold marks sections about the person (notables, notes). Gray marks system data (provenance). This wasn't arbitrary — it maps to how Lisa actually uses the profile.</p>
+  </div>
+
+  <div class="decision">
+    <strong>Tints stay under 6% opacity</strong>
+    <p>Background tints are deliberately subtle — 4-6% opacity max. They're sensed more than seen. The goal is "I can tell these cards apart without thinking" not "every card is a different color." The border + tint work together; neither needs to be loud.</p>
+  </div>
+
+  <div class="decision">
+    <strong>Notable lift uses gold, not generic shadow</strong>
+    <p>Instead of a neutral gray shadow for elevated cards, the box-shadow uses gold-tinted rgba. This ties the elevation to the project's color language — gold = noteworthy — rather than just "this card is higher." VIP and notable alumni share the same lift because they're the same concept: people worth knowing.</p>
+  </div>
+
+  <h2>Files Changed</h2>
+  <table>
+    <thead><tr><th>File</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>js/views/queue.js</td><td>Modified — triggerBgTint function, card tinting, insight text contrast, morning header gradient</td></tr>
+      <tr><td>js/views/profile.js</td><td>Modified — accent bars on 6 section headers</td></tr>
+      <tr><td>js/views/directory.js</td><td>Modified — notable alumni card elevation with gold shadow</td></tr>
+      <tr><td>be/board.md</td><td>Modified — Board 3 all Done, Board 4 unblocked</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Board Status</h2>
+  <table>
+    <thead><tr><th>Board</th><th>Status</th><th>Points</th></tr></thead>
+    <tbody>
+      <tr><td>Board 1: Projects Foundation</td><td style="color:#22c55e;font-weight:700">✓ Complete</td><td>18 pts</td></tr>
+      <tr><td>Board 2: Project Detail View</td><td style="color:#22c55e;font-weight:700">✓ Complete</td><td>21 pts</td></tr>
+      <tr><td>Board 3: Visual Hierarchy</td><td style="color:#22c55e;font-weight:700">✓ Complete</td><td>18 pts</td></tr>
+      <tr><td>Board 4: Tracking + Polish</td><td style="color:#6FC3DF;font-weight:700">Ready</td><td>16 pts</td></tr>
+    </tbody>
+  </table>
+
+  <h2>What's Next</h2>
+  <p style="color:#bbb">Board 4 is the final stretch — per-alumni invite tracking in projects, outreach-to-touchpoint integration, mobile-first responsive layout for projects, and a full QA pass across all views. 16 points to ship-ready.</p>
+
+  <div class="footer">
+    Generated 2026-03-26 20:30 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>

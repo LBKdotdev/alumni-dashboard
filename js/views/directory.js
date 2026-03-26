@@ -123,6 +123,7 @@ function renderAlumniCard(a, index) {
         ${activeEngagements.length > 4 ? `<span class="text-xs text-gray-400" style="align-self:center">+${activeEngagements.length - 4} more</span>` : ''}
       </div>` : ''
 
+  const isNotable = a.notables.length > 0 || a.engagement.is_vip
   const notable = a.notables.length > 0
     ? `<p class="text-xs text-gray-500 mb-1"><span class="font-semibold text-gray-600">Notable:</span> ${a.notables[0]}</p>` : ''
 
@@ -130,8 +131,12 @@ function renderAlumniCard(a, index) {
     ? `Last touchpoint: ${formatDate(lastTp.date)} — ${lastTp.title}`
     : 'No touchpoints on record'
 
+  const liftStyle = isNotable
+    ? 'box-shadow:0 2px 8px rgba(212,162,74,0.12),0 1px 3px rgba(0,0,0,0.06);border:1px solid rgba(212,162,74,0.18);'
+    : ''
+
   return `
-    <button class="w-full card card-hover animate-fade-up" style="text-align:left;padding:20px;animation-delay:${index * 0.03}s" data-action="navigate" data-view="profile" data-id="${a.id}">
+    <button class="w-full card card-hover animate-fade-up" style="text-align:left;padding:20px;animation-delay:${index * 0.03}s;${liftStyle}" data-action="navigate" data-view="profile" data-id="${a.id}">
       <div class="flex items-start gap-4">
         ${renderAvatar(a.name, 'md')}
         <div class="flex-1 min-w-0">

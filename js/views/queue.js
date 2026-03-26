@@ -51,6 +51,20 @@ function triggerTextColor(type) {
   return map[type] || 'var(--gray-600)'
 }
 
+function triggerBgTint(type) {
+  const map = {
+    practice_move: 'rgba(59,130,246,0.04)',
+    new_credential: 'rgba(212,162,74,0.05)',
+    publication: 'rgba(22,163,74,0.04)',
+    follow_up_due: 'rgba(239,68,68,0.04)',
+    milestone: 'rgba(147,51,234,0.04)',
+    reengagement: 'rgba(251,113,133,0.04)',
+    soap_prep: 'rgba(212,162,74,0.04)',
+    notable_achievement: 'rgba(212,162,74,0.06)',
+  }
+  return map[type] || 'transparent'
+}
+
 // ── Render ──
 
 export function renderQueue(state) {
@@ -108,10 +122,10 @@ export function renderQueue(state) {
       </div>` : ''
 
   return `
-    <div class="mb-6">
-      <p class="text-xs font-medium text-gray-400" style="text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">${today}</p>
-      <h1 class="text-2xl font-bold" style="color:var(--gray-900)">Good morning, Dr. Warren</h1>
-      <p class="text-sm text-gray-400" style="margin-top:4px">${queueItems.length} items need your attention</p>
+    <div class="mb-6" style="background:linear-gradient(135deg,rgba(212,162,74,0.08) 0%,rgba(128,42,46,0.06) 100%);border-radius:16px;padding:28px 24px;border:1px solid rgba(212,162,74,0.12)">
+      <p class="text-xs font-medium" style="text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;color:var(--burgundy);opacity:0.7">${today}</p>
+      <h1 style="font-size:26px;font-weight:800;color:var(--gray-900);margin-bottom:4px">Good morning, Dr. Warren</h1>
+      <p class="text-sm" style="color:var(--gray-500);font-weight:500">${queueItems.length} items need your attention</p>
     </div>
 
     <div class="flex flex-wrap items-center gap-3 mb-6">
@@ -132,24 +146,25 @@ export function renderQueue(state) {
 function renderTriggerCard(trigger, index) {
   const border = triggerBorderColor(trigger.trigger_type)
   const color = triggerTextColor(trigger.trigger_type)
+  const bgTint = triggerBgTint(trigger.trigger_type)
 
   let insights = ''
   if (trigger.detail.campus_proximity)
-    insights += `<div class="flex items-center gap-2 text-sm">
-      <span style="width:6px;height:6px;border-radius:50%;background:var(--burgundy);flex-shrink:0"></span>
-      <span class="text-gray-500">${trigger.detail.campus_proximity}</span></div>`
+    insights += `<div class="flex items-center gap-2" style="font-size:13px">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--burgundy);flex-shrink:0"></span>
+      <span style="color:var(--gray-700);font-weight:500">${trigger.detail.campus_proximity}</span></div>`
   if (trigger.detail.student_match)
-    insights += `<div class="flex items-center gap-2 text-sm">
-      <span style="width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0"></span>
-      <span class="text-gray-500">${trigger.detail.student_match}</span></div>`
+    insights += `<div class="flex items-center gap-2" style="font-size:13px">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0"></span>
+      <span style="color:var(--gray-700);font-weight:500">${trigger.detail.student_match}</span></div>`
   if (trigger.detail.last_touchpoint)
-    insights += `<div class="flex items-center gap-2 text-sm">
-      <span style="width:6px;height:6px;border-radius:50%;background:var(--gray-300);flex-shrink:0"></span>
-      <span class="text-gray-400">Last touchpoint: ${trigger.detail.last_touchpoint}</span></div>`
+    insights += `<div class="flex items-center gap-2" style="font-size:13px">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--gray-400);flex-shrink:0"></span>
+      <span style="color:var(--gray-600)">Last touchpoint: ${trigger.detail.last_touchpoint}</span></div>`
   if (trigger.detail.days_overdue > 0)
-    insights += `<div class="flex items-center gap-2 text-sm">
-      <span style="width:6px;height:6px;border-radius:50%;background:var(--red-500);flex-shrink:0"></span>
-      <span style="color:var(--red-600);font-weight:500">${trigger.detail.days_overdue} days overdue</span></div>`
+    insights += `<div class="flex items-center gap-2" style="font-size:13px">
+      <span style="width:8px;height:8px;border-radius:50%;background:var(--red-500);flex-shrink:0"></span>
+      <span style="color:var(--red-600);font-weight:600">${trigger.detail.days_overdue} days overdue</span></div>`
 
   let actions = ''
   if (trigger.alumni_id)
@@ -166,7 +181,7 @@ function renderTriggerCard(trigger, index) {
 
   return `
     <div class="card card-hover animate-fade-up" style="animation-delay:${0.05 + index * 0.05}s">
-      <div style="border-left:4px solid ${border};padding:24px">
+      <div style="border-left:4px solid ${border};padding:24px;background:${bgTint};border-radius:0 12px 12px 0">
         <div class="flex items-start justify-between mb-3">
           <div class="flex items-center gap-2">
             <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:${color}">

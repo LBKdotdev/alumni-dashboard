@@ -102,7 +102,7 @@ export function renderProfile(alumni, state) {
 
       <!-- ═══ SECTION 2: Engagement Status ═══ -->
       <div class="card" style="padding:24px;margin-bottom:20px">
-        <h2 class="text-lg font-bold mb-4" style="color:var(--gray-900)">Engagement with COMP</h2>
+        <h2 class="text-lg font-bold mb-4" style="color:var(--gray-900);padding-left:12px;border-left:3px solid var(--burgundy)">Engagement with COMP</h2>
         <div class="grid grid-2 gap-2">
           ${Object.entries(engagementConfig).map(([key, config]) => {
             const isActive = alumni.engagement[key]
@@ -119,7 +119,7 @@ export function renderProfile(alumni, state) {
       <!-- ═══ SECTION 3: Notables ═══ -->
       <div class="card" style="padding:24px;margin-bottom:20px">
         <div class="flex items-center justify-between mb-1">
-          <h2 class="text-lg font-bold" style="color:var(--gray-900)">Notables</h2>
+          <h2 class="text-lg font-bold" style="color:var(--gray-900);padding-left:12px;border-left:3px solid var(--gold)">Notables</h2>
           ${!addingNotable ? `<button class="flex items-center gap-1 text-xs font-semibold text-burgundy" data-action="start-notable">
             <svg class="icon icon-sm"><use href="./css/icons.svg#plus"></use></svg> Add
           </button>` : ''}
@@ -145,7 +145,7 @@ export function renderProfile(alumni, state) {
 
       <!-- ═══ SECTION 4: Touchpoint Timeline ═══ -->
       <div class="card" style="padding:24px;margin-bottom:20px">
-        <h2 class="text-lg font-bold mb-4" style="color:var(--gray-900)">
+        <h2 class="text-lg font-bold mb-4" style="color:var(--gray-900);padding-left:12px;border-left:3px solid var(--burgundy)">
           Timeline <span class="text-sm font-medium text-gray-400" style="margin-left:8px">${alumni.touchpoints?.length || 0} touchpoints</span>
         </h2>
         ${(alumni.touchpoints?.length || 0) > 0
@@ -172,7 +172,7 @@ export function renderProfile(alumni, state) {
 
       <!-- ═══ SECTION 5: Personal Notes ═══ -->
       <div class="card" style="padding:24px;margin-bottom:20px">
-        <h2 class="text-lg font-bold mb-4" style="color:var(--gray-900)">Personal Notes</h2>
+        <h2 class="text-lg font-bold mb-4" style="color:var(--gray-900);padding-left:12px;border-left:3px solid var(--gold)">Personal Notes</h2>
 
         ${state.addingNote ? `
           <div class="mb-4" style="padding:16px;background:var(--cream);border-radius:8px;border:1px solid var(--gray-200)">
@@ -202,7 +202,7 @@ export function renderProfile(alumni, state) {
 
       <!-- ═══ SECTION 6: Outreach History ═══ -->
       <div class="card" style="padding:24px;margin-bottom:20px">
-        <h2 class="text-lg font-bold mb-4" style="color:var(--gray-900)">Outreach History</h2>
+        <h2 class="text-lg font-bold mb-4" style="color:var(--gray-900);padding-left:12px;border-left:3px solid var(--burgundy)">Outreach History</h2>
 
         ${nextAction ? `
           <div class="flex items-center gap-3 mb-4" style="padding:12px 16px;border-radius:8px;${isOverdue ? 'background:var(--red-50);border:1px solid var(--red-200)' : 'background:rgba(245,230,200,0.5);border:1px solid rgba(212,162,74,0.2)'}">
@@ -229,7 +229,7 @@ export function renderProfile(alumni, state) {
 
       <!-- ═══ SECTION 7: Data Provenance ═══ -->
       <div class="card" style="padding:24px;margin-bottom:20px">
-        <h2 class="text-sm font-semibold text-gray-400 mb-3" style="text-transform:uppercase;letter-spacing:0.05em">Data Sources</h2>
+        <h2 class="text-sm font-semibold text-gray-400 mb-3" style="text-transform:uppercase;letter-spacing:0.05em;padding-left:12px;border-left:3px solid var(--gray-300)">Data Sources</h2>
         <div class="space-y-2 mb-4">
           ${Object.entries(alumni.data_sources).map(([key, source]) => `
             <div class="flex items-center text-xs">

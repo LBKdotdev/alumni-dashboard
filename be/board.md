@@ -23,14 +23,14 @@
 
 ## Board 3: Visual Hierarchy (18 pts)
 ### Ready
-- {trigger card tinting, update with, type-based background tint} · 3 · ~U
-- {trigger insight text, update with, stronger contrast and sizing} · 3 · ~U
-- {profile section headers, update with, accent bars and hierarchy} · 5 · ~U
-- {queue morning header, update with, warm gradient and visual weight} · 3 · ~U
-- {directory card elevation, update with, notable alumni visual lift} · 3 · ~U
 ### In Progress
 ### Done
 ✅ unblocked — Board 2 complete
+- {trigger card tinting, update with, type-based background tint} · 3 · ~U ✅
+- {trigger insight text, update with, stronger contrast and sizing} · 3 · ~U ✅
+- {profile section headers, update with, accent bars and hierarchy} · 5 · ~U ✅
+- {queue morning header, update with, warm gradient and visual weight} · 3 · ~U ✅
+- {directory card elevation, update with, notable alumni visual lift} · 3 · ~U ✅
 
 ## Board 4: Project Tracking + Polish (16 pts)
 ### Ready
@@ -40,4 +40,4 @@
 - {full QA pass, test across, all views on desktop + mobile} · 3 · ~T
 ### In Progress
 ### Done
-⛔ blocked by Board 3
+✅ unblocked — Board 3 complete
