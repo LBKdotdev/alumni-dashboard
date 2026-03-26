@@ -144,6 +144,44 @@ a:hover { text-decoration: underline; }
   margin-bottom: 28px;
 }
 
+/* Desktop vs Mobile login toggle */
+.login-desktop { display: none; }
+.login-mobile { display: block; }
+@media (min-width: 768px) {
+  .login-desktop { display: block; }
+  .login-mobile { display: none; }
+}
+
+/* Desktop input */
+.login-input-wrap {
+  margin-top: 24px;
+}
+.login-input {
+  width: 100%;
+  max-width: 220px;
+  padding: 14px 20px;
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+  letter-spacing: 0.3em;
+  color: #fff;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.login-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212,162,74,0.15);
+}
+.login-input::placeholder {
+  color: rgba(255,255,255,0.2);
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  font-weight: 400;
+}
+
 /* PIN Dots */
 .pin-dots {
   display: flex;
@@ -234,6 +272,7 @@ a:hover { text-decoration: underline; }
   font-size: 13px;
   color: #f87171;
   min-height: 20px;
+  margin-top: 12px;
   margin-bottom: 4px;
   font-weight: 500;
 }

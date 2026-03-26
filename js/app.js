@@ -330,11 +330,13 @@ const PIN_LENGTH = 4
 
 function setupLogin() {
   const gate = document.getElementById('login-gate')
-  const dotsContainer = document.getElementById('pin-dots')
   const error = document.getElementById('login-error')
   const keypad = document.getElementById('keypad')
+  const desktopInput = document.getElementById('login-code')
+  const dotsMobile = document.getElementById('pin-dots-mobile')
+  const dotsDesktop = document.getElementById('pin-dots-desktop')
 
-  if (!gate || !keypad) return false
+  if (!gate) return false
 
   // Already authenticated this session
   if (sessionStorage.getItem('alumni_auth') === 'true') {
@@ -342,17 +344,15 @@ function setupLogin() {
     return true
   }
 
-  let code = ''
-  const dots = dotsContainer.querySelectorAll('.pin-dot')
+  // ── Shared ──
 
-  function updateDots() {
-    dots.forEach((dot, i) => dot.classList.toggle('filled', i < code.length))
+  function getAllDots() {
+    return [...(dotsMobile?.querySelectorAll('.pin-dot') || []), ...(dotsDesktop?.querySelectorAll('.pin-dot') || [])]
   }
 
   function unlock() {
     sessionStorage.setItem('alumni_auth', 'true')
-    // Brief gold flash on all dots before fade
-    dots.forEach(d => d.classList.add('filled'))
+    getAllDots().forEach(d => d.classList.add('filled'))
     setTimeout(() => {
       gate.style.transition = 'opacity 0.4s ease'
       gate.style.opacity = '0'
@@ -361,55 +361,86 @@ function setupLogin() {
     }, 300)
   }
 
-  function reject() {
+  function showError() {
     error.classList.remove('hidden')
-    dotsContainer.classList.add('error')
-    code = ''
-    updateDots()
-    setTimeout(() => {
-      dotsContainer.classList.remove('error')
-      error.classList.add('hidden')
-    }, 1200)
+    setTimeout(() => error.classList.add('hidden'), 1200)
   }
 
-  function pressKey(key) {
-    if (key === 'delete') {
-      code = code.slice(0, -1)
-      error.classList.add('hidden')
-      updateDots()
-      return
-    }
-    if (code.length >= PIN_LENGTH) return
+  // ── Desktop: text input with live dot sync ──
 
-    code += key
-    updateDots()
+  if (desktopInput) {
+    const dDots = dotsDesktop?.querySelectorAll('.pin-dot') || []
 
-    if (code.length === PIN_LENGTH) {
-      // Auto-submit on 4th digit
-      setTimeout(() => {
-        if (code === ACCESS_CODE) {
-          unlock()
-        } else {
-          reject()
-        }
-      }, 200)
+    function syncDesktopDots() {
+      const len = desktopInput.value.length
+      dDots.forEach((dot, i) => dot.classList.toggle('filled', i < len))
     }
+
+    desktopInput.addEventListener('input', () => {
+      // Strip non-digits
+      desktopInput.value = desktopInput.value.replace(/\D/g, '').slice(0, PIN_LENGTH)
+      syncDesktopDots()
+
+      if (desktopInput.value.length === PIN_LENGTH) {
+        setTimeout(() => {
+          if (desktopInput.value === ACCESS_CODE) {
+            unlock()
+          } else {
+            showError()
+            dotsDesktop?.classList.add('error')
+            desktopInput.value = ''
+            syncDesktopDots()
+            setTimeout(() => dotsDesktop?.classList.remove('error'), 600)
+          }
+        }, 200)
+      }
+    })
+
+    // Focus on desktop
+    if (window.innerWidth >= 768) desktopInput.focus()
   }
 
-  // Keypad click events
-  keypad.querySelectorAll('.key[data-key]').forEach(btn => {
-    btn.addEventListener('click', () => pressKey(btn.dataset.key))
-  })
+  // ── Mobile: keypad ──
 
-  // Physical keyboard support
-  document.addEventListener('keydown', function loginKeyHandler(e) {
-    if (sessionStorage.getItem('alumni_auth') === 'true') {
-      document.removeEventListener('keydown', loginKeyHandler)
-      return
+  if (keypad && dotsMobile) {
+    let mobileCode = ''
+    const mDots = dotsMobile.querySelectorAll('.pin-dot')
+
+    function updateMobileDots() {
+      mDots.forEach((dot, i) => dot.classList.toggle('filled', i < mobileCode.length))
     }
-    if (e.key >= '0' && e.key <= '9') pressKey(e.key)
-    if (e.key === 'Backspace') pressKey('delete')
-  })
+
+    function pressKey(key) {
+      if (key === 'delete') {
+        mobileCode = mobileCode.slice(0, -1)
+        error.classList.add('hidden')
+        updateMobileDots()
+        return
+      }
+      if (mobileCode.length >= PIN_LENGTH) return
+
+      mobileCode += key
+      updateMobileDots()
+
+      if (mobileCode.length === PIN_LENGTH) {
+        setTimeout(() => {
+          if (mobileCode === ACCESS_CODE) {
+            unlock()
+          } else {
+            showError()
+            dotsMobile.classList.add('error')
+            mobileCode = ''
+            updateMobileDots()
+            setTimeout(() => dotsMobile.classList.remove('error'), 600)
+          }
+        }, 200)
+      }
+    }
+
+    keypad.querySelectorAll('.key[data-key]').forEach(btn => {
+      btn.addEventListener('click', () => pressKey(btn.dataset.key))
+    })
+  }
 
   return false
 }
