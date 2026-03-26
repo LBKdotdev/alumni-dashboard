@@ -24,21 +24,32 @@ export function renderDashboard(state) {
     ? alumni
     : alumni.filter(a => a.campus === dashboardCampus)
 
-  const totalDisplay = dashboardCampus === 'all' ? '~7,042' : dashboardCampus === 'pomona' ? '~4,695' : '~2,347'
   const mentorCount = filtered.filter(a => a.engagement.is_mentor).length
   const donorCount = filtered.filter(a => a.engagement.is_donor).length
+  const stateSet = new Set(filtered.map(a => a.professional.practice_state).filter(Boolean))
 
   // Campus comparison data
   const pomona = alumni.filter(a => a.campus === 'pomona')
   const lebanon = alumni.filter(a => a.campus === 'lebanon')
+  const hasLebanon = lebanon.length > 0
 
   const campusComparison = dashboardCampus === 'all' ? `
     <div class="card" style="padding:24px;margin-bottom:32px">
       <h3 class="text-base font-bold mb-4" style="color:var(--gray-900)">Two Campuses, Two Communities</h3>
       <div class="grid grid-2 gap-6">
-        ${renderCampusCard('Pomona, CA', '~4,695', pomona.length, pomona.filter(a => getEngagementCount(a) > 0).length, pomona.filter(a => a.engagement.is_mentor).length, 'LA / San Diego', '1977')}
-        ${renderCampusCard('Lebanon, OR', '~2,347', lebanon.length, lebanon.filter(a => getEngagementCount(a) > 0).length, lebanon.filter(a => a.engagement.is_mentor).length, 'OR / WA / PNW', '2011')}
+        ${renderCampusCard('Pomona, CA', pomona.length.toLocaleString(), pomona.filter(a => getEngagementCount(a) > 0).length, pomona.filter(a => a.engagement.is_mentor).length, 'LA / San Diego', '1977')}
+        ${hasLebanon
+          ? renderCampusCard('Lebanon, OR', lebanon.length.toLocaleString(), lebanon.filter(a => getEngagementCount(a) > 0).length, lebanon.filter(a => a.engagement.is_mentor).length, 'OR / WA / PNW', '2011')
+          : renderCampusCardPending('Lebanon, OR', '~2,347', 'OR / WA / PNW', '2011')}
       </div>
+    </div>` : ''
+
+  // Lebanon empty state
+  const lebanonEmpty = dashboardCampus === 'lebanon' && filtered.length === 0 ? `
+    <div class="card" style="padding:48px 24px;text-align:center;margin-bottom:32px">
+      <div style="font-size:32px;margin-bottom:12px">🏔️</div>
+      <h3 class="text-base font-bold mb-2" style="color:var(--gray-900)">Lebanon Campus — Coming Soon</h3>
+      <p class="text-sm text-gray-400" style="max-width:400px;margin:0 auto">COMP-Northwest alumni data hasn't been loaded yet. When Lisa's graduate list is connected, Lebanon records will appear here.</p>
     </div>` : ''
 
   return `
@@ -50,19 +61,22 @@ export function renderDashboard(state) {
       ${renderCampusToggle(dashboardCampus, 'dash-campus')}
     </div>
 
+    ${lebanonEmpty}
+
     <!-- Stat Cards -->
     <div class="grid grid-4 gap-4 mb-8">
-      ${renderStatCard('Total Alumni Located', totalDisplay, 'Matched via NPI Registry', true)}
-      ${renderStatCard('States + Territories', '48', 'Nationwide presence', false)}
+      ${renderStatCard('Alumni in Dataset', filtered.length.toLocaleString(), 'Matched via NPI Registry', true)}
+      ${renderStatCard('States Represented', stateSet.size || '—', 'Practice locations', false)}
       ${renderStatCard('Active Mentors', mentorCount, 'Currently mentoring students', false)}
       ${renderStatCard('Donors', donorCount, "Contributing to Dean's Fund", false)}
     </div>
 
+    ${filtered.length > 0 ? `
     <!-- Charts -->
     <div class="grid grid-2 gap-6 mb-8">
       <div class="card" style="padding:24px">
         <h3 class="text-base font-bold mb-4" style="color:var(--gray-900)">Specialty Distribution</h3>
-        <p class="text-xs text-gray-400 mb-4">Top 15 specialties from ${filtered.length} sample records</p>
+        <p class="text-xs text-gray-400 mb-4">Top 15 specialties from ${filtered.length.toLocaleString()} records</p>
         <div class="chart-wrap chart-wrap-bar">
           <canvas id="specialty-chart"></canvas>
         </div>
@@ -75,7 +89,7 @@ export function renderDashboard(state) {
         </div>
         <div id="engagement-legend" style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:8px"></div>
       </div>
-    </div>
+    </div>` : ''}
 
     ${campusComparison}
 
@@ -87,7 +101,7 @@ export function renderDashboard(state) {
 
     <!-- Footer note -->
     <div class="text-center" style="padding:16px 0">
-      <p class="text-xs text-gray-400">Dashboard showing ${filtered.length} sample records. Full dataset (${totalDisplay} alumni) populates when Lisa's graduate list is connected.</p>
+      <p class="text-xs text-gray-400">Showing ${filtered.length.toLocaleString()} records${dashboardCampus !== 'all' ? ' (' + dashboardCampus + ')' : ''}. Full dataset populates when Lisa's graduate list is connected.</p>
     </div>
   `
 }
@@ -105,11 +119,10 @@ function renderStatCard(label, value, note, accent) {
   </div>`
 }
 
-function renderCampusCard(name, total, sampleCount, engaged, mentors, corridor, founded) {
+function renderCampusCard(name, recordCount, engaged, mentors, corridor, founded) {
   const rows = [
-    ['Total Alumni', total],
-    ['Sample Records', sampleCount],
-    ['Engaged (sample)', engaged],
+    ['Records Loaded', recordCount],
+    ['Engaged', engaged],
     ['Active Mentors', mentors],
     ['Primary Corridor', corridor],
     ['Founded', founded],
@@ -126,9 +139,32 @@ function renderCampusCard(name, total, sampleCount, engaged, mentors, corridor, 
   </div>`
 }
 
+function renderCampusCardPending(name, estimated, corridor, founded) {
+  return `<div style="border:1px dashed var(--gray-300);border-radius:8px;padding:20px;opacity:0.7">
+    <h4 class="text-lg font-bold mb-3" style="color:var(--burgundy)">${name}</h4>
+    <div class="space-y-2">
+      <div class="flex justify-between text-sm" style="padding:4px 0;border-bottom:1px solid var(--gray-50)">
+        <span class="text-gray-400">Est. Alumni</span>
+        <span class="font-semibold text-gray-800">${estimated}</span>
+      </div>
+      <div class="flex justify-between text-sm" style="padding:4px 0;border-bottom:1px solid var(--gray-50)">
+        <span class="text-gray-400">Primary Corridor</span>
+        <span class="font-semibold text-gray-800">${corridor}</span>
+      </div>
+      <div class="flex justify-between text-sm" style="padding:4px 0;border-bottom:1px solid var(--gray-50)">
+        <span class="text-gray-400">Founded</span>
+        <span class="font-semibold text-gray-800">${founded}</span>
+      </div>
+      <div class="text-xs text-gray-400" style="padding-top:8px;text-align:center;font-style:italic">Data pending — awaiting graduate list</div>
+    </div>
+  </div>`
+}
+
 // ── Chart Creation (called from wireEvents after DOM render) ──
 
 function createCharts(filtered) {
+  if (filtered.length === 0) return
+
   // Specialty distribution — horizontal bar chart
   const specMap = {}
   filtered.forEach(a => {
