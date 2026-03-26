@@ -3,7 +3,7 @@
 // Morning briefing, trigger cards, filters, SOAP card, archive
 // ============================================================
 
-import { formatDate } from '../utils/helpers.js'
+import { formatDate, daysOverdue } from '../utils/helpers.js'
 import { renderPriorityBadge, renderCampusToggle, renderSOAPCard } from '../components.js'
 import {
   setQueueFilter, setQueueCampus, navigate, navigateDirectorySearch,
@@ -88,6 +88,50 @@ export function renderQueue(state) {
     weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
   })
 
+  // ── Mission Briefing ──
+  const highPriority = queueItems.filter(t => t.priority === 'high')
+
+  // Find the most urgent item (overdue follow-ups first, then highest priority)
+  const overdueItems = queueItems.filter(t => t.detail?.days_overdue > 0)
+    .sort((a, b) => b.detail.days_overdue - a.detail.days_overdue)
+  const urgentItem = overdueItems[0] || highPriority[0] || queueItems[0]
+
+  // Compute headline
+  let headline = ''
+  let headlineClickData = ''
+  if (urgentItem) {
+    if (urgentItem.detail?.days_overdue > 0) {
+      headline = `${urgentItem.alumni_name} follow-up is ${urgentItem.detail.days_overdue} days overdue`
+    } else if (urgentItem.trigger_type === 'soap_prep') {
+      headline = `SOAP season: ${urgentItem.detail?.students_helped || 0} of ${urgentItem.detail?.students_total || 0} students placed. Begin 2027 planning.`
+    } else {
+      headline = `${urgentItem.alumni_name}: ${urgentItem.trigger_label.toLowerCase()}`
+    }
+    if (urgentItem.alumni_id) {
+      headlineClickData = ` data-action="navigate" data-view="profile" data-id="${urgentItem.alumni_id}"`
+    }
+  }
+
+  // Nearest project deadline
+  const projects = state.projects || []
+  let projectLine = ''
+  const nowMs = Date.now()
+  const upcomingProjects = projects
+    .filter(p => p.date_range?.start && new Date(p.date_range.start + 'T00:00:00') > new Date())
+    .sort((a, b) => a.date_range.start.localeCompare(b.date_range.start))
+  if (upcomingProjects.length > 0) {
+    const next = upcomingProjects[0]
+    const daysTo = Math.ceil((new Date(next.date_range.start + 'T00:00:00') - new Date(new Date().toDateString())) / (1000 * 60 * 60 * 24))
+    projectLine = `${next.name} in ${daysTo} day${daysTo !== 1 ? 's' : ''}`
+  }
+
+  // Build the pulse line
+  const pulseSegments = []
+  if (highPriority.length > 0) pulseSegments.push(`<span style="color:var(--red-600);font-weight:600">${highPriority.length} high-priority</span>`)
+  const otherCount = queueItems.length - highPriority.length
+  if (otherCount > 0) pulseSegments.push(`${otherCount} more in queue`)
+  if (projectLine) pulseSegments.push(projectLine)
+
   const pills = Object.entries(triggerTypeLabels).map(([key, label]) =>
     `<button class="pill ${queueFilter === key ? 'pill-active' : 'pill-inactive'}" data-action="queue-filter" data-filter="${key}">${label}</button>`
   ).join('')
@@ -111,7 +155,7 @@ export function renderQueue(state) {
           <div class="space-y-3" style="margin-top:12px">
             ${archivedItems.map(t => `
               <div class="flex items-center gap-3" style="padding:12px 16px;background:var(--gray-50);border-radius:8px;border:1px solid var(--gray-100)">
-                <span class="text-sm text-gray-400 flex-1">${t.trigger_icon} ${t.alumni_name} — ${t.trigger_label}</span>
+                <span class="text-sm text-gray-400 flex-1">${t.trigger_icon} ${t.alumni_name}, ${t.trigger_label}</span>
                 <button class="flex items-center gap-1 text-xs font-semibold text-burgundy" data-action="restore-trigger" data-id="${t.id}">
                   <svg class="icon icon-sm"><use href="./css/icons.svg#rotate-ccw"></use></svg>
                   Restore
@@ -123,9 +167,9 @@ export function renderQueue(state) {
 
   return `
     <div class="mb-6" style="background:linear-gradient(135deg,rgba(212,162,74,0.08) 0%,rgba(128,42,46,0.06) 100%);border-radius:16px;padding:28px 24px;border:1px solid rgba(212,162,74,0.12)">
-      <p class="text-xs font-medium" style="text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;color:var(--burgundy);opacity:0.7">${today}</p>
-      <h1 style="font-size:26px;font-weight:800;color:var(--gray-900);margin-bottom:4px">Good morning, Dr. Warren</h1>
-      <p class="text-sm" style="color:var(--gray-500);font-weight:500">${queueItems.length} items need your attention</p>
+      <p class="text-xs font-medium" style="text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;color:var(--burgundy);opacity:0.7">${today}</p>
+      ${headline ? `<h1${headlineClickData} style="font-size:22px;font-weight:800;color:var(--gray-900);margin-bottom:8px;line-height:1.3">${headline}</h1>` : ''}
+      <p class="text-sm" style="color:var(--gray-500);font-weight:500">${pulseSegments.join(' &nbsp;&middot;&nbsp; ')}</p>
     </div>
 
     <div class="flex flex-wrap items-center gap-3 mb-6">
