@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~U: Apify Enrichment — 100 Alumni, 34 Emails, 54 Websites</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  h3 { color: #fff; font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  code { background: #222; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #6FC3DF; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .stat-box { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 16px; text-align: center; }
+  .stat-num { font-size: 28px; font-weight: 800; color: #6FC3DF; }
+  .stat-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+  .before { color: #ef4444; font-size: 13px; }
+  .after { color: #4ade80; font-size: 13px; }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  th { text-align: left; font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 0.05em; padding: 8px 12px; border-bottom: 1px solid #2A2A2A; }
+  td { font-size: 13px; padding: 10px 12px; border-bottom: 1px solid #1A1A1A; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .tag-email { background: rgba(34,197,94,0.15); color: #4ade80; }
+  .tag-web { background: rgba(111,195,223,0.15); color: #6FC3DF; }
+  .tag-enriched { background: rgba(168,85,247,0.15); color: #a855f7; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Build Report</span>
+</nav>
+<div class="container">
+
+  <h1>~U: Apify Enrichment Pipeline</h1>
+  <p class="subtitle">Google Maps scraper + website email finder — integrated into alumni data and dashboard UI</p>
+
+  <div class="stat-grid">
+    <div class="stat-box"><div class="stat-num">100</div><div class="stat-label">Alumni Enriched</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:#4ade80">34</div><div class="stat-label">Emails Found</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:#6FC3DF">54</div><div class="stat-label">Websites Added</div></div>
+    <div class="stat-box"><div class="stat-num" style="color:#d4a24a">64</div><div class="stat-label">Google Ratings</div></div>
+  </div>
+
+  <h2>What Was Updated</h2>
+  <div class="card">
+    <h3>Data Layer — alumni.json</h3>
+    <ul>
+      <li>100 NV alumni records enriched with Google Maps data</li>
+      <li>New fields: <code>practice_name</code>, <code>practice_website</code>, <code>google_rating</code>, <code>google_reviews</code>, <code>verified_address</code></li>
+      <li>34 alumni now have email addresses (was 0) — scraped from practice websites</li>
+      <li>Contact records tagged with <code>enriched: true</code>, <code>enrichment_date</code>, <code>email_source</code>, <code>email_type</code></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Dashboard View</h3>
+    <ul>
+      <li>New enrichment stats bar showing enriched count, emails found, and websites</li>
+      <li>Purple accent bar with Apify Pipeline label</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Directory View</h3>
+    <ul>
+      <li>Alumni cards now show <span class="tag tag-email">✉ Email</span> <span class="tag tag-web">🌐 Website</span> <span class="tag tag-enriched">Enriched</span> badges</li>
+      <li>Practice name and Google rating displayed inline</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Profile View</h3>
+    <ul>
+      <li>New purple "Enriched Data" panel showing website link, Google rating, and verified address</li>
+      <li>Email source attribution: "found via practice website scrape (general inbox / direct)"</li>
+      <li>Practice name now shown conditionally (no empty bullet when missing)</li>
+    </ul>
+  </div>
+
+  <h2>Before / After</h2>
+  <div class="card">
+    <p class="label before">Before (NPI Registry only)</p>
+    <ul class="before">
+      <li>168 NV alumni — name, specialty, NPI phone only</li>
+      <li>0 emails, 0 practice names, 0 websites</li>
+      <li>Outreach = cold call to NPI-listed number</li>
+    </ul>
+  </div>
+  <div class="card">
+    <p class="label after">After (NPI + Google Maps + Email Scraper)</p>
+    <ul class="after">
+      <li>100 enriched with practice details — names, addresses, ratings</li>
+      <li>54 practice website URLs — contact forms, about pages</li>
+      <li>34 emails — practice inboxes reachable by Lisa's staff</li>
+      <li>64 Google ratings — reputation context for outreach prioritization</li>
+    </ul>
+  </div>
+
+  <h2>Apify Runs</h2>
+  <div class="card">
+    <table>
+      <tr><th>Actor</th><th>Input</th><th>Output</th><th>Cost</th></tr>
+      <tr><td>Google Maps Scraper</td><td>144 physician searches</td><td>139 results (97%)</td><td>~$0.21</td></tr>
+      <tr><td>Website Email Finder</td><td>43 practice domains</td><td>25 domains with emails (58%)</td><td>~$0.25</td></tr>
+    </table>
+    <p style="color:#888;font-size:12px;margin-top:8px">Total cost: ~$0.46. Dataset IDs: aVlO1bXZ3g0lPzADX (Maps), L53RYRYri0BFZq3gj (Emails)</p>
+  </div>
+
+  <h2>Decisions Made</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Excluded students/trainees (20)</strong> — residents at hospitals won't have standalone Google Maps listings</li>
+      <li><strong>Deduplicated by NPI</strong> — 168 records → 164 unique → 144 practicing physicians</li>
+      <li><strong>Only verified matches merged</strong> — Google Maps returns closest match, not exact; ~54 wrong-person results were filtered out</li>
+      <li><strong>Practice emails preferred over personal</strong> — info@, contact@ reach the front desk, which routes to the doctor. Fine for Lisa's outreach model.</li>
+      <li><strong>Email type tagged</strong> — <code>practice_general</code> vs <code>practice_direct</code> so outreach can be calibrated</li>
+      <li><strong>FERPA clean</strong> — all data from public sources (Google Maps, practice websites). Zero educational records touched.</li>
+    </ul>
+  </div>
+
+  <h2>Files Changed</h2>
+  <div class="card">
+    <ul>
+      <li><code>data/alumni.json</code> — 100 records enriched with practice details + 34 emails</li>
+      <li><code>js/views/dashboard.js</code> — enrichment stats bar added</li>
+      <li><code>js/views/directory.js</code> — email/website/enriched badges on cards</li>
+      <li><code>js/views/profile.js</code> — enriched data panel, practice name fix</li>
+      <li><code>scripts/merge-enrichment.js</code> — repeatable merge script</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>

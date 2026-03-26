@@ -145,7 +145,13 @@ function renderAlumniCard(a, index) {
             ${a.engagement.is_vip ? renderVIPBadge() : ''}
             <span class="text-xs text-gray-400 ml-auto flex-shrink-0">Class of ${a.class_year}</span>
           </div>
-          <p class="text-sm text-gray-500 mb-2">${a.professional.specialty} &middot; ${a.professional.practice_city}, ${a.professional.practice_state}</p>
+          <p class="text-sm text-gray-500 mb-1">${a.professional.specialty} &middot; ${a.professional.practice_city}, ${a.professional.practice_state}</p>
+          ${a.professional.practice_name ? `<p class="text-xs text-gray-400 mb-1">${a.professional.practice_name}${a.professional.google_rating ? ` <span style="color:var(--gold)">★ ${a.professional.google_rating}</span> <span class="text-gray-500">(${a.professional.google_reviews})</span>` : ''}</p>` : ''}
+          <div class="flex items-center gap-2 mb-2">
+            ${a.contact.email ? '<span class="text-xs" style="background:rgba(34,197,94,0.12);color:#4ade80;padding:2px 8px;border-radius:10px;font-weight:600">✉ Email</span>' : ''}
+            ${a.professional.practice_website ? '<span class="text-xs" style="background:rgba(111,195,223,0.12);color:#6FC3DF;padding:2px 8px;border-radius:10px;font-weight:600">🌐 Website</span>' : ''}
+            ${a.contact.enriched ? '<span class="text-xs" style="background:rgba(168,85,247,0.12);color:#a855f7;padding:2px 8px;border-radius:10px;font-weight:600">Enriched</span>' : ''}
+          </div>
           ${badges}
           ${notable}
           <p class="text-xs text-gray-400">${touchpoint}</p>

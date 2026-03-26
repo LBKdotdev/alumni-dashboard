@@ -27,6 +27,9 @@ export function renderDashboard(state) {
   const mentorCount = filtered.filter(a => a.engagement.is_mentor).length
   const donorCount = filtered.filter(a => a.engagement.is_donor).length
   const stateSet = new Set(filtered.map(a => a.professional.practice_state).filter(Boolean))
+  const enrichedCount = filtered.filter(a => a.contact.enriched).length
+  const withEmail = filtered.filter(a => a.contact.email).length
+  const withWebsite = filtered.filter(a => a.professional.practice_website).length
 
   // Campus comparison data
   const pomona = alumni.filter(a => a.campus === 'pomona')
@@ -70,6 +73,22 @@ export function renderDashboard(state) {
       ${renderStatCard('Active Mentors', mentorCount, 'Currently mentoring students', false)}
       ${renderStatCard('Donors', donorCount, "Contributing to Dean's Fund", false)}
     </div>
+
+    <!-- Enrichment Stats -->
+    ${enrichedCount > 0 ? `
+    <div class="card" style="padding:20px 24px;margin-bottom:24px;border-left:3px solid #a855f7">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-bold" style="color:#a855f7">Data Enrichment — Apify Pipeline</h3>
+          <p class="text-xs text-gray-400">Public data from Google Maps + practice website scraping</p>
+        </div>
+        <div class="flex gap-6 text-sm">
+          <div class="text-center"><span class="text-lg font-bold" style="color:#a855f7">${enrichedCount}</span><br><span class="text-xs text-gray-400">Enriched</span></div>
+          <div class="text-center"><span class="text-lg font-bold" style="color:#4ade80">${withEmail}</span><br><span class="text-xs text-gray-400">Emails</span></div>
+          <div class="text-center"><span class="text-lg font-bold" style="color:var(--teal)">${withWebsite}</span><br><span class="text-xs text-gray-400">Websites</span></div>
+        </div>
+      </div>
+    </div>` : ''}
 
     ${filtered.length > 0 ? `
     <!-- Charts -->

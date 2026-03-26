@@ -47,7 +47,7 @@ export function renderProfile(alumni, state) {
               <h1 class="text-2xl font-bold" style="color:var(--gray-900)">${alumni.name}, ${alumni.credentials}</h1>
               ${alumni.engagement.is_vip ? renderVIPBadge() : ''}
             </div>
-            <p class="text-sm text-gray-500 mb-1">${alumni.professional.specialty} &middot; ${alumni.professional.practice_name || ''}</p>
+            <p class="text-sm text-gray-500 mb-1">${alumni.professional.specialty}${alumni.professional.practice_name ? ` &middot; ${alumni.professional.practice_name}` : ''}</p>
             <p class="text-sm text-gray-400 mb-3">
               ${alumni.professional.practice_city}, ${alumni.professional.practice_state} &middot; Class of ${alumni.class_year} &middot; ${getCampusLabel(alumni.campus)}
             </p>
@@ -69,6 +69,24 @@ export function renderProfile(alumni, state) {
               <span class="flex items-center gap-1">License: ${renderStatusDot(alumni.professional.license_status)} ${alumni.professional.license_status} (${alumni.professional.license_state})</span>
               <span>Verified: ${formatDate(alumni.professional.last_verified)}</span>
             </div>
+
+            <!-- Enrichment Data -->
+            ${alumni.contact.enriched ? `
+            <div style="background:rgba(168,85,247,0.04);border:1px solid rgba(168,85,247,0.15);border-radius:8px;padding:12px 16px;margin-bottom:16px">
+              <p class="text-xs font-bold mb-2" style="color:#a855f7;text-transform:uppercase;letter-spacing:0.05em">Enriched Data</p>
+              <div class="flex flex-wrap gap-4 text-sm">
+                ${alumni.professional.practice_website ? `<a href="${alumni.professional.practice_website}" target="_blank" rel="noopener" class="flex items-center gap-1" style="color:var(--teal)">
+                  <svg class="icon icon-sm"><use href="./css/icons.svg#link"></use></svg>
+                  Practice Website
+                </a>` : ''}
+                ${alumni.professional.google_rating ? `<span class="flex items-center gap-1 text-gray-500">
+                  <span style="color:var(--gold)">★ ${alumni.professional.google_rating}</span>
+                  <span class="text-xs text-gray-400">(${alumni.professional.google_reviews} reviews)</span>
+                </span>` : ''}
+                ${alumni.professional.verified_address ? `<span class="text-xs text-gray-400">📍 ${alumni.professional.verified_address}</span>` : ''}
+              </div>
+              ${alumni.contact.email_source === 'apify_website_scraper' ? `<p class="text-xs text-gray-400 mt-2">Email found via practice website scrape (${alumni.contact.email_type === 'practice_general' ? 'general inbox' : 'direct'})</p>` : ''}
+            </div>` : ''}
 
             <!-- Tags -->
             ${(alumni.tags?.length || 0) > 0 ? `<div class="flex flex-wrap gap-1 mb-4">${alumni.tags.map(t => renderTagBadge(t)).join('')}</div>` : ''}
