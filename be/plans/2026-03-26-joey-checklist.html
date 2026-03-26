@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What We Need From Joey — Alumni Engine</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: #111111;
+    color: #E5E5E5;
+    line-height: 1.6;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: #000; border-bottom: 2px solid #6FC3DF;
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  nav .brand { font-weight: 700; color: #6FC3DF; font-size: 18px; }
+  nav .title { font-size: 14px; color: #999; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  h1 { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .subtitle { font-size: 15px; color: #888; margin-bottom: 32px; }
+
+  .status-banner {
+    background: #1A1A1A; border: 1px solid #333; border-left: 4px solid #6FC3DF;
+    border-radius: 8px; padding: 16px 20px; margin-bottom: 32px;
+  }
+  .status-banner .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #6FC3DF; margin-bottom: 4px; }
+  .status-banner .text { font-size: 14px; color: #ccc; }
+
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; color: #6FC3DF; margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 1px solid #222;
+  }
+
+  .card {
+    background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 10px;
+    padding: 20px 24px; margin-bottom: 12px;
+  }
+  .card-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+  }
+  .card-num {
+    width: 32px; height: 32px; border-radius: 50%; background: #6FC3DF;
+    color: #111; font-weight: 800; font-size: 14px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .card-title { font-size: 16px; font-weight: 700; color: #fff; }
+  .card-body { font-size: 14px; color: #bbb; margin-left: 44px; }
+  .card-body p { margin-bottom: 8px; }
+  .card-body .detail { font-size: 13px; color: #888; }
+  .card-body .action {
+    display: inline-block; margin-top: 8px; padding: 6px 14px;
+    background: #222; border: 1px solid #444; border-radius: 6px;
+    font-size: 12px; font-weight: 600; color: #6FC3DF; font-family: monospace;
+  }
+  .card-body .action-steps {
+    margin: 12px 0 0 0; padding: 0; list-style: none;
+  }
+  .card-body .action-steps li {
+    padding: 8px 12px; margin-bottom: 4px;
+    background: #222; border-radius: 6px; border-left: 3px solid #6FC3DF;
+    font-size: 13px; color: #ccc; font-family: monospace;
+  }
+  .card-body .action-steps li span.step-num {
+    color: #6FC3DF; font-weight: 700; margin-right: 8px;
+  }
+  .card-body ul { margin: 8px 0 8px 20px; }
+  .card-body li { margin-bottom: 4px; color: #bbb; font-size: 13px; }
+
+  .priority-high {
+    display: inline-block; padding: 2px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    background: rgba(239,68,68,0.15); color: #ef4444; margin-left: 8px;
+  }
+
+  .divider { border: 0; border-top: 1px solid #222; margin: 32px 0; }
+
+  .what-we-have {
+    background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 8px; padding: 16px 20px; margin-bottom: 24px;
+  }
+  .what-we-have .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #22c55e; margin-bottom: 8px; }
+  .what-we-have ul { margin-left: 20px; }
+  .what-we-have li { font-size: 13px; color: #bbb; margin-bottom: 4px; }
+
+  .tldr {
+    background: #1A1A1A; border: 2px solid #6FC3DF; border-radius: 10px;
+    padding: 24px; margin-top: 32px;
+  }
+  .tldr .headline { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 12px; }
+  .tldr p { font-size: 15px; color: #ccc; margin-bottom: 8px; }
+  .tldr .muted { font-size: 13px; color: #888; margin-top: 12px; }
+
+  .footer {
+    margin-top: 48px; padding-top: 16px; border-top: 1px solid #222;
+    font-size: 12px; color: #555; text-align: center;
+  }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">What We Need From Joey &mdash; Alumni Engine</span>
+</nav>
+
+<div class="container">
+  <h1>One Thing From Joey</h1>
+  <p class="subtitle">The Alumni Relationship Engine is built and live. One key unlocks the rest.</p>
+
+  <div class="status-banner">
+    <div class="label">Current Status</div>
+    <div class="text">The app is <strong>live and functional</strong> at lbkdotdev.github.io/alumni-dashboard. To put it on <strong>scottyledell.us</strong> and light up the real-time data pipeline, we need Cloudflare access.</div>
+  </div>
+
+  <div class="what-we-have">
+    <div class="label">What's already done (no action needed)</div>
+    <ul>
+      <li>Alumni Engine built and deployed &mdash; live right now on GitHub Pages</li>
+      <li>6,282 real alumni records from NPI Registry &mdash; names, specialties, locations, licenses</li>
+      <li>Publication data from PubMed for every alumnus with research history</li>
+      <li>Queue, Directory, Profile, and Dashboard views &mdash; all functional</li>
+      <li>Outreach drafting with Dean's voice &mdash; copy to clipboard, mark as sent</li>
+      <li>Real-time pipeline code written &mdash; ready to deploy the moment we have access</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">The One Thing We Need</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">1</div>
+        <span class="card-title">Cloudflare Account Access</span>
+        <span class="priority-high">blocking</span>
+      </div>
+      <div class="card-body">
+        <p>Joey bought <strong>scottyledell.us</strong> and it's on Cloudflare (nameservers: melissa.ns.cloudflare.com). We need access to that Cloudflare account.</p>
+
+        <p class="detail" style="margin-top: 12px;"><strong>What we'll do with it:</strong></p>
+        <ul>
+          <li><strong>Custom domain</strong> &mdash; Point scottyledell.us to the live site (minutes, not hours)</li>
+          <li><strong>SSL</strong> &mdash; Auto-provisions free, no configuration needed</li>
+          <li><strong>Workers + KV</strong> &mdash; Deploy the pipeline that checks NPI and PubMed for real alumni changes weekly</li>
+          <li><strong>Cron Triggers</strong> &mdash; Automated Monday 6 AM refresh &mdash; Dr. Warren opens a fresh queue each week</li>
+        </ul>
+
+        <p class="detail" style="margin-top: 16px;"><strong>Easiest way for Joey to do this:</strong></p>
+        <ul class="action-steps">
+          <li><span class="step-num">1.</span> Log in at cloudflare.com</li>
+          <li><span class="step-num">2.</span> Go to Manage Account &rarr; Members</li>
+          <li><span class="step-num">3.</span> Click Invite &rarr; enter Scott's email &rarr; set role to Administrator</li>
+          <li><span class="step-num">4.</span> Scott accepts the invite email &mdash; done</li>
+        </ul>
+
+        <p class="detail" style="margin-top: 12px;"><strong>Alternative:</strong> If easier, Joey can just share the login (email + password) directly. Either way works.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="section">
+    <div class="section-title">What Happens Once We Have It</div>
+
+    <div class="card">
+      <div class="card-header">
+        <div class="card-num">&rarr;</div>
+        <span class="card-title">The Timeline</span>
+      </div>
+      <div class="card-body">
+        <p><strong>Same day:</strong></p>
+        <ul>
+          <li>scottyledell.us points to the Alumni Engine</li>
+          <li>SSL active, site live on the custom domain</li>
+        </ul>
+        <p><strong>Next day:</strong></p>
+        <ul>
+          <li>Workers + KV deployed &mdash; real-time pipeline running</li>
+          <li>First NPI/PubMed refresh pulls actual changes</li>
+          <li>Real triggers start appearing in Dr. Warren's queue</li>
+        </ul>
+        <p><strong>Ongoing:</strong></p>
+        <ul>
+          <li>Weekly auto-refresh every Monday 6 AM PST</li>
+          <li>Practice moves, new credentials, publications detected automatically</li>
+          <li>100% live data &mdash; zero fabrication</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <div class="tldr">
+    <div class="headline">TL;DR for Joey</div>
+    <p>We need access to the Cloudflare account that manages <strong>scottyledell.us</strong>.</p>
+    <p>Either invite Scott as a member or share the login. That's it &mdash; one thing.</p>
+    <p>Everything else is built, deployed, and waiting to go live.</p>
+    <p class="muted">The site is already running at lbkdotdev.github.io/alumni-dashboard if he wants to see it now.</p>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 &mdash; Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
