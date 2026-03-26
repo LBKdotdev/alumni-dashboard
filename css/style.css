@@ -812,6 +812,12 @@ body::before {
 .border-t { border-top: 1px solid var(--gray-100); }
 .pt-3 { padding-top: 12px; }
 .pt-4 { padding-top: 16px; }
+
+/* Chart containers — prevent resize loops, GPU-composited for iOS */
+.chart-wrap { position: relative; -webkit-transform: translateZ(0); transform: translateZ(0); }
+.chart-wrap-bar { height: 400px; }
+.chart-wrap-pie { height: 250px; }
+
 .grid { display: grid; }
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-4 { grid-template-columns: repeat(2, 1fr); }
@@ -863,8 +869,9 @@ body::before {
   /* Stat cards stack */
   .stat-grid { grid-template-columns: 1fr 1fr !important; }
 
-  /* Chart containers */
-  canvas { max-height: 250px; }
+  /* Charts — shorter on mobile since full width gives labels more room */
+  .chart-wrap-bar { height: 350px; }
+  .chart-wrap-pie { height: 220px; }
 }
 
 @media (max-width: 480px) {

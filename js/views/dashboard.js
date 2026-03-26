@@ -63,14 +63,14 @@ export function renderDashboard(state) {
       <div class="card" style="padding:24px">
         <h3 class="text-base font-bold mb-4" style="color:var(--gray-900)">Specialty Distribution</h3>
         <p class="text-xs text-gray-400 mb-4">Top 15 specialties from ${filtered.length} sample records</p>
-        <div style="position:relative;height:400px">
+        <div class="chart-wrap chart-wrap-bar">
           <canvas id="specialty-chart"></canvas>
         </div>
       </div>
       <div class="card" style="padding:24px">
         <h3 class="text-base font-bold mb-4" style="color:var(--gray-900)">Engagement Distribution</h3>
         <p class="text-xs text-gray-400 mb-4">Based on engagement checkboxes</p>
-        <div style="position:relative;height:250px">
+        <div class="chart-wrap chart-wrap-pie">
           <canvas id="engagement-chart"></canvas>
         </div>
         <div id="engagement-legend" style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:8px"></div>
