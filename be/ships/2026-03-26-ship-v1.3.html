@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ship v1.3: Enrichment Pipeline + Dash-Free Drafts</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p, .card li { color: #bbb; font-size: 14px; }
+  .card ul { list-style: none; padding: 0; }
+  .card li { padding: 4px 0; }
+  .card li::before { content: ""; display: inline-block; width: 6px; height: 6px; background: #6FC3DF; border-radius: 50%; margin-right: 10px; vertical-align: middle; }
+  .stat { display: inline-block; background: #222; border: 1px solid #333; border-radius: 6px; padding: 8px 16px; margin: 4px 8px 4px 0; font-size: 14px; color: #fff; font-weight: 600; }
+  .stat span { color: #6FC3DF; }
+  .commit { font-family: monospace; font-size: 13px; color: #888; padding: 6px 0; border-bottom: 1px solid #1A1A1A; }
+  .commit .hash { color: #6FC3DF; }
+  .version { display: inline-block; background: rgba(111,195,223,0.15); color: #6FC3DF; font-weight: 700; font-size: 20px; padding: 8px 20px; border-radius: 8px; border: 1px solid rgba(111,195,223,0.3); }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+  .purple { color: #a855f7; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report</span>
+</nav>
+<div class="container">
+  <h1>Ship v1.3</h1>
+  <p class="subtitle">Apify Enrichment Pipeline + Dash-Free Draft Engine</p>
+  <p><span class="version">v1.3</span></p>
+
+  <h2>What Shipped</h2>
+  <div class="card">
+    <h3>Apify Data Enrichment Pipeline</h3>
+    <p>Ran Google Maps scraper and Website Email Finder on 144 practicing NV alumni. Merged verified results into alumni.json with strict name-matching to filter false positives.</p>
+    <div style="margin-top:12px">
+      <span class="stat"><span>100</span> alumni enriched</span>
+      <span class="stat"><span>54</span> practice websites</span>
+      <span class="stat"><span>34</span> emails found</span>
+      <span class="stat"><span>64</span> Google ratings</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Enrichment UI Across All Views</h3>
+    <ul>
+      <li><strong>Dashboard:</strong> Purple enrichment stats bar showing enriched count, emails, and websites</li>
+      <li><strong>Directory:</strong> Enrichment filter dropdown (Has Email, Has Website, Enriched, Not Enriched) + "Most Data First" sort + inline badges</li>
+      <li><strong>Profile:</strong> Purple "Enriched Data" panel with website link, Google rating, verified address</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Dash-Free Draft Engine</h3>
+    <p>Removed all em dashes from every outreach template and fallback draft across the entire codebase. Rewrote 8 trigger drafts, the AACOM Vegas template, profile fallback, and project fallback with natural phrasing. No AI tells.</p>
+    <ul>
+      <li>triggers.json: all 8 trigger outreach drafts rewritten</li>
+      <li>projects.json: AACOM Vegas subject, body, brief, and checklist items</li>
+      <li>profile.js: fallback draft for "Draft Outreach" button</li>
+      <li>projects.js: fallback subject and body for project invitations</li>
+    </ul>
+  </div>
+
+  <h2>Commits Included</h2>
+  <div class="card" style="padding:12px 20px">
+    <div class="commit"><span class="hash">efafd82</span> ~U: remove all em dashes from outreach drafts and templates</div>
+    <div class="commit"><span class="hash">7aed6f3</span> ~A: enrichment filter + sort</div>
+    <div class="commit"><span class="hash">1eae32f</span> ~U: Apify enrichment, 100 alumni enriched, 34 emails, 54 websites</div>
+    <div class="commit"><span class="hash">faf4711</span> fix: single quote in I've broke template literal</div>
+  </div>
+
+  <h2>Version</h2>
+  <div class="card">
+    <p><strong>v1.3</strong> (from v1.2)</p>
+    <p>Deployed to: origin/main</p>
+    <p>Branch: main</p>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 23:45 &mdash; Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
