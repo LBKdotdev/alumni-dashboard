@@ -326,14 +326,15 @@ function renderSearchResults(query, container, isMobile) {
 // ── Login Gate ──
 
 const ACCESS_CODE = '2001'
+const PIN_LENGTH = 4
 
 function setupLogin() {
   const gate = document.getElementById('login-gate')
-  const input = document.getElementById('login-code')
-  const btn = document.getElementById('login-btn')
+  const dotsContainer = document.getElementById('pin-dots')
   const error = document.getElementById('login-error')
+  const keypad = document.getElementById('keypad')
 
-  if (!gate || !input || !btn) return false
+  if (!gate || !keypad) return false
 
   // Already authenticated this session
   if (sessionStorage.getItem('alumni_auth') === 'true') {
@@ -341,25 +342,75 @@ function setupLogin() {
     return true
   }
 
-  function attempt() {
-    if (input.value === ACCESS_CODE) {
-      sessionStorage.setItem('alumni_auth', 'true')
+  let code = ''
+  const dots = dotsContainer.querySelectorAll('.pin-dot')
+
+  function updateDots() {
+    dots.forEach((dot, i) => dot.classList.toggle('filled', i < code.length))
+  }
+
+  function unlock() {
+    sessionStorage.setItem('alumni_auth', 'true')
+    // Brief gold flash on all dots before fade
+    dots.forEach(d => d.classList.add('filled'))
+    setTimeout(() => {
       gate.style.transition = 'opacity 0.4s ease'
       gate.style.opacity = '0'
       setTimeout(() => gate.classList.add('hidden'), 400)
       startApp()
-    } else {
-      error.classList.remove('hidden')
-      input.value = ''
-      input.focus()
-      input.style.borderColor = '#f87171'
-      setTimeout(() => { input.style.borderColor = ''; }, 1500)
+    }, 300)
+  }
+
+  function reject() {
+    error.classList.remove('hidden')
+    dotsContainer.classList.add('error')
+    code = ''
+    updateDots()
+    setTimeout(() => {
+      dotsContainer.classList.remove('error')
+      error.classList.add('hidden')
+    }, 1200)
+  }
+
+  function pressKey(key) {
+    if (key === 'delete') {
+      code = code.slice(0, -1)
+      error.classList.add('hidden')
+      updateDots()
+      return
+    }
+    if (code.length >= PIN_LENGTH) return
+
+    code += key
+    updateDots()
+
+    if (code.length === PIN_LENGTH) {
+      // Auto-submit on 4th digit
+      setTimeout(() => {
+        if (code === ACCESS_CODE) {
+          unlock()
+        } else {
+          reject()
+        }
+      }, 200)
     }
   }
 
-  btn.addEventListener('click', attempt)
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt() })
-  input.focus()
+  // Keypad click events
+  keypad.querySelectorAll('.key[data-key]').forEach(btn => {
+    btn.addEventListener('click', () => pressKey(btn.dataset.key))
+  })
+
+  // Physical keyboard support
+  document.addEventListener('keydown', function loginKeyHandler(e) {
+    if (sessionStorage.getItem('alumni_auth') === 'true') {
+      document.removeEventListener('keydown', loginKeyHandler)
+      return
+    }
+    if (e.key >= '0' && e.key <= '9') pressKey(e.key)
+    if (e.key === 'Backspace') pressKey('delete')
+  })
+
   return false
 }
 
