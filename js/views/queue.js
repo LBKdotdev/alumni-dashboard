@@ -127,7 +127,7 @@ export function renderQueue(state) {
 
   // Build the pulse line
   const pulseSegments = []
-  if (highPriority.length > 0) pulseSegments.push(`<span style="color:var(--red-600);font-weight:600">${highPriority.length} high-priority</span>`)
+  if (highPriority.length > 0) pulseSegments.push(`<span style="color:#f87171;font-weight:600">${highPriority.length} high-priority</span>`)
   const otherCount = queueItems.length - highPriority.length
   if (otherCount > 0) pulseSegments.push(`${otherCount} more in queue`)
   if (projectLine) pulseSegments.push(projectLine)
@@ -166,10 +166,10 @@ export function renderQueue(state) {
       </div>` : ''
 
   return `
-    <div class="mb-6" style="background:linear-gradient(135deg,rgba(212,162,74,0.08) 0%,rgba(128,42,46,0.06) 100%);border-radius:16px;padding:28px 24px;border:1px solid rgba(212,162,74,0.12)">
-      <p class="text-xs font-medium" style="text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;color:var(--burgundy);opacity:0.7">${today}</p>
-      ${headline ? `<h1${headlineClickData} style="font-size:22px;font-weight:800;color:var(--gray-900);margin-bottom:8px;line-height:1.3">${headline}</h1>` : ''}
-      <p class="text-sm" style="color:var(--gray-500);font-weight:500">${pulseSegments.join(' &nbsp;&middot;&nbsp; ')}</p>
+    <div class="mb-6" style="background:linear-gradient(135deg,var(--gray-900) 0%,var(--burgundy-dark) 100%);border-radius:16px;padding:28px 24px;border:1px solid rgba(139,34,48,0.2);box-shadow:0 4px 24px rgba(0,0,0,0.12)">
+      <p class="text-xs font-medium" style="text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;color:var(--gold);opacity:0.8">${today}</p>
+      ${headline ? `<h1${headlineClickData} style="font-size:22px;font-weight:800;color:#fff;margin-bottom:8px;line-height:1.3${urgentItem?.alumni_id ? ';cursor:pointer' : ''}">${headline}</h1>` : ''}
+      <p class="text-sm" style="color:rgba(255,255,255,0.55);font-weight:500">${pulseSegments.join(' &nbsp;&middot;&nbsp; ')}</p>
     </div>
 
     <div class="flex flex-wrap items-center gap-3 mb-6">

@@ -127,12 +127,12 @@ export function renderDashboard(state) {
 
 function renderStatCard(label, value, note, accent) {
   const bg = accent
-    ? 'background:rgba(139,34,48,0.05);border-color:rgba(139,34,48,0.15)'
+    ? 'background:linear-gradient(135deg,rgba(139,34,48,0.06) 0%,rgba(212,162,74,0.06) 100%);border-color:rgba(139,34,48,0.15)'
     : 'background:var(--surface-raised);box-shadow:0 1px 3px rgba(0,0,0,0.03)'
   const valColor = accent ? 'color:var(--burgundy)' : 'color:var(--gray-800)'
 
   return `<div class="card" style="padding:20px;${bg}">
-    <div class="text-xs font-bold text-gray-400 mb-2" style="text-transform:uppercase;letter-spacing:0.05em;font-size:10px">${label}</div>
+    <div class="text-xs font-bold mb-2" style="text-transform:uppercase;letter-spacing:0.05em;font-size:10px;color:${accent ? 'var(--burgundy)' : 'var(--gray-400)'};opacity:${accent ? '0.6' : '1'}">${label}</div>
     <div class="text-2xl font-bold mb-1" style="${valColor}">${value}</div>
     <div class="text-xs text-gray-400">${note}</div>
   </div>`
