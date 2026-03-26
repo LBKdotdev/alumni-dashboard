@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~T: QA Pass — Enrichment + Projects + Dash-Free Drafts</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p, .card li { color: #bbb; font-size: 14px; }
+  .card ul { list-style: none; padding: 0; }
+  .card li { padding: 4px 0; }
+  .pass { color: #4ade80; }
+  .card li::before { content: "✓"; color: #4ade80; font-weight: 700; margin-right: 10px; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Test Report</span>
+</nav>
+<div class="container">
+  <h1>QA Pass <span class="pass">All Green</span></h1>
+  <p class="subtitle">Full audit: enrichment features, Projects view, dash-free drafts, imports, directory fix</p>
+
+  <h2>What Was Tested</h2>
+
+  <div class="card">
+    <h3>JavaScript Syntax + Runtime</h3>
+    <ul>
+      <li>All JS files: no broken template literals, unclosed strings, or undefined references</li>
+      <li>All import/export pairs verified across 10 modules</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Enrichment Features</h3>
+    <ul>
+      <li>helpers.js: filterAlumni handles all 4 enrichment filter modes correctly</li>
+      <li>helpers.js: sortAlumni enrichment scoring (email=4, website=2, rating=1, enriched=0.5)</li>
+      <li>directory.js: enrichment filter dropdown, sort option, event wiring all correct</li>
+      <li>projects.js: enrichment filter with counts, sort dropdown, badges, practice name display</li>
+      <li>dashboard.js: purple enrichment stats bar with correct counts</li>
+      <li>profile.js: enriched data panel with website, rating, verified address</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Dash-Free Outreach Drafts</h3>
+    <ul>
+      <li>triggers.json: all 8 trigger drafts clean, zero em/en dashes in subject or body</li>
+      <li>projects.json: AACOM Vegas template subject, body, brief, and checklist items all clean</li>
+      <li>profile.js: fallback draft body clean</li>
+      <li>projects.js: fallback subject and body clean</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Directory Duplicate Fix</h3>
+    <ul>
+      <li>Enrichment select no longer has hardcoded "All Data Levels" + array duplicate</li>
+      <li>Single "All Data Levels" option from enrichmentOptions array only</li>
+    </ul>
+  </div>
+
+  <h2>Fixes Applied</h2>
+  <div class="card">
+    <ul>
+      <li>Removed unused <code>timeAgo</code> import from profile.js (dead code cleanup)</li>
+    </ul>
+  </div>
+
+  <h2>Remaining Issues</h2>
+  <div class="card">
+    <p style="color:#4ade80;font-weight:600">None. All checks green.</p>
+    <p style="margin-top:8px;color:#888;font-size:13px">Note: circular dependency between app.js and dashboard.js (registerChart) is a known structural pattern that works at runtime. Not a bug.</p>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 23:58 &mdash; Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
