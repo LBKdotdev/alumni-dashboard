@@ -323,15 +323,60 @@ function renderSearchResults(query, container, isMobile) {
   })
 }
 
+// ── Login Gate ──
+
+const ACCESS_CODE = '2001'
+
+function setupLogin() {
+  const gate = document.getElementById('login-gate')
+  const input = document.getElementById('login-code')
+  const btn = document.getElementById('login-btn')
+  const error = document.getElementById('login-error')
+
+  if (!gate || !input || !btn) return false
+
+  // Already authenticated this session
+  if (sessionStorage.getItem('alumni_auth') === 'true') {
+    gate.classList.add('hidden')
+    return true
+  }
+
+  function attempt() {
+    if (input.value === ACCESS_CODE) {
+      sessionStorage.setItem('alumni_auth', 'true')
+      gate.style.transition = 'opacity 0.4s ease'
+      gate.style.opacity = '0'
+      setTimeout(() => gate.classList.add('hidden'), 400)
+      startApp()
+    } else {
+      error.classList.remove('hidden')
+      input.value = ''
+      input.focus()
+      input.style.borderColor = '#f87171'
+      setTimeout(() => { input.style.borderColor = ''; }, 1500)
+    }
+  }
+
+  btn.addEventListener('click', attempt)
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt() })
+  input.focus()
+  return false
+}
+
 // ── Boot ──
 
-async function boot() {
+async function startApp() {
   const { alumni, triggers, projects } = await loadData()
   initState(alumni, triggers, projects)
   onRender(render)
   setupGlobalEvents()
   render()
   console.log('[Alumni Engine] Booted — vanilla v2')
+}
+
+function boot() {
+  const authenticated = setupLogin()
+  if (authenticated) startApp()
 }
 
 boot()

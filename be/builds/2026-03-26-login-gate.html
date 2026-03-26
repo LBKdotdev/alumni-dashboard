@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~A: Login Gate</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p, .card li { color: #bbb; font-size: 14px; }
+  .card ul { list-style: none; padding: 0; }
+  .card li { padding: 4px 0; }
+  .card li::before { content: ""; display: inline-block; width: 6px; height: 6px; background: #6FC3DF; border-radius: 50%; margin-right: 10px; vertical-align: middle; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Build Report</span>
+</nav>
+<div class="container">
+  <h1>Login Gate</h1>
+  <p class="subtitle">Access code screen protects alumni PII. Simple, elegant, session-persistent.</p>
+
+  <h2>What Was Added</h2>
+  <div class="card">
+    <h3>Full-Screen Login Overlay</h3>
+    <ul>
+      <li>Dark gradient background (gray-900 to burgundy-dark), matches sidebar aesthetic</li>
+      <li>WesternU logo, white-filtered for dark background</li>
+      <li>"Alumni Relationship Engine" title, centered</li>
+      <li>Single access code input with gold focus ring</li>
+      <li>Burgundy gradient submit button with glow shadow</li>
+      <li>"Contains protected alumni information" notice</li>
+      <li>Animated entry: background fades in, card slides up</li>
+      <li>On success: smooth 400ms fade-out transition</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Authentication Logic</h3>
+    <ul>
+      <li>Access code: 2001 (hardcoded for prototype)</li>
+      <li>Session persistence via sessionStorage (survives refresh, clears on tab close)</li>
+      <li>Enter key submits (not just button click)</li>
+      <li>Invalid code: red flash on input, error message, auto-clear</li>
+      <li>App data doesn't load until authenticated (no network calls behind the gate)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Mobile Optimized</h3>
+    <ul>
+      <li>Max-width 380px card, responsive padding</li>
+      <li>16px input font-size prevents iOS zoom on focus</li>
+      <li>Touch-friendly button sizing</li>
+      <li>Full viewport coverage on all screen sizes</li>
+    </ul>
+  </div>
+
+  <h2>Decisions Made</h2>
+  <div class="card">
+    <ul>
+      <li>No username field. Single-user prototype, one code for everyone.</li>
+      <li>sessionStorage, not localStorage. Tab close = logged out. Security over convenience.</li>
+      <li>Data doesn't load until auth passes. The gate blocks everything, not just the UI.</li>
+      <li>Password input type hides the code from shoulder-surfing.</li>
+    </ul>
+  </div>
+
+  <h2>Files Changed</h2>
+  <div class="card">
+    <ul>
+      <li>index.html: login-gate overlay div added before sidebar</li>
+      <li>css/style.css: full login gate styles (card, input, button, animations, print hide)</li>
+      <li>js/app.js: setupLogin() with sessionStorage auth, boot sequence refactored</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-27 00:30 &mdash; Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>

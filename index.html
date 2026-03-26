@@ -8,6 +8,23 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
 </head>
 <body>
+  <!-- Login Gate -->
+  <div class="login-gate" id="login-gate">
+    <div class="login-card">
+      <div class="login-logo">
+        <img src="./assets/logo-westernu-h.svg" alt="Western University of Health Sciences" class="login-logo-img">
+      </div>
+      <h1 class="login-title">Alumni Relationship Engine</h1>
+      <p class="login-subtitle">Enter access code to continue</p>
+      <div class="login-input-wrap">
+        <input type="password" id="login-code" class="login-input" placeholder="Access code" autocomplete="off" maxlength="10">
+      </div>
+      <button class="login-btn" id="login-btn">Enter</button>
+      <p class="login-error hidden" id="login-error">Invalid code. Try again.</p>
+      <p class="login-notice">Contains protected alumni information.<br>Authorized personnel only.</p>
+    </div>
+  </div>
+
   <!-- Desktop Sidebar -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-logo">
