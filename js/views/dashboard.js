@@ -62,13 +62,17 @@ export function renderDashboard(state) {
     <div class="grid grid-2 gap-6 mb-8">
       <div class="card" style="padding:24px">
         <h3 class="text-base font-bold mb-4" style="color:var(--gray-900)">Specialty Distribution</h3>
-        <p class="text-xs text-gray-400 mb-4">From ${filtered.length} sample records</p>
-        <canvas id="specialty-chart" height="200"></canvas>
+        <p class="text-xs text-gray-400 mb-4">Top 15 specialties from ${filtered.length} sample records</p>
+        <div style="position:relative;height:400px">
+          <canvas id="specialty-chart"></canvas>
+        </div>
       </div>
       <div class="card" style="padding:24px">
         <h3 class="text-base font-bold mb-4" style="color:var(--gray-900)">Engagement Distribution</h3>
         <p class="text-xs text-gray-400 mb-4">Based on engagement checkboxes</p>
-        <canvas id="engagement-chart" height="200"></canvas>
+        <div style="position:relative;height:250px">
+          <canvas id="engagement-chart"></canvas>
+        </div>
         <div id="engagement-legend" style="display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:8px"></div>
       </div>
     </div>
@@ -131,9 +135,13 @@ function createCharts(filtered) {
     const s = a.professional.specialty
     specMap[s] = (specMap[s] || 0) + 1
   })
-  const specData = Object.entries(specMap)
+  const specAll = Object.entries(specMap)
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count)
+  const TOP_N = 15
+  const specTop = specAll.slice(0, TOP_N)
+  const otherCount = specAll.slice(TOP_N).reduce((sum, d) => sum + d.count, 0)
+  const specData = otherCount > 0 ? [...specTop, { name: 'Other', count: otherCount }] : specTop
 
   const specCanvas = document.getElementById('specialty-chart')
   if (specCanvas) {
