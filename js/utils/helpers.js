@@ -74,6 +74,19 @@ export function getLastTouchpoint(alumni) {
   , null)
 }
 
+// Human connections only — notes, outreach, meetings (not NPI scrapes or publication matches)
+export function getLastConnection(alumni) {
+  if (!alumni?.touchpoints?.length) return null
+  const human = alumni.touchpoints.filter(tp =>
+    tp.source === 'manual' || tp.source === 'outreach_engine' ||
+    tp.type === 'outreach' || tp.type === 'note' || tp.type === 'meeting'
+  )
+  if (human.length === 0) return null
+  return human.reduce((latest, tp) =>
+    !latest || tp.date > latest.date ? tp : latest
+  , null)
+}
+
 export function filterAlumni(alumniList, filters, search) {
   let result = [...alumniList]
 

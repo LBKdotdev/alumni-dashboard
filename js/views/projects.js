@@ -3,12 +3,13 @@
 // Campaigns, events, initiatives — proactive work
 // ============================================================
 
-import { filterAlumni, sortAlumni, formatDate, getLastTouchpoint } from '../utils/helpers.js'
+import { filterAlumni, sortAlumni, formatDate, getLastConnection } from '../utils/helpers.js'
 import { renderAvatar } from '../components.js'
 import { selectProject, clearProject, navigate, openOutreach, setAlumniInviteStatus } from '../state.js'
 
 // Module-scoped tab state
 let activeTab = 'alumni'
+let alumniPageSize = 50
 
 // ── Helpers ──
 
@@ -239,14 +240,14 @@ function renderAlumniTab(project, matched) {
         ${noStatus ? `<span class="text-xs text-gray-400"><strong>${noStatus}</strong> not yet invited</span>` : ''}
       </div>` : ''
 
-  const cards = sorted.slice(0, 50).map((a, i) => {
+  const cards = sorted.slice(0, alumniPageSize).map((a, i) => {
     const status = statuses[a.id]
     const sty = getStatusStyle(status)
     const statusBadge = sty
       ? `<span style="font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;background:${sty.bg};color:${sty.color};border:1px solid ${sty.border}">${sty.label}</span>`
       : ''
-    const lastTp = getLastTouchpoint(a)
-    const touchLine = lastTp ? `Last: ${formatDate(lastTp.date)}` : 'No touchpoints'
+    const lastConn = getLastConnection(a)
+    const touchLine = lastConn ? `Connected: ${formatDate(lastConn.date)}` : 'No connection yet'
 
     // Status dropdown options
     const statusOptions = ['invited', 'confirmed', 'declined'].map(s => {
@@ -284,8 +285,12 @@ function renderAlumniTab(project, matched) {
       </div>`
   }).join('')
 
-  const moreNote = sorted.length > 50
-    ? `<p class="text-xs text-gray-400" style="text-align:center;padding:12px 0">Showing 50 of ${sorted.length} alumni</p>`
+  const showing = Math.min(alumniPageSize, sorted.length)
+  const moreNote = sorted.length > showing
+    ? `<div style="text-align:center;padding:16px 0">
+        <p class="text-xs text-gray-400" style="margin-bottom:8px">Showing ${showing} of ${sorted.length} alumni</p>
+        <button class="btn btn-outline btn-sm" data-action="load-more-alumni">Show ${Math.min(50, sorted.length - showing)} more</button>
+      </div>`
     : ''
 
   return `
@@ -400,7 +405,8 @@ export function wireProjectsEvents(state) {
   // Landing: open project
   document.querySelectorAll('[data-action="open-project"]').forEach(el => {
     el.addEventListener('click', () => {
-      activeTab = 'alumni' // reset to first tab
+      activeTab = 'alumni'
+      alumniPageSize = 50
       selectProject(el.dataset.projectId)
     })
   })
@@ -428,10 +434,12 @@ export function wireProjectsEvents(state) {
   document.querySelectorAll('[data-action="toggle-checklist"]').forEach(el => {
     el.addEventListener('click', () => {
       const project = state.projects.find(p => p.id === state.selectedProjectId)
-      if (project) {
+      if (project?.checklist) {
         const idx = parseInt(el.dataset.index)
-        project.checklist[idx].done = !project.checklist[idx].done
-        selectProject(state.selectedProjectId) // re-render
+        if (idx >= 0 && idx < project.checklist.length) {
+          project.checklist[idx].done = !project.checklist[idx].done
+          selectProject(state.selectedProjectId) // re-render
+        }
       }
     })
   })
@@ -440,6 +448,14 @@ export function wireProjectsEvents(state) {
   document.querySelectorAll('[data-action="set-invite-status"]').forEach(el => {
     el.addEventListener('change', () => {
       setAlumniInviteStatus(state.selectedProjectId, el.dataset.alumniId, el.value || null)
+    })
+  })
+
+  // Detail: load more alumni
+  document.querySelectorAll('[data-action="load-more-alumni"]').forEach(el => {
+    el.addEventListener('click', () => {
+      alumniPageSize += 50
+      selectProject(state.selectedProjectId)
     })
   })
 

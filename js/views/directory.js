@@ -4,7 +4,7 @@
 // ============================================================
 
 import {
-  filterAlumni, sortAlumni, getLastTouchpoint, formatDate,
+  filterAlumni, sortAlumni, getLastTouchpoint, getLastConnection, formatDate,
   getEngagementCount, getAllSpecialties, getAllTags
 } from '../utils/helpers.js'
 import { renderAvatar, renderVIPBadge, renderEngagementBadge, renderCampusToggle } from '../components.js'
@@ -112,7 +112,7 @@ export function renderDirectory(state) {
 // ── Alumni Card ──
 
 function renderAlumniCard(a, index) {
-  const lastTp = getLastTouchpoint(a)
+  const lastConn = getLastConnection(a)
   const activeEngagements = Object.entries(a.engagement)
     .filter(([key, val]) => val === true && key !== 'is_vip')
     .map(([key]) => key)
@@ -127,9 +127,9 @@ function renderAlumniCard(a, index) {
   const notable = a.notables.length > 0
     ? `<p class="text-xs text-gray-500 mb-1"><span class="font-semibold text-gray-600">Notable:</span> ${a.notables[0]}</p>` : ''
 
-  const touchpoint = lastTp
-    ? `Last touchpoint: ${formatDate(lastTp.date)} — ${lastTp.title}`
-    : 'No touchpoints on record'
+  const touchpoint = lastConn
+    ? `Connected: ${formatDate(lastConn.date)} — ${lastConn.title}`
+    : 'No connection yet'
 
   const liftStyle = isNotable
     ? 'box-shadow:0 2px 8px rgba(212,162,74,0.12),0 1px 3px rgba(0,0,0,0.06);border:1px solid rgba(212,162,74,0.18);'

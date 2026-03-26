@@ -4,7 +4,7 @@
 // outreach history, data provenance
 // ============================================================
 
-import { formatDate, timeAgo, getLastTouchpoint, getCampusLabel, daysOverdue } from '../utils/helpers.js'
+import { formatDate, timeAgo, getLastTouchpoint, getLastConnection, getCampusLabel, daysOverdue } from '../utils/helpers.js'
 import {
   renderAvatar, renderVIPBadge, renderEngagementBadge, renderTagBadge,
   renderStatusDot, renderFerpaNotice, engagementConfig
@@ -25,7 +25,7 @@ let addingNotable = false
 export function renderProfile(alumni, state) {
   if (!alumni) return ''
 
-  const lastTouchpoint = getLastTouchpoint(alumni)
+  const lastConnection = getLastConnection(alumni)
   const nextAction = alumni.suggested_next_action
   const isOverdue = nextAction?.due_date && daysOverdue(nextAction.due_date) > 0
   const backLabel = state.previousView === 'directory' ? 'Directory' : 'Queue'
@@ -54,9 +54,9 @@ export function renderProfile(alumni, state) {
 
             <!-- Relationship Context -->
             <div style="background:var(--cream);border-radius:8px;padding:12px 16px;margin-bottom:16px">
-              ${lastTouchpoint
-                ? `<p class="text-sm text-gray-600"><span class="font-semibold text-gray-800">Last connected:</span> ${formatDate(lastTouchpoint.date)} — ${lastTouchpoint.title}</p>`
-                : `<p class="text-sm text-gray-400" style="font-style:italic">No touchpoints on record — this is a first connection opportunity</p>`}
+              ${lastConnection
+                ? `<p class="text-sm text-gray-600"><span class="font-semibold text-gray-800">Last connected:</span> ${formatDate(lastConnection.date)} — ${lastConnection.title}</p>`
+                : `<p class="text-sm" style="color:var(--burgundy);font-weight:500">No personal connection on record — first outreach opportunity</p>`}
               ${nextAction ? `<p class="text-sm" style="color:${isOverdue ? 'var(--red-600)' : 'var(--gray-600)'};margin-top:4px">
                 <span class="font-semibold" style="color:${isOverdue ? 'var(--red-700)' : 'var(--gray-800)'}">Next action:</span>
                 ${nextAction.description}${isOverdue ? ` <span style="color:var(--red-500);font-weight:600;margin-left:4px">(${daysOverdue(nextAction.due_date)} days overdue)</span>` : ''}
@@ -197,7 +197,7 @@ export function renderProfile(alumni, state) {
                 </div>
                 <p class="text-sm text-gray-600" style="line-height:1.6">${note.text}</p>
               </div>`).join('')}</div>`
-          : !state.addingNote ? `<p class="text-sm text-gray-400" style="font-style:italic">No notes yet. Click "Add Note" to start Lisa's notebook for this alumnus.</p>` : ''}
+          : !state.addingNote ? `<p class="text-sm text-gray-400" style="font-style:italic">No notes yet. Click "Add Note" to start building your record for this alumnus.</p>` : ''}
       </div>
 
       <!-- ═══ SECTION 6: Outreach History ═══ -->
@@ -256,9 +256,19 @@ export function wireProfileEvents(state) {
     el.addEventListener('click', () => goBack())
   )
 
-  // Add Note button
+  // Add Note button — scroll to notes section after render
   document.querySelectorAll('[data-action="start-note"]').forEach(el =>
-    el.addEventListener('click', () => { noteText = ''; setAddingNote(true) })
+    el.addEventListener('click', () => {
+      noteText = ''
+      setAddingNote(true)
+      requestAnimationFrame(() => {
+        const noteArea = document.getElementById('note-text')
+        if (noteArea) {
+          noteArea.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          noteArea.focus()
+        }
+      })
+    })
   )
 
   // Save Note
