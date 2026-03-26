@@ -12,14 +12,14 @@
 
 ## Board 2: Project Detail View (21 pts)
 ### Ready
-- {project alumni list tab, add to, project detail view} · 5 · ~A
-- {project checklist tab, add to, project detail view} · 3 · ~A
-- {project outreach tab, add to, project detail view} · 5 · ~A
-- {project intel brief tab, add to, project detail view} · 3 · ~A
 ### In Progress
 ### Done
 ✅ unblocked — Board 1 complete
 - {project detail shell, add to, js/views/projects.js} · 5 · ~A ✅
+- {project alumni list tab, add to, project detail view} · 5 · ~A ✅ (shipped with shell)
+- {project checklist tab, add to, project detail view} · 3 · ~A ✅ (shipped with shell)
+- {project outreach tab, add to, project detail view} · 5 · ~A ✅ (shipped with shell)
+- {project intel brief tab, add to, project detail view} · 3 · ~A ✅ (shipped with shell)
 
 ## Board 3: Visual Hierarchy (18 pts)
 ### Ready
@@ -30,7 +30,7 @@
 - {directory card elevation, update with, notable alumni visual lift} · 3 · ~U
 ### In Progress
 ### Done
-⛔ blocked by Board 2
+✅ unblocked — Board 2 complete
 
 ## Board 4: Project Tracking + Polish (16 pts)
 ### Ready
