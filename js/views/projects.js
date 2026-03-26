@@ -1,10 +1,14 @@
 // ============================================================
-// PROJECTS VIEW — Landing page with project cards
+// PROJECTS VIEW — Landing + Detail with tabbed sections
 // Campaigns, events, initiatives — proactive work
 // ============================================================
 
-import { filterAlumni } from '../utils/helpers.js'
-import { selectProject, navigate } from '../state.js'
+import { filterAlumni, sortAlumni, formatDate, getLastTouchpoint } from '../utils/helpers.js'
+import { renderAvatar } from '../components.js'
+import { selectProject, clearProject, navigate, openOutreach } from '../state.js'
+
+// Module-scoped tab state
+let activeTab = 'alumni'
 
 // ── Helpers ──
 
@@ -13,8 +17,7 @@ function daysUntil(dateStr) {
   const now = new Date()
   now.setHours(0, 0, 0, 0)
   const target = new Date(dateStr + 'T00:00:00')
-  const diff = Math.ceil((target - now) / (1000 * 60 * 60 * 24))
-  return diff
+  return Math.ceil((target - now) / (1000 * 60 * 60 * 24))
 }
 
 function formatDateRange(start, end) {
@@ -30,35 +33,33 @@ function formatDateRange(start, end) {
   return `${startStr} – ${e.toLocaleDateString('en-US', opts)}, ${e.getFullYear()}`
 }
 
-function getAlumniCount(project, alumni) {
-  if (!project.filter) return 0
-  return filterAlumni(alumni, project.filter, '').length
+function getProjectAlumni(project, alumni) {
+  if (!project.filter) return []
+  return filterAlumni(alumni, project.filter, '')
 }
 
 function getTypeLabel(type) {
-  const labels = {
-    conference: 'Conference',
-    reunion: 'Reunion',
-    campaign: 'Campaign',
-    initiative: 'Initiative',
-  }
+  const labels = { conference: 'Conference', reunion: 'Reunion', campaign: 'Campaign', initiative: 'Initiative' }
   return labels[type] || type || 'Project'
 }
 
 function getTypeColor(type) {
-  const colors = {
-    conference: 'var(--burgundy)',
-    reunion: 'var(--gold)',
-    campaign: 'var(--green)',
-    initiative: 'var(--blue-500)',
-  }
+  const colors = { conference: 'var(--burgundy)', reunion: 'var(--gold)', campaign: 'var(--green)', initiative: 'var(--blue-500)' }
   return colors[type] || 'var(--gray-500)'
 }
 
-// ── Render ──
+// ════════════════════════════════════════════════════════════
+// LANDING VIEW — project cards
+// ════════════════════════════════════════════════════════════
 
 export function renderProjects(state) {
-  const { projects, alumni } = state
+  const { projects, alumni, selectedProjectId } = state
+
+  // If a project is selected, render the detail view
+  if (selectedProjectId) {
+    const project = projects.find(p => p.id === selectedProjectId)
+    if (project) return renderProjectDetail(project, state)
+  }
 
   if (projects.length === 0) {
     return `
@@ -70,23 +71,20 @@ export function renderProjects(state) {
         <div style="font-size:32px;margin-bottom:12px">📁</div>
         <h3 class="text-base font-bold mb-2" style="color:var(--gray-900)">No Projects Yet</h3>
         <p class="text-sm text-gray-400" style="max-width:400px;margin:0 auto">Projects organize your proactive outreach — conferences, reunions, campaigns. Data will appear here when project records are loaded.</p>
-      </div>
-    `
+      </div>`
   }
 
   const cards = projects.map((p, i) => renderProjectCard(p, alumni, i)).join('')
-
   return `
     <div class="mb-6">
       <h1 class="text-2xl font-bold" style="color:var(--gray-900)">Projects</h1>
       <p class="text-sm text-gray-400">${projects.length} active project${projects.length !== 1 ? 's' : ''} — campaigns, events, and initiatives</p>
     </div>
-    <div class="space-y-3">${cards}</div>
-  `
+    <div class="space-y-3">${cards}</div>`
 }
 
 function renderProjectCard(project, alumni, index) {
-  const alumniCount = getAlumniCount(project, alumni)
+  const matched = getProjectAlumni(project, alumni)
   const days = daysUntil(project.date_range?.start)
   const dateRange = formatDateRange(project.date_range?.start, project.date_range?.end)
   const typeLabel = getTypeLabel(project.type)
@@ -124,9 +122,7 @@ function renderProjectCard(project, alumni, index) {
           <h3 class="text-base font-bold mb-1" style="color:var(--gray-900)">${project.name}</h3>
           <p class="text-sm text-gray-400">${dateRange}${project.location ? ' &middot; ' + project.location : ''}</p>
           <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:8px">
-            <span class="text-xs text-gray-500">
-              <strong style="color:var(--gray-800)">${alumniCount}</strong> alumni matched
-            </span>
+            <span class="text-xs text-gray-500"><strong style="color:var(--gray-800)">${matched.length}</strong> alumni matched</span>
             ${project.alumni_status ? `<span class="text-xs text-gray-500"><strong style="color:var(--gray-800)">${Object.values(project.alumni_status).filter(s => s === 'invited' || s === 'confirmed').length}</strong> invited</span>` : ''}
           </div>
           ${checklistBar}
@@ -136,12 +132,263 @@ function renderProjectCard(project, alumni, index) {
     </button>`
 }
 
-// ── Events ──
+// ════════════════════════════════════════════════════════════
+// DETAIL VIEW — project header + tabbed content
+// ════════════════════════════════════════════════════════════
+
+function renderProjectDetail(project, state) {
+  const { alumni } = state
+  const matched = getProjectAlumni(project, alumni)
+  const days = daysUntil(project.date_range?.start)
+  const dateRange = formatDateRange(project.date_range?.start, project.date_range?.end)
+  const typeLabel = getTypeLabel(project.type)
+  const typeColor = getTypeColor(project.type)
+  const checklist = project.checklist || []
+  const doneCount = checklist.filter(c => c.done).length
+
+  const tabs = [
+    { key: 'alumni', label: 'Alumni', count: matched.length },
+    { key: 'checklist', label: 'Checklist', count: `${doneCount}/${checklist.length}` },
+    { key: 'outreach', label: 'Outreach' },
+    { key: 'brief', label: 'Brief' },
+  ]
+
+  const tabBar = tabs.map(t => {
+    const isActive = activeTab === t.key
+    const badge = t.count != null ? `<span style="margin-left:4px;font-size:11px;color:${isActive ? 'var(--burgundy)' : 'var(--gray-400)'}">${t.count}</span>` : ''
+    return `<button class="proj-tab${isActive ? ' proj-tab-active' : ''}" data-action="project-tab" data-tab="${t.key}">
+      ${t.label}${badge}
+    </button>`
+  }).join('')
+
+  let tabContent = ''
+  switch (activeTab) {
+    case 'alumni': tabContent = renderAlumniTab(project, matched); break
+    case 'checklist': tabContent = renderChecklistTab(project); break
+    case 'outreach': tabContent = renderOutreachTab(project); break
+    case 'brief': tabContent = renderBriefTab(project); break
+  }
+
+  const countdownBadge = days !== null && days >= 0
+    ? `<span style="display:inline-flex;align-items:center;gap:4px;background:rgba(139,34,48,0.08);border:1px solid rgba(139,34,48,0.15);border-radius:20px;padding:4px 12px;font-size:13px;font-weight:700;color:var(--burgundy)">${days} days</span>`
+    : ''
+
+  return `
+    <!-- Back button -->
+    <button class="flex items-center gap-2 mb-4" style="color:var(--gray-500);font-size:13px;background:none;border:none;cursor:pointer;padding:4px 0" data-action="back-to-projects">
+      <svg class="icon icon-sm"><use href="./css/icons.svg#arrow-left"></use></svg>
+      Projects
+    </button>
+
+    <!-- Project header -->
+    <div class="card" style="padding:24px;margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px">
+        <div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${typeColor}"></span>
+            <span class="text-xs font-bold" style="color:${typeColor};text-transform:uppercase;letter-spacing:0.05em">${typeLabel}</span>
+          </div>
+          <h1 class="text-2xl font-bold" style="color:var(--gray-900);margin-bottom:4px">${project.name}</h1>
+          <p class="text-sm text-gray-400">${dateRange}${project.location ? ' &middot; ' + project.location : ''}</p>
+          ${project.description ? `<p class="text-sm text-gray-500" style="margin-top:8px;max-width:550px">${project.description}</p>` : ''}
+        </div>
+        ${countdownBadge}
+      </div>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="proj-tab-bar">${tabBar}</div>
+
+    <!-- Tab content -->
+    <div style="margin-top:16px">
+      ${tabContent}
+    </div>`
+}
+
+// ── Alumni Tab ──
+
+function renderAlumniTab(project, matched) {
+  const sorted = sortAlumni(matched, 'name')
+  if (sorted.length === 0) {
+    return `<div class="card" style="padding:32px;text-align:center">
+      <p class="text-sm text-gray-400">No alumni match this project's filter criteria.</p>
+    </div>`
+  }
+
+  const cards = sorted.slice(0, 50).map((a, i) => {
+    const status = project.alumni_status?.[a.id]
+    const statusBadge = status
+      ? `<span class="pill pill-sm" style="font-size:10px">${status}</span>`
+      : ''
+    const lastTp = getLastTouchpoint(a)
+    const touchLine = lastTp ? `Last: ${formatDate(lastTp.date)}` : 'No touchpoints'
+
+    return `
+      <div class="card card-hover" style="padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer"
+        data-action="proj-alumni-profile" data-alumni-id="${a.id}">
+        ${renderAvatar(a.name, 'sm')}
+        <div style="flex:1;min-width:0">
+          <div style="display:flex;align-items:center;gap:6px">
+            <span class="text-sm font-bold" style="color:var(--gray-900)">${a.name}, ${a.credentials}</span>
+            ${statusBadge}
+          </div>
+          <p class="text-xs text-gray-400">${a.professional.specialty} &middot; ${a.professional.practice_city}</p>
+        </div>
+        <div class="text-xs text-gray-400" style="flex-shrink:0;text-align:right">
+          <div>Class of ${a.class_year}</div>
+          <div>${touchLine}</div>
+        </div>
+      </div>`
+  }).join('')
+
+  const moreNote = sorted.length > 50
+    ? `<p class="text-xs text-gray-400" style="text-align:center;padding:12px 0">Showing 50 of ${sorted.length} alumni</p>`
+    : ''
+
+  return `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <span class="text-sm text-gray-500"><strong style="color:var(--gray-800)">${sorted.length}</strong> alumni in ${project.filter?.state || 'filter'}</span>
+    </div>
+    <div class="space-y-2">${cards}</div>
+    ${moreNote}`
+}
+
+// ── Checklist Tab ──
+
+function renderChecklistTab(project) {
+  const checklist = project.checklist || []
+  if (checklist.length === 0) {
+    return `<div class="card" style="padding:32px;text-align:center">
+      <p class="text-sm text-gray-400">No checklist items for this project.</p>
+    </div>`
+  }
+
+  const items = checklist.map((item, i) => {
+    const overdue = !item.done && item.due_date && daysUntil(item.due_date) < 0
+    const dueSoon = !item.done && item.due_date && daysUntil(item.due_date) >= 0 && daysUntil(item.due_date) <= 3
+    const dueColor = overdue ? 'color:var(--red-500);font-weight:600' : dueSoon ? 'color:var(--gold);font-weight:600' : 'color:var(--gray-400)'
+
+    return `
+      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;${item.done ? 'opacity:0.6' : ''}"
+        data-action="toggle-checklist" data-index="${i}">
+        <div style="width:20px;height:20px;border-radius:4px;border:2px solid ${item.done ? 'var(--green)' : 'var(--gray-300)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;background:${item.done ? 'var(--green-bg)' : 'transparent'}">
+          ${item.done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
+        </div>
+        <div style="flex:1;min-width:0">
+          <span class="text-sm ${item.done ? 'text-gray-400' : ''}" style="${item.done ? 'text-decoration:line-through' : 'color:var(--gray-900)'}">${item.task}</span>
+        </div>
+        ${item.due_date ? `<span class="text-xs" style="${dueColor}">${formatDate(item.due_date)}</span>` : ''}
+      </div>`
+  }).join('')
+
+  const doneCount = checklist.filter(c => c.done).length
+  return `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+      <span class="text-sm text-gray-500"><strong style="color:var(--gray-800)">${doneCount}</strong> of ${checklist.length} complete</span>
+      <div style="width:120px;height:6px;background:var(--gray-100);border-radius:3px;overflow:hidden">
+        <div style="width:${Math.round(doneCount / checklist.length * 100)}%;height:100%;background:var(--green);border-radius:3px"></div>
+      </div>
+    </div>
+    <div class="space-y-2">${items}</div>`
+}
+
+// ── Outreach Tab ──
+
+function renderOutreachTab(project) {
+  const template = project.outreach_template
+  if (!template) {
+    return `<div class="card" style="padding:32px;text-align:center">
+      <p class="text-sm text-gray-400">No outreach template configured for this project.</p>
+    </div>`
+  }
+
+  const previewBody = template.body.replace(/\n/g, '<br>').replace(/\{\{last_name\}\}/g, '<span style="color:var(--burgundy);font-weight:600">[Last Name]</span>')
+
+  return `
+    <div class="card" style="padding:24px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+        <svg class="icon icon-sm" style="color:var(--burgundy)"><use href="./css/icons.svg#mail"></use></svg>
+        <span class="text-sm font-bold" style="color:var(--gray-900)">Outreach Template</span>
+      </div>
+      <div style="background:var(--gray-50);border:1px solid var(--gray-100);border-radius:8px;padding:20px">
+        <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--gray-100)">
+          <span class="text-xs text-gray-400" style="text-transform:uppercase;letter-spacing:0.05em">Subject</span>
+          <p class="text-sm font-bold" style="color:var(--gray-900);margin-top:2px">${template.subject}</p>
+        </div>
+        <div class="text-sm" style="color:var(--gray-700);line-height:1.7">${previewBody}</div>
+      </div>
+    </div>
+    <p class="text-xs text-gray-400" style="text-align:center">Tap an alumni from the Alumni tab, then draft outreach to use this template with their name filled in.</p>`
+}
+
+// ── Brief Tab ──
+
+function renderBriefTab(project) {
+  if (!project.brief) {
+    return `<div class="card" style="padding:32px;text-align:center">
+      <p class="text-sm text-gray-400">No intel brief for this project.</p>
+    </div>`
+  }
+
+  // Simple markdown → HTML (headers, bold, lists, paragraphs)
+  const html = project.brief
+    .replace(/^## (.+)$/gm, '<h3 style="color:var(--gray-900);font-size:15px;font-weight:700;margin:20px 0 8px">$1</h3>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong style="color:var(--gray-800)">$1</strong>')
+    .replace(/^- (.+)$/gm, '<li style="margin:4px 0;color:var(--gray-600)">$1</li>')
+    .replace(/(<li.*<\/li>\n?)+/g, match => `<ul style="margin:8px 0 12px 16px;list-style:disc">${match}</ul>`)
+    .replace(/\n\n/g, '</p><p style="margin:8px 0;color:var(--gray-600)">')
+
+  return `
+    <div class="card" style="padding:24px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+        <svg class="icon icon-sm" style="color:var(--burgundy)"><use href="./css/icons.svg#shield"></use></svg>
+        <span class="text-sm font-bold" style="color:var(--gray-900)">Intel Brief</span>
+      </div>
+      <div class="text-sm" style="color:var(--gray-600);line-height:1.7">${html}</div>
+    </div>`
+}
+
+// ════════════════════════════════════════════════════════════
+// EVENTS
+// ════════════════════════════════════════════════════════════
 
 export function wireProjectsEvents(state) {
+  // Landing: open project
   document.querySelectorAll('[data-action="open-project"]').forEach(el => {
     el.addEventListener('click', () => {
+      activeTab = 'alumni' // reset to first tab
       selectProject(el.dataset.projectId)
+    })
+  })
+
+  // Detail: back to projects list
+  document.querySelectorAll('[data-action="back-to-projects"]').forEach(el => {
+    el.addEventListener('click', () => clearProject())
+  })
+
+  // Detail: tab switching
+  document.querySelectorAll('[data-action="project-tab"]').forEach(el => {
+    el.addEventListener('click', () => {
+      activeTab = el.dataset.tab
+      // Re-render by forcing state update
+      selectProject(state.selectedProjectId)
+    })
+  })
+
+  // Detail: alumni profile navigation
+  document.querySelectorAll('[data-action="proj-alumni-profile"]').forEach(el => {
+    el.addEventListener('click', () => navigate('profile', el.dataset.alumniId))
+  })
+
+  // Detail: checklist toggle
+  document.querySelectorAll('[data-action="toggle-checklist"]').forEach(el => {
+    el.addEventListener('click', () => {
+      const project = state.projects.find(p => p.id === state.selectedProjectId)
+      if (project) {
+        const idx = parseInt(el.dataset.index)
+        project.checklist[idx].done = !project.checklist[idx].done
+        selectProject(state.selectedProjectId) // re-render
+      }
     })
   })
 }

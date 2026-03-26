@@ -12,7 +12,6 @@
 
 ## Board 2: Project Detail View (21 pts)
 ### Ready
-- {project detail shell, add to, js/views/projects.js} · 5 · ~A
 - {project alumni list tab, add to, project detail view} · 5 · ~A
 - {project checklist tab, add to, project detail view} · 3 · ~A
 - {project outreach tab, add to, project detail view} · 5 · ~A
@@ -20,6 +19,7 @@
 ### In Progress
 ### Done
 ✅ unblocked — Board 1 complete
+- {project detail shell, add to, js/views/projects.js} · 5 · ~A ✅
 
 ## Board 3: Visual Hierarchy (18 pts)
 ### Ready
