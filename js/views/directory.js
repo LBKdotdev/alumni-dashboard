@@ -4,7 +4,7 @@
 // ============================================================
 
 import {
-  filterAlumni, sortAlumni, getLastTouchpoint, getLastConnection, formatDate,
+  filterAlumni, sortAlumni, getLastConnection, formatDate,
   getEngagementCount, getAllSpecialties, getAllTags
 } from '../utils/helpers.js'
 import { renderAvatar, renderVIPBadge, renderEngagementBadge, renderCampusToggle } from '../components.js'

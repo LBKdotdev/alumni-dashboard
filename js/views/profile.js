@@ -4,7 +4,7 @@
 // outreach history, data provenance
 // ============================================================
 
-import { formatDate, timeAgo, getLastTouchpoint, getLastConnection, getCampusLabel, daysOverdue } from '../utils/helpers.js'
+import { formatDate, timeAgo, getLastConnection, getCampusLabel, daysOverdue } from '../utils/helpers.js'
 import {
   renderAvatar, renderVIPBadge, renderEngagementBadge, renderTagBadge,
   renderStatusDot, renderFerpaNotice, engagementConfig
