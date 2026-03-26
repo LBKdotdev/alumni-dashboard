@@ -138,6 +138,24 @@ export function filterAlumni(alumniList, filters, search) {
     result = result.filter(a => a.professional.practice_state === filters.state)
   }
 
+  // Enrichment
+  if (filters.enrichment && filters.enrichment !== 'all') {
+    switch (filters.enrichment) {
+      case 'has_email':
+        result = result.filter(a => a.contact.email)
+        break
+      case 'has_website':
+        result = result.filter(a => a.professional.practice_website)
+        break
+      case 'enriched':
+        result = result.filter(a => a.contact.enriched)
+        break
+      case 'not_enriched':
+        result = result.filter(a => !a.contact.enriched)
+        break
+    }
+  }
+
   return result
 }
 
@@ -157,6 +175,11 @@ export function sortAlumni(alumniList, sortBy) {
     }
     case 'engagement':
       return sorted.sort((a, b) => getEngagementCount(b) - getEngagementCount(a))
+    case 'enrichment':
+      return sorted.sort((a, b) => {
+        const score = (r) => (r.contact.email ? 4 : 0) + (r.professional.practice_website ? 2 : 0) + (r.professional.google_rating ? 1 : 0) + (r.contact.enriched ? 0.5 : 0)
+        return score(b) - score(a)
+      })
     default:
       return sorted
   }

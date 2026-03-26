@@ -27,6 +27,7 @@ export function initState(alumni, triggers, projects) {
       engagementType: [],
       tags: [],
       classYear: 'all',
+      enrichment: 'all',
     },
     directorySortBy: 'name',
 

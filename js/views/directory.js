@@ -25,11 +25,20 @@ const engagementTypes = [
   { key: 'is_guest_speaker', label: 'Guest Speaker' },
 ]
 
+const enrichmentOptions = [
+  { key: 'all', label: 'All Data Levels' },
+  { key: 'has_email', label: 'Has Email' },
+  { key: 'has_website', label: 'Has Website' },
+  { key: 'enriched', label: 'Enriched (any)' },
+  { key: 'not_enriched', label: 'No Enrichment Yet' },
+]
+
 const sortOptions = [
   { key: 'name', label: 'Name' },
   { key: 'class_year', label: 'Class Year' },
   { key: 'last_touchpoint', label: 'Last Touchpoint' },
   { key: 'engagement', label: 'Engagement' },
+  { key: 'enrichment', label: 'Most Data First' },
 ]
 
 // Module-scoped page state (resets on re-render when filters change)
@@ -59,6 +68,7 @@ export function renderDirectory(state) {
   const engOpts = engagementTypes.map(e => `<option value="${e.key}" ${(directoryFilters.engagementType?.[0] === e.key) ? 'selected' : ''}>${e.label}</option>`).join('')
   const yearOpts = classYears.map(y => `<option value="${y}" ${String(directoryFilters.classYear) === String(y) ? 'selected' : ''}>Class of ${y}</option>`).join('')
   const tagOpts = tags.map(t => `<option value="${t}" ${(directoryFilters.tags?.[0] === t) ? 'selected' : ''}>${t.replace(/_/g, ' ')}</option>`).join('')
+  const enrichOpts = enrichmentOptions.map(o => `<option value="${o.key}" ${directoryFilters.enrichment === o.key ? 'selected' : ''}>${o.label}</option>`).join('')
   const sortOpts = sortOptions.map(o => `<option value="${o.key}" ${directorySortBy === o.key ? 'selected' : ''}>Sort: ${o.label}</option>`).join('')
 
   const cards = paged.map((a, i) => renderAlumniCard(a, i)).join('')
@@ -99,6 +109,7 @@ export function renderDirectory(state) {
       <select class="select" data-action="filter-engagement"><option value="all">All Engagement</option>${engOpts}</select>
       <select class="select" data-action="filter-year"><option value="all">All Class Years</option>${yearOpts}</select>
       <select class="select" data-action="filter-tags"><option value="all">All Tags</option>${tagOpts}</select>
+      <select class="select" data-action="filter-enrichment" style="border-color:rgba(168,85,247,0.3);color:#a855f7"><option value="all">All Data Levels</option>${enrichOpts}</select>
       <select class="select" data-action="sort-by">${sortOpts}</select>
       <span class="text-xs text-gray-400 ml-auto">Showing ${filtered.length} of ${alumni.length} alumni</span>
     </div>
@@ -195,6 +206,10 @@ export function wireDirectoryEvents(state) {
     currentPage = 0
     setDirectoryFilters({ tags: tagsEl.value === 'all' ? [] : [tagsEl.value] })
   })
+
+  // Enrichment filter
+  const enrichEl = document.querySelector('[data-action="filter-enrichment"]')
+  if (enrichEl) enrichEl.addEventListener('change', () => { currentPage = 0; setDirectoryFilters({ enrichment: enrichEl.value }) })
 
   // Sort
   const sortEl = document.querySelector('[data-action="sort-by"]')
