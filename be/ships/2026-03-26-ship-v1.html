@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~S: Ship — Alumni Relationship Engine v1</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  h3 { color: #fff; font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  code { background: #222; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #6FC3DF; }
+  .banner { background: rgba(212,162,74,0.12); border: 1px solid rgba(212,162,74,0.3); border-radius: 8px; padding: 20px 24px; margin-bottom: 32px; }
+  .banner-title { color: #d4a24a; font-weight: 800; font-size: 20px; margin-bottom: 4px; }
+  .banner-sub { color: #999; font-size: 14px; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 16px 0; }
+  .stat { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 16px; text-align: center; }
+  .stat-val { color: #6FC3DF; font-size: 24px; font-weight: 800; }
+  .stat-label { color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 4px; }
+  .commit { font-size: 13px; color: #aaa; padding: 8px 0; border-bottom: 1px solid #1A1A1A; display: flex; gap: 12px; }
+  .commit-hash { color: #6FC3DF; font-family: monospace; flex-shrink: 0; }
+  .commit-msg { color: #ccc; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+  .section-accent { border-left: 3px solid #d4a24a; padding-left: 16px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report</span>
+</nav>
+<div class="container">
+
+  <div class="banner">
+    <div class="banner-title">Shipped: Alumni Relationship Engine v1</div>
+    <div class="banner-sub">Full Projects tab, visual overhaul, QA pass — 4 boards, 73 points, zero open bugs</div>
+  </div>
+
+  <h1>What Shipped</h1>
+  <p class="subtitle">Everything built and tested today, live on main.</p>
+
+  <div class="stat-grid">
+    <div class="stat">
+      <div class="stat-val">4</div>
+      <div class="stat-label">Boards</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">19</div>
+      <div class="stat-label">Items</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">73</div>
+      <div class="stat-label">Points</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val">0</div>
+      <div class="stat-label">Open Bugs</div>
+    </div>
+  </div>
+
+  <h2>What's In This Ship</h2>
+
+  <div class="card">
+    <h3>Board 1 — Projects Foundation (18 pts)</h3>
+    <ul>
+      <li>Projects data model + JSON loader</li>
+      <li>State management — project selection, invite status, outreach integration</li>
+      <li>Sidebar + mobile nav with Projects link and folder icon</li>
+      <li>Projects landing view — cards with countdown, alumni count, checklist progress</li>
+      <li>AACOM Vegas 2026 seed data — 168 NV alumni, checklist, outreach template, intel brief</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Board 2 — Project Detail View (21 pts)</h3>
+    <ul>
+      <li>Detail shell — header, status badges, tab bar</li>
+      <li>Overview tab — description, objectives, logistics, target alumni criteria</li>
+      <li>Checklist tab — interactive toggles with progress tracking</li>
+      <li>Alumni tab — filtered alumni list with engagement badges and specialty breakdown</li>
+      <li>Outreach tab — draft outreach, template integration, touchpoint auto-creation</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Board 3 — Visual Hierarchy (18 pts)</h3>
+    <ul>
+      <li>Queue trigger cards — type-tinted backgrounds (blue/gold/green/red/purple)</li>
+      <li>Insight text contrast — 8px dots, gray-700 weight-500 text</li>
+      <li>Profile section headers — accent bars (burgundy/gold/gray by section type)</li>
+      <li>Queue morning header — warm gradient card with greeting</li>
+      <li>Directory card elevation — gold shadow lift for notable/VIP alumni</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Board 4 — Tracking + Polish (16 pts)</h3>
+    <ul>
+      <li>Per-alumni invite status — dropdown with color-coded badges (invited/confirmed/declined)</li>
+      <li>Project outreach auto-creates touchpoints — outreach sent = invite status set</li>
+      <li>Mobile responsive project layouts — card grids, detail header, alumni cards</li>
+      <li>Full QA pass — checklist bounds-check, "Lisa's notebook" text fix, import safety</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>Visual Overhaul — French Atelier Aesthetic</h3>
+    <ul>
+      <li>Warm-shifted neutral palette — amber undertone across all grays</li>
+      <li>Surface token system — <code>--surface</code>, <code>--surface-raised</code>, <code>--surface-inset</code></li>
+      <li>Softer shadows — 0.03 opacity base, burgundy-tinted hover</li>
+      <li>Removed texture overlay — clean ivory instead of noise</li>
+      <li>Cards, sidebar, forms, inputs all on warm surface tokens</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>QA Bug Fixes</h3>
+    <ul>
+      <li><strong>Add Note scroll:</strong> Button now smooth-scrolls to note form and auto-focuses textarea</li>
+      <li><strong>Load More pagination:</strong> Projects alumni tab progressive loading (50 at a time)</li>
+      <li><strong>Human connections:</strong> New <code>getLastConnection()</code> separates real connections from automated NPI/PubMed data</li>
+    </ul>
+  </div>
+
+  <h2>Commits Included</h2>
+  <div class="card" style="padding:12px 18px">
+    <div class="commit"><span class="commit-hash">df88cca</span><span class="commit-msg">~T: QA test pass — 3 bug fixes (Add Note scroll, Load More, getLastConnection)</span></div>
+    <div class="commit"><span class="commit-hash">5262dd4</span><span class="commit-msg">~U: refined visual theme — warm ivory surfaces, soft shadows, kill texture</span></div>
+    <div class="commit"><span class="commit-hash">66afe64</span><span class="commit-msg">~B: Board 4 Tracking + Polish — 4 items, 16 pts</span></div>
+    <div class="commit"><span class="commit-hash">c07261e</span><span class="commit-msg">~B: Board 3 Visual Hierarchy — 5 items, 18 pts</span></div>
+    <div class="commit"><span class="commit-hash">de303ff</span><span class="commit-msg">~B: Board 2 build report + index</span></div>
+    <div class="commit"><span class="commit-hash">7449178</span><span class="commit-msg">~A: project detail shell — header, tab bar, 4 tabs, checklist toggle</span></div>
+    <div class="commit"><span class="commit-hash">938c8e6</span><span class="commit-msg">~B: Board 1 build report + Be index</span></div>
+    <div class="commit"><span class="commit-hash">aad2c35</span><span class="commit-msg">~A: AACOM Vegas seed data — 168 NV alumni</span></div>
+    <div class="commit"><span class="commit-hash">a3fdc3e</span><span class="commit-msg">~A: Projects landing view — cards with countdown</span></div>
+    <div class="commit"><span class="commit-hash">bd573c8</span><span class="commit-msg">~A: projects state management</span></div>
+    <div class="commit"><span class="commit-hash">9c4c559</span><span class="commit-msg">~A: Projects nav item — sidebar + mobile nav + route</span></div>
+    <div class="commit"><span class="commit-hash">c22a93c</span><span class="commit-msg">~A: projects.json data file</span></div>
+    <div class="commit"><span class="commit-hash">5271e7a</span><span class="commit-msg">fix: dashboard campus toggle — real counts, Lebanon empty state</span></div>
+    <div class="commit"><span class="commit-hash">e944dd4</span><span class="commit-msg">fix: mobile-optimized chart containers</span></div>
+    <div class="commit"><span class="commit-hash">12bc77b</span><span class="commit-msg">fix: dashboard chart resize loop</span></div>
+    <div class="commit"><span class="commit-hash">327d97d</span><span class="commit-msg">~E: 4 boards, 19 items, 73 pts</span></div>
+    <div class="commit"><span class="commit-hash">f0c6933</span><span class="commit-msg">~P: Projects tab + visual overhaul plan</span></div>
+    <div class="commit"><span class="commit-hash">10f43f1</span><span class="commit-msg">Visual contrast overhaul</span></div>
+  </div>
+
+  <h2>Deploy Target</h2>
+  <div class="section-accent">
+    <p><strong>Repository:</strong> LBKdotdev/alumni-dashboard</p>
+    <p><strong>Branch:</strong> main</p>
+    <p><strong>Platform:</strong> Static HTML — Cloudflare Pages when DNS is ready</p>
+    <p><strong>Status:</strong> Pushed to origin/main. Live for local demo.</p>
+  </div>
+
+  <h2>5 Views, Zero Dependencies</h2>
+  <div class="card">
+    <p>The Alumni Relationship Engine is a fully vanilla SPA — no React, no build tools, no npm. Five views (Dashboard, Directory, Queue, Profile, Projects), Chart.js for the two dashboard charts, and everything else is hand-rolled HTML/CSS/JS.</p>
+    <ul style="margin-top:12px">
+      <li><strong>Dashboard</strong> — stat cards, specialty bar chart, engagement pie, campus comparison, SOAP story</li>
+      <li><strong>Directory</strong> — search, 6 filters, sort, 25/page pagination, 168 alumni cards</li>
+      <li><strong>Queue</strong> — trigger-based morning briefing, type-tinted cards, actionable outreach</li>
+      <li><strong>Profile</strong> — 5-section deep dive, timeline, notes, publications, outreach history</li>
+      <li><strong>Projects</strong> — event planning, alumni targeting, invite tracking, outreach drafting</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
