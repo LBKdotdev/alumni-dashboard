@@ -18,14 +18,19 @@
       "classYear": "all"
     },
     "checklist": [
-      { "task": "Pull Nevada alumni list", "done": true, "due_date": "2026-03-25" },
-      { "task": "Identify top 20 priority alumni for dinner", "done": false, "due_date": "2026-04-01" },
-      { "task": "Draft personalized outreach for priority alumni", "done": false, "due_date": "2026-04-05" },
-      { "task": "Send first wave of invitations", "done": false, "due_date": "2026-04-08" },
-      { "task": "Reserve dinner venue at Caesars", "done": false, "due_date": "2026-04-10" },
-      { "task": "Follow up with non-responders", "done": false, "due_date": "2026-04-15" },
-      { "task": "Finalize attendee list and seating", "done": false, "due_date": "2026-04-18" },
-      { "task": "Prepare talking points and intel briefs", "done": false, "due_date": "2026-04-20" }
+      { "task": "Pull Nevada alumni list", "done": true, "due_date": "2026-03-25", "role": "dean" },
+      { "task": "Review list — flag top 20 priority reconnections", "done": false, "due_date": "2026-04-01", "role": "dean" },
+      { "task": "Approve outreach messaging and template", "done": false, "due_date": "2026-04-05", "role": "dean" },
+      { "task": "Review and send personalized invitations to priority alumni", "done": false, "due_date": "2026-04-08", "role": "dean" },
+      { "task": "Personal follow-up with VIPs who haven't responded", "done": false, "due_date": "2026-04-15", "role": "dean" },
+      { "task": "Review intel brief and talking points", "done": false, "due_date": "2026-04-20", "role": "dean" },
+      { "task": "Post-dinner debrief — note new contacts, follow-up promises, next steps", "done": false, "due_date": "2026-04-25", "role": "dean" },
+      { "task": "Reserve dinner venue at Caesars", "done": false, "due_date": "2026-04-01", "role": "staff" },
+      { "task": "Coordinate Dean's travel and hotel", "done": false, "due_date": "2026-04-10", "role": "staff" },
+      { "task": "Send bulk invitations to non-priority alumni", "done": false, "due_date": "2026-04-10", "role": "staff" },
+      { "task": "Collect RSVPs and dietary restrictions", "done": false, "due_date": "2026-04-16", "role": "staff" },
+      { "task": "Finalize headcount and send to venue", "done": false, "due_date": "2026-04-18", "role": "staff" },
+      { "task": "Print name badges and prep welcome packets", "done": false, "due_date": "2026-04-20", "role": "staff" }
     ],
     "outreach_template": {
       "subject": "COMP Alumni Dinner at AACOM Vegas — You're Invited",

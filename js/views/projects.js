@@ -304,6 +304,24 @@ function renderAlumniTab(project, matched) {
 
 // ── Checklist Tab ──
 
+function renderChecklistItem(item, i) {
+  const overdue = !item.done && item.due_date && daysUntil(item.due_date) < 0
+  const dueSoon = !item.done && item.due_date && daysUntil(item.due_date) >= 0 && daysUntil(item.due_date) <= 3
+  const dueColor = overdue ? 'color:var(--red-500);font-weight:600' : dueSoon ? 'color:var(--gold);font-weight:600' : 'color:var(--gray-400)'
+
+  return `
+    <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;${item.done ? 'opacity:0.6' : ''}"
+      data-action="toggle-checklist" data-index="${i}">
+      <div style="width:20px;height:20px;border-radius:4px;border:2px solid ${item.done ? 'var(--green)' : 'var(--gray-300)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;background:${item.done ? 'var(--green-bg)' : 'transparent'}">
+        ${item.done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
+      </div>
+      <div style="flex:1;min-width:0">
+        <span class="text-sm ${item.done ? 'text-gray-400' : ''}" style="${item.done ? 'text-decoration:line-through' : 'color:var(--gray-900)'}">${item.task}</span>
+      </div>
+      ${item.due_date ? `<span class="text-xs" style="${dueColor}">${formatDate(item.due_date)}</span>` : ''}
+    </div>`
+}
+
 function renderChecklistTab(project) {
   const checklist = project.checklist || []
   if (checklist.length === 0) {
@@ -312,33 +330,46 @@ function renderChecklistTab(project) {
     </div>`
   }
 
-  const items = checklist.map((item, i) => {
-    const overdue = !item.done && item.due_date && daysUntil(item.due_date) < 0
-    const dueSoon = !item.done && item.due_date && daysUntil(item.due_date) >= 0 && daysUntil(item.due_date) <= 3
-    const dueColor = overdue ? 'color:var(--red-500);font-weight:600' : dueSoon ? 'color:var(--gold);font-weight:600' : 'color:var(--gray-400)'
-
-    return `
-      <div class="card" style="padding:14px 16px;display:flex;align-items:center;gap:12px;${item.done ? 'opacity:0.6' : ''}"
-        data-action="toggle-checklist" data-index="${i}">
-        <div style="width:20px;height:20px;border-radius:4px;border:2px solid ${item.done ? 'var(--green)' : 'var(--gray-300)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;background:${item.done ? 'var(--green-bg)' : 'transparent'}">
-          ${item.done ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>' : ''}
-        </div>
-        <div style="flex:1;min-width:0">
-          <span class="text-sm ${item.done ? 'text-gray-400' : ''}" style="${item.done ? 'text-decoration:line-through' : 'color:var(--gray-900)'}">${item.task}</span>
-        </div>
-        ${item.due_date ? `<span class="text-xs" style="${dueColor}">${formatDate(item.due_date)}</span>` : ''}
-      </div>`
-  }).join('')
-
+  const hasRoles = checklist.some(c => c.role)
   const doneCount = checklist.filter(c => c.done).length
-  return `
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+
+  const progressBar = `
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <span class="text-sm text-gray-500"><strong style="color:var(--gray-800)">${doneCount}</strong> of ${checklist.length} complete</span>
       <div style="width:120px;height:6px;background:var(--gray-100);border-radius:3px;overflow:hidden">
         <div style="width:${Math.round(doneCount / checklist.length * 100)}%;height:100%;background:var(--green);border-radius:3px"></div>
       </div>
-    </div>
-    <div class="space-y-2">${items}</div>`
+    </div>`
+
+  if (!hasRoles) {
+    return `${progressBar}<div class="space-y-2">${checklist.map((item, i) => renderChecklistItem(item, i)).join('')}</div>`
+  }
+
+  const deanItems = checklist.map((item, i) => ({ item, i })).filter(({ item }) => item.role !== 'staff')
+  const staffItems = checklist.map((item, i) => ({ item, i })).filter(({ item }) => item.role === 'staff')
+
+  const deanDone = deanItems.filter(({ item }) => item.done).length
+  const staffDone = staffItems.filter(({ item }) => item.done).length
+
+  const deanSection = deanItems.length > 0 ? `
+    <div style="margin-bottom:24px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--burgundy)">
+        <span class="text-xs font-bold" style="color:var(--burgundy);text-transform:uppercase;letter-spacing:0.05em">Dean's Checklist</span>
+        <span class="text-xs text-gray-400">${deanDone}/${deanItems.length}</span>
+      </div>
+      <div class="space-y-2">${deanItems.map(({ item, i }) => renderChecklistItem(item, i)).join('')}</div>
+    </div>` : ''
+
+  const staffSection = staffItems.length > 0 ? `
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:2px solid var(--gray-300)">
+        <span class="text-xs font-bold" style="color:var(--gray-500);text-transform:uppercase;letter-spacing:0.05em">Staff / Assistant</span>
+        <span class="text-xs text-gray-400">${staffDone}/${staffItems.length}</span>
+      </div>
+      <div class="space-y-2">${staffItems.map(({ item, i }) => renderChecklistItem(item, i)).join('')}</div>
+    </div>` : ''
+
+  return `${progressBar}${deanSection}${staffSection}`
 }
 
 // ── Outreach Tab ──

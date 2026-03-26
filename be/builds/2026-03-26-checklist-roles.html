@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~U: Project Checklists — Dean vs Staff</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  h3 { color: #fff; font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  code { background: #222; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #6FC3DF; }
+  .before { color: #ef4444; font-size: 13px; }
+  .after { color: #4ade80; font-size: 13px; }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Build Report</span>
+</nav>
+<div class="container">
+
+  <h1>~U: Project Checklists</h1>
+  <p class="subtitle">Split into Dean's Checklist and Staff/Assistant — because Lisa isn't booking hotel rooms.</p>
+
+  <h2>What Was Updated</h2>
+  <div class="card">
+    <p>Project checklists now support role-based grouping. Items tagged <code>"role": "dean"</code> appear under a burgundy-accented "Dean's Checklist" header. Items tagged <code>"role": "staff"</code> appear under a gray "Staff / Assistant" header. Projects without roles render flat (backwards compatible).</p>
+  </div>
+
+  <h2>Before / After — AACOM Vegas</h2>
+
+  <div class="card">
+    <p class="label before">Before (8 items, no roles)</p>
+    <ul class="before">
+      <li>Pull Nevada alumni list</li>
+      <li>Identify top 20 priority alumni</li>
+      <li>Draft personalized outreach</li>
+      <li>Send first wave of invitations</li>
+      <li>Reserve dinner venue at Caesars</li>
+      <li>Follow up with non-responders</li>
+      <li>Finalize attendee list and seating</li>
+      <li>Prepare talking points</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <p class="label after">After — Dean's Checklist (7 items)</p>
+    <ul class="after">
+      <li>Pull Nevada alumni list &#10003;</li>
+      <li>Review list — flag top 20 priority reconnections</li>
+      <li>Approve outreach messaging and template</li>
+      <li>Review and send personalized invitations to priority alumni</li>
+      <li>Personal follow-up with VIPs who haven't responded</li>
+      <li>Review intel brief and talking points</li>
+      <li>Post-dinner debrief — note new contacts, follow-up promises, next steps</li>
+    </ul>
+    <p class="label after" style="margin-top:16px">After — Staff / Assistant (6 items)</p>
+    <ul class="after">
+      <li>Reserve dinner venue at Caesars</li>
+      <li>Coordinate Dean's travel and hotel</li>
+      <li>Send bulk invitations to non-priority alumni</li>
+      <li>Collect RSVPs and dietary restrictions</li>
+      <li>Finalize headcount and send to venue</li>
+      <li>Print name badges and prep welcome packets</li>
+    </ul>
+  </div>
+
+  <h2>Decisions Made</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Dean items = decisions and relationships.</strong> Reviewing lists, approving messaging, personal outreach to VIPs, debriefing after. Things only Lisa can do.</li>
+      <li><strong>Staff items = logistics and coordination.</strong> Venue booking, travel, RSVPs, printing. Things an assistant handles.</li>
+      <li><strong>Post-dinner debrief added.</strong> The whole point of the dinner is the connections made — capturing follow-up promises while they're fresh is the highest-value task.</li>
+      <li><strong>Backwards compatible.</strong> Projects without <code>role</code> fields render the old flat list. No breaking changes.</li>
+    </ul>
+  </div>
+
+  <h2>Files Changed</h2>
+  <div class="card">
+    <ul>
+      <li><code>data/projects.json</code> — 13 checklist items (was 8), each with <code>role: "dean"</code> or <code>role: "staff"</code></li>
+      <li><code>js/views/projects.js</code> — <code>renderChecklistTab</code> groups by role, burgundy header for Dean, gray for Staff</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
