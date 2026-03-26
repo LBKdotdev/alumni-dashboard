@@ -165,12 +165,8 @@ export function renderSOAPCard() {
             `).join('')}
           </div>
 
-          <blockquote style="font-size:14px;font-style:italic;color:var(--gray-500);border-left:2px solid rgba(212,162,74,0.4);padding-left:12px;margin-bottom:16px;">
-            "I was in your shoes three years ago. It turned out to be the best thing that ever happened to me."
-          </blockquote>
-
           <span class="flex items-center gap-1 text-sm font-semibold text-gray-400" style="font-style:italic;">
-            SOAP mentor profiles &mdash; available when pipeline is live
+            SOAP mentor profiles available when pipeline is live
           </span>
         </div>
       </div>
