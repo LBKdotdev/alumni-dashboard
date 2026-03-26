@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~S: Ship v1.2 — Dean vs Staff Checklists</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  h3 { color: #fff; font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 12px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 16px; }
+  code { background: #222; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #6FC3DF; }
+  .banner { background: rgba(212,162,74,0.12); border: 1px solid rgba(212,162,74,0.3); border-radius: 8px; padding: 20px 24px; margin-bottom: 32px; }
+  .banner-title { color: #d4a24a; font-weight: 800; font-size: 20px; margin-bottom: 4px; }
+  .banner-sub { color: #999; font-size: 14px; }
+  .commit { font-size: 13px; color: #aaa; padding: 8px 0; border-bottom: 1px solid #1A1A1A; display: flex; gap: 12px; }
+  .commit-hash { color: #6FC3DF; font-family: monospace; flex-shrink: 0; }
+  .commit-msg { color: #ccc; }
+  .section-accent { border-left: 3px solid #d4a24a; padding-left: 16px; margin: 16px 0; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report</span>
+</nav>
+<div class="container">
+
+  <div class="banner">
+    <div class="banner-title">Shipped: v1.2 — Dean vs Staff Checklists</div>
+    <div class="banner-sub">Project checklists now separate what Lisa does from what her staff handles.</div>
+  </div>
+
+  <h1>What Shipped</h1>
+  <p class="subtitle">Role-based checklist grouping. QA validated. Clean.</p>
+
+  <h2>What Changed</h2>
+  <div class="card">
+    <h3>Checklist Role Grouping</h3>
+    <ul>
+      <li>Checklist items now carry a <code>role</code> field — <code>"dean"</code> or <code>"staff"</code></li>
+      <li>Dean's Checklist renders with burgundy accent header — decisions, relationships, prep</li>
+      <li>Staff / Assistant renders with gray accent header — logistics, coordination</li>
+      <li>AACOM Vegas: 7 Dean items + 6 Staff items (was 8 flat items with venue booking mixed in)</li>
+      <li>Added post-dinner debrief task — capturing follow-up promises is the highest-value item</li>
+      <li>Backwards compatible — projects without roles render flat</li>
+    </ul>
+  </div>
+
+  <h2>Commits Included</h2>
+  <div class="card" style="padding:12px 18px">
+    <div class="commit"><span class="commit-hash">f156237</span><span class="commit-msg">~T: QA pass — checklist roles verified, all checks green</span></div>
+    <div class="commit"><span class="commit-hash">5a1f9ac</span><span class="commit-msg">~U: project checklists split Dean vs Staff — 13 items with role-based grouping</span></div>
+  </div>
+
+  <h2>Deploy Target</h2>
+  <div class="section-accent">
+    <p><strong>Repository:</strong> LBKdotdev/alumni-dashboard</p>
+    <p><strong>Branch:</strong> main</p>
+    <p><strong>Status:</strong> Pushed to origin/main</p>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
