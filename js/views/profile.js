@@ -337,7 +337,7 @@ export function wireProfileEvents(state) {
         alumniName: alumni.name,
         email: alumni.contact.email,
         subject: nextAction?.description || `Connecting with ${alumni.name}`,
-        body: `Dear ${alumni.name.replace('Dr. ', '')},\n\nI wanted to reach out...\n\nWarm regards,\nDr. Lisa Warren, DO, MBA\nDean, COMP & COMP-Northwest`,
+        body: `Hi ${alumni.name},\n\nI wanted to reach out and connect. ${alumni.professional?.specialty ? `I see you're practicing ${alumni.professional.specialty}` : 'I've been looking at your record'}${alumni.professional?.practice_city ? ` in ${alumni.professional.practice_city}` : ''} — that's great to hear.\n\nI'm making it a priority to stay connected with our alumni in a meaningful way, and I'd love to hear how things are going if you ever have a few minutes.\n\nNo pressure at all — just wanted you to know we're paying attention and cheering you on.\n\nWarm regards,\nLisa Warren, DO, MBA\nDean, COMP & COMP-Northwest`,
       })
     })
   )
