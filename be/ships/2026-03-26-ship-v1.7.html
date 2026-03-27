@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~S: Ship v1.7 — Deep Burgundy Sidebar</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.6; }
+  .version { display: inline-block; background: #6FC3DF; color: #111; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 4px; margin-bottom: 16px; }
+  .commit { font-family: monospace; font-size: 12px; color: #6FC3DF; }
+  .commit-msg { color: #ccc; margin-left: 8px; }
+  .stat { display: inline-block; background: #222; border-radius: 6px; padding: 6px 14px; margin: 4px; font-size: 13px; }
+  .stat strong { color: #6FC3DF; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report</span>
+</nav>
+<div class="container">
+  <span class="version">v1.7</span>
+  <h1>~S: Deep Burgundy Sidebar</h1>
+  <p class="subtitle">Brand-aligned navigation. Warm, not cold.</p>
+
+  <h2>What Shipped</h2>
+  <div class="card">
+    <h3>Deep Burgundy Sidebar</h3>
+    <p>Sidebar background shifted from cold gray-900 to deep burgundy (#1c0a10) with a subtle vertical gradient. Right border gets a burgundy tint. Dividers (logo, footer) use rgba burgundy instead of white-opacity. Nav hover states glow burgundy instead of generic white. Mobile bottom nav matches. The entire navigation surface is now brand-aligned — warm, dark, unmistakably WesternU.</p>
+  </div>
+
+  <h2>Commits</h2>
+  <div class="card">
+    <p><span class="commit">97bfed1</span><span class="commit-msg">~U: deep burgundy sidebar — brand-aligned nav, burgundy tint borders and hovers</span></p>
+  </div>
+
+  <h2>Ship History</h2>
+  <div class="card">
+    <div class="stat"><strong>v1.0</strong> 4 boards, 73 pts</div>
+    <div class="stat"><strong>v1.1</strong> Voice</div>
+    <div class="stat"><strong>v1.2</strong> Checklists</div>
+    <div class="stat"><strong>v1.3</strong> Enrichment</div>
+    <div class="stat"><strong>v1.4</strong> Visual + login</div>
+    <div class="stat"><strong>v1.5</strong> PubMed + language</div>
+    <div class="stat"><strong>v1.6</strong> Rolodex + review</div>
+    <div class="stat"><strong>v1.7</strong> Burgundy sidebar</div>
+  </div>
+
+  <div class="footer">Generated 2026-03-26 — Be / Alumni Relationship Engine</div>
+</div>
+</body>
+</html>
