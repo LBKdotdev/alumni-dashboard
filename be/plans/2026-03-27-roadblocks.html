@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roadblocks &amp; Decisions — Alumni Relationship Engine</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+  .subtitle { color: #666; font-size: 13px; margin-bottom: 36px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+
+  .block { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px 24px; margin-bottom: 12px; }
+  .block-red { border-left: 4px solid #ef4444; }
+  .block-gold { border-left: 4px solid #f59e0b; }
+  .block-green { border-left: 4px solid #4ade80; }
+  .block-blue { border-left: 4px solid #6FC3DF; }
+  .block h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .block p { font-size: 13px; color: #999; }
+  .block strong { color: #fff; }
+
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 3px; margin-bottom: 8px; }
+  .tag-block { background: #ef4444; color: #fff; }
+  .tag-decision { background: #f59e0b; color: #000; }
+  .tag-ready { background: #4ade80; color: #000; }
+  .tag-info { background: #6FC3DF; color: #000; }
+
+  table { width: 100%; border-collapse: collapse; background: #1A1A1A; border-radius: 8px; overflow: hidden; border: 1px solid #2A2A2A; margin: 12px 0 20px; }
+  th { background: #000; color: #6FC3DF; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 12px 16px; text-align: left; }
+  td { padding: 12px 16px; font-size: 13px; color: #999; border-top: 1px solid #1e1e1e; vertical-align: top; }
+  td:first-child { color: #fff; font-weight: 600; }
+  .y { color: #4ade80; }
+  .n { color: #ef4444; }
+  .rec td { background: rgba(111,195,223,0.05); }
+
+  .code { background: #0a0a0a; border: 1px solid #2A2A2A; border-radius: 8px; padding: 16px 20px; margin: 12px 0; font-family: 'SF Mono', monospace; font-size: 12px; color: #6FC3DF; line-height: 1.8; overflow-x: auto; }
+
+  .footer { margin-top: 40px; padding-top: 12px; border-top: 1px solid #222; font-size: 11px; color: #444; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Roadblocks</span>
+</nav>
+<div class="container">
+
+  <h1>Roadblocks &amp; Decisions</h1>
+  <p class="subtitle">Alumni Relationship Engine &mdash; 2026-03-27 &mdash; For Joey</p>
+
+  <!-- ═══ ROADBLOCKS ═══ -->
+  <h2>Roadblocks</h2>
+
+  <div class="block block-red">
+    <span class="tag tag-block">Blocker</span>
+    <h3>Repo was public. 6,282 real alumni records were exposed.</h3>
+    <p>NPI numbers, emails, practice locations, Dr. Warren's name, outreach drafts, access code (2001), all Be artifacts. <strong>Repo is now private as of today.</strong> GitHub Pages demo link is dead. Lisa can no longer access the demo.</p>
+  </div>
+
+  <div class="block block-red">
+    <span class="tag tag-block">Blocker</span>
+    <h3>Nothing persists.</h3>
+    <p>Notes, engagement toggles, outreach history, checklists, trigger dismissals &mdash; all lost on page refresh. Static site, no backend, no database. Lisa cannot use this as a daily tool. It is demo-only.</p>
+  </div>
+
+  <div class="block block-red">
+    <span class="tag tag-block">Blocker</span>
+    <h3>No hosting while private.</h3>
+    <p>GitHub Pages does not serve private repos on free accounts. We need an alternative host to restore demo access. Cloudflare Pages connects to private repos and is free.</p>
+  </div>
+
+  <!-- ═══ DECISIONS ═══ -->
+  <h2>Decisions Needed</h2>
+
+  <div class="block block-gold">
+    <span class="tag tag-decision">Decision 1</span>
+    <h3>Approve Cloudflare as the platform.</h3>
+    <p>Pages (hosting) + Access (auth) + Worker (API) + D1 (database). All free tier. All on one account. <code>scottyledell.us</code> is already on Cloudflare DNS.</p>
+  </div>
+
+  <div class="block block-gold">
+    <span class="tag tag-decision">Decision 2</span>
+    <h3>Grant Cloudflare account access.</h3>
+    <p>Need login or invite to the Cloudflare account managing <code>scottyledell.us</code> to deploy Pages and Workers.</p>
+  </div>
+
+  <div class="block block-gold">
+    <span class="tag tag-decision">Decision 3</span>
+    <h3>Pick a demo URL.</h3>
+    <p>Options: <code>alumni-dashboard.pages.dev</code> (free, instant) or <code>alumni.scottyledell.us</code> (custom subdomain, free, your domain). Either works. Custom looks more professional for Lisa.</p>
+  </div>
+
+  <!-- ═══ OPTIONS TABLE ═══ -->
+  <h2>Infrastructure Options</h2>
+
+  <table>
+    <thead><tr><th>Criteria</th><th>Cloudflare</th><th>Supabase</th><th>Stay on GitHub</th></tr></thead>
+    <tbody>
+      <tr><td>Host private repo</td><td class="y">Yes</td><td class="y">Yes (Vercel/Netlify)</td><td class="n">No (needs Pro $4/mo)</td></tr>
+      <tr><td>Persistence (DB)</td><td class="y">D1 (SQLite, 5GB free)</td><td class="y">Postgres (500MB free)</td><td class="n">None</td></tr>
+      <tr><td>Auth gate</td><td class="y">Cloudflare Access (free/50 users)</td><td class="y">Built-in auth</td><td class="n">Hardcoded PIN only</td></tr>
+      <tr><td>Email API (future)</td><td class="y">Worker route</td><td>Needs edge function</td><td class="n">No</td></tr>
+      <tr><td>Custom domain</td><td class="y">Already on CF DNS</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+      <tr><td>Cost</td><td><strong style="color:#4ade80">$0/mo</strong></td><td><strong style="color:#4ade80">$0/mo</strong></td><td>$4/mo (Pro) or $0 (public)</td></tr>
+      <tr><td>Bare metal / own it</td><td class="y">Yes</td><td class="n">Managed service</td><td class="y">Yes but no backend</td></tr>
+      <tr class="rec"><td><strong style="color:#6FC3DF">Recommendation</strong></td><td><strong style="color:#6FC3DF">This one</strong></td><td>Fallback</td><td>Demo only</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ═══ MAILTO SOLUTION ═══ -->
+  <h2>Email: Temporary Solution (No Backend Needed)</h2>
+
+  <div class="block block-green">
+    <span class="tag tag-ready">Ready to Ship</span>
+    <h3>mailto: link replaces copy-paste.</h3>
+    <p>When Lisa clicks "Send Email," her default email client (Outlook, Gmail, Apple Mail) opens with <strong>To, Subject, and Body pre-filled</strong>. She reviews the draft in her own email and clicks Send. Works in demo mode. Works in production. Zero infrastructure.</p>
+  </div>
+
+  <p style="font-size:13px;color:#888;margin:12px 0">How it works in the code:</p>
+
+  <div class="code">
+    &lt;a href="mailto:dr.sandefur@example.com<br>
+    &nbsp;&nbsp;?subject=Welcome%20to%20Oregon<br>
+    &nbsp;&nbsp;&amp;body=Hi%20Dr.%20Sandefur%2C%0A%0AI%20noticed%20you're%20practicing%20in%20Baker%20City...%0A%0AWarm%20regards%2C%0ALisa%20Warren"&gt;<br>
+    &nbsp;&nbsp;Send Email<br>
+    &lt;/a&gt;
+  </div>
+
+  <div class="block block-blue">
+    <span class="tag tag-info">Details</span>
+    <h3>What Lisa sees:</h3>
+    <p>1. Clicks "Draft Outreach" on a trigger or profile.<br>
+    2. Panel opens with pre-written email in her voice.<br>
+    3. She edits if she wants.<br>
+    4. Clicks <strong>"Send Email"</strong> &mdash; her email client opens, ready to send.<br>
+    5. She hits Send in Outlook/Gmail. Done.</p>
+    <p style="margin-top:10px"><strong>Fallback:</strong> "Copy to Clipboard" stays as secondary option.<br>
+    <strong>No email on file:</strong> Button disabled, shows "No email on file &mdash; enrichment needed."<br>
+    <strong>Limit:</strong> mailto: body caps at ~2,000 chars in some browsers. Our drafts are ~500-800 chars. No issue.</p>
+  </div>
+
+  <!-- ═══ APPROACH REALIGNMENT ═══ -->
+  <h2>Current Approach: Prototype for Lisa</h2>
+
+  <div class="block block-blue">
+    <span class="tag tag-info">Where We Are</span>
+    <h3>This is a prototype. That's the right positioning.</h3>
+    <p>We're presenting to Lisa, not deploying to production. The goal is to show her what's possible with her alumni data, her voice, and her workflow &mdash; and get a "yes, build this for real." Everything we're building is designed to make that conversation happen.</p>
+  </div>
+
+  <div class="block block-blue">
+    <h3>What the prototype already proves:</h3>
+    <p>
+      &bull; Trigger-based outreach works (8 trigger types, real NPI/PubMed signals)<br>
+      &bull; Her voice can be captured and scaled (dash-free, warm, specific)<br>
+      &bull; 6,282 real records are queryable and useful<br>
+      &bull; Enrichment adds real value (34 emails, 54 websites, Google ratings)<br>
+      &bull; The UX matches institutional expectations (not startup, not generic CRM)
+    </p>
+  </div>
+
+  <div class="block block-green">
+    <h3>What we can add before the demo (no backend):</h3>
+    <p>
+      &bull; <strong>mailto: email</strong> &mdash; Lisa clicks Send, her email client opens. Real sending, not copy-paste.<br>
+      &bull; <strong>Lisa's notes pre-populated</strong> &mdash; 3 profiles with her words already in the system. "This was built for me."<br>
+      &bull; <strong>CSV export</strong> &mdash; "Here's your Vegas alumni list." She downloads it.<br>
+      &bull; <strong>Outreach stats on Dashboard</strong> &mdash; Frames the tool as measurable.
+    </p>
+  </div>
+
+  <div class="block block-gold">
+    <h3>What we tell Lisa:</h3>
+    <p>
+      <em>"This is a working prototype built on your real alumni data. The trigger queue, the outreach drafts, the enrichment &mdash; that's all real. What you're seeing today is what the tool does. What we're building next is making it permanent &mdash; your notes save, your outreach tracks, and it lives behind a real login on your own URL. That's a few days of work once you say go."</em>
+    </p>
+  </div>
+
+  <!-- ═══ NEXT STEPS ═══ -->
+  <h2>Next Steps</h2>
+
+  <div class="block block-green">
+    <h3>Immediately (no blockers):</h3>
+    <p>
+      1. Ship mailto: email integration<br>
+      2. Pre-populate 3 profiles with Lisa's notes<br>
+      3. Add CSV export<br>
+      4. Add outreach stats to Dashboard<br>
+      5. Visual QA pass (Rolodex + sidebar)
+    </p>
+  </div>
+
+  <div class="block block-gold">
+    <h3>After Joey decides:</h3>
+    <p>
+      1. Deploy to Cloudflare Pages (restores demo access on private repo)<br>
+      2. Add Cloudflare Access (real auth, replaces PIN 2001)<br>
+      3. Build Worker + D1 backend (everything persists)<br>
+      4. Wire frontend to API (notes, toggles, outreach, checklists save)<br>
+      5. Send Lisa the new URL
+    </p>
+  </div>
+
+  <div class="footer">2026-03-27 &mdash; Be / Alumni Relationship Engine</div>
+
+</div>
+</body>
+</html>
