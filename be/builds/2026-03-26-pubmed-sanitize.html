@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~U: PubMed Count Sanitization</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.6; }
+  .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+  .before { background: rgba(139,34,48,0.1); border: 1px solid rgba(139,34,48,0.3); border-radius: 8px; padding: 16px; }
+  .after { background: rgba(45,138,78,0.1); border: 1px solid rgba(45,138,78,0.3); border-radius: 8px; padding: 16px; }
+  .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+  .before .label { color: #8b2230; }
+  .after .label { color: #2d8a4e; }
+  .sample { font-size: 13px; color: #ccc; font-family: monospace; }
+  .stat { display: inline-block; background: #222; border-radius: 6px; padding: 4px 12px; margin: 4px; font-size: 13px; }
+  .stat strong { color: #6FC3DF; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+  code { background: #222; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #6FC3DF; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Build Report</span>
+</nav>
+<div class="container">
+  <h1>~U: PubMed Count Sanitization</h1>
+  <p class="subtitle">Strip inflated name-search counts, show qualitative label</p>
+
+  <h2>What Was Updated</h2>
+  <div class="card">
+    <h3>The Problem</h3>
+    <p>5,795 alumni records had PubMed "publication counts" that were actually name-search result counts, not authored papers. Median count was 336. Maximum was 350,828. These would destroy trust instantly if Lisa saw "Dr. Khan: Published 24,767 papers."</p>
+  </div>
+
+  <div class="card">
+    <h3>The Fix</h3>
+    <p>Added <code>sanitizeNotable()</code> helper that intercepts PubMed count strings at the rendering layer. Specific counts are replaced with a qualitative label. The data file is untouched (preserving the raw NPI-matched search counts for future author disambiguation).</p>
+  </div>
+
+  <h2>Before / After</h2>
+  <div class="before-after">
+    <div class="before">
+      <div class="label">Before</div>
+      <div class="sample">Published 7,896 peer-reviewed paper(s) (PubMed)</div>
+      <div class="sample" style="margin-top:8px">Published 350,828 peer-reviewed paper(s) (PubMed)</div>
+    </div>
+    <div class="after">
+      <div class="label">After</div>
+      <div class="sample">Published researcher (PubMed-indexed)</div>
+      <div class="sample" style="margin-top:8px">Published researcher (PubMed-indexed)</div>
+    </div>
+  </div>
+
+  <h2>Data Stats</h2>
+  <div class="card">
+    <div class="stat"><strong>5,795</strong> alumni with PubMed notables</div>
+    <div class="stat"><strong>336</strong> median count (clearly inflated)</div>
+    <div class="stat"><strong>350,828</strong> max count (name: common search)</div>
+    <div class="stat"><strong>0</strong> specific counts shown to user now</div>
+  </div>
+
+  <h2>Files Changed</h2>
+  <div class="card">
+    <p><strong>js/utils/helpers.js</strong> — Added <code>sanitizeNotable()</code> function</p>
+    <p style="margin-top:8px"><strong>js/views/directory.js</strong> — Applied sanitization to directory card notable display</p>
+    <p style="margin-top:8px"><strong>js/views/profile.js</strong> — Applied sanitization to profile notables list</p>
+  </div>
+
+  <h2>Decisions Made</h2>
+  <div class="card">
+    <h3>Why rendering layer, not data fix?</h3>
+    <p>The raw PubMed search counts in alumni.json have future value: when author disambiguation is built (matching on ORCID or co-author networks), the original counts provide a baseline. Fix at display, preserve at source.</p>
+  </div>
+  <div class="card">
+    <h3>Why qualitative, not capped?</h3>
+    <p>Even "Published 12 papers" could be wrong for a common name. A cap (e.g., show if under 50) still risks inaccuracy. "Published researcher (PubMed-indexed)" is always true: the name does appear in PubMed. Zero trust risk.</p>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
