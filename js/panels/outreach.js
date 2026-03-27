@@ -1,7 +1,6 @@
 // ============================================================
 // OUTREACH PANEL — slide-in draft composer
-// Port of OutreachPanel.jsx: overlay + slide-in panel with
-// subject/body fields, copy to clipboard, mark as sent
+// mailto: send, copy to clipboard, mark as sent
 // ============================================================
 
 import { closeOutreach, markOutreachSent } from '../state.js'
@@ -10,6 +9,12 @@ import { renderHumanReviewsBadge } from '../components.js'
 // Module-scoped transient state
 let copied = false
 let sent = false
+
+// ── Helpers ──
+
+function buildMailtoUrl(email, subject, body) {
+  return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+}
 
 // ── Render ──
 
@@ -22,6 +27,8 @@ export function renderOutreachPanel(state) {
     const draft = state.outreachDraft
     copied = false
     sent = false
+
+    const hasEmail = !!draft.email
 
     overlay.classList.remove('hidden')
     panel.classList.remove('hidden')
@@ -43,7 +50,7 @@ export function renderOutreachPanel(state) {
         <div style="margin-bottom:16px">
           <label class="text-xs font-semibold text-gray-400" style="text-transform:uppercase;letter-spacing:0.05em">To</label>
           <p class="text-sm text-gray-800" style="margin-top:2px">
-            ${draft.alumniName}${draft.email ? `<span class="text-gray-400" style="margin-left:8px">${draft.email}</span>` : ''}
+            ${draft.alumniName}${hasEmail ? `<span class="text-gray-400" style="margin-left:8px">${draft.email}</span>` : '<span style="margin-left:8px;color:var(--red-500);font-size:12px">No email on file</span>'}
           </p>
         </div>
 
@@ -57,23 +64,46 @@ export function renderOutreachPanel(state) {
           <label class="text-xs font-semibold text-gray-400" style="text-transform:uppercase;letter-spacing:0.05em;display:block;margin-bottom:8px">Message</label>
           <textarea id="outreach-body" class="textarea">${draft.body || ''}</textarea>
           <p class="text-xs text-gray-400" style="margin-top:8px;font-style:italic">
-            Draft reflects Dean's office voice — warm, personal, referencing the specific trigger. Edit as needed before sending.
+            Draft reflects Dean's office voice. Edit as needed before sending.
           </p>
         </div>
       </div>
 
       <!-- Actions -->
       <div style="padding:16px 24px;border-top:1px solid var(--gray-100)">
+        ${hasEmail ? `
+        <!-- Primary: Send Email via mailto: -->
+        <a id="outreach-mailto" class="btn btn-primary" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-bottom:8px;text-decoration:none;cursor:pointer" href="#">
+          <svg class="icon icon-sm"><use href="./css/icons.svg#send"></use></svg>
+          Send Email
+        </a>
         <div class="flex items-center gap-2" style="margin-bottom:12px">
           <button id="outreach-copy" class="btn btn-outline" style="flex:1;justify-content:center">
             <svg class="icon icon-sm"><use href="./css/icons.svg#copy"></use></svg>
             <span id="copy-label">Copy to Clipboard</span>
           </button>
-          ${draft.alumniId ? `<button id="outreach-send" class="btn btn-primary" style="flex:1;justify-content:center">
-            <svg class="icon icon-sm"><use href="./css/icons.svg#send"></use></svg>
+          ${draft.alumniId ? `<button id="outreach-send" class="btn btn-outline" style="flex:1;justify-content:center">
+            <svg class="icon icon-sm"><use href="./css/icons.svg#check"></use></svg>
             <span id="send-label">Mark as Sent</span>
-          </button>` : `<span class="text-xs text-gray-400" style="flex:1;text-align:center;padding:8px">Group outreach \u2014 copy and send via your email client</span>`}
+          </button>` : ''}
         </div>
+        ` : `
+        <!-- No email: copy only -->
+        <div style="background:var(--red-50);border:1px solid var(--red-200);border-radius:8px;padding:12px 16px;margin-bottom:12px">
+          <p class="text-xs" style="color:var(--red-600);font-weight:600">No email address on file for this alumnus.</p>
+          <p class="text-xs" style="color:var(--red-500);margin-top:4px">Enrichment needed to enable direct sending. You can still copy the draft below.</p>
+        </div>
+        <div class="flex items-center gap-2" style="margin-bottom:12px">
+          <button id="outreach-copy" class="btn btn-outline" style="flex:1;justify-content:center">
+            <svg class="icon icon-sm"><use href="./css/icons.svg#copy"></use></svg>
+            <span id="copy-label">Copy to Clipboard</span>
+          </button>
+          ${draft.alumniId && !draft.isGroupTrigger ? `<button id="outreach-send" class="btn btn-outline" style="flex:1;justify-content:center">
+            <svg class="icon icon-sm"><use href="./css/icons.svg#check"></use></svg>
+            <span id="send-label">Mark as Sent</span>
+          </button>` : ''}
+        </div>
+        `}
         <button data-action="close-outreach" class="w-full text-center text-sm text-gray-400" style="padding:4px;transition:color 0.15s">
           Cancel
         </button>
@@ -95,6 +125,18 @@ function wireOutreachEvents(draft) {
   document.querySelectorAll('[data-action="close-outreach"]').forEach(el =>
     el.addEventListener('click', () => closeOutreachPanel())
   )
+
+  // mailto: send button — reads current subject/body at click time
+  const mailtoBtn = document.getElementById('outreach-mailto')
+  if (mailtoBtn) {
+    mailtoBtn.addEventListener('click', (e) => {
+      e.preventDefault()
+      const subject = document.getElementById('outreach-subject')?.value || ''
+      const body = document.getElementById('outreach-body')?.value || ''
+      const url = buildMailtoUrl(draft.email, subject, body)
+      window.location.href = url
+    })
+  }
 
   // Copy to clipboard
   const copyBtn = document.getElementById('outreach-copy')
@@ -136,7 +178,9 @@ function wireOutreachEvents(draft) {
       const icon = sendBtn.querySelector('use')
       if (label) label.textContent = 'Marked as Sent'
       if (icon) icon.setAttribute('href', './css/icons.svg#check')
-      sendBtn.style.background = 'var(--green)'
+      sendBtn.style.background = 'var(--green-soft)'
+      sendBtn.style.color = 'var(--green)'
+      sendBtn.style.borderColor = 'var(--green-200)'
       setTimeout(() => {
         markOutreachSent(draft.alumniId)
       }, 600)
