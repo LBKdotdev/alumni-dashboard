@@ -8,7 +8,7 @@
   /* Brand Colors */
   --burgundy: #8b2230;
   --burgundy-dark: #58001b;
-  --burgundy-deep: #1c0a10;
+  --burgundy-deep: #2d1118;
   --burgundy-mid: #6e1a26;
   --burgundy-soft: rgba(139, 34, 48, 0.07);
   --burgundy-glow: rgba(139, 34, 48, 0.12);
@@ -327,8 +327,8 @@ a:hover { text-decoration: underline; }
   position: fixed;
   left: 0; top: 0; bottom: 0;
   width: var(--sidebar-width);
-  background: linear-gradient(180deg, var(--burgundy-deep) 0%, #120610 100%);
-  border-right: 1px solid rgba(139,34,48,0.15);
+  background: linear-gradient(180deg, var(--burgundy-deep) 0%, #1e0c12 100%);
+  border-right: 1px solid rgba(139,34,48,0.2);
   flex-direction: column;
   z-index: 40;
 }
@@ -881,8 +881,8 @@ a:hover { text-decoration: underline; }
 /* ═══ ROLODEX ═══ */
 
 .rolodex {
-  perspective: 1200px;
-  perspective-origin: center top;
+  perspective: 1000px;
+  perspective-origin: center 20%;
 }
 
 .rolodex-card {
@@ -891,15 +891,28 @@ a:hover { text-decoration: underline; }
   animation: rolodexFlip 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   opacity: 0;
   will-change: transform, opacity;
+  /* Persistent Rolodex look: slight 3D tilt + layered shadow at rest */
+  border-left: 4px solid var(--burgundy);
+  box-shadow:
+    0 2px 4px rgba(0,0,0,0.04),
+    4px 4px 0 -2px var(--surface-raised),
+    5px 5px 0 -2px rgba(139,34,48,0.08),
+    8px 8px 0 -4px var(--surface-raised),
+    9px 9px 0 -4px rgba(139,34,48,0.05);
+}
+
+/* Alternating tab accent — like colored index dividers */
+.rolodex-card:nth-child(even) {
+  border-left-color: var(--gold);
 }
 
 @keyframes rolodexFlip {
   0% {
     opacity: 0;
-    transform: rotateX(-40deg) translateY(-8px) scale(0.97);
+    transform: rotateX(-35deg) translateY(-10px) scale(0.96);
   }
-  50% {
-    opacity: 0.8;
+  60% {
+    opacity: 1;
   }
   100% {
     opacity: 1;
@@ -914,20 +927,12 @@ a:hover { text-decoration: underline; }
               border-color 0.3s ease;
 }
 .rolodex-card.card-hover:hover {
-  transform: rotateX(-2deg) translateY(-6px) scale(1.008);
+  transform: translateY(-4px) translateX(-2px) scale(1.005);
   box-shadow:
-    0 8px 24px rgba(139,34,48,0.12),
-    0 16px 48px rgba(0,0,0,0.08),
-    0 2px 8px rgba(212,162,74,0.06);
-  border-color: rgba(139,34,48,0.18);
-}
-
-/* Subtle depth layering — cards further down appear slightly recessed */
-.rolodex-card:nth-child(n+6) {
-  --card-depth: 0.998;
-}
-.rolodex-card:nth-child(n+12) {
-  --card-depth: 0.996;
+    0 8px 24px rgba(139,34,48,0.14),
+    0 16px 40px rgba(0,0,0,0.08),
+    0 2px 8px rgba(212,162,74,0.08);
+  border-color: rgba(139,34,48,0.3);
 }
 
 /* Page transition: cards flip out then new ones flip in */
@@ -938,7 +943,7 @@ a:hover { text-decoration: underline; }
   }
   100% {
     opacity: 0;
-    transform: rotateX(30deg) translateY(6px) scale(0.97);
+    transform: rotateX(25deg) translateY(8px) scale(0.96);
   }
 }
 
