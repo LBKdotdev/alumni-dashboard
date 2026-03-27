@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~P: The Last Mile v2 — Revised Plan</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1.3; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 40px; }
+  h2 { color: #6FC3DF; font-size: 20px; font-weight: 700; margin: 44px 0 20px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+
+  .banner { background: linear-gradient(135deg, #1a1a2e 0%, #111 100%); border: 2px solid #f59e0b; border-radius: 12px; padding: 28px 32px; margin-bottom: 40px; text-align: center; }
+  .banner-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #f59e0b; margin-bottom: 8px; }
+  .banner p { color: #888; font-size: 14px; max-width: 640px; margin: 0 auto; line-height: 1.7; }
+
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 24px; margin-bottom: 14px; border-left: 3px solid #333; }
+  .card.blue { border-left-color: #6FC3DF; }
+  .card.red { border-left-color: #ef4444; }
+  .card.green { border-left-color: #4ade80; }
+  .card.gold { border-left-color: #f59e0b; }
+  .card.purple { border-left-color: #a855f7; }
+  .card.blocked { border-left-color: #ef4444; border: 1px solid rgba(239,68,68,0.2); background: linear-gradient(135deg, #1A1A1A 0%, #1a1414 100%); }
+  .card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .card.blue .card-label { color: #6FC3DF; }
+  .card.red .card-label { color: #ef4444; }
+  .card.green .card-label { color: #4ade80; }
+  .card.gold .card-label { color: #f59e0b; }
+  .card.purple .card-label { color: #a855f7; }
+  .card.blocked .card-label { color: #ef4444; }
+  .card h3 { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.7; }
+  .card p + p { margin-top: 10px; }
+  .card strong { color: #fff; }
+  .card code { background: #222; padding: 2px 6px; border-radius: 4px; color: #6FC3DF; font-size: 12px; }
+  .card ul { list-style: none; padding: 0; margin-top: 8px; }
+  .card li { font-size: 13px; color: #999; padding: 5px 0; padding-left: 18px; position: relative; }
+  .card li::before { content: "\2192"; position: absolute; left: 0; color: #6FC3DF; }
+
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 4px; margin-right: 6px; vertical-align: middle; }
+  .tag-ready { background: #4ade80; color: #000; }
+  .tag-blocked { background: #ef4444; color: #fff; }
+  .tag-new { background: #6FC3DF; color: #000; }
+  .tag-idea { background: #a855f7; color: #fff; }
+
+  .phase-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .phase-header h3 { color: #fff; font-size: 18px; font-weight: 800; margin: 0; }
+  .phase-header .pts { font-size: 12px; color: #6FC3DF; font-weight: 700; }
+
+  .divider { height: 1px; background: #222; margin: 32px 0; }
+
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Plan v2</span>
+</nav>
+<div class="container">
+
+  <h1>The Last Mile v2</h1>
+  <p class="subtitle">Revised plan. Incorporates the persistence decision, security concerns, and new ideas surfaced during the audit.</p>
+
+  <div class="banner">
+    <div class="banner-label">Plan &mdash; Awaiting Approval</div>
+    <p>The repo is public. The data is real. Before we build more features, we need to lock the door. Everything else depends on that decision.</p>
+  </div>
+
+  <!-- ═══ WHAT CHANGED ═══ -->
+  <h2>What Changed Since v1</h2>
+
+  <div class="card red">
+    <div class="card-label">Discovery</div>
+    <h3>The repo is public. 6,282 real alumni records are exposed.</h3>
+    <p>NPI numbers, email addresses, practice locations, Dr. Warren's name and voice in outreach drafts, the access code (2001), all build artifacts and internal briefings. Anyone with the URL can see everything. This needs to be resolved before we ship anything else.</p>
+  </div>
+
+  <div class="card gold">
+    <div class="card-label">Discovery</div>
+    <h3>Nothing persists. The product is a demo, not a tool.</h3>
+    <p>Notes, engagement toggles, outreach history, checklist progress, trigger dismissals &mdash; all session-only. Persistence isn't a Phase 3 "nice to have." It's the difference between something Lisa can use and something Lisa can only look at.</p>
+  </div>
+
+  <div class="card blue">
+    <div class="card-label">Decision Pending</div>
+    <h3>Cloudflare Pages + Worker + D1 is the recommended path.</h3>
+    <p>Private repo. Cloudflare Pages for hosting (replaces GitHub Pages). Cloudflare Access for authentication. Worker + D1 for persistence and future email API. Joey needs to approve before we proceed. See: <a href="2026-03-27-persistence-briefing.html" style="color:#6FC3DF">Decision Brief</a></p>
+  </div>
+
+  <!-- ═══ BLOCKER ═══ -->
+  <h2>Blocker</h2>
+
+  <div class="card blocked">
+    <div class="card-label">Blocked &mdash; Waiting on Joey</div>
+    <h3>Infrastructure decision required before Phase 2 build.</h3>
+    <p>Two questions for Joey:</p>
+    <ul>
+      <li><strong>Go private?</strong> Flip alumni-dashboard to private repo. Lisa's current demo link stops working.</li>
+      <li><strong>Cloudflare?</strong> Deploy to Cloudflare Pages + Access. Lisa gets a new, gated URL. Same infra handles the backend later.</li>
+    </ul>
+    <p>Until this is decided, all build work on persistence and email is blocked. The items below are organized by what we <em>can</em> do now vs. what's waiting.</p>
+  </div>
+
+  <!-- ═══ PHASE 2A: UNBLOCKED ═══ -->
+  <h2>Phase 2A: Ship Now (no infrastructure needed)</h2>
+
+  <div class="card green">
+    <span class="tag tag-ready">Ready</span>
+    <h3>Lisa's wow moment &mdash; pre-populated notes</h3>
+    <p>Hand-write 3 alumni profiles with notes attributed to "Lisa Warren." Content drawn from meeting context. These are the profiles Joey navigates to during the demo. Her words, already in the system. Emotional ROI is off the charts.</p>
+    <ul>
+      <li>Dr. Eric Sandefur &mdash; "Ran into Eric at the AACOM reception. Genuinely interested in teaching. Follow up about preceptor role."</li>
+      <li>Dr. Keith Kesler &mdash; "Haven't connected with Keith since graduation. His psychiatry work is exactly what we should be showcasing."</li>
+      <li>A VIP alumnus &mdash; "One of our most consistent supporters. Always shows up. Don't take that for granted."</li>
+    </ul>
+  </div>
+
+  <div class="card green">
+    <span class="tag tag-ready">Ready</span>
+    <h3>Email from within &mdash; mailto: integration</h3>
+    <p>Replace "Copy to Clipboard" as the primary action with a <code>mailto:</code> link. Lisa clicks "Send Email," her default email client opens with To, Subject, and Body pre-filled. She reviews and hits Send. Zero backend required.</p>
+    <ul>
+      <li>Primary button: "Send Email" (opens email client)</li>
+      <li>Secondary: "Copy to Clipboard" (de-emphasized fallback)</li>
+      <li>"Mark as Sent" stays for in-app tracking</li>
+      <li>No-email state: "No email on file" with enrichment prompt</li>
+    </ul>
+  </div>
+
+  <div class="card green">
+    <span class="tag tag-ready">Ready</span>
+    <h3>CSV export &mdash; "Bring this list to Vegas"</h3>
+    <p>Download button on Directory (filtered results) and Projects alumni tab. Client-side CSV generation via Blob. Columns: Name, Credentials, Class Year, Specialty, City, State, Email, Phone, Engagement types, Tags.</p>
+  </div>
+
+  <div class="card green">
+    <span class="tag tag-ready">Ready</span>
+    <h3>Outreach activity stats &mdash; Dashboard metrics</h3>
+    <p>Stats row on Dashboard: total outreach sent, response rate, alumni with no outreach yet. Computed from the existing data. Frames the tool as measurable.</p>
+  </div>
+
+  <div class="card green">
+    <span class="tag tag-ready">Ready</span>
+    <h3>Visual polish &mdash; Rolodex + sidebar confirmation</h3>
+    <p>Verify Rolodex cards render correctly after the CSS specificity fix. Confirm burgundy sidebar reads warm. Test mobile nav. QA pass on GitHub Pages.</p>
+  </div>
+
+  <!-- ═══ PHASE 2B: BLOCKED ═══ -->
+  <h2>Phase 2B: After Joey Decides (infrastructure required)</h2>
+
+  <div class="card blocked">
+    <span class="tag tag-blocked">Blocked</span>
+    <h3>Make repo private</h3>
+    <p>Flip alumni-dashboard to private. Protects alumni PII, internal briefings, and access code. Breaks Lisa's current demo URL. Must coordinate with new hosting.</p>
+  </div>
+
+  <div class="card blocked">
+    <span class="tag tag-blocked">Blocked</span>
+    <h3>Cloudflare Pages deployment</h3>
+    <p>Deploy static site to Cloudflare Pages. Connect to private repo. New URL (e.g., <code>alumni-dashboard.pages.dev</code> or custom domain). Replaces GitHub Pages.</p>
+  </div>
+
+  <div class="card blocked">
+    <span class="tag tag-blocked">Blocked</span>
+    <h3>Cloudflare Access &mdash; authentication gate</h3>
+    <p>Zero-trust access control in front of the site. Email-based login or one-time PIN. Free for up to 50 users. Replaces the hardcoded "2001" PIN with real authentication. Only Lisa, Joey, and authorized users can access.</p>
+  </div>
+
+  <div class="card blocked">
+    <span class="tag tag-blocked">Blocked</span>
+    <h3>Cloudflare Worker + D1 &mdash; persistence backend</h3>
+    <p>API routes for saving notes, engagement toggles, outreach history, trigger state, checklist progress. SQLite at the edge. Everything Lisa does survives refresh. This is what turns the demo into a tool.</p>
+  </div>
+
+  <div class="card blocked">
+    <span class="tag tag-blocked">Blocked</span>
+    <h3>Frontend persistence wiring</h3>
+    <p>Swap session-state mutations for API calls. Notes save to D1. Engagement toggles persist. Outreach history writes on "Mark as Sent." Trigger dismissals survive refresh. Checklist state is permanent.</p>
+  </div>
+
+  <!-- ═══ IDEAS BANK ═══ -->
+  <h2>Ideas Bank (Phase 3+)</h2>
+  <p style="margin-bottom:20px;font-size:13px;color:#666">Ideas surfaced during the audit. Not committed to any timeline. Captured here so nothing gets lost.</p>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Gmail API email integration</h3>
+    <p>OAuth with Lisa's WesternU Gmail. "Send Email" creates a draft in her Gmail Drafts folder. She opens Gmail, reviews, clicks Send. Full HTML formatting, tracking pixels for open detection, reply threading. Replaces mailto:.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>NaciLink branding</h3>
+    <p>Name the product. Source a clean Vitruvian Man image (public domain, no Google watermark). Integrate brand into login gate, nav bar, favicon. Custom domain: nacilink.com. "The prototype" becomes a product with identity. Lake Nacimiento origin story for the name.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Alumni geographic map</h3>
+    <p>Interactive map view of alumni locations. Pin clusters by state/city. Click a cluster to filter the directory. "168 alumni in Nevada" as a visual, not a number. Essential for conference planning. Could use Leaflet.js (lightweight, no API key) or Mapbox.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Smart search / natural language</h3>
+    <p>"Mentors near Portland" or "class of 2010 donors who haven't been contacted." The data model supports complex queries. The search box currently only does text matching. An LLM-powered search layer would be transformative.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Lebanon campus data</h3>
+    <p>COMP-Northwest (Lebanon, OR) currently shows "Coming Soon." Need registrar data or NPI batch query for Lebanon graduates. Estimated ~2,347 graduates since 2015. Two-campus comparison becomes real.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Outreach analytics dashboard</h3>
+    <p>"You've reached 42 alumni this quarter. 28 opened. 12 replied. 3 became mentors." Tracks the full funnel from trigger detection to relationship outcome. Proves ROI to the Provost. Requires email tracking + persistence backend.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Calendar / timeline view</h3>
+    <p>Visual calendar showing project deadlines, follow-up due dates, upcoming milestones, and trigger events on a timeline. "What's happening this week" as a view, not just the queue ranking.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Suggested actions that learn</h3>
+    <p>Track which outreach drafts Lisa edits, which triggers she acts on first, which approaches get replies. Use that signal to rerank triggers and improve draft quality over time. The tool adapts to Lisa's instincts.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Multi-user with roles</h3>
+    <p>Lisa (Dean) sees everything. Staff see their checklist items. Board members see the dashboard only. Cloudflare Access + Worker auth makes this possible without a heavy auth framework.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Real-time NPI + PubMed sync</h3>
+    <p>Scheduled Worker that queries NPPES and PubMed weekly. Auto-generates triggers when changes are detected. No manual data refresh. The system watches for Lisa.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>PDF export for profiles</h3>
+    <p>"Print this profile for my meeting." One-page PDF with photo placeholder, engagement summary, touchpoint history, personal notes. Lisa brings it to a lunch meeting. Physical artifact from a digital tool.</p>
+  </div>
+
+  <div class="card purple">
+    <span class="tag tag-idea">Idea</span>
+    <h3>Bulk outreach campaigns</h3>
+    <p>Select 20 alumni from a project, generate personalized drafts for each (using templates + individual data), review all 20, send all 20. Mass personalization, not mass email. Each one reads like Lisa wrote it individually.</p>
+  </div>
+
+  <!-- ═══ SUMMARY ═══ -->
+  <h2>Where We Stand</h2>
+
+  <div class="card blue">
+    <div class="card-label">Status</div>
+    <h3>Phase 2A is ready to build. Phase 2B is waiting on Joey.</h3>
+    <p><strong style="color:#4ade80">Phase 2A (5 items, no blockers):</strong> Wow moment, mailto: email, CSV export, outreach stats, visual polish. Can build today. Ships on current GitHub Pages. Makes the demo significantly better.</p>
+    <p><strong style="color:#ef4444">Phase 2B (5 items, blocked):</strong> Private repo, Cloudflare Pages, Cloudflare Access, Worker + D1 backend, persistence wiring. Requires Joey's go-ahead on infrastructure. This is what makes the product real.</p>
+    <p><strong style="color:#a855f7">Ideas Bank (12 ideas):</strong> Captured, not committed. These shape Phase 3 and beyond. Best ones: Gmail API, alumni map, NaciLink branding, bulk campaigns.</p>
+  </div>
+
+  <div class="footer">
+    <p>The Last Mile v2 &mdash; Alumni Relationship Engine</p>
+    <p style="margin-top:8px;color:#444">Generated 2026-03-27 08:02 &mdash; Be</p>
+  </div>
+
+</div>
+</body>
+</html>
