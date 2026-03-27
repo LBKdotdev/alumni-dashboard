@@ -877,6 +877,74 @@ a:hover { text-decoration: underline; }
 .dot-bounced { background: var(--red-500); }
 .dot-inactive { background: var(--gray-300); }
 
+/* ═══ ROLODEX ═══ */
+
+.rolodex {
+  perspective: 1200px;
+  perspective-origin: center top;
+}
+
+.rolodex-card {
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+  animation: rolodexFlip 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+@keyframes rolodexFlip {
+  0% {
+    opacity: 0;
+    transform: rotateX(-40deg) translateY(-8px) scale(0.97);
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0) scale(1);
+  }
+}
+
+/* Hover: card lifts forward like pulling from the spindle */
+.rolodex-card.card-hover {
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+              border-color 0.3s ease;
+}
+.rolodex-card.card-hover:hover {
+  transform: rotateX(-2deg) translateY(-6px) scale(1.008);
+  box-shadow:
+    0 8px 24px rgba(139,34,48,0.12),
+    0 16px 48px rgba(0,0,0,0.08),
+    0 2px 8px rgba(212,162,74,0.06);
+  border-color: rgba(139,34,48,0.18);
+}
+
+/* Subtle depth layering — cards further down appear slightly recessed */
+.rolodex-card:nth-child(n+6) {
+  --card-depth: 0.998;
+}
+.rolodex-card:nth-child(n+12) {
+  --card-depth: 0.996;
+}
+
+/* Page transition: cards flip out then new ones flip in */
+@keyframes rolodexFlipOut {
+  0% {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: rotateX(30deg) translateY(6px) scale(0.97);
+  }
+}
+
+.rolodex-exit {
+  animation: rolodexFlipOut 0.25s cubic-bezier(0.55, 0, 1, 0.45) forwards;
+}
+
 /* ═══ ANIMATIONS ═══ */
 
 @keyframes fadeUp {

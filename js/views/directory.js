@@ -114,7 +114,7 @@ export function renderDirectory(state) {
       <span class="text-xs text-gray-400 ml-auto">Showing ${filtered.length} of ${alumni.length} alumni</span>
     </div>
 
-    <div class="space-y-3">${cards}</div>
+    <div class="rolodex space-y-3">${cards}</div>
     ${empty}
     ${pagination}
   `
@@ -147,7 +147,7 @@ function renderAlumniCard(a, index) {
     : ''
 
   return `
-    <button class="w-full card card-hover animate-fade-up" style="text-align:left;padding:20px;animation-delay:${index * 0.03}s;${liftStyle}" data-action="navigate" data-view="profile" data-id="${a.id}">
+    <button class="w-full card card-hover rolodex-card" style="text-align:left;padding:20px;animation-delay:${index * 0.05}s;${liftStyle}" data-action="navigate" data-view="profile" data-id="${a.id}">
       <div class="flex items-start gap-4">
         ${renderAvatar(a.name, 'md')}
         <div class="flex-1 min-w-0">
@@ -220,13 +220,22 @@ export function wireDirectoryEvents(state) {
     el.addEventListener('click', () => navigate(el.dataset.view, el.dataset.id))
   )
 
-  // Pagination
+  // Pagination with rolodex flip-out transition
+  const flipAndNavigate = (changePage) => {
+    const cards = document.querySelectorAll('.rolodex-card')
+    cards.forEach(c => {
+      c.classList.remove('rolodex-card')
+      c.classList.add('rolodex-exit')
+    })
+    setTimeout(() => { changePage(); forceRender() }, 200)
+  }
+
   const prevBtn = document.querySelector('[data-action="page-prev"]')
   const nextBtn = document.querySelector('[data-action="page-next"]')
-  if (prevBtn) prevBtn.addEventListener('click', () => { if (currentPage > 0) { currentPage--; forceRender() } })
+  if (prevBtn) prevBtn.addEventListener('click', () => { if (currentPage > 0) flipAndNavigate(() => currentPage--) })
   if (nextBtn) nextBtn.addEventListener('click', () => {
     const filtered = sortAlumni(filterAlumni(state.alumni, state.directoryFilters, state.directorySearch), state.directorySortBy)
     const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
-    if (currentPage < totalPages - 1) { currentPage++; forceRender() }
+    if (currentPage < totalPages - 1) flipAndNavigate(() => currentPage++)
   })
 }
