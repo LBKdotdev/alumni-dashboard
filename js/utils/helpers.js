@@ -242,3 +242,47 @@ export function getAllTags(alumniList) {
   const tags = new Set(alumniList.flatMap(a => a.tags))
   return [...tags].sort()
 }
+
+// ── CSV Export ──
+
+export function exportAlumniCSV(alumniList, filenamePrefix = 'alumni') {
+  const headers = ['Name','Credentials','Class Year','Campus','Specialty','Practice Name','City','State','Email','Phone','Engagement','Tags']
+  const engagementLabels = {
+    is_mentor: 'Mentor', is_donor: 'Donor', is_preceptor: 'Preceptor',
+    is_advisory_board: 'Advisory Board', attends_rcme_events: 'RCME',
+    attends_social_events: 'Social Events', is_soap_mentor: 'SOAP Mentor',
+    is_guest_speaker: 'Guest Speaker', is_champion: 'Champion'
+  }
+
+  const escapeCSV = (val) => {
+    const str = String(val ?? '')
+    return str.includes(',') || str.includes('"') || str.includes('\n')
+      ? '"' + str.replace(/"/g, '""') + '"'
+      : str
+  }
+
+  const rows = alumniList.map(a => {
+    const engagements = Object.entries(a.engagement || {})
+      .filter(([k, v]) => v === true && k !== 'is_vip')
+      .map(([k]) => engagementLabels[k] || k)
+      .join('; ')
+    const tags = (a.tags || []).join('; ')
+    return [
+      a.name, a.credentials, a.class_year, a.campus,
+      a.professional?.specialty, a.professional?.practice_name,
+      a.professional?.practice_city, a.professional?.practice_state,
+      a.contact?.email, a.contact?.phone,
+      engagements, tags
+    ].map(escapeCSV).join(',')
+  })
+
+  const csv = [headers.join(','), ...rows].join('\n')
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+  const url = URL.createObjectURL(blob)
+  const date = new Date().toISOString().slice(0, 10)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = `${filenamePrefix}-${date}.csv`
+  link.click()
+  URL.revokeObjectURL(url)
+}

@@ -3,7 +3,7 @@
 // Campaigns, events, initiatives — proactive work
 // ============================================================
 
-import { filterAlumni, sortAlumni, formatDate, getLastConnection, getEngagementCount } from '../utils/helpers.js'
+import { filterAlumni, sortAlumni, formatDate, getLastConnection, getEngagementCount, exportAlumniCSV } from '../utils/helpers.js'
 import { renderAvatar } from '../components.js'
 import { selectProject, clearProject, navigate, openOutreach, setAlumniInviteStatus } from '../state.js'
 
@@ -276,6 +276,9 @@ function renderAlumniTab(project, matched) {
       <select class="select" data-action="proj-enrich-filter" style="font-size:12px;border-color:rgba(168,85,247,0.3);color:#a855f7">${filterOpts}</select>
       <select class="select" data-action="proj-alumni-sort" style="font-size:12px">${sortOpts}</select>
       <span class="text-xs text-gray-400 ml-auto">Showing ${Math.min(alumniPageSize, sorted.length)} of ${sorted.length}</span>
+      <button class="btn btn-ghost btn-sm" data-action="proj-export-csv" style="margin-left:8px;font-size:11px;color:var(--green)">
+        <svg class="icon icon-sm" style="margin-right:4px"><use href="./css/icons.svg#download"></use></svg> CSV
+      </button>
     </div>`
 
   const cards = sorted.slice(0, alumniPageSize).map((a, i) => {
@@ -553,6 +556,18 @@ export function wireProjectsEvents(state) {
       selectProject(state.selectedProjectId)
     })
   })
+
+  // Detail: CSV export
+  const projCsvBtn = document.querySelector('[data-action="proj-export-csv"]')
+  if (projCsvBtn) {
+    projCsvBtn.addEventListener('click', () => {
+      const project = state.projects.find(p => p.id === state.selectedProjectId)
+      if (!project) return
+      const matched = filterAlumni(state.alumni, project.filter)
+      const slug = (project.name || 'project').toLowerCase().replace(/[^a-z0-9]+/g, '-')
+      exportAlumniCSV(matched, slug)
+    })
+  }
 
   // Detail: draft outreach from project template
   document.querySelectorAll('[data-action="proj-draft-outreach"]').forEach(el => {

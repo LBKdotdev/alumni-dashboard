@@ -5,7 +5,8 @@
 
 import {
   filterAlumni, sortAlumni, getLastConnection, formatDate,
-  getEngagementCount, getAllSpecialties, getAllTags, sanitizeNotable
+  getEngagementCount, getAllSpecialties, getAllTags, sanitizeNotable,
+  exportAlumniCSV
 } from '../utils/helpers.js'
 import { renderAvatar, renderVIPBadge, renderEngagementBadge, renderCampusToggle } from '../components.js'
 import {
@@ -112,6 +113,9 @@ export function renderDirectory(state) {
       <select class="select" data-action="filter-enrichment" style="border-color:rgba(168,85,247,0.3);color:#a855f7">${enrichOpts}</select>
       <select class="select" data-action="sort-by">${sortOpts}</select>
       <span class="text-xs text-gray-400 ml-auto">Showing ${filtered.length} of ${alumni.length} alumni</span>
+      <button class="btn btn-ghost btn-sm" data-action="export-csv" style="margin-left:8px;font-size:11px;color:var(--green)">
+        <svg class="icon icon-sm" style="margin-right:4px"><use href="./css/icons.svg#download"></use></svg> CSV
+      </button>
     </div>
 
     <div class="rolodex space-y-3">${cards}</div>
@@ -212,6 +216,15 @@ export function wireDirectoryEvents(state) {
   // Sort
   const sortEl = document.querySelector('[data-action="sort-by"]')
   if (sortEl) sortEl.addEventListener('change', () => { currentPage = 0; setDirectorySort(sortEl.value) })
+
+  // CSV export
+  const csvBtn = document.querySelector('[data-action="export-csv"]')
+  if (csvBtn) {
+    csvBtn.addEventListener('click', () => {
+      const filtered = sortAlumni(filterAlumni(state.alumni, state.directoryFilters, state.directorySearch), state.directorySortBy)
+      exportAlumniCSV(filtered, 'alumni')
+    })
+  }
 
   // Navigate to profile
   document.querySelectorAll('[data-action="navigate"]').forEach(el =>
