@@ -44,10 +44,10 @@
 
 ## Board 5: Last Mile — Email, Data, Polish (19 pts)
 ### Ready
-- {Lisa's personal notes, add to, 3 alumni profiles} · 3 · ~A
 - {outreach activity stats, add to, dashboard view} · 3 · ~A
 - {Rolodex and sidebar, test across, desktop and mobile} · 3 · ~T
 ### In Progress
 ### Done
 - {mailto: send button, add to, outreach panel} · 5 · ~A ✅
 - {CSV export, add to, directory and projects views} · 5 · ~A ✅
+- {Lisa's personal notes, add to, 3 alumni profiles} · 3 · ~A ✅
