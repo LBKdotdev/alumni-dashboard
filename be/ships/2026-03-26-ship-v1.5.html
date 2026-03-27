@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~S: Ship v1.5 — PubMed Sanitization + Language Cleanup</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.6; }
+  .version { display: inline-block; background: #6FC3DF; color: #111; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 4px; margin-bottom: 16px; }
+  .commit { font-family: monospace; font-size: 12px; color: #6FC3DF; }
+  .commit-msg { color: #ccc; margin-left: 8px; }
+  .stat { display: inline-block; background: #222; border-radius: 6px; padding: 6px 14px; margin: 4px; font-size: 13px; }
+  .stat strong { color: #6FC3DF; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report</span>
+</nav>
+<div class="container">
+  <span class="version">v1.5</span>
+  <h1>~S: PubMed Sanitization + Language Cleanup</h1>
+  <p class="subtitle">Trust layer hardened. All three review fixes resolved.</p>
+
+  <h2>What Shipped</h2>
+  <div class="card">
+    <h3>PubMed Count Sanitization</h3>
+    <p>5,795 inflated publication counts (median: 336, max: 350,828) replaced with "Published researcher (PubMed-indexed)" at the rendering layer. Zero misleading numbers visible to end users. Raw data preserved for future author disambiguation.</p>
+  </div>
+  <div class="card">
+    <h3>Practice Intelligence Layer</h3>
+    <p>Renamed "Data Enrichment / Apify Pipeline" and "scraping" language to "Practice Intelligence Layer" throughout. Dashboard, profile, and directory all use professional framing. No developer jargon visible to Lisa or the board.</p>
+  </div>
+  <div class="card">
+    <h3>SOAP Card Cleanup</h3>
+    <p>Removed "I was in your shoes three years ago" blockquote from the SOAP impact card. Direct meeting transcription quotes removed from prototype UI. Emotional weight of the card preserved through stats and named mentors.</p>
+  </div>
+
+  <h2>Review Fix Scorecard</h2>
+  <div class="card">
+    <div class="stat"><strong>Fix #1</strong> PubMed counts — RESOLVED</div>
+    <div class="stat"><strong>Fix #2</strong> Projects positioning — RESOLVED (v1.3)</div>
+    <div class="stat"><strong>Fix #3</strong> Outreach formatting — RESOLVED (v1.3)</div>
+    <p style="margin-top:12px"><strong>3 / 3 review fixes shipped.</strong> Prototype Review document updated to reflect all changes.</p>
+  </div>
+
+  <h2>Commits Included</h2>
+  <div class="card">
+    <p><span class="commit">c2798d1</span><span class="commit-msg">~D: remove meeting transcription quote from SOAP card</span></p>
+    <p style="margin-top:6px"><span class="commit">56a6325</span><span class="commit-msg">~U: rename to Practice Intelligence Layer</span></p>
+    <p style="margin-top:6px"><span class="commit">0426d70</span><span class="commit-msg">~U: sanitize PubMed counts — qualitative labels</span></p>
+    <p style="margin-top:6px"><span class="commit">16dd7bf</span><span class="commit-msg">~U: PubMed sanitize build report + index</span></p>
+    <p style="margin-top:6px"><span class="commit">737339f</span><span class="commit-msg">~T: QA pass — PubMed sanitization verified</span></p>
+  </div>
+
+  <h2>Cumulative Ship Summary (v1.0 — v1.5)</h2>
+  <div class="card">
+    <div class="stat"><strong>v1.0</strong> 4 boards, 73 pts, zero bugs</div>
+    <div class="stat"><strong>v1.1</strong> Dr. Warren's voice</div>
+    <div class="stat"><strong>v1.2</strong> Dean vs Staff checklists</div>
+    <div class="stat"><strong>v1.3</strong> Enrichment + dash-free drafts</div>
+    <div class="stat"><strong>v1.4</strong> Visual overhaul + login gate + mission briefing</div>
+    <div class="stat"><strong>v1.5</strong> PubMed sanitization + language cleanup</div>
+  </div>
+
+  <h2>Deploy Target</h2>
+  <div class="card">
+    <p><strong>GitHub Pages:</strong> lbkdotdev.github.io/alumni-dashboard</p>
+    <p style="margin-top:4px"><strong>Branch:</strong> main</p>
+    <p style="margin-top:4px"><strong>Status:</strong> Pushed. All commits on origin/main.</p>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
