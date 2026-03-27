@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~R: Retro — Alumni Relationship Engine v1.0 through v1.7</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.7; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 40px; }
+  h2 { color: #6FC3DF; font-size: 20px; font-weight: 700; margin: 40px 0 20px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 24px; margin-bottom: 14px; border-left: 3px solid #333; }
+  .card.good { border-left-color: #4ade80; }
+  .card.better { border-left-color: #f59e0b; }
+  .card.commit { border-left-color: #6FC3DF; }
+  .card h3 { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.7; }
+  .card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .card.good .card-label { color: #4ade80; }
+  .card.better .card-label { color: #f59e0b; }
+  .card.commit .card-label { color: #6FC3DF; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+  .stat-box { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; flex: 1; min-width: 140px; text-align: center; }
+  .stat-num { font-size: 32px; font-weight: 800; color: #6FC3DF; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+  .timeline { margin: 20px 0; }
+  .tl-row { display: flex; gap: 16px; padding: 10px 0; border-bottom: 1px solid #1A1A1A; }
+  .tl-ver { font-size: 13px; font-weight: 700; color: #6FC3DF; min-width: 40px; }
+  .tl-desc { font-size: 13px; color: #999; flex: 1; }
+  .tl-pts { font-size: 12px; color: #555; min-width: 60px; text-align: right; }
+
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+
+  @media (max-width: 640px) {
+    .container { padding: 20px 16px 60px; }
+    h1 { font-size: 22px; }
+    .stats { flex-direction: column; }
+    .stat-box { min-width: auto; }
+  }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Retro</span>
+</nav>
+<div class="container">
+
+  <h1>Retro: Alumni Relationship Engine</h1>
+  <p class="subtitle">v1.0 through v1.7 &mdash; One day of work. Everything that happened, what went well, what could be better, and commitments forward.</p>
+
+  <!-- ═══ BY THE NUMBERS ═══ -->
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Versions Shipped</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">58</div>
+      <div class="stat-label">Commits</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">30</div>
+      <div class="stat-label">Be Artifacts</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">6,282</div>
+      <div class="stat-label">Alumni Records</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Open Bugs</div>
+    </div>
+  </div>
+
+  <!-- ═══ WHAT HAPPENED ═══ -->
+  <h2>What Happened</h2>
+
+  <div class="timeline">
+    <div class="tl-row">
+      <span class="tl-ver">v1.0</span>
+      <span class="tl-desc">Full vanilla JS rewrite from React prototype. 4 boards, 19 items, 73 story points. Projects tab, visual hierarchy, tracking, polish. Queue, Directory, Dashboard, Profiles, Outreach panel. 6,282 real NPI records, PubMed timelines, SOAP story.</span>
+      <span class="tl-pts">73 pts</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-ver">v1.1</span>
+      <span class="tl-desc">Dr. Warren's voice applied to all 8 trigger outreach drafts. Warm, specific, low-friction. "Hi Dr. Konecny" not "Dear Alumni."</span>
+      <span class="tl-pts">voice</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-ver">v1.2</span>
+      <span class="tl-desc">Dean vs. Staff checklists with role-based grouping. Lisa sees her tasks, staff see theirs.</span>
+      <span class="tl-pts">roles</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-ver">v1.3</span>
+      <span class="tl-desc">Apify enrichment pipeline: 100 alumni enriched, 34 emails, 54 websites, Google ratings. Dash-free outreach drafts. Enrichment filter/sort/badges in Projects and Directory.</span>
+      <span class="tl-pts">data</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-ver">v1.4</span>
+      <span class="tl-desc">Visual overhaul: dark sidebar, burgundy gradients, gold accents, card hover shadows, dark mobile nav. Login gate (code: 2001) with mobile keypad and desktop text input. Mission briefing banner replacing static greeting.</span>
+      <span class="tl-pts">UX</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-ver">v1.5</span>
+      <span class="tl-desc">PubMed publication counts sanitized (350K inflated counts replaced with qualitative labels). "Practice Intelligence Layer" renamed from "scraping/pipeline." SOAP meeting transcription quote removed.</span>
+      <span class="tl-pts">trust</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-ver">v1.6</span>
+      <span class="tl-desc">Rolodex card animation: 3D flip-in, hover lift, page flip transitions. Prototype review document rebuilt in Be style for Joey. Backup tag v1.5-stable pushed.</span>
+      <span class="tl-pts">polish</span>
+    </div>
+    <div class="tl-row">
+      <span class="tl-ver">v1.7</span>
+      <span class="tl-desc">Deep burgundy sidebar. Navigation surface shifted from cold gray to warm brand-aligned burgundy. Mobile nav matched.</span>
+      <span class="tl-pts">brand</span>
+    </div>
+  </div>
+
+  <!-- ═══ WHAT WENT WELL ═══ -->
+  <h2>What Went Well</h2>
+
+  <div class="card good">
+    <div class="card-label">Went Well</div>
+    <h3>Speed without chaos</h3>
+    <p>7 versions in one day. Every version shipped clean — committed, pushed, build report written, index updated. No regressions. No rollbacks needed. The Be chain reaction (work, review, report, index, commit, push) prevented the usual "fast = sloppy" trap. Structure enabled speed, didn't slow it down.</p>
+  </div>
+
+  <div class="card good">
+    <div class="card-label">Went Well</div>
+    <h3>Catching the creep factor early</h3>
+    <p>The meeting transcription quotes ("Good morning, Dr. Warren" greeting, "I was in your shoes" SOAP quote) could have shipped to Lisa and felt invasive. Flagged early, replaced with something better (mission briefing, stats-only SOAP card). The instinct to ask "would this feel creepy?" saved the demo.</p>
+  </div>
+
+  <div class="card good">
+    <div class="card-label">Went Well</div>
+    <h3>Developer language audit</h3>
+    <p>"Scraping" and "Apify Pipeline" would have undermined trust instantly. Renaming to "Practice Intelligence Layer" reframes a technical capability as a product feature. Same data, completely different perception. This kind of naming discipline is the difference between a prototype and a product.</p>
+  </div>
+
+  <div class="card good">
+    <div class="card-label">Went Well</div>
+    <h3>The PubMed fix was surgical</h3>
+    <p>5,795 inflated publication counts fixed at the rendering layer with one function. Data preserved for future disambiguation. Zero trust risk. The decision to go qualitative ("Published researcher") instead of capped ("Published ~50 papers") was the right call — even low counts are suspect with common names.</p>
+  </div>
+
+  <div class="card good">
+    <div class="card-label">Went Well</div>
+    <h3>Design instincts leveled up the product</h3>
+    <p>The Rolodex animation, deep burgundy sidebar, and login gate weren't in any spec. They came from creative conversation. Each one made the prototype feel more intentional, more owned, more "this was built for us." The NaciLink branding conversation is the natural next step — the product is earning a name.</p>
+  </div>
+
+  <!-- ═══ WHAT COULD BE BETTER ═══ -->
+  <h2>What Could Be Better</h2>
+
+  <div class="card better">
+    <div class="card-label">Improve</div>
+    <h3>PubMed counts should have been caught in v1.0</h3>
+    <p>The inflated publication numbers (350,828 papers for one person) were in the data from day one. They survived 4 boards, 5 QA passes, and 4 ship cycles before being flagged in the review document. The QA passes tested functionality (does the card render?) but not data sanity (does the number make sense?). Future QA should include a "would Lisa believe this?" smell test on displayed data.</p>
+  </div>
+
+  <div class="card better">
+    <div class="card-label">Improve</div>
+    <h3>The review document should have existed earlier</h3>
+    <p>The prototype review (12 categories, checklists, fixes) was written after v1.4. It should have been the FIRST artifact — grade against the meeting brief, then build. Instead, the review retroactively validated work that was already done. Building the scorecard first would have caught the PubMed issue, the developer language, and the meeting quote sensitivity before they shipped.</p>
+  </div>
+
+  <div class="card better">
+    <div class="card-label">Improve</div>
+    <h3>Versioning cadence was too fast for meaningful QA</h3>
+    <p>Seven versions in one day means each version got minimal soak time. The ship cycle worked (nothing broke), but there was no space for "live with it for a day and see what feels wrong." The burgundy sidebar, for example, shipped and immediately felt right — but the Rolodex animation hasn't had real user feedback yet. Consider batching cosmetic refinements into fewer, more deliberate releases.</p>
+  </div>
+
+  <div class="card better">
+    <div class="card-label">Improve</div>
+    <h3>The "wow moment" suggestion is still unbuilt</h3>
+    <p>Pre-populating Lisa's actual handwritten notes into a profile was identified as the single highest-impact demo moment. It's been in the review doc since v1.5 and still hasn't been implemented. It's a 5-minute task that changes the entire emotional register of the demo. Should have been prioritized over cosmetic work.</p>
+  </div>
+
+  <!-- ═══ COMMITMENTS ═══ -->
+  <h2>Commitments</h2>
+
+  <div class="card commit">
+    <div class="card-label">Commitment #1</div>
+    <h3>Build the "wow moment" before the next demo</h3>
+    <p>Pre-populate 1-2 profiles with Lisa's actual words from the meeting transcript. Date and attribute to "Lisa Warren." This is the single highest-ROI task remaining.</p>
+  </div>
+
+  <div class="card commit">
+    <div class="card-label">Commitment #2</div>
+    <h3>QA includes a "would Lisa believe this?" data pass</h3>
+    <p>Every QA cycle should include a sanity check on displayed numbers, names, and language. Not just "does it render" but "does it make sense to a non-technical dean." The PubMed lesson applies broadly.</p>
+  </div>
+
+  <div class="card commit">
+    <div class="card-label">Commitment #3</div>
+    <h3>Grade before you build</h3>
+    <p>Next project: write the review scorecard FIRST, against the discovery meeting brief. Then build to the scorecard. This inverts the current flow (build, then validate) into a tighter loop (define success, then build to it).</p>
+  </div>
+
+  <div class="card commit">
+    <div class="card-label">Commitment #4</div>
+    <h3>NaciLink branding decision</h3>
+    <p>The product is earning a name. Decide on NaciLink (or alternative), source a clean Vitruvian Man image (public domain, not Google watermark), and integrate the brand into the login gate, nav, and favicon. This turns "the prototype" into a product with identity.</p>
+  </div>
+
+  <!-- ═══ ARTIFACT INDEX ═══ -->
+  <h2>Artifacts Generated Today</h2>
+
+  <div class="card">
+    <h3>5 Plans</h3>
+    <p>Projects + Visual Overhaul plan, 4-board estimate, Joey checklist, Vegas alumni list, Prototype review (v1.5)</p>
+  </div>
+  <div class="card">
+    <h3>12 Builds</h3>
+    <p>Boards 1-4, voice update, checklist roles, Apify enrichment, enrichment in Projects, mission briefing, login gate, PubMed sanitize, Rolodex cards</p>
+  </div>
+  <div class="card">
+    <h3>5 Test Passes</h3>
+    <p>QA bugfixes, voice + imports, checklist roles, enrichment + projects, PubMed sanitization</p>
+  </div>
+  <div class="card">
+    <h3>8 Ships</h3>
+    <p>v1.0 through v1.7. Zero rollbacks. Zero regressions.</p>
+  </div>
+
+  <div class="footer">
+    <p>First retro for Alumni Relationship Engine. Covers all Be artifacts from March 26, 2026.</p>
+    <p style="margin-top:8px;color:#444">Generated 2026-03-26 &mdash; Be / Alumni Relationship Engine</p>
+  </div>
+
+</div>
+</body>
+</html>
