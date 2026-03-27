@@ -3,7 +3,7 @@
 // Stat cards, Chart.js bar + pie charts, campus comparison, SOAP
 // ============================================================
 
-import { getEngagementCount } from '../utils/helpers.js'
+import { getEngagementCount, getLastConnection } from '../utils/helpers.js'
 import { renderCampusToggle, renderSOAPCard } from '../components.js'
 import { setDashboardCampus, navigate } from '../state.js'
 import { registerChart } from '../app.js'
@@ -89,6 +89,8 @@ export function renderDashboard(state) {
         </div>
       </div>
     </div>` : ''}
+
+    ${renderOutreachStats(filtered)}
 
     ${filtered.length > 0 ? `
     <!-- Charts -->
@@ -177,6 +179,58 @@ function renderCampusCardPending(name, estimated, corridor, founded) {
       <div class="text-xs text-gray-400" style="padding-top:8px;text-align:center;font-style:italic">Data pending — awaiting graduate list</div>
     </div>
   </div>`
+}
+
+// ── Outreach Activity Stats ──
+
+function renderOutreachStats(filtered) {
+  let notesCount = 0
+  let outreachCount = 0
+  let touchedSet = new Set()
+  let lastDate = null
+
+  filtered.forEach(a => {
+    // Count notes
+    if (a.notes?.length) {
+      notesCount += a.notes.length
+      touchedSet.add(a.id)
+      a.notes.forEach(n => {
+        if (!lastDate || n.date > lastDate) lastDate = n.date
+      })
+    }
+    // Count outreach touchpoints (manual or outreach_engine)
+    if (a.touchpoints?.length) {
+      a.touchpoints.forEach(tp => {
+        if (tp.source === 'manual' || tp.source === 'outreach_engine' || tp.type === 'outreach' || tp.type === 'note') {
+          outreachCount++
+          touchedSet.add(a.id)
+          if (!lastDate || tp.date > lastDate) lastDate = tp.date
+        }
+      })
+    }
+  })
+
+  if (notesCount === 0 && outreachCount === 0) return ''
+
+  const lastActivity = lastDate
+    ? new Date(lastDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    : '—'
+
+  return `
+    <div class="card" style="padding:20px 24px;margin-bottom:24px;border-left:3px solid var(--gold)">
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-bold" style="color:var(--gold)">Outreach Activity</h3>
+          <p class="text-xs text-gray-400">Notes, calls, and emails tracked by the alumni team</p>
+        </div>
+        <div class="flex gap-6 text-sm">
+          <div class="text-center"><span class="text-lg font-bold" style="color:var(--gold)">${notesCount}</span><br><span class="text-xs text-gray-400">Notes</span></div>
+          <div class="text-center"><span class="text-lg font-bold" style="color:var(--burgundy)">${outreachCount}</span><br><span class="text-xs text-gray-400">Touchpoints</span></div>
+          <div class="text-center"><span class="text-lg font-bold" style="color:var(--teal)">${touchedSet.size}</span><br><span class="text-xs text-gray-400">Alumni Touched</span></div>
+          <div class="text-center"><span class="text-lg font-bold" style="color:var(--gray-600)">${lastActivity}</span><br><span class="text-xs text-gray-400">Last Activity</span></div>
+        </div>
+      </div>
+    </div>`
 }
 
 // ── Chart Creation (called from wireEvents after DOM render) ──
