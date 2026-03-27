@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~T: QA Pass — PubMed Sanitization</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.6; }
+  .pass { border-left: 3px solid #2d8a4e; }
+  .pass h3::before { content: "\2713 "; color: #2d8a4e; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+  code { background: #222; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #6FC3DF; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Test Report</span>
+</nav>
+<div class="container">
+  <h1>~T: QA Pass — PubMed Sanitization</h1>
+  <p class="subtitle">All render paths verified, regex matches all data patterns, no edge cases found</p>
+
+  <h2>What Was Tested</h2>
+
+  <div class="card pass">
+    <h3>Regex matches all data formats</h3>
+    <p>Verified against actual alumni.json data. Pattern <code>/Published [\d,]+ peer-reviewed paper\(s\) \(PubMed\)/</code> matches: single-digit counts (1), hundreds (744), thousands with commas (19,608), and six-figure counts (350,828). All 5,795 PubMed notables follow this exact format.</p>
+  </div>
+
+  <div class="card pass">
+    <h3>Directory view applies sanitization</h3>
+    <p>directory.js line 139: <code>sanitizeNotable(a.notables[0])</code> wraps the first notable on every card. Import present on line 8. Only displays when notables exist (guarded by length check).</p>
+  </div>
+
+  <div class="card pass">
+    <h3>Profile view applies sanitization</h3>
+    <p>profile.js line 159: <code>sanitizeNotable(n)</code> applied in the <code>.map()</code> over all notables. Import present on line 7. Covers all notables, not just the first.</p>
+  </div>
+
+  <div class="card pass">
+    <h3>No other render points missed</h3>
+    <p>Searched queue.js, projects.js, dashboard.js, components.js for notable references. None found. Directory and profile are the only two places notables render to HTML.</p>
+  </div>
+
+  <div class="card pass">
+    <h3>Non-PubMed notables pass through unchanged</h3>
+    <p><code>sanitizeNotable()</code> uses <code>.replace()</code> with the specific PubMed pattern. Any notable that doesn't match (e.g., "Board Certified in 3 Specialties") passes through untouched.</p>
+  </div>
+
+  <div class="card pass">
+    <h3>No edge case data formats</h3>
+    <p>Scanned all notable strings in alumni.json. Only one PubMed format exists: "Published X peer-reviewed paper(s) (PubMed)". No variants (different journal names, different plural forms, missing parentheses). The regex is comprehensive for the actual data.</p>
+  </div>
+
+  <h2>Results</h2>
+  <div class="card">
+    <p><strong>6 / 6 checks passed.</strong> Zero issues found. The PubMed sanitization is clean, complete, and covers all render paths.</p>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-26 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
