@@ -4,7 +4,7 @@
 // outreach history, data provenance
 // ============================================================
 
-import { formatDate, getLastConnection, getCampusLabel, daysOverdue } from '../utils/helpers.js'
+import { formatDate, getLastConnection, getCampusLabel, daysOverdue, sanitizeNotable } from '../utils/helpers.js'
 import {
   renderAvatar, renderVIPBadge, renderEngagementBadge, renderTagBadge,
   renderStatusDot, renderFerpaNotice, engagementConfig
@@ -156,7 +156,7 @@ export function renderProfile(alumni, state) {
 
         ${(alumni.notables?.length || 0) > 0
           ? `<ul class="space-y-2">${alumni.notables.map(n =>
-              `<li class="flex items-start gap-2 text-sm text-gray-600"><span style="color:var(--gold);margin-top:4px">&bull;</span> ${n}</li>`
+              `<li class="flex items-start gap-2 text-sm text-gray-600"><span style="color:var(--gold);margin-top:4px">&bull;</span> ${sanitizeNotable(n)}</li>`
             ).join('')}</ul>`
           : !addingNotable ? `<p class="text-sm text-gray-400" style="font-style:italic">No notables on record yet</p>` : ''}
       </div>

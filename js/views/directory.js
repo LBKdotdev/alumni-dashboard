@@ -5,7 +5,7 @@
 
 import {
   filterAlumni, sortAlumni, getLastConnection, formatDate,
-  getEngagementCount, getAllSpecialties, getAllTags
+  getEngagementCount, getAllSpecialties, getAllTags, sanitizeNotable
 } from '../utils/helpers.js'
 import { renderAvatar, renderVIPBadge, renderEngagementBadge, renderCampusToggle } from '../components.js'
 import {
@@ -136,7 +136,7 @@ function renderAlumniCard(a, index) {
 
   const isNotable = a.notables.length > 0 || a.engagement.is_vip
   const notable = a.notables.length > 0
-    ? `<p class="text-xs text-gray-500 mb-1"><span class="font-semibold text-gray-600">Notable:</span> ${a.notables[0]}</p>` : ''
+    ? `<p class="text-xs text-gray-500 mb-1"><span class="font-semibold text-gray-600">Notable:</span> ${sanitizeNotable(a.notables[0])}</p>` : ''
 
   const touchpoint = lastConn
     ? `Connected: ${formatDate(lastConn.date)} — ${lastConn.title}`

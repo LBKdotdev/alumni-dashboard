@@ -185,6 +185,15 @@ export function sortAlumni(alumniList, sortBy) {
   }
 }
 
+export function sanitizeNotable(text) {
+  // PubMed counts are name-search results, not authored papers.
+  // Replace "Published 7,896 peer-reviewed paper(s) (PubMed)" with qualitative label.
+  return text.replace(
+    /Published [\d,]+ peer-reviewed paper\(s\) \(PubMed\)/,
+    'Published researcher (PubMed-indexed)'
+  )
+}
+
 export function getCampusLabel(campus) {
   switch (campus) {
     case 'pomona': return 'COMP (Pomona)'
