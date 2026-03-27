@@ -142,12 +142,10 @@ function renderAlumniCard(a, index) {
     ? `Connected: ${formatDate(lastConn.date)} — ${lastConn.title}`
     : 'No connection yet'
 
-  const liftStyle = isNotable
-    ? 'box-shadow:0 2px 8px rgba(212,162,74,0.12),0 1px 3px rgba(0,0,0,0.06);border:1px solid rgba(212,162,74,0.18);'
-    : ''
+  const notableClass = isNotable ? ' rolodex-notable' : ''
 
   return `
-    <button class="w-full card card-hover rolodex-card" style="text-align:left;padding:20px;animation-delay:${index * 0.05}s;${liftStyle}" data-action="navigate" data-view="profile" data-id="${a.id}">
+    <button class="w-full card card-hover rolodex-card${notableClass}" style="text-align:left;padding:20px;animation-delay:${index * 0.05}s" data-action="navigate" data-view="profile" data-id="${a.id}">
       <div class="flex items-start gap-4">
         ${renderAvatar(a.name, 'md')}
         <div class="flex-1 min-w-0">

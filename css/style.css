@@ -8,7 +8,7 @@
   /* Brand Colors */
   --burgundy: #8b2230;
   --burgundy-dark: #58001b;
-  --burgundy-deep: #2d1118;
+  --burgundy-deep: #3a1520;
   --burgundy-mid: #6e1a26;
   --burgundy-soft: rgba(139, 34, 48, 0.07);
   --burgundy-glow: rgba(139, 34, 48, 0.12);
@@ -327,7 +327,7 @@ a:hover { text-decoration: underline; }
   position: fixed;
   left: 0; top: 0; bottom: 0;
   width: var(--sidebar-width);
-  background: linear-gradient(180deg, var(--burgundy-deep) 0%, #1e0c12 100%);
+  background: linear-gradient(180deg, var(--burgundy-deep) 0%, #2a1018 100%);
   border-right: 1px solid rgba(139,34,48,0.2);
   flex-direction: column;
   z-index: 40;
@@ -891,19 +891,35 @@ a:hover { text-decoration: underline; }
   animation: rolodexFlip 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   opacity: 0;
   will-change: transform, opacity;
-  /* Persistent Rolodex look: slight 3D tilt + layered shadow at rest */
-  border-left: 4px solid var(--burgundy);
+  /* Persistent Rolodex look: thick left tab + layered stacked-card shadow */
+  border-left: 4px solid var(--burgundy) !important;
   box-shadow:
     0 2px 4px rgba(0,0,0,0.04),
     4px 4px 0 -2px var(--surface-raised),
     5px 5px 0 -2px rgba(139,34,48,0.08),
     8px 8px 0 -4px var(--surface-raised),
-    9px 9px 0 -4px rgba(139,34,48,0.05);
+    9px 9px 0 -4px rgba(139,34,48,0.05) !important;
 }
 
 /* Alternating tab accent — like colored index dividers */
 .rolodex-card:nth-child(even) {
-  border-left-color: var(--gold);
+  border-left-color: var(--gold) !important;
+}
+
+/* Notable alumni get a warm gold glow on top of Rolodex styling */
+.rolodex-notable {
+  border-color: rgba(212,162,74,0.25) !important;
+  border-left: 4px solid var(--burgundy) !important;
+  box-shadow:
+    0 2px 8px rgba(212,162,74,0.12),
+    0 1px 3px rgba(0,0,0,0.06),
+    4px 4px 0 -2px var(--surface-raised),
+    5px 5px 0 -2px rgba(139,34,48,0.08),
+    8px 8px 0 -4px var(--surface-raised),
+    9px 9px 0 -4px rgba(139,34,48,0.05) !important;
+}
+.rolodex-notable:nth-child(even) {
+  border-left-color: var(--gold) !important;
 }
 
 @keyframes rolodexFlip {
