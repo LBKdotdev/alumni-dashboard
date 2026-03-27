@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision Brief: Making It Real — Persistence &amp; Production Readiness</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; line-height: 1.3; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 40px; }
+  h2 { color: #6FC3DF; font-size: 20px; font-weight: 700; margin: 44px 0 20px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+
+  /* Status banner */
+  .status-banner { background: linear-gradient(135deg, #1a1a2e 0%, #111 100%); border: 2px solid #f59e0b; border-radius: 12px; padding: 32px; margin-bottom: 40px; }
+  .status-banner .label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #f59e0b; margin-bottom: 12px; }
+  .status-banner h2 { color: #fff; font-size: 22px; font-weight: 800; margin: 0 0 12px; padding: 0; border: none; }
+  .status-banner p { color: #999; font-size: 14px; line-height: 1.7; }
+
+  /* Cards */
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 24px; margin-bottom: 14px; border-left: 3px solid #333; }
+  .card.blue { border-left-color: #6FC3DF; }
+  .card.red { border-left-color: #ef4444; }
+  .card.green { border-left-color: #4ade80; }
+  .card.gold { border-left-color: #f59e0b; }
+  .card.purple { border-left-color: #a855f7; }
+  .card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .card.blue .card-label { color: #6FC3DF; }
+  .card.red .card-label { color: #ef4444; }
+  .card.green .card-label { color: #4ade80; }
+  .card.gold .card-label { color: #f59e0b; }
+  .card.purple .card-label { color: #a855f7; }
+  .card h3 { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.7; }
+  .card p + p { margin-top: 10px; }
+  .card strong { color: #fff; }
+  .card code { background: #222; padding: 2px 6px; border-radius: 4px; color: #6FC3DF; font-size: 12px; }
+
+  /* Comparison table */
+  .compare { width: 100%; border-collapse: separate; border-spacing: 0; background: #1A1A1A; border-radius: 12px; overflow: hidden; border: 1px solid #2A2A2A; margin-bottom: 24px; }
+  .compare thead th { background: #000; color: #6FC3DF; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; padding: 14px 16px; text-align: left; border-bottom: 1px solid #2A2A2A; }
+  .compare tbody td { padding: 14px 16px; font-size: 13px; color: #999; border-bottom: 1px solid #1e1e1e; vertical-align: top; }
+  .compare tbody td:first-child { color: #fff; font-weight: 600; white-space: nowrap; }
+  .compare tbody tr:last-child td { border-bottom: none; }
+  .compare .rec { background: rgba(111,195,223,0.06); }
+  .compare .rec td { color: #ccc; }
+  .yes { color: #4ade80; font-weight: 600; }
+  .no { color: #ef4444; font-weight: 600; }
+  .partial { color: #f59e0b; font-weight: 600; }
+  .highlight { color: #6FC3DF; font-weight: 600; }
+
+  /* Diagram */
+  .diagram { background: #0a0a0a; border: 1px solid #2A2A2A; border-radius: 12px; padding: 32px; margin: 20px 0 24px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; line-height: 2; color: #888; text-align: center; }
+  .diagram .arrow { color: #6FC3DF; }
+  .diagram .node { color: #fff; font-weight: 600; }
+  .diagram .db { color: #4ade80; font-weight: 600; }
+  .diagram .label { color: #f59e0b; font-size: 11px; }
+
+  /* Bottom line */
+  .bottom-line { background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #111 100%); border: 2px solid #6FC3DF; border-radius: 12px; padding: 40px 32px; margin-top: 40px; text-align: center; }
+  .bottom-line h2 { color: #6FC3DF; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin: 0 0 16px; padding: 0; border: none; }
+  .bottom-line p { color: #999; font-size: 14px; max-width: 640px; margin: 0 auto; line-height: 1.8; }
+  .bottom-line p strong { color: #fff; }
+
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Decision Brief</span>
+</nav>
+<div class="container">
+
+  <h1>Making It Real</h1>
+  <p class="subtitle">A decision document for Joey. Where we are, what's missing, and what it takes to put this in Lisa's hands for real.</p>
+
+  <!-- ═══ THE SITUATION ═══ -->
+  <div class="status-banner">
+    <div class="label">Current Reality</div>
+    <h2>The prototype is exceptional. But it's a prototype.</h2>
+    <p>Everything Lisa does in the app &mdash; adding notes, toggling engagement, dismissing triggers, marking outreach as sent, checking off project tasks &mdash; lives in browser memory only. <strong style="color:#fff">Refresh the page and it's all gone.</strong> The outreach drafts are beautifully written but end at "Copy to Clipboard." There is no backend. There is no database. It's a static website hosted on GitHub Pages.</p>
+  </div>
+
+  <!-- ═══ WHAT WORKS ═══ -->
+  <h2>What We Built (and it's genuinely good)</h2>
+
+  <div class="card green">
+    <div class="card-label">Delivered</div>
+    <h3>The product Lisa described in the meeting &mdash; built.</h3>
+    <p><strong>Trigger Queue:</strong> 8 trigger types (practice moves, new credentials, publications, overdue follow-ups, milestones, reengagement, SOAP prep, achievements). Dynamic mission briefing banner. Priority sorting. Campus filtering. Dismiss + archive. This is the killer feature &mdash; no alumni CRM does this.</p>
+    <p><strong>6,282 Real Alumni Records:</strong> NPI-matched, PubMed publications, 100 enriched with emails/websites/Google ratings. Search "Las Vegas" and get 109 results with practice names and contact info.</p>
+    <p><strong>Lisa's Voice:</strong> All outreach drafts written in her tone. "Hi Dr. Konecny" not "Dear Alumni." Warm, specific, trigger-referenced. Dash-free. Every draft reads like Lisa wrote it.</p>
+    <p><strong>Projects:</strong> AACOM Vegas with 168 Nevada alumni, Dean vs. Staff checklists, outreach templates with name personalization, intel briefs.</p>
+    <p><strong>Compliance:</strong> FERPA notice, "Human reviews and sends" badge, data provenance on every profile, PIN-gated access, "Prototype" labeling, session-only auth.</p>
+    <p><strong>Visual Design:</strong> WesternU brand-aligned (burgundy/gold/cream), dark sidebar, Rolodex card animation, mission briefing hero, login gate with mobile keypad. Institutional, not startup.</p>
+  </div>
+
+  <!-- ═══ WHAT DOESN'T WORK ═══ -->
+  <h2>What Doesn't Work Yet</h2>
+
+  <div class="card red">
+    <div class="card-label">Gap #1 &mdash; Critical</div>
+    <h3>Nothing saves.</h3>
+    <p>Lisa adds a personal note to an alumni profile: <em>"Spoke with Eric at the reception. He's interested in preceptor role. Follow up in April."</em> She closes the tab. Opens it tomorrow. <strong>The note is gone.</strong></p>
+    <p>Same for: engagement checkbox toggles, dismissed triggers, checklist progress, outreach history, alumni invite statuses on projects. All session-only. All lost on refresh.</p>
+    <p>This isn't a minor gap. This is the difference between a tool and a slideshow.</p>
+  </div>
+
+  <div class="card red">
+    <div class="card-label">Gap #2 &mdash; High Friction</div>
+    <h3>Email is copy-paste.</h3>
+    <p>Every outreach interaction &mdash; the beautifully crafted, voice-matched, trigger-specific draft &mdash; ends with Lisa clicking "Copy to Clipboard," opening Outlook, creating a new email, pasting in the To/Subject/Body, reformatting, and clicking Send. That's five extra steps. Every time. For every alumnus.</p>
+    <p>For a Dean managing 6,000+ alumni relationships, this friction kills adoption.</p>
+  </div>
+
+  <div class="card gold">
+    <div class="card-label">Gap #3 &mdash; Missed Emotional Beat</div>
+    <h3>Lisa's own words aren't in the system.</h3>
+    <p>The notes sections on every profile are empty. The meeting transcript has Lisa saying specific things about specific alumni &mdash; her institutional knowledge, her personal impressions. If those words were already in the profiles when she sees the demo, attributed to "Lisa Warren," the reaction shifts from <em>"this is a nice tool"</em> to <em>"this was built for me."</em></p>
+    <p>This is a 15-minute task. Highest emotional ROI of anything on the list.</p>
+  </div>
+
+  <!-- ═══ THE OPTIONS ═══ -->
+  <h2>Options to Make It Real</h2>
+
+  <p style="margin-bottom:20px;font-size:14px;color:#888">Three paths to persistence. Each adds a backend that saves Lisa's work. The question is how much infrastructure we want to own.</p>
+
+  <table class="compare">
+    <thead>
+      <tr>
+        <th>Criteria</th>
+        <th>A: Cloudflare Worker + D1</th>
+        <th>B: Supabase</th>
+        <th>C: JSON + GitHub API</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Philosophy</td>
+        <td>Bare metal. You own every line.</td>
+        <td>Managed platform. Fast setup.</td>
+        <td>Scrappy hack. Repo is the DB.</td>
+      </tr>
+      <tr>
+        <td>Saves notes, toggles, state</td>
+        <td class="yes">Yes</td>
+        <td class="yes">Yes</td>
+        <td class="yes">Yes (commits to repo)</td>
+      </tr>
+      <tr>
+        <td>Email integration</td>
+        <td class="yes">Yes (add later as Worker route)</td>
+        <td class="partial">Partial (needs edge function)</td>
+        <td class="no">No</td>
+      </tr>
+      <tr>
+        <td>Multi-user / Auth</td>
+        <td class="yes">Yes (build it)</td>
+        <td class="yes">Yes (built-in)</td>
+        <td class="no">Single user only</td>
+      </tr>
+      <tr>
+        <td>Cost</td>
+        <td>Free tier (100K req/day, 5GB D1)</td>
+        <td>Free tier (500MB, 50K requests)</td>
+        <td>Free (GitHub API limits)</td>
+      </tr>
+      <tr>
+        <td>Setup time</td>
+        <td>4&ndash;6 hours</td>
+        <td>2&ndash;3 hours</td>
+        <td>1&ndash;2 hours</td>
+      </tr>
+      <tr>
+        <td>Scales to production</td>
+        <td class="yes">Yes (enterprise-grade edge network)</td>
+        <td class="yes">Yes (Postgres scales well)</td>
+        <td class="no">No (commits as writes = bad)</td>
+      </tr>
+      <tr>
+        <td>Vendor lock-in</td>
+        <td>Low (SQLite is portable)</td>
+        <td>Medium (Postgres, but standard)</td>
+        <td>None</td>
+      </tr>
+      <tr>
+        <td>Fits metal philosophy</td>
+        <td class="yes">Yes &mdash; bare metal, edge-native</td>
+        <td class="partial">Partial &mdash; managed service</td>
+        <td class="partial">Partial &mdash; clever but fragile</td>
+      </tr>
+      <tr class="rec">
+        <td><span class="highlight">Recommendation</span></td>
+        <td><strong style="color:#6FC3DF">This one.</strong></td>
+        <td>Viable fallback</td>
+        <td>Only for throwaway demos</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ═══ OPTION A DEEP DIVE ═══ -->
+  <h2>Option A: Cloudflare Worker + D1</h2>
+
+  <div class="card blue">
+    <div class="card-label">How It Works</div>
+    <h3>One Worker. One database. Everything persists.</h3>
+    <p>A Cloudflare Worker is a serverless function that runs at the edge &mdash; close to the user, fast, no server to manage. D1 is Cloudflare's SQLite-at-the-edge database. Together they give us a lightweight API that the static site talks to.</p>
+  </div>
+
+  <div class="diagram">
+    <span class="node">Lisa's Browser</span><br>
+    <span class="arrow">&darr;</span> <span class="label">fetch('/api/notes', { method: 'POST', body: ... })</span><br>
+    <span class="node">Cloudflare Worker</span> <span style="color:#555">(edge function, ~50 lines of code)</span><br>
+    <span class="arrow">&darr;</span> <span class="label">INSERT INTO notes (alumni_id, author, text, date) VALUES (...)</span><br>
+    <span class="db">D1 Database</span> <span style="color:#555">(SQLite at the edge, 5GB free)</span><br>
+    <span class="arrow">&darr;</span> <span class="label">Saved. Persists forever. Available on next visit.</span><br>
+  </div>
+
+  <div class="card blue">
+    <div class="card-label">What It Handles</div>
+    <h3>Every action Lisa takes, persisted.</h3>
+    <p><strong>Notes:</strong> <code>POST /api/notes</code> &mdash; saves personal notes to alumni profiles. Survives refresh, survives tab close, survives device switch.</p>
+    <p><strong>Engagement toggles:</strong> <code>PATCH /api/alumni/:id/engagement</code> &mdash; saves checkbox changes.</p>
+    <p><strong>Outreach history:</strong> <code>POST /api/outreach</code> &mdash; logs sent emails with date, subject, status.</p>
+    <p><strong>Trigger dismissals:</strong> <code>PATCH /api/triggers/:id</code> &mdash; saves dismissed/archived state.</p>
+    <p><strong>Checklist progress:</strong> <code>PATCH /api/projects/:id/checklist</code> &mdash; saves task completion.</p>
+    <p><strong>Alumni invite status:</strong> <code>PATCH /api/projects/:id/alumni-status</code> &mdash; saves invited/confirmed/declined.</p>
+  </div>
+
+  <div class="card blue">
+    <div class="card-label">Future-Ready</div>
+    <h3>Same Worker handles email later.</h3>
+    <p>When we're ready for real email integration (Phase 3), we add a <code>POST /api/send-email</code> route to the same Worker. It calls SendGrid, Postmark, or Gmail API. No new infrastructure. The Worker grows with the product.</p>
+    <p>Authentication? Add a simple token check or Cloudflare Access (zero-trust, free for up to 50 users). Lisa logs in once, stays logged in.</p>
+  </div>
+
+  <!-- ═══ WHAT CHANGES ═══ -->
+  <h2>What This Changes in the Plan</h2>
+
+  <div class="card gold">
+    <div class="card-label">Plan Impact</div>
+    <h3>Persistence moves from "Phase 3 someday" to "Phase 2 now."</h3>
+    <p>The original plan deferred persistence. That was wrong. Without persistence, the email integration, the wow-moment notes, the outreach tracking &mdash; none of it matters because Lisa can't come back tomorrow and see what she did yesterday.</p>
+    <p>Revised Phase 2 scope:</p>
+    <p>
+      1. <strong>Cloudflare Worker + D1 backend</strong> &mdash; persistence for notes, engagement, outreach, triggers, checklists<br>
+      2. <strong>Email from within</strong> &mdash; mailto: now, Worker-based sending later<br>
+      3. <strong>Lisa's wow moment</strong> &mdash; pre-populated notes (now they'll persist too)<br>
+      4. <strong>CSV export</strong> &mdash; "Bring this list to Vegas"<br>
+      5. <strong>Outreach activity stats</strong> &mdash; Dashboard metrics<br>
+      6. <strong>Visual polish</strong> &mdash; Rolodex + sidebar confirmation
+    </p>
+  </div>
+
+  <!-- ═══ COST ═══ -->
+  <h2>Cost</h2>
+
+  <div class="card green">
+    <div class="card-label">Free Tier Covers Everything</div>
+    <h3>$0/month for Lisa's usage.</h3>
+    <p><strong>Cloudflare Workers:</strong> 100,000 requests/day free. Lisa making 50 saves a day uses 0.05% of the limit.</p>
+    <p><strong>D1 Database:</strong> 5GB storage free. The entire alumni dataset is ~3MB. We could store 1,500x the data before hitting the limit.</p>
+    <p><strong>GitHub Pages:</strong> Already free. Stays as the frontend host.</p>
+    <p><strong>Custom domain:</strong> Optional. If we want nacilink.com or alumni.westernu.edu, Cloudflare handles DNS for free too.</p>
+  </div>
+
+  <!-- ═══ TIMELINE ═══ -->
+  <h2>Timeline</h2>
+
+  <div class="card blue">
+    <div class="card-label">Estimated Build</div>
+    <h3>Backend + email + polish in one push.</h3>
+    <p>
+      <strong style="color:#6FC3DF">Worker + D1 setup:</strong> 4&ndash;6 hours (schema, CRUD routes, CORS, deploy)<br>
+      <strong style="color:#6FC3DF">Frontend persistence wiring:</strong> 2&ndash;3 hours (swap session state for API calls)<br>
+      <strong style="color:#6FC3DF">Email integration (mailto:):</strong> 30 minutes<br>
+      <strong style="color:#6FC3DF">Wow moment notes:</strong> 15 minutes<br>
+      <strong style="color:#6FC3DF">CSV export:</strong> 1 hour<br>
+      <strong style="color:#6FC3DF">Outreach stats:</strong> 1 hour<br>
+      <strong style="color:#6FC3DF">Visual polish + QA:</strong> 1&ndash;2 hours
+    </p>
+    <p style="margin-top:12px">Total: <strong style="color:#fff">~10&ndash;14 hours of build time.</strong> One focused day with Be running the boards.</p>
+  </div>
+
+  <!-- ═══ THE DECISION ═══ -->
+  <div class="bottom-line">
+    <h2>The Decision</h2>
+    <p>Do we ship the backend now and give Lisa a tool she can use Monday?<br>Or do we keep it as a demo-only prototype and plan production later?</p>
+    <p style="margin-top:16px"><strong>Option 1:</strong> Build the Cloudflare backend into Phase 2. Lisa gets persistence + email. Product is real.<br><strong>Option 2:</strong> Ship Phase 2 as demo-only (mailto: + wow moment + CSV). Fast, but still a slideshow.<br><strong>Option 3:</strong> Skip Phase 2 entirely. Demo v1.7 as-is. Plan production as a separate project.</p>
+    <p style="margin-top:16px;color:#6FC3DF;font-weight:600">Our recommendation: Option 1. Build it real. The foundation is too good to leave as a demo.</p>
+  </div>
+
+  <div class="footer">
+    <p>Decision Brief for Joey &mdash; Alumni Relationship Engine</p>
+    <p style="margin-top:8px;color:#444">Generated 2026-03-27 07:45 &mdash; Be</p>
+  </div>
+
+</div>
+</body>
+</html>
