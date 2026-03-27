@@ -85,7 +85,7 @@ export function renderProfile(alumni, state) {
                 </span>` : ''}
                 ${alumni.professional.verified_address ? `<span class="text-xs text-gray-400">📍 ${alumni.professional.verified_address}</span>` : ''}
               </div>
-              ${alumni.contact.email_source === 'apify_website_scraper' ? `<p class="text-xs text-gray-400 mt-2">Email found via practice website scrape (${alumni.contact.email_type === 'practice_general' ? 'general inbox' : 'direct'})</p>` : ''}
+              ${alumni.contact.email_source === 'apify_website_scraper' ? `<p class="text-xs text-gray-400 mt-2">Email found via public practice website (${alumni.contact.email_type === 'practice_general' ? 'general inbox' : 'direct'})</p>` : ''}
             </div>` : ''}
 
             <!-- Tags -->

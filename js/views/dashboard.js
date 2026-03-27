@@ -79,8 +79,8 @@ export function renderDashboard(state) {
     <div class="card" style="padding:20px 24px;margin-bottom:24px;border-left:3px solid #a855f7">
       <div class="flex items-center justify-between">
         <div>
-          <h3 class="text-sm font-bold" style="color:#a855f7">Data Enrichment — Apify Pipeline</h3>
-          <p class="text-xs text-gray-400">Public data from Google Maps + practice website scraping</p>
+          <h3 class="text-sm font-bold" style="color:#a855f7">Practice Intelligence Layer</h3>
+          <p class="text-xs text-gray-400">Cross-referenced with public business listings and practice websites</p>
         </div>
         <div class="flex gap-6 text-sm">
           <div class="text-center"><span class="text-lg font-bold" style="color:#a855f7">${enrichedCount}</span><br><span class="text-xs text-gray-400">Enriched</span></div>
