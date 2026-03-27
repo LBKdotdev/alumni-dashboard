@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~S: Ship v1.6 — Rolodex + Prototype Review</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.6; }
+  .version { display: inline-block; background: #6FC3DF; color: #111; font-weight: 700; font-size: 13px; padding: 4px 12px; border-radius: 4px; margin-bottom: 16px; }
+  .commit { font-family: monospace; font-size: 12px; color: #6FC3DF; }
+  .commit-msg { color: #ccc; margin-left: 8px; }
+  .stat { display: inline-block; background: #222; border-radius: 6px; padding: 6px 14px; margin: 4px; font-size: 13px; }
+  .stat strong { color: #6FC3DF; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report</span>
+</nav>
+<div class="container">
+  <span class="version">v1.6</span>
+  <h1>~S: Rolodex + Prototype Review</h1>
+  <p class="subtitle">The directory has motion. The review is documented. Backup tagged.</p>
+
+  <h2>What Shipped</h2>
+  <div class="card">
+    <h3>Rolodex Card Animation</h3>
+    <p>Directory alumni cards flip in from a tilted-back position like a Rolodex spindle. 3D perspective, staggered entry, hover lift with burgundy shadow, page transitions flip out then in. Pure CSS, 60fps, zero libraries.</p>
+  </div>
+  <div class="card">
+    <h3>Prototype Review Document</h3>
+    <p>Full review rebuilt in Be dark style. 12 categories graded, 8 A+ and 4 A, 6 issues identified and resolved, 3 post-review enhancements, ship history v1.0 through v1.5. Ready for Joey.</p>
+  </div>
+
+  <h2>Safety</h2>
+  <div class="card">
+    <p><strong>Backup tag:</strong> <code style="background:#222;padding:2px 6px;border-radius:4px;color:#6FC3DF;font-size:12px">v1.5-stable</code> pushed to remote before Rolodex work began. Full rollback available.</p>
+  </div>
+
+  <h2>Commits Included</h2>
+  <div class="card">
+    <p><span class="commit">649f58e</span><span class="commit-msg">Prototype Review v1.5 — 12 categories, Be style</span></p>
+    <p style="margin-top:6px"><span class="commit">7d66cd0</span><span class="commit-msg">~U: Rolodex card animation — 3D flip-in, hover lift, page transition</span></p>
+  </div>
+
+  <h2>Cumulative Ship Summary</h2>
+  <div class="card">
+    <div class="stat"><strong>v1.0</strong> 4 boards, 73 pts</div>
+    <div class="stat"><strong>v1.1</strong> Dr. Warren's voice</div>
+    <div class="stat"><strong>v1.2</strong> Dean vs Staff checklists</div>
+    <div class="stat"><strong>v1.3</strong> Enrichment + dash-free</div>
+    <div class="stat"><strong>v1.4</strong> Visual + login + mission</div>
+    <div class="stat"><strong>v1.5</strong> PubMed + language</div>
+    <div class="stat"><strong>v1.6</strong> Rolodex + review</div>
+  </div>
+
+  <div class="footer">Generated 2026-03-26 — Be / Alumni Relationship Engine</div>
+</div>
+</body>
+</html>

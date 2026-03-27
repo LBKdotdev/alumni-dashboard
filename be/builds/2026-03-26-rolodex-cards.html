@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~U: Rolodex Card Animation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.6; }
+  code { background: #222; padding: 2px 6px; border-radius: 4px; font-size: 12px; color: #6FC3DF; }
+  .footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Build Report</span>
+</nav>
+<div class="container">
+  <h1>~U: Rolodex Card Animation</h1>
+  <p class="subtitle">3D flip-in, hover lift, page transition — the directory demands attention</p>
+
+  <h2>What Was Updated</h2>
+  <div class="card">
+    <h3>Rolodex Flip-In</h3>
+    <p>Directory alumni cards now animate in from a tilted-back position (rotateX -40deg) like flipping forward on a Rolodex spindle. Staggered 50ms per card. CSS 3D perspective on the container at 1200px depth. Pure CSS transforms, 60fps, zero libraries.</p>
+  </div>
+  <div class="card">
+    <h3>Hover Lift</h3>
+    <p>Hovering a card tilts it forward 2deg and lifts it 6px with a layered shadow (burgundy tint + ambient). Feels like pulling a card off the spindle to read it. Cubic-bezier easing for a natural, weighted feel.</p>
+  </div>
+  <div class="card">
+    <h3>Page Transition</h3>
+    <p>Paginating (Next/Previous) triggers a flip-out animation first (cards tilt forward 30deg and fade), then the new page flips in. 200ms exit, then fresh flip-in. Smooth and intentional.</p>
+  </div>
+
+  <h2>Files Changed</h2>
+  <div class="card">
+    <p><strong>css/style.css</strong> — Added <code>.rolodex</code> container (perspective), <code>.rolodex-card</code> (flip-in keyframes), <code>.rolodex-exit</code> (flip-out), hover overrides with 3D transforms</p>
+    <p style="margin-top:8px"><strong>js/views/directory.js</strong> — Container class <code>rolodex</code>, card class <code>rolodex-card</code>, pagination uses flip-out-then-render pattern</p>
+  </div>
+
+  <h2>Decisions Made</h2>
+  <div class="card">
+    <h3>Why Rolodex?</h3>
+    <p>Lisa has paper notes on alumni. She flips through people she knows. A data table says "database." A Rolodex says "I have a relationship with each of these people." The physical metaphor matches the product metaphor.</p>
+  </div>
+
+  <div class="footer">Generated 2026-03-26 — Be / Alumni Relationship Engine</div>
+</div>
+</body>
+</html>
