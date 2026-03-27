@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~P: Last Mile — Email, Wow Moment, Refinements</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.7; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 40px; }
+  h2 { color: #6FC3DF; font-size: 20px; font-weight: 700; margin: 40px 0 20px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+  .banner { background: linear-gradient(135deg, #1a1a2e 0%, #111 100%); border: 2px solid #f59e0b; border-radius: 12px; padding: 28px 32px; margin-bottom: 40px; text-align: center; }
+  .banner-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #f59e0b; margin-bottom: 8px; }
+  .banner p { color: #888; font-size: 14px; max-width: 600px; margin: 0 auto; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 24px; margin-bottom: 14px; border-left: 3px solid #333; }
+  .card.intent { border-left-color: #6FC3DF; }
+  .card.scope { border-left-color: #4ade80; }
+  .card.approach { border-left-color: #f59e0b; }
+  .card.constraint { border-left-color: #ef4444; }
+  .card-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .card.intent .card-label { color: #6FC3DF; }
+  .card.scope .card-label { color: #4ade80; }
+  .card.approach .card-label { color: #f59e0b; }
+  .card.constraint .card-label { color: #ef4444; }
+  .card h3 { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #999; line-height: 1.7; }
+  .card ul { list-style: none; padding: 0; margin-top: 8px; }
+  .card li { font-size: 13px; color: #999; padding: 4px 0; padding-left: 18px; position: relative; }
+  .card li::before { content: "→"; position: absolute; left: 0; color: #6FC3DF; }
+  .tier { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 4px; margin-bottom: 12px; }
+  .tier-now { background: #4ade80; color: #000; }
+  .tier-next { background: #f59e0b; color: #000; }
+  .tier-future { background: #6FC3DF; color: #000; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Plan</span>
+</nav>
+<div class="container">
+
+  <h1>The Last Mile</h1>
+  <p class="subtitle">Close the three gaps between "impressive demo" and "I need this running Monday."</p>
+
+  <div class="banner">
+    <div class="banner-label">Plan &mdash; Awaiting Approval</div>
+    <p>Email sends from within. Lisa's words are already in the system. The outreach panel becomes the command center, not a clipboard middleman.</p>
+  </div>
+
+  <!-- ═══ INTENT ═══ -->
+  <h2>Intent</h2>
+
+  <div class="card intent">
+    <div class="card-label">Why This Matters</div>
+    <h3>The product is 90% there. The last 10% is what Lisa will remember.</h3>
+    <p>The trigger queue is a category-defining feature. The voice is right. The data is real. But every outreach ends with "Copy to Clipboard," the notes sections are empty, and nothing survives a refresh. These three gaps are the difference between "nice demo" and "when can we go live?"</p>
+  </div>
+
+  <!-- ═══ SCOPE ═══ -->
+  <h2>Scope</h2>
+
+  <div class="card scope">
+    <div class="card-label">In Scope</div>
+    <h3>Phase 2: Email + Wow Moment + Polish</h3>
+    <ul>
+      <li><strong style="color:#fff">Email from within</strong> &mdash; mailto: integration so outreach opens Lisa's email client with To/Subject/Body pre-filled. One click to review and send. No copy-paste.</li>
+      <li><strong style="color:#fff">Lisa's wow moment</strong> &mdash; Pre-populate 3 alumni profiles with notes attributed to "Lisa Warren" from the meeting transcript. Her words, her voice, already in the system when she sees it.</li>
+      <li><strong style="color:#fff">Outreach panel upgrade</strong> &mdash; "Send Email" button (mailto:), "Create Draft" label, visual hierarchy that makes sending the primary action and copying the fallback.</li>
+      <li><strong style="color:#fff">Rolodex hover polish</strong> &mdash; Verify the Rolodex card-hover lift and stacked shadows render correctly across views.</li>
+      <li><strong style="color:#fff">Sidebar warmth</strong> &mdash; Confirm burgundy sidebar reads as burgundy, not black. Fine-tune if needed.</li>
+      <li><strong style="color:#fff">Export alumni list</strong> &mdash; CSV download from the Directory or Project alumni tab. "Bring this list to Vegas."</li>
+      <li><strong style="color:#fff">Outreach activity summary</strong> &mdash; Small stats card on Dashboard showing outreach counts (sent, opened, replied) for the current dataset.</li>
+    </ul>
+  </div>
+
+  <div class="card constraint">
+    <div class="card-label">Out of Scope (for now)</div>
+    <h3>Deferred to Phase 3</h3>
+    <ul>
+      <li>Backend persistence (Cloudflare Worker + D1/KV) &mdash; requires infrastructure</li>
+      <li>Gmail API OAuth integration &mdash; requires Lisa's account setup</li>
+      <li>Lebanon campus real data &mdash; requires registrar data</li>
+      <li>Alumni map visualization &mdash; requires mapping library decision</li>
+      <li>Smart/NLP search &mdash; requires search engine</li>
+      <li>NaciLink branding &mdash; separate creative decision</li>
+    </ul>
+  </div>
+
+  <!-- ═══ APPROACH ═══ -->
+  <h2>Approach</h2>
+
+  <div class="card approach">
+    <span class="tier tier-now">Ship Now</span>
+    <h3>Tier 1: mailto: Email Integration</h3>
+    <p>Replace "Copy to Clipboard" as the primary action with a <code style="background:#222;padding:2px 6px;border-radius:4px;color:#6FC3DF;font-size:12px">mailto:</code> link. When Lisa clicks "Send Email," her default email client (Outlook, Apple Mail, Gmail web) opens with To, Subject, and Body pre-filled. She reviews the draft in her actual email environment and clicks Send.</p>
+    <ul>
+      <li>Primary button: "Send Email" (mailto: link styled as button)</li>
+      <li>Secondary button: "Copy to Clipboard" (fallback, de-emphasized)</li>
+      <li>"Mark as Sent" stays for outreach tracking in the app</li>
+      <li>For alumni without email: show "No email on file" with enrichment prompt</li>
+      <li>URL-encode subject and body for mailto: compatibility</li>
+      <li>Newlines in body: use %0A for line breaks, %0A%0A for paragraph breaks</li>
+    </ul>
+  </div>
+
+  <div class="card approach">
+    <span class="tier tier-now">Ship Now</span>
+    <h3>Tier 1: Lisa's Wow Moment</h3>
+    <p>Hand-pick 3 alumni profiles that appear in triggers or the Vegas project. Add personal notes attributed to "Lisa Warren" with realistic content drawn from the meeting context. These are the profiles Joey will navigate to during the demo.</p>
+    <ul>
+      <li>Dr. Eric Sandefur (trigger_001, practice move) &mdash; "Ran into Eric at the AACOM reception last year. Genuinely interested in teaching. Follow up about preceptor role."</li>
+      <li>Dr. Keith Kesler (trigger_003, publication) &mdash; "Haven't connected with Keith since graduation. His psychiatry work is exactly the kind of research we should be showcasing. Reach out personally."</li>
+      <li>A VIP or highly-engaged alumnus &mdash; "One of our most consistent supporters. Always shows up. Don't take that for granted."</li>
+    </ul>
+  </div>
+
+  <div class="card approach">
+    <span class="tier tier-now">Ship Now</span>
+    <h3>Tier 1: CSV Export</h3>
+    <p>Add a "Download CSV" button to the Directory view (filtered results) and the Projects alumni tab. Generates a CSV with: Name, Credentials, Class Year, Specialty, City, State, Email, Phone, Engagement types, Tags. Lisa can take this to Vegas or import into a mail merge.</p>
+  </div>
+
+  <div class="card approach">
+    <span class="tier tier-now">Ship Now</span>
+    <h3>Tier 1: Outreach Activity Stats</h3>
+    <p>Add a small stats row to the Dashboard showing aggregate outreach metrics from the dataset: total outreach sent, open rate, reply rate, alumni with no outreach yet. Even with demo data, this frames the tool as measurable, not just reactive.</p>
+  </div>
+
+  <div class="card approach">
+    <span class="tier tier-now">Ship Now</span>
+    <h3>Tier 1: Visual Polish Pass</h3>
+    <p>Verify Rolodex animation and burgundy sidebar render correctly on GitHub Pages. Fine-tune any remaining specificity issues. Confirm mobile nav matches.</p>
+  </div>
+
+  <!-- ═══ PHASES ═══ -->
+  <h2>Phases</h2>
+
+  <div class="card intent">
+    <div class="card-label">Phase 2 (This Plan)</div>
+    <h3>The Last Mile &mdash; 5 deliverables</h3>
+    <ul>
+      <li>Email integration (mailto: in outreach panel)</li>
+      <li>Wow moment (3 profiles with Lisa's notes)</li>
+      <li>CSV export (Directory + Projects)</li>
+      <li>Outreach activity stats (Dashboard)</li>
+      <li>Visual polish (Rolodex + sidebar confirmation)</li>
+    </ul>
+  </div>
+
+  <div class="card scope">
+    <div class="card-label">Phase 3 (Future)</div>
+    <h3>Production Bridge</h3>
+    <ul>
+      <li>Cloudflare Worker backend (persistence + email API)</li>
+      <li>Gmail OAuth draft creation</li>
+      <li>Real-time NPI/PubMed sync</li>
+      <li>Lebanon campus data integration</li>
+      <li>NaciLink branding + Vitruvian logo</li>
+      <li>Alumni geographic map</li>
+    </ul>
+  </div>
+
+  <!-- ═══ CONSTRAINTS ═══ -->
+  <h2>Constraints</h2>
+
+  <div class="card constraint">
+    <div class="card-label">Technical</div>
+    <h3>Static site limitations</h3>
+    <ul>
+      <li>No backend &mdash; mailto: is the only email option without infrastructure</li>
+      <li>mailto: body length capped at ~2000 chars in some browsers &mdash; long drafts may truncate</li>
+      <li>CSV generation must be client-side (Blob + download link)</li>
+      <li>Outreach stats are read from static JSON, not real tracking</li>
+      <li>No persistence &mdash; notes added by Lisa during demo are session-only</li>
+    </ul>
+  </div>
+
+  <div class="card constraint">
+    <div class="card-label">Demo Strategy</div>
+    <h3>What Joey shows Lisa</h3>
+    <ul>
+      <li>Navigate to a profile with pre-populated notes &mdash; "Lisa, your words are already here"</li>
+      <li>Click "Draft Outreach" &mdash; show the pre-filled email</li>
+      <li>Click "Send Email" &mdash; her email client opens, ready to send</li>
+      <li>Show the CSV export &mdash; "Here's your Vegas list, ready for the trip"</li>
+      <li>Show the Dashboard outreach stats &mdash; "This is how you'll track impact"</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>Generated 2026-03-27 07:38 &mdash; Be / Alumni Relationship Engine</p>
+  </div>
+
+</div>
+</body>
+</html>
