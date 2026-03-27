@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>~E: Phase 2A — 1 Board, 5 Items, 19 Points</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.7; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 14px; margin-bottom: 40px; }
+  h2 { color: #6FC3DF; font-size: 20px; font-weight: 700; margin: 40px 0 20px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
+  .stat-box { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px; flex: 1; min-width: 120px; text-align: center; }
+  .stat-num { font-size: 32px; font-weight: 800; color: #6FC3DF; line-height: 1; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+  .item { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px 24px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 16px; }
+  .item-pts { background: #6FC3DF; color: #000; font-weight: 800; font-size: 14px; min-width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .item-body h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .item-body p { font-size: 13px; color: #999; }
+  .item-cmd { font-size: 11px; font-weight: 700; color: #6FC3DF; margin-top: 6px; }
+
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px 24px; margin-bottom: 12px; }
+  .card h3 { color: #fff; font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .card p { font-size: 13px; color: #999; }
+
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Estimate</span>
+</nav>
+<div class="container">
+
+  <h1>Phase 2A: The Last Mile</h1>
+  <p class="subtitle">1 board, 5 items, 19 story points. No infrastructure blockers. Ships on current stack.</p>
+
+  <div class="stats">
+    <div class="stat-box">
+      <div class="stat-num">1</div>
+      <div class="stat-label">Board</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">5</div>
+      <div class="stat-label">Items</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">19</div>
+      <div class="stat-label">Points</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">0</div>
+      <div class="stat-label">Blocked</div>
+    </div>
+  </div>
+
+  <!-- ═══ BOARD 5 ═══ -->
+  <h2>Board 5: Last Mile &mdash; Email, Data, Polish (19 pts)</h2>
+
+  <div class="item">
+    <div class="item-pts">5</div>
+    <div class="item-body">
+      <h3>{mailto: send button, add to, outreach panel}</h3>
+      <p>Replace copy-paste with real sending. Primary "Send Email" button builds a <code style="background:#222;padding:1px 4px;border-radius:3px;color:#6FC3DF;font-size:12px">mailto:</code> link with URL-encoded To/Subject/Body. Opens Lisa's email client with draft pre-filled. Demote "Copy to Clipboard" to secondary. Handle no-email state with disabled button + enrichment prompt. Test across all 3 entry points (Queue, Profile, Projects).</p>
+      <div class="item-cmd">~A &bull; Highest value &mdash; removes the #1 friction point</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-pts">5</div>
+    <div class="item-body">
+      <h3>{CSV export, add to, directory and projects views}</h3>
+      <p>Download button on Directory (exports filtered results) and Projects alumni tab (exports project roster). Client-side Blob generation. Columns: Name, Credentials, Class Year, Specialty, City, State, Email, Phone, Practice Name, Engagement types, Tags. Filename includes date and filter context (e.g., <code style="background:#222;padding:1px 4px;border-radius:3px;color:#6FC3DF;font-size:12px">alumni-nevada-2026-03-27.csv</code>).</p>
+      <div class="item-cmd">~A &bull; "Bring this list to Vegas" &mdash; tangible deliverable Lisa takes with her</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-pts">3</div>
+    <div class="item-body">
+      <h3>{Lisa's personal notes, add to, 3 alumni profiles}</h3>
+      <p>Hand-write notes into alumni.json for Dr. Eric Sandefur (trigger_001), Dr. Keith Kesler (trigger_003), and one VIP alumnus. Notes attributed to "Lisa Warren" with realistic dates. Content from meeting context. When Lisa sees her own words in a profile, the demo shifts from "nice tool" to "this was built for me."</p>
+      <div class="item-cmd">~A &bull; Highest emotional ROI &mdash; the wow moment</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-pts">3</div>
+    <div class="item-body">
+      <h3>{outreach activity stats, add to, dashboard view}</h3>
+      <p>Stats row showing aggregate outreach metrics: total sent, open rate, reply rate, alumni never contacted. Computed from existing outreach_history arrays in alumni.json. Frames the tool as measurable and outcome-oriented, not just a notification engine.</p>
+      <div class="item-cmd">~A &bull; Changes the dashboard from stats-only to action-tracking</div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="item-pts">3</div>
+    <div class="item-body">
+      <h3>{Rolodex and sidebar, test across, desktop and mobile}</h3>
+      <p>Verify the CSS specificity fix shipped correctly. Confirm Rolodex cards show burgundy/gold left borders and stacked shadows. Confirm sidebar reads as warm burgundy, not black. Test mobile nav matches. Fix any remaining issues found.</p>
+      <div class="item-cmd">~T &bull; Confirmation pass &mdash; we pushed the fix, need to verify it landed</div>
+    </div>
+  </div>
+
+  <!-- ═══ VALUE RATIONALE ═══ -->
+  <h2>Value Rationale</h2>
+
+  <div class="card">
+    <h3>Priority order: friction removal &rarr; tangible output &rarr; emotional impact &rarr; metrics &rarr; polish</h3>
+    <p><strong style="color:#fff">1. mailto: (5 pts)</strong> &mdash; Removes the single biggest UX friction. Every outreach draft currently dead-ends at "Copy to Clipboard." This makes it real sending.</p>
+    <p style="margin-top:8px"><strong style="color:#fff">2. CSV export (5 pts)</strong> &mdash; Lisa is going to Vegas in weeks. She needs a list she can print, share, or mail-merge. This is the most tangible deliverable.</p>
+    <p style="margin-top:8px"><strong style="color:#fff">3. Wow moment notes (3 pts)</strong> &mdash; Highest emotional ROI. Small effort, massive demo impact. Lisa sees her own words in the system before anyone tells her they're there.</p>
+    <p style="margin-top:8px"><strong style="color:#fff">4. Outreach stats (3 pts)</strong> &mdash; Reframes the dashboard from "look at these numbers" to "look at what you've accomplished." Tells the ROI story.</p>
+    <p style="margin-top:8px"><strong style="color:#fff">5. Visual QA (3 pts)</strong> &mdash; We pushed a CSS fix for Rolodex + sidebar. Need to confirm it actually landed on the live site. Last, because it's verification, not new work.</p>
+  </div>
+
+  <!-- ═══ DEPENDENCIES ═══ -->
+  <h2>Dependencies</h2>
+
+  <div class="card">
+    <h3>None. All 5 items are independent and unblocked.</h3>
+    <p>No item depends on another. No infrastructure needed. No Joey decision required. Board 5 can start immediately. Phase 2B (Cloudflare backend, persistence) remains blocked separately and is not on this board.</p>
+  </div>
+
+  <div class="footer">
+    <p>Generated 2026-03-27 08:30 &mdash; Be / Alumni Relationship Engine</p>
+  </div>
+
+</div>
+</body>
+</html>
