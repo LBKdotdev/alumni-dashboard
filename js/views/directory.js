@@ -105,6 +105,10 @@ export function renderDirectory(state) {
     </div>
 
     <div class="flex flex-wrap items-center gap-3 mb-6">
+      <button class="btn btn-sm" data-action="vegas-filter" style="border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;gap:4px;${directoryFilters.practiceState === 'NV' ? 'background:var(--tron-blue,#6FC3DF);color:#111;border-color:var(--tron-blue,#6FC3DF)' : 'background:transparent;color:#6FC3DF;border:1px solid rgba(111,195,223,0.4)'}">
+        <svg class="icon icon-sm" style="width:14px;height:14px"><use href="./css/icons.svg#map-pin"></use></svg>
+        AACOM Vegas
+      </button>
       ${renderCampusToggle(directoryFilters.campus, 'dir-campus', 'sm')}
       <select class="select" data-action="filter-specialty"><option value="all">All Specialties</option>${specOpts}</select>
       <select class="select" data-action="filter-engagement"><option value="all">All Engagement</option>${engOpts}</select>
@@ -182,6 +186,16 @@ export function wireDirectoryEvents(state) {
     searchInput.addEventListener('input', () => {
       currentPage = 0
       setDirectorySearch(searchInput.value)
+    })
+  }
+
+  // Vegas filter toggle
+  const vegasBtn = document.querySelector('[data-action="vegas-filter"]')
+  if (vegasBtn) {
+    vegasBtn.addEventListener('click', () => {
+      currentPage = 0
+      const current = state.directoryFilters.practiceState
+      setDirectoryFilters({ practiceState: current === 'NV' ? 'all' : 'NV' })
     })
   }
 

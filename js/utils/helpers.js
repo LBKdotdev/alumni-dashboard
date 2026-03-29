@@ -138,6 +138,11 @@ export function filterAlumni(alumniList, filters, search) {
     result = result.filter(a => a.professional.practice_state === filters.state)
   }
 
+  // Practice state (Vegas filter)
+  if (filters.practiceState && filters.practiceState !== 'all') {
+    result = result.filter(a => a.professional.practice_state === filters.practiceState)
+  }
+
   // Enrichment
   if (filters.enrichment && filters.enrichment !== 'all') {
     switch (filters.enrichment) {
