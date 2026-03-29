@@ -4,7 +4,7 @@
 // outreach history, data provenance
 // ============================================================
 
-import { formatDate, getLastConnection, getCampusLabel, daysOverdue, sanitizeNotable } from '../utils/helpers.js'
+import { formatDate, getLastConnection, getCampusLabel, daysOverdue, sanitizeNotable, getInitials } from '../utils/helpers.js'
 import {
   renderAvatar, renderVIPBadge, renderEngagementBadge, renderTagBadge,
   renderStatusDot, renderFerpaNotice, engagementConfig
@@ -249,6 +249,9 @@ export function renderProfile(alumni, state) {
           : `<p class="text-sm text-gray-400" style="font-style:italic">No outreach history</p>`}
       </div>
 
+      <!-- ═══ SIMILAR ALUMNI ═══ -->
+      ${renderSimilarAlumni(alumni, state.alumni)}
+
       <!-- ═══ SECTION 7: Data Provenance ═══ -->
       <div class="card" style="padding:24px;margin-bottom:20px">
         <h2 class="text-sm font-semibold text-gray-400 mb-3" style="text-transform:uppercase;letter-spacing:0.05em;padding-left:12px;border-left:3px solid var(--gray-300)">Data Sources</h2>
@@ -261,6 +264,36 @@ export function renderProfile(alumni, state) {
             </div>`).join('')}
         </div>
         ${renderFerpaNotice()}
+      </div>
+    </div>`
+}
+
+// ── Similar Alumni ──
+
+function renderSimilarAlumni(alumni, allAlumni) {
+  const similar = allAlumni.filter(a =>
+    a.id !== alumni.id &&
+    a.professional.specialty === alumni.professional.specialty &&
+    a.professional.practice_state === alumni.professional.practice_state
+  ).slice(0, 3)
+
+  if (similar.length === 0) return ''
+
+  return `
+    <div class="card" style="padding:24px;margin-bottom:20px">
+      <h2 class="text-sm font-semibold text-gray-400 mb-3" style="text-transform:uppercase;letter-spacing:0.05em;padding-left:12px;border-left:3px solid #6FC3DF">Similar Alumni</h2>
+      <p class="text-xs text-gray-400 mb-3">${alumni.professional.specialty} in ${alumni.professional.practice_state} — potential connections</p>
+      <div class="space-y-2">
+        ${similar.map(a => `
+          <button class="flex items-center gap-3" data-action="view-similar" data-id="${a.id}" style="width:100%;text-align:left;padding:10px 12px;border-radius:8px;transition:background 0.15s;cursor:pointer;background:transparent;border:1px solid var(--gray-100)" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">
+            <div style="width:36px;height:36px;border-radius:50%;background:var(--burgundy,#8B2230);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;flex-shrink:0">${getInitials(a.name)}</div>
+            <div style="min-width:0;flex:1">
+              <div class="text-sm font-semibold" style="color:var(--gray-900)">${a.name}, ${a.credentials}</div>
+              <div class="text-xs text-gray-500">${a.professional.practice_city}, ${a.professional.practice_state}${a.professional.practice_name ? ' &middot; ' + a.professional.practice_name : ''}</div>
+            </div>
+            <svg class="icon icon-sm" style="color:var(--gray-300);flex-shrink:0"><use href="./css/icons.svg#chevron-right"></use></svg>
+          </button>
+        `).join('')}
       </div>
     </div>`
 }
@@ -314,6 +347,11 @@ export function wireProfileEvents(state) {
   // Met at AACOM tag
   document.querySelectorAll('[data-action="tag-met-aacom"]').forEach(el =>
     el.addEventListener('click', () => tagAlumni(alumni.id, 'met-at-aacom'))
+  )
+
+  // Similar alumni links
+  document.querySelectorAll('[data-action="view-similar"]').forEach(el =>
+    el.addEventListener('click', () => navigate('profile', el.dataset.id))
   )
 
   // Start Notable
