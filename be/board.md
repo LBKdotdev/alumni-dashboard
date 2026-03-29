@@ -54,11 +54,11 @@
 
 ## Board 6: NaciLink Identity + Conference Foundation (13 pts)
 ### Ready
-- {NaciLink branding pass, update across, login gate + sidebar + mobile nav + tab title} · 5 · ~U
 - {Vegas filter preset, add to, directory view filter bar} · 5 · ~A
 ### In Progress
 ### Done
 - {PWA manifest + home screen install, add to, index.html + manifest.json} · 3 · ~A ✅
+- {NaciLink branding pass, update across, login gate + sidebar + mobile nav + tab title} · 5 · ~U ✅
 
 ## Board 7: Conference Interaction Features (9 pts) ⛔ blocked — Board 6
 ### Ready

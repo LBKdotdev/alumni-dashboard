@@ -361,10 +361,11 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid rgba(139,34,48,0.25);
 }
 .logo-img {
-  height: 28px;
+  height: 36px;
+  width: 36px;
   margin-bottom: 10px;
-  opacity: 0.9;
-  filter: brightness(10);
+  opacity: 0.95;
+  border-radius: 8px;
 }
 .sidebar-title {
   display: flex;
