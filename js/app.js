@@ -107,6 +107,9 @@ function render() {
     case 'projects':
       root.innerHTML = renderProjects(state)
       break
+    case 'lookup':
+      root.innerHTML = renderLookup(state)
+      break
     default:
       root.innerHTML = renderQueue(state)
   }
@@ -161,6 +164,64 @@ function updateQueueBadge(state) {
   }
 }
 
+// ── Lookup View ──
+
+function renderLookup(state) {
+  return `
+    <div style="max-width:600px;margin:0 auto;padding-top:40px">
+      <h1 class="text-2xl font-bold" style="color:var(--gray-900);text-align:center;margin-bottom:8px">Quick Lookup</h1>
+      <p class="text-sm text-gray-400" style="text-align:center;margin-bottom:24px">Find any alumnus instantly</p>
+      <div style="position:relative;margin-bottom:24px">
+        <svg class="icon icon-md" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--gray-400)"><use href="./css/icons.svg#search"></use></svg>
+        <input type="text" id="lookup-input" class="input" style="padding:16px 16px 16px 48px;font-size:18px;border-radius:16px;width:100%" placeholder="Type a name..." autocomplete="off">
+      </div>
+      <div id="lookup-results"></div>
+    </div>
+  `
+}
+
+function wireLookupEvents() {
+  const input = document.getElementById('lookup-input')
+  const results = document.getElementById('lookup-results')
+  if (!input || !results) return
+
+  input.focus()
+
+  input.addEventListener('input', () => {
+    const q = input.value.toLowerCase()
+    if (q.length < 2) {
+      results.innerHTML = q.length === 0 ? '' : '<p class="text-sm text-gray-400" style="text-align:center;padding:16px">Keep typing...</p>'
+      return
+    }
+    const state = getState()
+    const matches = state.alumni.filter(a =>
+      a.name.toLowerCase().includes(q) ||
+      a.professional.specialty.toLowerCase().includes(q) ||
+      a.professional.practice_city.toLowerCase().includes(q)
+    ).slice(0, 20)
+
+    if (matches.length === 0) {
+      results.innerHTML = '<p class="text-sm text-gray-400" style="text-align:center;padding:16px">No alumni found</p>'
+      return
+    }
+
+    results.innerHTML = matches.map(a => `
+      <button class="card" data-action="lookup-select" data-id="${a.id}" style="width:100%;text-align:left;cursor:pointer;padding:14px 18px;margin-bottom:8px;display:flex;align-items:center;gap:14px;transition:border-color 0.15s">
+        <div style="width:44px;height:44px;border-radius:50%;background:var(--burgundy,#8B2230);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0">${getInitials(a.name)}</div>
+        <div style="min-width:0;flex:1">
+          <div class="font-semibold" style="color:var(--gray-900);font-size:15px">${a.name}, ${a.credentials}</div>
+          <div class="text-sm text-gray-500">${a.professional.specialty} &middot; ${a.professional.practice_city}, ${a.professional.practice_state}</div>
+        </div>
+        <svg class="icon icon-sm" style="color:var(--gray-300);flex-shrink:0"><use href="./css/icons.svg#chevron-right"></use></svg>
+      </button>
+    `).join('')
+
+    results.querySelectorAll('[data-action="lookup-select"]').forEach(btn =>
+      btn.addEventListener('click', () => navigate('profile', btn.dataset.id))
+    )
+  })
+}
+
 // ── Event Delegation ──
 
 function wireEvents() {
@@ -175,6 +236,7 @@ function wireEvents() {
     case 'profile': wireProfileEvents(state); break
     case 'dashboard': wireDashboardEvents(state); break
     case 'projects': wireProjectsEvents(state); break
+    case 'lookup': wireLookupEvents(); break
   }
 }
 
@@ -269,7 +331,7 @@ function setupGlobalEvents() {
 function handleHashChange() {
   const hash = location.hash.slice(1) || 'queue'
   const [view, id] = hash.split('/')
-  const validViews = ['queue', 'directory', 'profile', 'dashboard', 'projects']
+  const validViews = ['queue', 'directory', 'profile', 'dashboard', 'projects', 'lookup']
   if (validViews.includes(view)) {
     navigate(view, id || null)
   }
@@ -293,7 +355,8 @@ function renderSearchResults(query, container, isMobile) {
     a.professional.practice_city.toLowerCase().includes(q) ||
     a.professional.practice_state.toLowerCase() === q
   )
-  const results = all.slice(0, 5)
+  const limit = isMobile ? 15 : 5
+  const results = all.slice(0, limit)
   const moreCount = all.length - results.length
 
   if (all.length === 0) {
