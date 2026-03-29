@@ -90,17 +90,18 @@ export function getLastConnection(alumni) {
 export function filterAlumni(alumniList, filters, search) {
   let result = [...alumniList]
 
-  // Search
+  // Search — supports any word order (e.g. "warren lisa" finds "Lisa Warren")
   if (search) {
-    const q = search.toLowerCase()
-    result = result.filter(a =>
-      a.name.toLowerCase().includes(q) ||
-      a.professional.specialty.toLowerCase().includes(q) ||
-      a.professional.practice_city.toLowerCase().includes(q) ||
-      a.professional.practice_state.toLowerCase().includes(q) ||
-      a.tags.some(t => t.toLowerCase().includes(q)) ||
-      a.notables.some(n => n.toLowerCase().includes(q))
-    )
+    const words = search.toLowerCase().split(/\s+/)
+    result = result.filter(a => {
+      const name = a.name.toLowerCase()
+      const spec = a.professional.specialty.toLowerCase()
+      const city = a.professional.practice_city.toLowerCase()
+      const st = a.professional.practice_state.toLowerCase()
+      const tags = a.tags.join(' ').toLowerCase()
+      const notables = a.notables.join(' ').toLowerCase()
+      return words.every(w => name.includes(w) || spec.includes(w) || city.includes(w) || st.includes(w) || tags.includes(w) || notables.includes(w))
+    })
   }
 
   // Campus

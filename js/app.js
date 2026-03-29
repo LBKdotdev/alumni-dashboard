@@ -194,11 +194,13 @@ function wireLookupEvents() {
       return
     }
     const state = getState()
-    const matches = state.alumni.filter(a =>
-      a.name.toLowerCase().includes(q) ||
-      a.professional.specialty.toLowerCase().includes(q) ||
-      a.professional.practice_city.toLowerCase().includes(q)
-    ).slice(0, 20)
+    const words = q.split(/\s+/)
+    const matches = state.alumni.filter(a => {
+      const name = a.name.toLowerCase()
+      const spec = a.professional.specialty.toLowerCase()
+      const city = a.professional.practice_city.toLowerCase()
+      return words.every(w => name.includes(w) || spec.includes(w) || city.includes(w))
+    }).slice(0, 20)
 
     if (matches.length === 0) {
       results.innerHTML = '<p class="text-sm text-gray-400" style="text-align:center;padding:16px">No alumni found</p>'
@@ -348,13 +350,14 @@ function renderSearchResults(query, container, isMobile) {
     return
   }
 
-  const q = query.toLowerCase()
-  const all = state.alumni.filter(a =>
-    a.name.toLowerCase().includes(q) ||
-    a.professional.specialty.toLowerCase().includes(q) ||
-    a.professional.practice_city.toLowerCase().includes(q) ||
-    a.professional.practice_state.toLowerCase() === q
-  )
+  const words = query.toLowerCase().split(/\s+/)
+  const all = state.alumni.filter(a => {
+    const name = a.name.toLowerCase()
+    const spec = a.professional.specialty.toLowerCase()
+    const city = a.professional.practice_city.toLowerCase()
+    const st = a.professional.practice_state.toLowerCase()
+    return words.every(w => name.includes(w) || spec.includes(w) || city.includes(w) || st === w)
+  })
   const limit = isMobile ? 15 : 5
   const results = all.slice(0, limit)
   const moreCount = all.length - results.length
