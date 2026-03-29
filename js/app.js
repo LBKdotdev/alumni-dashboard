@@ -12,6 +12,8 @@ import { renderDashboard, wireDashboardEvents } from './views/dashboard.js'
 import { renderProjects, wireProjectsEvents } from './views/projects.js'
 import { renderOutreachPanel, closeOutreachPanel } from './panels/outreach.js'
 
+let _focusRestore = null
+
 // ── Data Init ──
 
 async function loadData() {
@@ -73,6 +75,12 @@ function render() {
   const state = getState()
   const root = document.getElementById('root')
 
+  // Capture focused input before DOM rebuild
+  const focused = document.activeElement
+  if (focused && focused.id && (focused.tagName === 'INPUT' || focused.tagName === 'TEXTAREA')) {
+    _focusRestore = { id: focused.id, pos: focused.selectionStart }
+  }
+
   destroyCharts()
 
   switch (state.currentView) {
@@ -114,6 +122,18 @@ function render() {
 
   // Wire events after render
   wireEvents()
+
+  // Restore focus to active input after DOM rebuild
+  if (_focusRestore) {
+    const el = document.getElementById(_focusRestore.id)
+    if (el) {
+      el.focus()
+      if (typeof el.setSelectionRange === 'function' && _focusRestore.pos != null) {
+        el.setSelectionRange(_focusRestore.pos, _focusRestore.pos)
+      }
+    }
+    _focusRestore = null
+  }
 }
 
 function updateNav(state) {

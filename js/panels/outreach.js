@@ -13,7 +13,7 @@ let sent = false
 // ── Helpers ──
 
 function buildMailtoUrl(email, subject, body) {
-  return `mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+  return `https://outlook.office.com/mail/deeplink/compose?to=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
 // ── Render ──
@@ -133,8 +133,7 @@ function wireOutreachEvents(draft) {
       e.preventDefault()
       const subject = document.getElementById('outreach-subject')?.value || ''
       const body = document.getElementById('outreach-body')?.value || ''
-      const url = buildMailtoUrl(draft.email, subject, body)
-      window.location.href = url
+      window.open(buildMailtoUrl(draft.email, subject, body), '_blank')
     })
   }
 
