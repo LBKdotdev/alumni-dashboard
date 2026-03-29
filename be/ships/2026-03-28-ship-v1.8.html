@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ship v1.8 — Input Focus Fix + Outlook Email</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 18px 20px; margin-bottom: 12px; }
+  .card-title { color: #6FC3DF; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .card-detail { color: #aaa; font-size: 13px; }
+  .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e1e1e; }
+  .stat-label { color: #888; font-size: 13px; }
+  .stat-value { color: #fff; font-weight: 600; font-size: 13px; }
+  .file-list { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: #888; }
+  .file-list span { color: #6FC3DF; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report — v1.8</span>
+</nav>
+<div class="container">
+  <h1>Ship v1.8</h1>
+  <p class="subtitle">Input Focus Fix + Outlook Email Integration</p>
+
+  <h2>What Shipped</h2>
+
+  <div class="card">
+    <div class="card-title">Input Focus Persistence</div>
+    <p class="card-detail">Fixed a bug where typing in any input field (search, filters, outreach fields) lost focus after every keystroke. The full DOM re-render on state change was destroying and rebuilding inputs. Now captures the active element and cursor position before render and restores them after, so typing feels natural.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Outlook Web Email Integration</div>
+    <p class="card-detail">Replaced mailto: protocol (unreliable — requires system-level email handler config) with Outlook web compose deeplink. "Send Email" now opens a new tab to Outlook with To, Subject, and Body pre-filled. Works on any machine, any browser, no configuration needed.</p>
+  </div>
+
+  <h2>Version</h2>
+  <div class="stat-row"><span class="stat-label">Version</span><span class="stat-value">1.8</span></div>
+  <div class="stat-row"><span class="stat-label">Commit</span><span class="stat-value">8252901</span></div>
+  <div class="stat-row"><span class="stat-label">Branch</span><span class="stat-value">main</span></div>
+  <div class="stat-row"><span class="stat-label">Pushed</span><span class="stat-value">origin/main</span></div>
+
+  <h2>Commits Included</h2>
+  <div class="card">
+    <div class="file-list">
+      <span>8252901</span> ~U: fix input focus loss on re-render, switch email to Outlook web compose
+    </div>
+  </div>
+
+  <h2>Files Changed</h2>
+  <div class="card">
+    <div class="file-list">
+      <span>js/app.js</span> — focus capture/restore around render cycle<br>
+      <span>js/panels/outreach.js</span> — Outlook web deeplink, window.open for send button
+    </div>
+  </div>
+
+  <h2>Deploy Target</h2>
+  <p>Private GitHub repo (LBKdotdev/alumni-dashboard). Local testing via Python HTTP server. Production hosting pending Cloudflare Pages deployment.</p>
+
+  <div class="footer">
+    Generated 2026-03-28 — Be / Alumni Relationship Engine
+  </div>
+</div>
+</body>
+</html>
