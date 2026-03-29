@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estimate: Conference Features — 2 Boards, 6 Items, 22 pts</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 18px 20px; margin-bottom: 12px; }
+  .card-title { color: #6FC3DF; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .card-pts { color: #d4a24a; font-size: 12px; font-weight: 600; }
+  .card-detail { color: #aaa; font-size: 13px; margin-top: 8px; }
+  .board-header { background: #1A1A1A; border: 1px solid #6FC3DF; border-radius: 8px; padding: 16px 20px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+  .board-name { color: #fff; font-size: 16px; font-weight: 700; }
+  .board-pts { color: #d4a24a; font-size: 14px; font-weight: 700; }
+  .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e1e1e; }
+  .stat-label { color: #888; font-size: 13px; }
+  .stat-value { color: #fff; font-weight: 600; font-size: 13px; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Estimate — Conference Features</span>
+</nav>
+<div class="container">
+  <h1>Conference Features Estimate</h1>
+  <p class="subtitle">2 boards &middot; 6 items &middot; 22 points &middot; Pure front-end</p>
+
+  <h2>Boards Overview</h2>
+  <div class="stat-row"><span class="stat-label">Total Boards</span><span class="stat-value">2</span></div>
+  <div class="stat-row"><span class="stat-label">Total Items</span><span class="stat-value">6</span></div>
+  <div class="stat-row"><span class="stat-label">Total Points</span><span class="stat-value">22</span></div>
+  <div class="stat-row"><span class="stat-label">Backend dependency</span><span class="stat-value">None</span></div>
+  <div class="stat-row"><span class="stat-label">Boards 1–5 (prior)</span><span class="stat-value">92 pts — all complete</span></div>
+  <div class="stat-row"><span class="stat-label">Project total after</span><span class="stat-value">114 pts</span></div>
+
+  <h2>Board 6: NaciLink Identity + Conference Foundation (13 pts)</h2>
+
+  <div class="board-header">
+    <span class="board-name">Board 6</span>
+    <span class="board-pts">13 pts &middot; 3 items</span>
+  </div>
+
+  <p style="color:#999;font-size:13px;margin-bottom:16px">Highest value first — establish NaciLink as a real product and give Lisa the two features she'll use before she even walks into AACOM. PWA install makes it feel native. Branding makes it look professional. Vegas filter gives her immediate conference value.</p>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">1. PWA manifest + home screen install</span>
+      <span class="card-pts">3 pts &middot; ~A</span>
+    </div>
+    <p class="card-detail">manifest.json with NaciLink name, emblem icons at 192px + 512px, theme/background #111111, display: standalone. Meta tags in index.html. Apple touch icon for iOS. Lisa taps "Add to Home Screen" — NaciLink icon, full-screen, no browser chrome.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">2. NaciLink branding pass</span>
+      <span class="card-pts">5 pts &middot; ~U</span>
+    </div>
+    <p class="card-detail">Login gate: NaciLink logo finalized (sizing, spacing, centering). Sidebar: replace "Alumni Engine" text + prototype badge with NaciLink emblem + "NaciLink" text. Mobile nav header. Browser tab title. Favicon (already done). Consistent identity across every surface — the tool has a name, make sure every pixel knows it.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">3. Vegas filter preset</span>
+      <span class="card-pts">5 pts &middot; ~A</span>
+    </div>
+    <p class="card-detail">Teal pill button "AACOM Vegas" in Directory filter bar with location pin icon. One tap sets state filter to NV, shows "168 alumni in Nevada" count. Second tap clears. Visible on mobile without scrolling — above the alumni cards, below search. Also add to Projects view on the AACOM Vegas project as a quick-access button.</p>
+  </div>
+
+  <h2>Board 7: Conference Interaction Features (9 pts)</h2>
+
+  <div class="board-header">
+    <span class="board-name">Board 7 ⛔ blocked — Board 6</span>
+    <span class="board-pts">9 pts &middot; 3 items</span>
+  </div>
+
+  <p style="color:#999;font-size:13px;margin-bottom:16px">The live conference features — what Lisa uses while standing in a crowd. Depends on Board 6 being done (branding and PWA are the container these features live in).</p>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">4. "Met at AACOM" quick tag</span>
+      <span class="card-pts">3 pts &middot; ~A</span>
+    </div>
+    <p class="card-detail">Floating action button on profile view — teal circle, handshake icon. One tap adds "met-at-aacom" tag + touchpoint "Met at AACOM 2026." Button turns green with checkmark. Idempotent — already tagged shows green. Directory view: add "Met at AACOM" as a filter chip alongside the Vegas preset. Post-conference follow-up list in one tap.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">5. Conference quick lookup</span>
+      <span class="card-pts">3 pts &middot; ~A</span>
+    </div>
+    <p class="card-detail">Dedicated search-first view accessible from mobile nav. Full-screen, auto-focused search input, large result cards (name, specialty, city only). Tap result → profile slides in. Back returns to search with results intact. No sidebar, no clutter. Spotlight-style: pull up, type, find, done. Optimized for standing in a crowd with one hand on a phone.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">6. Alumni-to-alumni connection assist</span>
+      <span class="card-pts">3 pts &middot; ~A</span>
+    </div>
+    <p class="card-detail">"Similar Alumni" section at bottom of profile view. 3 alumni who share specialty + state, sorted by city proximity. Lisa meets Dr. A in cardiology → scrolls down → sees 3 cardiologists nearby → "Let me connect you with Dr. B." Simple match: same professional.specialty + same professional.practice_state, exclude current alumni, limit 3.</p>
+  </div>
+
+  <h2>Dependencies</h2>
+  <ul>
+    <li><strong>Board 6 → Board 7:</strong> Branding and PWA must land first. Conference features live inside the NaciLink container — identity before interaction.</li>
+    <li><strong>No backend dependency:</strong> All items are pure front-end. State mutations go through state.js. When Joey ships D1, each mutation gets a fetch() call added. Views don't change.</li>
+    <li><strong>NaciLink logo assets:</strong> Already in assets/ (nacilink-logo.png, nacilink-emblem.png, favicon.ico). Board 6 uses them.</li>
+  </ul>
+
+  <h2>Value Rationale</h2>
+  <ul>
+    <li><strong>Board 6 first:</strong> PWA install + branding is what makes Lisa feel like she's using a product, not a prototype. The Vegas filter is the single highest-value conference feature — it's the first thing she'll use. These three items unlock the conference narrative.</li>
+    <li><strong>Board 7 second:</strong> Interaction features are the "wow" moments — tagging alumni she meets, quick lookup mid-conversation, connecting alumni to each other. These are what make other alumni directors say "I want one." But they only matter if the foundation (Board 6) is solid.</li>
+  </ul>
+
+  <div class="footer">
+    Generated 2026-03-29 — Be / NaciLink
+  </div>
+</div>
+</body>
+</html>

@@ -51,3 +51,19 @@
 - {Lisa's personal notes, add to, 3 alumni profiles} · 3 · ~A ✅
 - {outreach activity stats, add to, dashboard view} · 3 · ~A ✅
 - {Rolodex and sidebar, test across, desktop and mobile} · 3 · ~T ✅
+
+## Board 6: NaciLink Identity + Conference Foundation (13 pts)
+### Ready
+- {PWA manifest + home screen install, add to, index.html + manifest.json} · 3 · ~A
+- {NaciLink branding pass, update across, login gate + sidebar + mobile nav + tab title} · 5 · ~U
+- {Vegas filter preset, add to, directory view filter bar} · 5 · ~A
+### In Progress
+### Done
+
+## Board 7: Conference Interaction Features (9 pts) ⛔ blocked — Board 6
+### Ready
+- {Met at AACOM quick tag, add to, profile view + directory filter} · 3 · ~A
+- {conference quick lookup, add to, mobile nav as new view} · 3 · ~A
+- {alumni-to-alumni connection assist, add to, profile view} · 3 · ~A
+### In Progress
+### Done
