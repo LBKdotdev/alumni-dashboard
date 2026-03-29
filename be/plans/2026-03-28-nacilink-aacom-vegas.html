@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan: NaciLink Live for AACOM Vegas</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  h3 { color: #fff; font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul, ol { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 18px 20px; margin-bottom: 12px; }
+  .card-title { color: #6FC3DF; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .card-detail { color: #aaa; font-size: 13px; }
+  .banner { background: #1a2a1a; border: 1px solid #2a4a2a; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; text-align: center; }
+  .banner-text { color: #4ade80; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .phase { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 20px 24px; margin-bottom: 16px; }
+  .phase-num { color: #6FC3DF; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+  .phase-title { color: #fff; font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+  .phase-detail { color: #aaa; font-size: 13px; }
+  .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e1e1e; }
+  .stat-label { color: #888; font-size: 13px; }
+  .stat-value { color: #fff; font-weight: 600; font-size: 13px; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+  .scenario { border-left: 3px solid #6FC3DF; padding-left: 16px; margin: 12px 0; }
+  .scenario-title { color: #fff; font-size: 13px; font-weight: 600; }
+  .scenario-detail { color: #999; font-size: 13px; font-style: italic; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Plan — NaciLink at AACOM Vegas</span>
+</nav>
+<div class="container">
+  <h1>NaciLink Live for AACOM Vegas</h1>
+  <p class="subtitle">Get NaciLink into Lisa's hands — on her phone, at the conference, ready to use.</p>
+
+  <div class="banner">
+    <span class="banner-text">Plan — Awaiting Approval</span>
+  </div>
+
+  <h2>Intent</h2>
+  <p>Deploy NaciLink so Dr. Warren can access it from her phone at AACOM Vegas. She walks the conference floor with 6,282 alumni profiles in her pocket — searchable by name, filterable by specialty, with notes and outreach built in. Every conversation becomes informed. Every follow-up happens while it's fresh.</p>
+
+  <h2>Purpose</h2>
+  <p>Turn NaciLink from a local prototype into a live tool Lisa can use in the field. The conference is the first real-world test. If it works there — standing in a crowd, pulling up a profile in 3 seconds — it works anywhere.</p>
+
+  <h2>What</h2>
+
+  <div class="phase">
+    <div class="phase-num">Phase 1 — Deploy</div>
+    <div class="phase-title">Get it live on a URL Lisa can hit from her phone</div>
+    <div class="phase-detail">
+      <ul>
+        <li><strong>Cloudflare Pages deploy</strong> — connect the private GitHub repo, deploy to a <code>.pages.dev</code> URL. No build step needed, static files only. Free tier.</li>
+        <li><strong>Cloudflare Access</strong> — gate the site behind email authentication. Only Lisa's email (and yours, and Joey's) can access. Everyone else sees a login wall. Free for up to 50 users.</li>
+        <li><strong>Custom domain (optional)</strong> — <code>nacilink.dev</code> or similar. Or just use the <code>.pages.dev</code> URL for now.</li>
+        <li><strong>HTTPS</strong> — automatic with Cloudflare Pages. Zero config.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-num">Phase 2 — Conference-Ready Features</div>
+    <div class="phase-title">Small additions that make a big difference at AACOM</div>
+    <div class="phase-detail">
+      <ul>
+        <li><strong>Quick lookup mode</strong> — one-tap search from login. Lisa opens NaciLink, types a name, gets the profile. Minimum friction.</li>
+        <li><strong>Vegas filter pre-set</strong> — one-tap filter to show only the 168 Nevada alumni. "Who's local to this conference?"</li>
+        <li><strong>"Met at AACOM" tag</strong> — quick-add tag Lisa taps after meeting someone. Post-conference, she filters by this tag and has her follow-up list.</li>
+        <li><strong>Quick note on mobile</strong> — after a conversation, Lisa adds a note in 10 seconds. "Interested in preceptor role. Follow up re: spring visit." Done before she forgets.</li>
+        <li><strong>Add to Home Screen</strong> — PWA manifest so Lisa can install NaciLink as an app icon on her iPhone. Feels native, launches full-screen, no browser chrome.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-num">Phase 3 — Lisa Prep</div>
+    <div class="phase-title">Brief Lisa before Vegas so she hits the ground running</div>
+    <div class="phase-detail">
+      <ul>
+        <li><strong>15-minute walkthrough</strong> — show her the phone experience. Search, profile, notes, outreach. That's all she needs to know.</li>
+        <li><strong>Pre-load her priority targets</strong> — ask Lisa which alumni she most wants to connect with at AACOM. Add notes to those profiles: "Priority — want to discuss mentorship program."</li>
+        <li><strong>Test on her actual phone</strong> — have her open it, log in with 2001, search a name, add a note. If anything feels off, fix it before she flies to Vegas.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Conference Scenarios</h2>
+
+  <div class="scenario">
+    <div class="scenario-title">Lisa is at the WesternU booth. An alumnus walks up.</div>
+    <div class="scenario-detail">"Dr. Kalekas, class of '03? Let me pull you up..." — sees Internal Medicine, Las Vegas, published researcher, no prior engagement. "Paul, we've been meaning to reach out — your research work is exactly what our students need to see."</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-title">Lisa just had a great conversation. She's walking to the next session.</div>
+    <div class="scenario-detail">Opens NaciLink, searches the name, taps "Add Note" — "Met at AACOM. Interested in advisory board. Wants to host students at his Henderson practice. Follow up March." Tags: "met-at-aacom." 15 seconds. Done.</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-title">Lisa is at dinner with 3 other alumni directors from other schools.</div>
+    <div class="scenario-detail">Someone asks "how do you keep track of 8,000 alumni?" Lisa pulls out her phone and shows NaciLink. "We matched 6,282 through federal records. Every one has specialty, location, phone. I can search anyone right now." The other directors want one. Scotty gets three warm leads.</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-title">Lisa flies home. Monday morning.</div>
+    <div class="scenario-detail">Opens NaciLink on her laptop. Filters by "met-at-aacom" tag. 12 alumni she connected with, each with notes from the conversations. Opens outreach panel, drafts follow-ups. Every lead gets a personalized email within 48 hours of meeting. That's the kind of follow-through that turns a conference handshake into a donor, a mentor, or an advisory board member.</div>
+  </div>
+
+  <h2>Scope</h2>
+  <div class="stat-row"><span class="stat-label">Deploy (Cloudflare Pages + Access)</span><span class="stat-value">~1 hour</span></div>
+  <div class="stat-row"><span class="stat-label">Conference features (Vegas filter, quick tag, PWA)</span><span class="stat-value">~2–3 hours</span></div>
+  <div class="stat-row"><span class="stat-label">Lisa prep + phone test</span><span class="stat-value">15 minutes with Lisa</span></div>
+  <div class="stat-row"><span class="stat-label">Total</span><span class="stat-value">Half a day of work</span></div>
+  <div class="stat-row"><span class="stat-label">Cost</span><span class="stat-value">$0 (Cloudflare free tier)</span></div>
+  <div class="stat-row"><span class="stat-label">Mobile ready</span><span class="stat-value">Already built — keypad login, bottom nav, search overlay, responsive grid</span></div>
+
+  <h2>Constraints</h2>
+  <ul>
+    <li><strong>Data is static</strong> — notes Lisa adds at the conference live in her browser session only. They won't persist across devices or page refreshes. This is a prototype limitation. She should use "Copy to Clipboard" on important notes as a backup until Phase 2B (D1 database) is built.</li>
+    <li><strong>Needs WiFi or cell signal</strong> — the app loads JSON data on startup. No offline mode yet. Vegas conference centers usually have WiFi.</li>
+    <li><strong>Cloudflare Access requires Joey's account</strong> — someone with the Cloudflare account needs to set up Access policies. That's a Joey or Scotty task.</li>
+  </ul>
+
+  <h2>Approach</h2>
+  <ol>
+    <li>Deploy to Cloudflare Pages (connect GitHub repo, deploy)</li>
+    <li>Set up Cloudflare Access (email allowlist: Lisa, Scotty, Joey)</li>
+    <li>Add PWA manifest (home screen install on iPhone)</li>
+    <li>Add "Vegas filter" and "met-at-aacom" quick tag</li>
+    <li>Test on phone</li>
+    <li>Brief Lisa</li>
+    <li>She flies to Vegas armed</li>
+  </ol>
+
+  <div class="footer">
+    Generated 2026-03-28 — Be / NaciLink
+  </div>
+</div>
+</body>
+</html>
