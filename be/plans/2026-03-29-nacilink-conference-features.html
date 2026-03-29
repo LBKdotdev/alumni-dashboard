@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan: NaciLink Conference Features — Front-End Sprint</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  h3 { color: #fff; font-size: 15px; font-weight: 600; margin: 20px 0 8px; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul, ol { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 18px 20px; margin-bottom: 12px; }
+  .card-title { color: #6FC3DF; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .card-pts { color: #d4a24a; font-size: 12px; font-weight: 600; }
+  .card-detail { color: #aaa; font-size: 13px; margin-top: 8px; }
+  .banner { background: #1a2a1a; border: 1px solid #2a4a2a; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; text-align: center; }
+  .banner-text { color: #4ade80; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e1e1e; }
+  .stat-label { color: #888; font-size: 13px; }
+  .stat-value { color: #fff; font-weight: 600; font-size: 13px; }
+  .scenario { border-left: 3px solid #6FC3DF; padding-left: 16px; margin: 12px 0; }
+  .scenario-title { color: #fff; font-size: 13px; font-weight: 600; }
+  .scenario-detail { color: #999; font-size: 13px; font-style: italic; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Plan — Conference Features</span>
+</nav>
+<div class="container">
+  <h1>NaciLink Conference Features</h1>
+  <p class="subtitle">Front-end sprint — everything Scotty can ship while Joey builds the D1 backend.</p>
+
+  <div class="banner">
+    <span class="banner-text">Plan — Awaiting Approval</span>
+  </div>
+
+  <h2>Intent</h2>
+  <p>Build every front-end feature that makes NaciLink a conference weapon. All UI, all state logic, all ready to wire to Joey's API endpoints when they land. Zero throwaway work — every line of code ships to production.</p>
+
+  <h2>Purpose</h2>
+  <p>Lisa walks into AACOM Vegas with NaciLink on her phone feeling like a native app. She can search alumni in 2 seconds, tag people she meets, filter the Vegas list, and look up anyone before a conversation. The front-end is the experience. The backend is the persistence. Scotty owns the experience.</p>
+
+  <h2>Scope</h2>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">1. PWA Manifest — Home Screen Install</span>
+      <span class="card-pts">3 pts</span>
+    </div>
+    <p class="card-detail">Add <code>manifest.json</code> with NaciLink name, icons (circular emblem at 192px and 512px), theme color (#111111), background color (#111111), display: standalone. Add meta tags to index.html: <code>link rel="manifest"</code>, <code>meta name="theme-color"</code>, Apple touch icon. Lisa taps "Add to Home Screen" on Safari — NaciLink icon on her iPhone, launches full-screen, no browser chrome, no URL bar. Feels native.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">2. Vegas Filter Preset</span>
+      <span class="card-pts">3 pts</span>
+    </div>
+    <p class="card-detail">Add an "AACOM Vegas" chip/button to the Directory view filter bar. One tap filters to practice_state = NV. Shows "168 alumni in Nevada" count. Second tap clears the filter. Styled as a teal pill button with a location pin icon. Visible on mobile without scrolling — sits above the alumni list, below the search bar. Lisa opens Directory, taps Vegas, sees her conference list.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">3. "Met at AACOM" Quick Tag</span>
+      <span class="card-pts">5 pts</span>
+    </div>
+    <p class="card-detail">Add a floating action button on the profile view — teal circle, handshake or check icon. One tap adds "met-at-aacom" to the alumni's tags array and adds a touchpoint: "Met at AACOM 2026 — tagged by Dr. Warren." Visual confirmation: button turns green with checkmark, "Tagged" text. If already tagged, button shows as green (idempotent). On Directory view, add "Met at AACOM" as a filter option — Lisa filters post-conference to see everyone she connected with. This is the follow-up list generator.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">4. Conference Quick Lookup</span>
+      <span class="card-pts">5 pts</span>
+    </div>
+    <p class="card-detail">New view: full-screen search optimized for standing in a crowd. Big search input (auto-focused), large result cards (name, specialty, city — nothing else). Tap a result → full profile slides in. Back button returns to search with results preserved. No sidebar, no nav clutter, no dashboard — just search and go. Accessible from a dedicated icon on mobile nav or a gesture. Think iPhone Spotlight: pull down, type, find, done. This is how Lisa uses NaciLink mid-conversation without fumbling through menus.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">5. NaciLink Branding Pass</span>
+      <span class="card-pts">3 pts</span>
+    </div>
+    <p class="card-detail">Wire the NaciLink logo into the login gate (already started — finalize sizing and spacing). Update sidebar brand from "Alumni Engine" to "NaciLink" with the circular emblem. Update mobile nav header. Update page title in browser tab. Update the Be reports to reference NaciLink. The tool has a name now — make sure it shows up everywhere consistently.</p>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="card-title">6. Alumni-to-Alumni Connection Assist</span>
+      <span class="card-pts">3 pts</span>
+    </div>
+    <p class="card-detail">On a profile view, add a "Similar Alumni" section at the bottom — 3 alumni who share the same specialty in the same state or nearby city. Lisa meets Dr. A in cardiology, scrolls down, sees 3 other cardiologists nearby. "Let me connect you with Dr. B — she's 20 minutes from your practice." Lisa becomes a connector, not just a contact collector. Simple matching: same specialty + same state, sorted by city proximity to the viewed alumni.</p>
+  </div>
+
+  <h2>Use Cases at AACOM</h2>
+
+  <div class="scenario">
+    <div class="scenario-title">Pre-conference prep — the night before</div>
+    <div class="scenario-detail">Lisa opens NaciLink on her phone from the hotel. Taps "AACOM Vegas" filter. Scrolls the 168 Nevada alumni. Stars the 10 she most wants to find. Adds notes: "Ask about preceptor interest." She walks in tomorrow with a hit list.</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-title">Booth encounter — someone walks up</div>
+    <div class="scenario-detail">Opens quick lookup. Types "Kalekas." Card pops up: Internal Medicine, Las Vegas, published researcher. Lisa knows exactly who she's talking to before the handshake ends. Taps "Met at AACOM" before the next person walks up.</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-title">Session networking — connecting alumni to each other</div>
+    <div class="scenario-detail">Dr. Chen mentions she's looking for a research partner in cardiology. Lisa opens Dr. Chen's profile, scrolls to "Similar Alumni" — sees 3 cardiologists in her region. "I should introduce you to Dr. Park — she's at Valley Medical, 15 minutes from you." Lisa just added value that no alumni newsletter ever could.</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-title">End of day — hotel debrief</div>
+    <div class="scenario-detail">Lisa filters Directory by "Met at AACOM" tag. 12 profiles tagged today. Each one has a note from the conversation. She exports the CSV, emails it to her assistant: "Start prepping personalized follow-ups for each of these." Her team is working while she sleeps.</div>
+  </div>
+
+  <div class="scenario">
+    <div class="scenario-title">Dinner with other alumni directors</div>
+    <div class="scenario-detail">"How do you track 8,000 alumni?" Lisa pulls out her phone, opens NaciLink from her home screen. Full-screen app, no browser chrome. Searches a name, shows the profile. "We matched 6,282 through federal records." Three alumni directors at the table want one. Scotty gets warm leads.</div>
+  </div>
+
+  <h2>Approach</h2>
+  <ol>
+    <li>PWA manifest + home screen install (foundation — do first)</li>
+    <li>NaciLink branding pass (visual identity locked in)</li>
+    <li>Vegas filter preset (quick win, immediately useful)</li>
+    <li>"Met at AACOM" quick tag (the conference killer feature)</li>
+    <li>Conference quick lookup (the UX differentiator)</li>
+    <li>Alumni-to-alumni connection assist (the "wow" moment)</li>
+  </ol>
+  <p>Order is by dependency then impact. PWA and branding first because they're the container everything lives in. Vegas filter and AACOM tag next because they're the highest-value conference features. Quick lookup and connection assist last because they're the most complex but deliver the biggest "wow."</p>
+
+  <h2>Constraints</h2>
+  <ul>
+    <li><strong>No persistence until Joey ships D1.</strong> Tags and notes added at the conference will live in browser state only. When D1 is ready, wire the state mutations to API calls. The front-end code doesn't change — only the persistence layer underneath it.</li>
+    <li><strong>State module is the integration point.</strong> All mutations go through <code>state.js</code>. When D1 lands, each mutation function gets an <code>await fetch('/api/...')</code> call added. The views and components never know the difference.</li>
+    <li><strong>No new dependencies.</strong> Vanilla JS. No service workers for offline (that's Phase 2). No frameworks. No build tools.</li>
+  </ul>
+
+  <h2>Totals</h2>
+  <div class="stat-row"><span class="stat-label">Items</span><span class="stat-value">6</span></div>
+  <div class="stat-row"><span class="stat-label">Points</span><span class="stat-value">22</span></div>
+  <div class="stat-row"><span class="stat-label">Backend dependency</span><span class="stat-value">None — pure front-end</span></div>
+  <div class="stat-row"><span class="stat-label">Ready to wire to D1</span><span class="stat-value">Yes — state.js is the seam</span></div>
+
+  <div class="footer">
+    Generated 2026-03-29 — Be / NaciLink
+  </div>
+</div>
+</body>
+</html>
