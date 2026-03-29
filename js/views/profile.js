@@ -11,7 +11,7 @@ import {
 } from '../components.js'
 import {
   navigate, goBack, openOutreach, setAddingNote,
-  addNote, addNotable, toggleEngagement, forceRender
+  addNote, addNotable, toggleEngagement, tagAlumni, forceRender
 } from '../state.js'
 
 // Module-scoped transient state (replaces React useState)
@@ -92,12 +92,16 @@ export function renderProfile(alumni, state) {
             ${(alumni.tags?.length || 0) > 0 ? `<div class="flex flex-wrap gap-1 mb-4">${alumni.tags.map(t => renderTagBadge(t)).join('')}</div>` : ''}
 
             <!-- Action Buttons -->
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-2 flex-wrap">
               <button class="btn btn-outline btn-sm" data-action="start-note">
                 <svg class="icon icon-sm"><use href="./css/icons.svg#plus"></use></svg> Add Note
               </button>
               <button class="btn btn-primary btn-sm" data-action="draft-outreach-profile">
                 <svg class="icon icon-sm"><use href="./css/icons.svg#mail"></use></svg> Draft Outreach
+              </button>
+              <button class="btn btn-sm" data-action="tag-met-aacom" style="border-radius:20px;gap:4px;${alumni.tags?.includes('met-at-aacom') ? 'background:var(--green-soft,rgba(34,197,94,0.15));color:var(--green,#22c55e);border-color:var(--green-200,rgba(34,197,94,0.3))' : 'background:transparent;color:#6FC3DF;border:1px solid rgba(111,195,223,0.4)'}">
+                <svg class="icon icon-sm"><use href="./css/icons.svg#${alumni.tags?.includes('met-at-aacom') ? 'check' : 'handshake'}"></use></svg>
+                ${alumni.tags?.includes('met-at-aacom') ? 'Met at AACOM ✓' : 'Met at AACOM'}
               </button>
             </div>
           </div>
@@ -305,6 +309,11 @@ export function wireProfileEvents(state) {
   // Cancel Note
   document.querySelectorAll('[data-action="cancel-note"]').forEach(el =>
     el.addEventListener('click', () => { noteText = ''; setAddingNote(false) })
+  )
+
+  // Met at AACOM tag
+  document.querySelectorAll('[data-action="tag-met-aacom"]').forEach(el =>
+    el.addEventListener('click', () => tagAlumni(alumni.id, 'met-at-aacom'))
   )
 
   // Start Notable

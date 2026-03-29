@@ -109,6 +109,10 @@ export function renderDirectory(state) {
         <svg class="icon icon-sm" style="width:14px;height:14px"><use href="./css/icons.svg#map-pin"></use></svg>
         AACOM Vegas
       </button>
+      <button class="btn btn-sm" data-action="met-aacom-filter" style="border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;gap:4px;${(directoryFilters.tags?.[0] === 'met-at-aacom') ? 'background:var(--green-soft,rgba(34,197,94,0.15));color:var(--green,#22c55e);border-color:var(--green-200,rgba(34,197,94,0.3))' : 'background:transparent;color:#6FC3DF;border:1px solid rgba(111,195,223,0.4)'}">
+        <svg class="icon icon-sm" style="width:14px;height:14px"><use href="./css/icons.svg#handshake"></use></svg>
+        Met at AACOM
+      </button>
       ${renderCampusToggle(directoryFilters.campus, 'dir-campus', 'sm')}
       <select class="select" data-action="filter-specialty"><option value="all">All Specialties</option>${specOpts}</select>
       <select class="select" data-action="filter-engagement"><option value="all">All Engagement</option>${engOpts}</select>
@@ -196,6 +200,16 @@ export function wireDirectoryEvents(state) {
       currentPage = 0
       const current = state.directoryFilters.practiceState
       setDirectoryFilters({ practiceState: current === 'NV' ? 'all' : 'NV' })
+    })
+  }
+
+  // Met at AACOM filter toggle
+  const metBtn = document.querySelector('[data-action="met-aacom-filter"]')
+  if (metBtn) {
+    metBtn.addEventListener('click', () => {
+      currentPage = 0
+      const current = state.directoryFilters.tags
+      setDirectoryFilters({ tags: current?.[0] === 'met-at-aacom' ? [] : ['met-at-aacom'] })
     })
   }
 

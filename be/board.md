@@ -63,8 +63,8 @@
 ## Board 7: Conference Interaction Features (9 pts)
 ✅ unblocked — Board 6 complete
 ### Ready
-- {Met at AACOM quick tag, add to, profile view + directory filter} · 3 · ~A
 - {conference quick lookup, add to, mobile nav as new view} · 3 · ~A
 - {alumni-to-alumni connection assist, add to, profile view} · 3 · ~A
 ### In Progress
 ### Done
+- {Met at AACOM quick tag, add to, profile view + directory filter} · 3 · ~A ✅

@@ -172,6 +172,22 @@ export function addNotable(alumniId, notable) {
   }))
 }
 
+export function tagAlumni(alumniId, tag) {
+  updateAlumni(alumniId, a => {
+    if (a.tags.includes(tag)) return a
+    const touchpoint = {
+      date: new Date().toISOString().split('T')[0],
+      type: 'tag',
+      icon: '\u{1F91D}',
+      title: `Tagged: ${tag.replace(/-/g, ' ')}`,
+      detail: `Tagged by Dr. Warren`,
+      added_by: 'Dr. Warren',
+      source: 'manual',
+    }
+    return { ...a, tags: [...a.tags, tag], touchpoints: [touchpoint, ...a.touchpoints] }
+  })
+}
+
 // ── Outreach Panel ──
 
 export function openOutreach(draft) {
