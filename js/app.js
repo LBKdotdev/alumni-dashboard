@@ -418,7 +418,7 @@ function renderSearchResults(query, container, isMobile) {
 
 // ── Login Gate ──
 
-const ACCESS_CODE = '1004'
+const ACCESS_CODE = '2001'
 const PIN_LENGTH = 4
 
 function setupLogin() {
