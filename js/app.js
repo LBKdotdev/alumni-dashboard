@@ -123,8 +123,12 @@ function render() {
   // Handle outreach panel
   renderOutreachPanel(state)
 
-  // Scroll to top on view change
-  window.scrollTo(0, 0)
+  // Scroll to top on view change (not on in-page updates like "show more")
+  if (state._skipScroll) {
+    state._skipScroll = false
+  } else {
+    window.scrollTo(0, 0)
+  }
 
   // Wire events after render
   wireEvents()

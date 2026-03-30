@@ -10,7 +10,7 @@ import {
   renderStatusDot, renderFerpaNotice, engagementConfig
 } from '../components.js'
 import {
-  navigate, goBack, openOutreach, setAddingNote,
+  getState, navigate, goBack, openOutreach, setAddingNote,
   addNote, addNotable, toggleEngagement, tagAlumni, forceRender
 } from '../state.js'
 
@@ -300,7 +300,7 @@ function renderSimilarAlumni(alumni, allAlumni) {
           </a>
         `).join('')}
       </div>
-      ${moreCount > 0 ? `<button data-action="show-more-similar" style="width:100%;margin-top:12px;padding:8px;border-radius:8px;border:1px solid rgba(111,195,223,0.3);background:transparent;color:#6FC3DF;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='rgba(111,195,223,0.08)'" onmouseout="this.style.background='transparent'">Show ${moreCount} more</button>` : ''}
+      ${moreCount > 0 ? `<button data-action="show-more-similar" style="width:100%;margin-top:12px;padding:8px;border-radius:8px;border:1px solid rgba(111,195,223,0.3);background:transparent;color:#6FC3DF;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='rgba(111,195,223,0.08)'" onmouseout="this.style.background='transparent'">Show all ${similar.length}</button>` : ''}
     </div>`
 }
 
@@ -356,9 +356,14 @@ export function wireProfileEvents(state) {
     el.addEventListener('click', () => tagAlumni(alumni.id, 'met-at-aacom'))
   )
 
-  // Show more similar
+  // Show all similar — skip scroll so page stays in place
   document.querySelectorAll('[data-action="show-more-similar"]').forEach(el =>
-    el.addEventListener('click', () => { similarShown += 3; forceRender() })
+    el.addEventListener('click', () => {
+      similarShown = 9999
+      const state = getState()
+      state._skipScroll = true
+      forceRender()
+    })
   )
 
   // Start Notable
