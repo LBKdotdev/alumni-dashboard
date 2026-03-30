@@ -275,7 +275,7 @@ function renderSimilarAlumni(alumni, allAlumni) {
     a.id !== alumni.id &&
     a.professional.specialty === alumni.professional.specialty &&
     a.professional.practice_state === alumni.professional.practice_state
-  ).slice(0, 3)
+  ).slice(0, 5)
 
   if (similar.length === 0) return ''
 
@@ -285,14 +285,14 @@ function renderSimilarAlumni(alumni, allAlumni) {
       <p class="text-xs text-gray-400 mb-3">${alumni.professional.specialty} in ${alumni.professional.practice_state} — potential connections</p>
       <div class="space-y-2">
         ${similar.map(a => `
-          <button class="flex items-center gap-3" data-action="view-similar" data-id="${a.id}" style="width:100%;text-align:left;padding:10px 12px;border-radius:8px;transition:background 0.15s;cursor:pointer;background:transparent;border:1px solid var(--gray-100)" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">
+          <div data-action="view-similar" data-id="${a.id}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;border:1px solid var(--gray-100);transition:background 0.15s" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">
             <div style="width:36px;height:36px;border-radius:50%;background:var(--burgundy,#8B2230);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;flex-shrink:0">${getInitials(a.name)}</div>
             <div style="min-width:0;flex:1">
               <div class="text-sm font-semibold" style="color:var(--gray-900)">${a.name}, ${a.credentials}</div>
               <div class="text-xs text-gray-500">${a.professional.practice_city}, ${a.professional.practice_state}${a.professional.practice_name ? ' &middot; ' + a.professional.practice_name : ''}</div>
             </div>
             <svg class="icon icon-sm" style="color:var(--gray-300);flex-shrink:0"><use href="./css/icons.svg#chevron-right"></use></svg>
-          </button>
+          </div>
         `).join('')}
       </div>
     </div>`
