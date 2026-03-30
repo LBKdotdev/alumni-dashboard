@@ -19,6 +19,7 @@ let noteText = ''
 let noteAuthor = 'Dr. Warren'
 let notableText = ''
 let addingNotable = false
+let similarShown = 3
 
 // ── Render ──
 
@@ -275,16 +276,19 @@ function renderSimilarAlumni(alumni, allAlumni) {
     a.id !== alumni.id &&
     a.professional.specialty === alumni.professional.specialty &&
     a.professional.practice_state === alumni.professional.practice_state
-  ).slice(0, 5)
+  )
 
   if (similar.length === 0) return ''
+
+  const shown = similar.slice(0, similarShown)
+  const moreCount = similar.length - similarShown
 
   return `
     <div class="card" style="padding:24px;margin-bottom:20px">
       <h2 class="text-sm font-semibold text-gray-400 mb-3" style="text-transform:uppercase;letter-spacing:0.05em;padding-left:12px;border-left:3px solid #6FC3DF">Similar Alumni</h2>
-      <p class="text-xs text-gray-400 mb-3">${alumni.professional.specialty} in ${alumni.professional.practice_state} — potential connections</p>
-      <div class="space-y-2">
-        ${similar.map(a => `
+      <p class="text-xs text-gray-400 mb-3">${alumni.professional.specialty} in ${alumni.professional.practice_state} — ${similar.length} potential connections</p>
+      <div class="space-y-2" id="similar-list">
+        ${shown.map(a => `
           <div data-action="view-similar" data-id="${a.id}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;border:1px solid var(--gray-100);transition:background 0.15s" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">
             <div style="width:36px;height:36px;border-radius:50%;background:var(--burgundy,#8B2230);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;flex-shrink:0">${getInitials(a.name)}</div>
             <div style="min-width:0;flex:1">
@@ -295,6 +299,7 @@ function renderSimilarAlumni(alumni, allAlumni) {
           </div>
         `).join('')}
       </div>
+      ${moreCount > 0 ? `<button data-action="show-more-similar" style="width:100%;margin-top:12px;padding:8px;border-radius:8px;border:1px solid rgba(111,195,223,0.3);background:transparent;color:#6FC3DF;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='rgba(111,195,223,0.08)'" onmouseout="this.style.background='transparent'">Show ${moreCount} more</button>` : ''}
     </div>`
 }
 
@@ -308,7 +313,7 @@ export function wireProfileEvents(state) {
 
   // Back
   document.querySelectorAll('[data-action="go-back"]').forEach(el =>
-    el.addEventListener('click', () => goBack())
+    el.addEventListener('click', () => { similarShown = 3; goBack() })
   )
 
   // Add Note button — scroll to notes section after render
@@ -351,7 +356,12 @@ export function wireProfileEvents(state) {
 
   // Similar alumni links
   document.querySelectorAll('[data-action="view-similar"]').forEach(el =>
-    el.addEventListener('click', () => navigate('profile', el.dataset.id))
+    el.addEventListener('click', () => { similarShown = 3; navigate('profile', el.dataset.id) })
+  )
+
+  // Show more similar
+  document.querySelectorAll('[data-action="show-more-similar"]').forEach(el =>
+    el.addEventListener('click', () => { similarShown += 3; forceRender() })
   )
 
   // Start Notable
