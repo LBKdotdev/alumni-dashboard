@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inspect: NaciLink — Where We Are</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 18px 20px; margin-bottom: 12px; }
+  .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e1e1e; }
+  .stat-label { color: #888; font-size: 13px; }
+  .stat-value { color: #fff; font-weight: 600; font-size: 13px; }
+  .done { color: #4ade80; }
+  .pending { color: #d4a24a; }
+  .blocked { color: #f87171; }
+  .section-title { color: #6FC3DF; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Inspect — NaciLink</span>
+</nav>
+<div class="container">
+  <h1>NaciLink — Where We Are</h1>
+  <p class="subtitle">Alumni Relationship Engine for WesternU &middot; Product Owner: Scotty Ledel</p>
+
+  <h2>What It Is</h2>
+  <p>A tool that puts 6,282 alumni profiles in Lisa Warren's hands — searchable, filterable, with outreach built in. Originally "Alumni Relationship Engine," now branded as <strong>NaciLink</strong>. Named after Lake Nacimiento where the concept was born. Built with vanilla HTML/CSS/JS, zero frameworks, zero dependencies beyond Chart.js.</p>
+
+  <h2>The Numbers</h2>
+  <div class="stat-row"><span class="stat-label">Alumni records</span><span class="stat-value">6,282</span></div>
+  <div class="stat-row"><span class="stat-label">With phone numbers</span><span class="stat-value">6,280</span></div>
+  <div class="stat-row"><span class="stat-label">With email</span><span class="stat-value">34 (Apify enriched)</span></div>
+  <div class="stat-row"><span class="stat-label">Notable achievements flagged</span><span class="stat-value">5,795</span></div>
+  <div class="stat-row"><span class="stat-label">Nevada / Vegas area</span><span class="stat-value">168</span></div>
+  <div class="stat-row"><span class="stat-label">Class year range</span><span class="stat-value">1982–2025</span></div>
+  <div class="stat-row"><span class="stat-label">Data source</span><span class="stat-value">NPPES federal registry + Apify enrichment</span></div>
+
+  <h2>What's Built (All Complete)</h2>
+  <div class="stat-row"><span class="stat-label">Boards shipped</span><span class="stat-value done">7 of 7</span></div>
+  <div class="stat-row"><span class="stat-label">Story points delivered</span><span class="stat-value done">114 of 114</span></div>
+  <div class="stat-row"><span class="stat-label">Commits</span><span class="stat-value">99</span></div>
+  <div class="stat-row"><span class="stat-label">Be artifacts</span><span class="stat-value">38 (13 plans, 15 builds, 9 ships, 1 retro)</span></div>
+
+  <div class="card">
+    <div class="section-title">Views</div>
+    <ul>
+      <li><strong>Queue</strong> — morning briefing with triggered outreach cards</li>
+      <li><strong>Alumni Directory</strong> — searchable, filterable, CSV export, Vegas filter, Met at AACOM filter</li>
+      <li><strong>Profile</strong> — full alumni detail with notes, outreach, engagement, similar alumni, AACOM tag</li>
+      <li><strong>Projects</strong> — campaign management (AACOM Vegas is live with checklist + alumni list)</li>
+      <li><strong>Dashboard</strong> — charts, stats, enrichment metrics, outreach activity</li>
+      <li><strong>Lookup</strong> — conference quick search, big input, 20 results, one-tap to profile</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Features</div>
+    <ul>
+      <li>Login gate with PIN (2001) — keypad on mobile, text input on desktop</li>
+      <li>Search works in any word order — "Warren Lisa" finds "Lisa Warren"</li>
+      <li>Outreach panel with Outlook web email integration</li>
+      <li>CSV export on directory and projects</li>
+      <li>Personal notes and touchpoint tracking</li>
+      <li>"Met at AACOM" one-tap tag with directory filter</li>
+      <li>Similar alumni connections (same specialty + state)</li>
+      <li>AACOM Vegas filter — 168 Nevada alumni in one tap</li>
+      <li>PWA manifest — installs as app on iPhone home screen</li>
+      <li>NaciLink branding — logo, emblem, favicon, consistent identity</li>
+      <li>Fully mobile responsive — bottom nav, keypad login, touch-friendly</li>
+    </ul>
+  </div>
+
+  <h2>What's Not Done</h2>
+  <div class="card">
+    <div class="section-title" style="color:#d4a24a">Blocked on Joey</div>
+    <ul>
+      <li><strong>D1 backend</strong> — Cloudflare Worker + D1 database for real persistence. Notes and tags currently live in browser memory only. Joey said he'd get on it.</li>
+      <li><strong>Cloudflare Pages deploy</strong> — need account access to push it live on a URL Lisa can hit from her phone</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="color:#d4a24a">Ready When Backend Lands</div>
+    <ul>
+      <li><strong>Wire state.js to API</strong> — every mutation goes through state.js already. Add fetch() calls when endpoints exist. Views don't change.</li>
+      <li><strong>Cloudflare Access</strong> — email-based login replacing the PIN. Free tier.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="section-title" style="color:#d4a24a">Future Ideas (Parked)</div>
+    <ul>
+      <li>Business card OCR for enrichment</li>
+      <li>Offline mode / service worker</li>
+      <li>Multi-school support (sell to other universities)</li>
+      <li>SOC 2 compliance path ($30K–$48K when revenue justifies it)</li>
+      <li>12 enhancement ideas banked in plan-last-mile-v2.html</li>
+    </ul>
+  </div>
+
+  <h2>The Business</h2>
+  <div class="card">
+    <ul>
+      <li><strong>Product Owner:</strong> Dr. Lisa Warren (friend of 25 years)</li>
+      <li><strong>POR:</strong> Scotty Ledel</li>
+      <li><strong>Architect:</strong> Joey (BFF since age 14, building D1 backend)</li>
+      <li><strong>Goal:</strong> Launch Scotty's consulting practice — NaciLink is the first client project</li>
+      <li><strong>Pricing target:</strong> $5K setup + $1,200/mo retainer, or $750/mo friends rate</li>
+      <li><strong>Market:</strong> ~200 health sciences universities in the US, all using bloated tools they hate</li>
+      <li><strong>Competitive edge:</strong> NPPES federal enrichment (nobody else has this), purpose-built UX, 10x cheaper than Blackbaud/Salesforce</li>
+    </ul>
+  </div>
+
+  <h2>Git Status</h2>
+  <div class="stat-row"><span class="stat-label">Branch</span><span class="stat-value">main</span></div>
+  <div class="stat-row"><span class="stat-label">Tree</span><span class="stat-value done">Clean</span></div>
+  <div class="stat-row"><span class="stat-label">Remote</span><span class="stat-value">Up to date with origin</span></div>
+  <div class="stat-row"><span class="stat-label">Repo</span><span class="stat-value">Private (LBKdotdev/alumni-dashboard)</span></div>
+  <div class="stat-row"><span class="stat-label">Version</span><span class="stat-value">v1.8</span></div>
+
+  <div class="footer">
+    Generated 2026-03-29 — Be / NaciLink
+  </div>
+</div>
+</body>
+</html>
