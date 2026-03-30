@@ -70,8 +70,13 @@ function updateAlumni(alumniId, fn) {
 // ── Navigation ──
 
 export function navigate(view, alumniId) {
+  // Track root view — where the user was before entering profile land
+  const rootView = view === 'profile' && _state.currentView !== 'profile'
+    ? _state.currentView
+    : _state.rootView || _state.currentView
   update({
     previousView: _state.currentView,
+    rootView: rootView,
     currentView: view,
     selectedAlumniId: alumniId || null,
     addingNote: false,

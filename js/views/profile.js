@@ -29,7 +29,8 @@ export function renderProfile(alumni, state) {
   const lastConnection = getLastConnection(alumni)
   const nextAction = alumni.suggested_next_action
   const isOverdue = nextAction?.due_date && daysOverdue(nextAction.due_date) > 0
-  const backLabel = state.previousView === 'directory' ? 'Directory' : 'Queue'
+  const backView = state.previousView === 'profile' ? (state.rootView || 'queue') : (state.previousView || 'queue')
+  const backLabel = backView === 'directory' ? 'Directory' : backView === 'lookup' ? 'Lookup' : backView === 'projects' ? 'Projects' : 'Queue'
 
   return `
     <div style="max-width:768px">
@@ -311,9 +312,10 @@ export function wireProfileEvents(state) {
     : null
   if (!alumni) return
 
-  // Back
+  // Back — always returns to the root view (directory, queue, lookup), not another profile
+  const backView = state.previousView === 'profile' ? (state.rootView || 'queue') : (state.previousView || 'queue')
   document.querySelectorAll('[data-action="go-back"]').forEach(el =>
-    el.addEventListener('click', () => { similarShown = 3; goBack() })
+    el.addEventListener('click', () => { similarShown = 3; navigate(backView) })
   )
 
   // Add Note button — scroll to notes section after render
@@ -354,10 +356,14 @@ export function wireProfileEvents(state) {
     el.addEventListener('click', () => tagAlumni(alumni.id, 'met-at-aacom'))
   )
 
-  // Similar alumni links
-  document.querySelectorAll('[data-action="view-similar"]').forEach(el =>
-    el.addEventListener('click', () => { similarShown = 3; navigate('profile', el.dataset.id) })
-  )
+  // Similar alumni — delegated click on the list container
+  const similarList = document.getElementById('similar-list')
+  if (similarList) {
+    similarList.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-action="view-similar"]')
+      if (card) { similarShown = 3; navigate('profile', card.dataset.id) }
+    })
+  }
 
   // Show more similar
   document.querySelectorAll('[data-action="show-more-similar"]').forEach(el =>
