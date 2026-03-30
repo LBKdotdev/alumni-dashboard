@@ -361,11 +361,8 @@ a:hover { text-decoration: underline; }
   border-bottom: 1px solid rgba(139,34,48,0.25);
 }
 .logo-img {
-  height: 36px;
-  width: 36px;
-  margin-bottom: 10px;
-  opacity: 0.95;
-  border-radius: 8px;
+  margin-bottom: 4px;
+  opacity: 0.9;
 }
 .sidebar-title {
   display: flex;
