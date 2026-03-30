@@ -174,7 +174,9 @@ export function addNotable(alumniId, notable) {
 
 export function tagAlumni(alumniId, tag) {
   updateAlumni(alumniId, a => {
-    if (a.tags.includes(tag)) return a
+    if (a.tags.includes(tag)) {
+      return { ...a, tags: a.tags.filter(t => t !== tag) }
+    }
     const touchpoint = {
       date: new Date().toISOString().split('T')[0],
       type: 'tag',
