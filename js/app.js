@@ -123,6 +123,9 @@ function render() {
   // Handle outreach panel
   renderOutreachPanel(state)
 
+  // Scroll to top on view change
+  window.scrollTo(0, 0)
+
   // Wire events after render
   wireEvents()
 
