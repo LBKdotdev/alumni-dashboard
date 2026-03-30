@@ -290,14 +290,14 @@ function renderSimilarAlumni(alumni, allAlumni) {
       <p class="text-xs text-gray-400 mb-3">${alumni.professional.specialty} in ${alumni.professional.practice_state} — ${similar.length} potential connections</p>
       <div class="space-y-2" id="similar-list">
         ${shown.map(a => `
-          <div data-action="view-similar" data-id="${a.id}" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;border:1px solid var(--gray-100);transition:background 0.15s" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">
+          <a href="#profile/${a.id}" class="similar-card" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;cursor:pointer;border:1px solid var(--gray-100);transition:background 0.15s;text-decoration:none;color:inherit" onmouseover="this.style.background='var(--gray-50)'" onmouseout="this.style.background='transparent'">
             <div style="width:36px;height:36px;border-radius:50%;background:var(--burgundy,#8B2230);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:11px;flex-shrink:0">${getInitials(a.name)}</div>
             <div style="min-width:0;flex:1">
               <div class="text-sm font-semibold" style="color:var(--gray-900)">${a.name}, ${a.credentials}</div>
               <div class="text-xs text-gray-500">${a.professional.practice_city}, ${a.professional.practice_state}${a.professional.practice_name ? ' &middot; ' + a.professional.practice_name : ''}</div>
             </div>
             <svg class="icon icon-sm" style="color:var(--gray-300);flex-shrink:0"><use href="./css/icons.svg#chevron-right"></use></svg>
-          </div>
+          </a>
         `).join('')}
       </div>
       ${moreCount > 0 ? `<button data-action="show-more-similar" style="width:100%;margin-top:12px;padding:8px;border-radius:8px;border:1px solid rgba(111,195,223,0.3);background:transparent;color:#6FC3DF;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='rgba(111,195,223,0.08)'" onmouseout="this.style.background='transparent'">Show ${moreCount} more</button>` : ''}
@@ -355,15 +355,6 @@ export function wireProfileEvents(state) {
   document.querySelectorAll('[data-action="tag-met-aacom"]').forEach(el =>
     el.addEventListener('click', () => tagAlumni(alumni.id, 'met-at-aacom'))
   )
-
-  // Similar alumni — delegated click on the list container
-  const similarList = document.getElementById('similar-list')
-  if (similarList) {
-    similarList.addEventListener('click', (e) => {
-      const card = e.target.closest('[data-action="view-similar"]')
-      if (card) { similarShown = 3; navigate('profile', card.dataset.id) }
-    })
-  }
 
   // Show more similar
   document.querySelectorAll('[data-action="show-more-similar"]').forEach(el =>
