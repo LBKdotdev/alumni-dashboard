@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ship v2.1 — Similar Alumni Polish</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 18px 20px; margin-bottom: 12px; }
+  .card-title { color: #6FC3DF; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .card-detail { color: #aaa; font-size: 13px; }
+  .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e1e1e; }
+  .stat-label { color: #888; font-size: 13px; }
+  .stat-value { color: #fff; font-weight: 600; font-size: 13px; }
+  .file-list { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: #888; }
+  .file-list span { color: #6FC3DF; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report — v2.1</span>
+</nav>
+<div class="container">
+  <h1>Ship v2.1 — Similar Alumni Polish</h1>
+  <p class="subtitle">6 fixes from live testing — similar alumni is now fully usable</p>
+
+  <h2>What Shipped</h2>
+
+  <div class="card">
+    <div class="card-title">Similar Alumni Cards Are Clickable</div>
+    <p class="card-detail">Cards now link directly to the alumni's profile using hash navigation. No broken JS events — just anchor links that work every time.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Show All in One Tap</div>
+    <p class="card-detail">Starts with 3 similar alumni. "Show all 150" button reveals the full list in one tap. Page stays in place — no jumping to the top.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Scroll to Top on Navigation</div>
+    <p class="card-detail">Clicking a similar alumni card takes you to their profile and scrolls to the top so you know where you are. Expanding "show all" stays put.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Back Button Leaves a Rope</div>
+    <p class="card-detail">Clicking through similar alumni profiles no longer sends you down a hole. Back button always returns to where you started — Directory, Queue, or Lookup. Not another profile.</p>
+  </div>
+
+  <h2>Version</h2>
+  <div class="stat-row"><span class="stat-label">Version</span><span class="stat-value">2.1</span></div>
+  <div class="stat-row"><span class="stat-label">Previous</span><span class="stat-value">2.0</span></div>
+  <div class="stat-row"><span class="stat-label">Commits</span><span class="stat-value">6</span></div>
+  <div class="stat-row"><span class="stat-label">Branch</span><span class="stat-value">main</span></div>
+  <div class="stat-row"><span class="stat-label">Pushed</span><span class="stat-value">origin/main</span></div>
+
+  <h2>Commits Included</h2>
+  <div class="card">
+    <div class="file-list">
+      <span>d61d176</span> ~F: show all similar, stays in place<br>
+      <span>116c933</span> ~F: scroll to top on view change<br>
+      <span>6142766</span> ~F: anchor links for similar alumni<br>
+      <span>6587d12</span> ~F: back button returns to root view<br>
+      <span>471b9a3</span> ~U: starts with 3, show more<br>
+      <span>5ba40e9</span> ~F: clickable, bumped to 5 then 3
+    </div>
+  </div>
+
+  <div class="footer">
+    Generated 2026-03-29 — Be / NaciLink v2.1
+  </div>
+</div>
+</body>
+</html>
