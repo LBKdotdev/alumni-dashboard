@@ -140,6 +140,13 @@ export function renderDirectory(state) {
 
 // ── Alumni Card ──
 
+function renderConfidenceDot(a) {
+  const tags = a.tags || []
+  if (tags.includes('needs-verification')) return '<span style="width:8px;height:8px;border-radius:50%;background:#ef4444;flex-shrink:0" title="Needs verification"></span>'
+  if (tags.includes('duplicate-review')) return '<span style="width:8px;height:8px;border-radius:50%;background:#d4a24a;flex-shrink:0" title="Duplicate — needs review"></span>'
+  return ''
+}
+
 function renderAlumniCard(a, index) {
   const lastConn = getLastConnection(a)
   const activeEngagements = Object.entries(a.engagement)
@@ -170,6 +177,7 @@ function renderAlumniCard(a, index) {
           <div class="flex items-center gap-2 mb-1">
             <h3 class="text-base font-bold" style="color:var(--gray-900)">${a.name}, ${a.credentials}</h3>
             ${a.engagement.is_vip ? renderVIPBadge() : ''}
+            ${renderConfidenceDot(a)}
             <span class="text-xs text-gray-400 ml-auto flex-shrink-0">Class of ${a.class_year}</span>
           </div>
           <p class="text-sm text-gray-500 mb-1">${a.professional.specialty} &middot; ${a.professional.practice_city}, ${a.professional.practice_state}</p>
