@@ -113,6 +113,9 @@ export function renderDirectory(state) {
         <svg class="icon icon-sm" style="width:14px;height:14px"><use href="./css/icons.svg#handshake"></use></svg>
         Met at AACOM
       </button>
+      <button class="btn btn-sm" data-action="verify-filter" style="border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;gap:4px;${(directoryFilters.tags?.[0] === 'needs-verification') ? 'background:rgba(239,68,68,0.15);color:#ef4444;border-color:rgba(239,68,68,0.3)' : 'background:transparent;color:#ef4444;border:1px solid rgba(239,68,68,0.3)'}">
+        Needs Verification (47)
+      </button>
       ${renderCampusToggle(directoryFilters.campus, 'dir-campus', 'sm')}
       <select class="select" data-action="filter-specialty"><option value="all">All Specialties</option>${specOpts}</select>
       <select class="select" data-action="filter-engagement"><option value="all">All Engagement</option>${engOpts}</select>
@@ -210,6 +213,16 @@ export function wireDirectoryEvents(state) {
       currentPage = 0
       const current = state.directoryFilters.tags
       setDirectoryFilters({ tags: current?.[0] === 'met-at-aacom' ? [] : ['met-at-aacom'] })
+    })
+  }
+
+  // Needs Verification filter toggle
+  const verifyBtn = document.querySelector('[data-action="verify-filter"]')
+  if (verifyBtn) {
+    verifyBtn.addEventListener('click', () => {
+      currentPage = 0
+      const current = state.directoryFilters.tags
+      setDirectoryFilters({ tags: current?.[0] === 'needs-verification' ? [] : ['needs-verification'] })
     })
   }
 
