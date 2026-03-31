@@ -116,6 +116,9 @@ export function renderDirectory(state) {
       <button class="btn btn-sm" data-action="verify-filter" style="border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;gap:4px;${(directoryFilters.tags?.[0] === 'needs-verification') ? 'background:rgba(239,68,68,0.15);color:#ef4444;border-color:rgba(239,68,68,0.3)' : 'background:transparent;color:#ef4444;border:1px solid rgba(239,68,68,0.3)'}">
         Needs Verification (47)
       </button>
+      <button class="btn btn-sm" data-action="duplicate-filter" style="border-radius:20px;padding:4px 14px;font-size:12px;font-weight:700;gap:4px;${(directoryFilters.tags?.[0] === 'duplicate-review') ? 'background:rgba(212,162,74,0.15);color:#d4a24a;border-color:rgba(212,162,74,0.3)' : 'background:transparent;color:#d4a24a;border:1px solid rgba(212,162,74,0.3)'}">
+        Duplicate Review (${alumni.filter(a => a.tags?.includes('duplicate-review')).length})
+      </button>
       ${renderCampusToggle(directoryFilters.campus, 'dir-campus', 'sm')}
       <select class="select" data-action="filter-specialty"><option value="all">All Specialties</option>${specOpts}</select>
       <select class="select" data-action="filter-engagement"><option value="all">All Engagement</option>${engOpts}</select>
@@ -223,6 +226,16 @@ export function wireDirectoryEvents(state) {
       currentPage = 0
       const current = state.directoryFilters.tags
       setDirectoryFilters({ tags: current?.[0] === 'needs-verification' ? [] : ['needs-verification'] })
+    })
+  }
+
+  // Duplicate Review filter toggle
+  const dupeBtn = document.querySelector('[data-action="duplicate-filter"]')
+  if (dupeBtn) {
+    dupeBtn.addEventListener('click', () => {
+      currentPage = 0
+      const current = state.directoryFilters.tags
+      setDirectoryFilters({ tags: current?.[0] === 'duplicate-review' ? [] : ['duplicate-review'] })
     })
   }
 
