@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ship v2.3 — Alumni Recovery + Gap Report</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 18px 20px; margin-bottom: 12px; }
+  .card-title { color: #6FC3DF; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .card-detail { color: #aaa; font-size: 13px; }
+  .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e1e1e; }
+  .stat-label { color: #888; font-size: 13px; }
+  .stat-value { color: #fff; font-weight: 600; font-size: 13px; }
+  .file-list { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: #888; }
+  .file-list span { color: #6FC3DF; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report — v2.3</span>
+</nav>
+<div class="container">
+  <h1>Ship v2.3 — Alumni Recovery + Gap Report</h1>
+  <p class="subtitle">Found the gap. Closed most of it. Built a path for Lisa to close the rest.</p>
+
+  <h2>What Happened</h2>
+  <div class="card">
+    <div class="card-title">The Problem</div>
+    <p class="card-detail">During a live demo, Dr. Robert Warren (Lisa's husband, WesternU DO Class of 2001) wasn't in the system. He's a real alumnus with a real NPI — the pipeline missed him. Investigation revealed 2,289 alumni from Lisa's original 8,166 list were missing.</p>
+  </div>
+
+  <h2>What Shipped</h2>
+
+  <div class="card">
+    <div class="card-title">Phase 1: Strict DO Recovery</div>
+    <p class="card-detail">Searched all 2,289 missing names against the federal NPPES API with strict DO credential matching. Recovered 73 confirmed DO alumni with full data — specialty, location, phone.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Phase 2: Credential-Flexible Recovery</div>
+    <p class="card-detail">Re-searched the remaining 2,216 with looser matching. Found 1,423 results. Kept only the 906 that came back as DO. Removed 517 non-DO matches (MDs, pharmacists, dentists — wrong people with the same names). Clean data over big numbers.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Gap Report on Dashboard</div>
+    <p class="card-detail">Red-bordered card on the dashboard showing "793 alumni not yet matched." One-click CSV download — Lisa gets a spreadsheet with every missing name and graduation year. She reviews it, identifies who matters, and provides corrections.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Dr. Robert Warren Added</div>
+    <p class="card-detail">NPI 1760594717. Family Medicine, Pomona CA, Class of 2001. Manually added during the demo and confirmed through the federal registry.</p>
+  </div>
+
+  <h2>The Numbers</h2>
+  <div class="stat-row"><span class="stat-label">Lisa's original list</span><span class="stat-value">8,166</span></div>
+  <div class="stat-row"><span class="stat-label">Before recovery (this morning)</span><span class="stat-value">6,283</span></div>
+  <div class="stat-row"><span class="stat-label">Recovered (Phase 1 + Phase 2 DO only)</span><span class="stat-value">979</span></div>
+  <div class="stat-row"><span class="stat-label">Bad matches removed</span><span class="stat-value">517</span></div>
+  <div class="stat-row"><span class="stat-label" style="color:#fff;font-weight:700">Total alumni now</span><span class="stat-value" style="color:#4ade80;font-weight:700">7,262</span></div>
+  <div class="stat-row"><span class="stat-label">Match rate</span><span class="stat-value" style="color:#4ade80">89% (was 77%)</span></div>
+  <div class="stat-row"><span class="stat-label">Remaining gap (for Lisa)</span><span class="stat-value">793</span></div>
+
+  <h2>Version</h2>
+  <div class="stat-row"><span class="stat-label">Version</span><span class="stat-value">2.3</span></div>
+  <div class="stat-row"><span class="stat-label">Previous</span><span class="stat-value">2.2</span></div>
+
+  <div class="footer">
+    Generated 2026-03-30 — Be / NaciLink v2.3
+  </div>
+</div>
+</body>
+</html>
