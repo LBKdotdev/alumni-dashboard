@@ -92,6 +92,21 @@ export function renderDashboard(state) {
 
     ${renderOutreachStats(filtered)}
 
+    <!-- Gap Report -->
+    <div class="card" id="gap-report-card" style="padding:20px 24px;margin-bottom:24px;border-left:3px solid var(--red-500,#ef4444);display:none">
+      <div class="flex items-center justify-between flex-wrap gap-3">
+        <div>
+          <h3 class="text-sm font-bold" style="color:var(--red-500,#ef4444)">Alumni Gap Report</h3>
+          <p class="text-xs text-gray-400"><span id="gap-count">0</span> graduates from Lisa's list not yet matched in federal records</p>
+          <p class="text-xs text-gray-400" style="margin-top:4px">May be retired, name changed, practicing internationally, or left medicine</p>
+        </div>
+        <button class="btn btn-outline btn-sm" data-action="download-gap" style="border-color:var(--red-500,#ef4444);color:var(--red-500,#ef4444)">
+          <svg class="icon icon-sm" style="margin-right:4px"><use href="./css/icons.svg#download"></use></svg>
+          Download CSV
+        </button>
+      </div>
+    </div>
+
     ${filtered.length > 0 ? `
     <!-- Charts -->
     <div class="grid grid-2 gap-6 mb-8">
@@ -353,4 +368,29 @@ export function wireDashboardEvents(state) {
     ? alumni
     : alumni.filter(a => a.campus === dashboardCampus)
   createCharts(filtered)
+
+  // Load gap report and wire download
+  fetch('./data/gap-report.json')
+    .then(r => r.ok ? r.json() : [])
+    .then(gap => {
+      if (gap.length === 0) return
+      const card = document.getElementById('gap-report-card')
+      const count = document.getElementById('gap-count')
+      if (card) card.style.display = ''
+      if (count) count.textContent = gap.length
+
+      document.querySelectorAll('[data-action="download-gap"]').forEach(el =>
+        el.addEventListener('click', () => {
+          const csv = 'Name,Graduation Year\n' + gap.map(g => `"${g.name}",${g.year || ''}`).join('\n')
+          const blob = new Blob([csv], { type: 'text/csv' })
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.href = url
+          a.download = 'alumni-gap-report.csv'
+          a.click()
+          URL.revokeObjectURL(url)
+        })
+      )
+    })
+    .catch(() => {})
 }
