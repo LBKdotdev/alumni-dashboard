@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ship v2.5 — Data Integrity Pass</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 18px 20px; margin-bottom: 12px; }
+  .card-title { color: #6FC3DF; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .card-detail { color: #aaa; font-size: 13px; }
+  .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e1e1e; }
+  .stat-label { color: #888; font-size: 13px; }
+  .stat-value { color: #fff; font-weight: 600; font-size: 13px; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Ship Report — v2.5</span>
+</nav>
+<div class="container">
+  <h1>Ship v2.5 — Data Integrity Pass</h1>
+  <p class="subtitle">Stripped every piece of fake data. What's real is real. What's demo is labeled.</p>
+
+  <h2>What Was Removed</h2>
+
+  <div class="card">
+    <div class="card-title">Inflated Publication Counts</div>
+    <p class="card-detail">5,792 alumni had publication numbers from PubMed name searches that matched the wrong people. "Dr. William Chow — 1,738 papers" was actually every W. Chow in medical literature. All removed.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">False PubMed Touchpoints</div>
+    <p class="card-detail">26,911 touchpoints linking specific paper titles to alumni who didn't write them. A family medicine DO in Pomona wasn't publishing about Brazilian dry-cured loin. All removed.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">"published_researcher" Tags</div>
+    <p class="card-detail">5,792 alumni tagged as published researchers based on the inflated counts. All removed.</p>
+  </div>
+
+  <h2>What Was Labeled</h2>
+
+  <div class="card">
+    <div class="card-title">3 Demo Profiles — Fong, Sandefur, Kesler</div>
+    <p class="card-detail">These 3 keep their notes, engagement flags, and touchpoints to show what the tool can do when Lisa starts using it for real. Each shows a red "Demo Data" badge on their profile card so nobody thinks it's real.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Queue — "Demo Scenarios" Banner</div>
+    <p class="card-detail">The 8 queue triggers (practice moves, new credentials, publications) are labeled as demo scenarios. They show system capabilities, not live data.</p>
+  </div>
+
+  <h2>What's Real</h2>
+  <ul>
+    <li><strong>7,309 alumni records</strong> — names, NPI numbers, specialties, practice locations, phone numbers. All from federal NPPES registry.</li>
+    <li><strong>34 emails</strong> — from public practice websites via Apify enrichment.</li>
+    <li><strong>NPI sync touchpoints</strong> — "NPI record matched" timestamps. Real.</li>
+    <li><strong>Gap report</strong> — 793 unmatched alumni with CSV download. Real.</li>
+    <li><strong>47 needs-verification</strong> — name-split recoveries awaiting Lisa's confirmation. Real process.</li>
+  </ul>
+
+  <h2>What's Demo</h2>
+  <ul>
+    <li>Lisa's notes on 3 profiles — she didn't write them</li>
+    <li>Engagement flags on 3 profiles — she didn't set them</li>
+    <li>8 queue triggers — fabricated scenarios</li>
+    <li>Outreach draft templates — not Lisa's voice</li>
+  </ul>
+
+  <h2>The Principle</h2>
+  <p>Real data earns trust. Fake data destroys it. If Lisa tells an alumnus "you have 744 publications" and they have 12, the tool is dead. Better to show less and be right than show more and be wrong.</p>
+
+  <h2>Version</h2>
+  <div class="stat-row"><span class="stat-label">Version</span><span class="stat-value">2.5</span></div>
+  <div class="stat-row"><span class="stat-label">Previous</span><span class="stat-value">2.4</span></div>
+  <div class="stat-row"><span class="stat-label">Data removed</span><span class="stat-value">32,703 fake data points</span></div>
+  <div class="stat-row"><span class="stat-label">Alumni count</span><span class="stat-value">7,309 (unchanged — data cleaned, not deleted)</span></div>
+
+  <div class="footer">
+    Generated 2026-03-30 — Be / NaciLink v2.5
+  </div>
+</div>
+</body>
+</html>
