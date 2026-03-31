@@ -170,6 +170,29 @@ export function toggleEngagement(alumniId, field) {
   }))
 }
 
+export function confirmAlumni(alumniId) {
+  updateAlumni(alumniId, a => ({
+    ...a,
+    tags: a.tags.filter(t => t !== 'needs-verification' && t !== 'recovered-name-split'),
+  }))
+}
+
+export function editAndConfirmAlumni(alumniId, changes) {
+  updateAlumni(alumniId, a => ({
+    ...a,
+    name: changes.name || a.name,
+    class_year: changes.class_year || a.class_year,
+    credentials: changes.credentials || a.credentials,
+    tags: a.tags.filter(t => t !== 'needs-verification' && t !== 'recovered-name-split'),
+    notes: changes.note ? [{ date: new Date().toISOString().split('T')[0], author: 'Dr. Warren', text: changes.note }, ...a.notes] : a.notes,
+  }))
+}
+
+export function removeAlumni(alumniId) {
+  _state.alumni = _state.alumni.filter(a => a.id !== alumniId)
+  if (_renderCallback) _renderCallback()
+}
+
 export function addNotable(alumniId, notable) {
   updateAlumni(alumniId, a => ({
     ...a,

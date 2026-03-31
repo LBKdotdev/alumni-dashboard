@@ -11,7 +11,8 @@ import {
 } from '../components.js'
 import {
   getState, navigate, goBack, openOutreach, setAddingNote,
-  addNote, addNotable, toggleEngagement, tagAlumni, forceRender
+  addNote, addNotable, toggleEngagement, tagAlumni,
+  confirmAlumni, editAndConfirmAlumni, removeAlumni, forceRender
 } from '../state.js'
 
 // Module-scoped transient state (replaces React useState)
@@ -107,6 +108,52 @@ export function renderProfile(alumni, state) {
                 ${alumni.tags?.includes('met-at-aacom') ? 'Met at AACOM ✓' : 'Met at AACOM'}
               </button>
             </div>
+
+            ${alumni.tags?.includes('needs-verification') ? `
+            <!-- Verification Bar -->
+            <div style="margin-top:16px;padding:16px;border-radius:10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2)">
+              <p class="text-xs font-bold" style="color:#ef4444;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Needs Verification</p>
+              <p class="text-xs text-gray-400" style="margin-bottom:12px">This alumni was matched by name-splitting. Please confirm this is a WesternU graduate, edit their info, or remove if wrong person.</p>
+              <div id="verify-edit-form" class="hidden" style="margin-bottom:12px">
+                <div style="display:flex;flex-direction:column;gap:8px">
+                  <div>
+                    <label class="text-xs text-gray-400" style="display:block;margin-bottom:2px">Name</label>
+                    <input type="text" id="verify-name" class="input" value="${alumni.name.replace(/"/g, '&quot;')}" style="font-size:14px">
+                  </div>
+                  <div style="display:flex;gap:8px">
+                    <div style="flex:1">
+                      <label class="text-xs text-gray-400" style="display:block;margin-bottom:2px">Class Year</label>
+                      <input type="number" id="verify-year" class="input" value="${alumni.class_year || ''}" style="font-size:14px">
+                    </div>
+                    <div style="flex:1">
+                      <label class="text-xs text-gray-400" style="display:block;margin-bottom:2px">Credentials</label>
+                      <input type="text" id="verify-cred" class="input" value="${alumni.credentials}" style="font-size:14px">
+                    </div>
+                  </div>
+                  <div>
+                    <label class="text-xs text-gray-400" style="display:block;margin-bottom:2px">Note (optional)</label>
+                    <input type="text" id="verify-note" class="input" placeholder="e.g. Maiden name was Frankel" style="font-size:14px">
+                  </div>
+                  <div style="display:flex;gap:8px;margin-top:4px">
+                    <button class="btn btn-sm" data-action="verify-save" style="background:var(--green,#22c55e);color:#fff;border:none;flex:1">Save & Confirm</button>
+                    <button class="btn btn-outline btn-sm" data-action="verify-cancel" style="flex:1">Cancel</button>
+                  </div>
+                </div>
+              </div>
+              <div id="verify-buttons" class="flex items-center gap-2">
+                <button class="btn btn-sm" data-action="verify-confirm" style="background:var(--green,#22c55e);color:#fff;border:none">
+                  <svg class="icon icon-sm"><use href="./css/icons.svg#check"></use></svg> Confirm
+                </button>
+                <button class="btn btn-outline btn-sm" data-action="verify-edit" style="color:#6FC3DF;border-color:rgba(111,195,223,0.4)">
+                  Edit & Confirm
+                </button>
+                <button class="btn btn-outline btn-sm" data-action="verify-remove" style="color:#ef4444;border-color:rgba(239,68,68,0.3)">
+                  Remove
+                </button>
+              </div>
+            </div>
+            ` : ''}
+
           </div>
         </div>
 
@@ -423,5 +470,55 @@ export function wireProfileEvents(state) {
   // Navigate links (if any profile-internal navigate buttons exist)
   document.querySelectorAll('[data-action="navigate"]').forEach(el =>
     el.addEventListener('click', () => navigate(el.dataset.view, el.dataset.id))
+  )
+
+  // Verification: Confirm
+  document.querySelectorAll('[data-action="verify-confirm"]').forEach(el =>
+    el.addEventListener('click', () => confirmAlumni(alumni.id))
+  )
+
+  // Verification: Edit — show the form
+  document.querySelectorAll('[data-action="verify-edit"]').forEach(el =>
+    el.addEventListener('click', () => {
+      const form = document.getElementById('verify-edit-form')
+      const buttons = document.getElementById('verify-buttons')
+      if (form) form.classList.remove('hidden')
+      if (buttons) buttons.classList.add('hidden')
+    })
+  )
+
+  // Verification: Save edits & confirm
+  document.querySelectorAll('[data-action="verify-save"]').forEach(el =>
+    el.addEventListener('click', () => {
+      const name = document.getElementById('verify-name')?.value?.trim()
+      const year = document.getElementById('verify-year')?.value
+      const cred = document.getElementById('verify-cred')?.value?.trim()
+      const note = document.getElementById('verify-note')?.value?.trim()
+      editAndConfirmAlumni(alumni.id, {
+        name: name || undefined,
+        class_year: year ? parseInt(year) : undefined,
+        credentials: cred || undefined,
+        note: note || undefined,
+      })
+    })
+  )
+
+  // Verification: Cancel edit
+  document.querySelectorAll('[data-action="verify-cancel"]').forEach(el =>
+    el.addEventListener('click', () => {
+      const form = document.getElementById('verify-edit-form')
+      const buttons = document.getElementById('verify-buttons')
+      if (form) form.classList.add('hidden')
+      if (buttons) buttons.classList.remove('hidden')
+    })
+  )
+
+  // Verification: Remove
+  document.querySelectorAll('[data-action="verify-remove"]').forEach(el =>
+    el.addEventListener('click', () => {
+      removeAlumni(alumni.id)
+      const backView = state.rootView || state.previousView || 'directory'
+      navigate(backView)
+    })
   )
 }
