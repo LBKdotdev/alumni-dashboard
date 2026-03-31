@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plan: Alumni Recovery Pipeline</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #111111; color: #ccc; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; }
+  nav { position: sticky; top: 0; background: #000; border-bottom: 2px solid #6FC3DF; padding: 12px 24px; z-index: 100; display: flex; align-items: center; gap: 12px; }
+  nav .brand { color: #6FC3DF; font-weight: 700; font-size: 18px; }
+  nav .title { color: #999; font-size: 14px; }
+  .container { max-width: 800px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .subtitle { color: #888; font-size: 15px; margin-bottom: 32px; }
+  h2 { color: #6FC3DF; font-size: 18px; font-weight: 700; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #222; }
+  p, li { font-size: 14px; line-height: 1.7; }
+  ul { padding-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; }
+  .card { background: #1A1A1A; border: 1px solid #2A2A2A; border-radius: 8px; padding: 18px 20px; margin-bottom: 12px; }
+  .card-title { color: #6FC3DF; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .card-detail { color: #aaa; font-size: 13px; }
+  .stat-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e1e1e; }
+  .stat-label { color: #888; font-size: 13px; }
+  .stat-value { color: #fff; font-weight: 600; font-size: 13px; }
+  .banner { background: #1a2a1a; border: 1px solid #2a4a2a; border-radius: 8px; padding: 16px 20px; margin-bottom: 24px; text-align: center; }
+  .banner-text { color: #4ade80; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .red { color: #f87171; }
+  .green { color: #4ade80; }
+  .gold { color: #d4a24a; }
+  .footer { margin-top: 48px; padding-top: 16px; border-top: 1px solid #222; font-size: 12px; color: #555; text-align: center; }
+</style>
+</head>
+<body>
+<nav>
+  <span class="brand">Be</span>
+  <span class="title">Plan — Alumni Recovery Pipeline</span>
+</nav>
+<div class="container">
+  <h1>Alumni Recovery Pipeline</h1>
+  <p class="subtitle">Close the gap between Lisa's 8,166 and our 6,283</p>
+
+  <div class="banner">
+    <span class="banner-text">Plan — Awaiting Approval</span>
+  </div>
+
+  <h2>The Problem</h2>
+  <p>Lisa gave us 8,166 alumni. We matched 6,283. That leaves <strong class="red">2,289 missing</strong>. One of them was Rob — Lisa's husband — which surfaced during a live demo. If Rob is missing, who else is?</p>
+
+  <h2>What We Learned</h2>
+  <p>We sampled 50 of the 2,289 missing alumni against the federal NPPES API:</p>
+
+  <div class="card">
+    <div class="stat-row"><span class="stat-label">Found as DO in NPPES</span><span class="stat-value green">5 (10%)</span></div>
+    <div class="stat-row"><span class="stat-label">Found but not listed as DO</span><span class="stat-value gold">30 (60%)</span></div>
+    <div class="stat-row"><span class="stat-label">Not found at all</span><span class="stat-value red">15 (30%)</span></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">What this means</div>
+    <p class="card-detail">
+      <strong class="green">~228 alumni</strong> are recoverable right now — they're DOs in NPPES, just missed by the original name matching.<br><br>
+      <strong class="gold">~1,373 alumni</strong> are in NPPES but not listed as DO. Could be credential variations (D.O. vs DO vs D.O), dual-credential (MD/DO), or they registered under a different credential. These need manual review or looser matching.<br><br>
+      <strong class="red">~688 alumni</strong> aren't in NPPES at all. Likely retired, deceased, changed careers, never registered an NPI, or significant name changes (marriage). These are genuinely unfindable through the pipeline.
+    </p>
+  </div>
+
+  <h2>Why They Were Missed</h2>
+  <ul>
+    <li><strong>Name format mismatch</strong> — Lisa's list has "Van Buskirk, John R." but the original pipeline might have searched "VanBuskirk" or split the name wrong</li>
+    <li><strong>Middle name confusion</strong> — "Murad Haid, Joan L." has a two-word last name that would break most name parsers</li>
+    <li><strong>Credential filtering</strong> — Some DOs register with "D.O.", "D.O", or even just their specialty credential. Strict "DO" matching misses them</li>
+    <li><strong>Duplicate name skipping</strong> — 81 duplicate names in the dataset. If the pipeline hit a common name like "John Lee" it may have matched the wrong one or skipped both</li>
+    <li><strong>Recent grads</strong> — 820 of the missed are from the 2020s. Some may not have NPI numbers yet</li>
+  </ul>
+
+  <h2>The Plan</h2>
+
+  <div class="card">
+    <div class="card-title">Phase 1: Automated Recovery (~228 alumni)</div>
+    <p class="card-detail">Run all 2,289 missed names against the NPPES API with improved matching:
+    <ul style="margin-top:8px">
+      <li>Search by first name + last name (handle multi-word last names)</li>
+      <li>Accept DO, D.O., D.O as valid credentials</li>
+      <li>Use graduation year to disambiguate common names</li>
+      <li>For each match, pull full NPI data (specialty, location, phone) and add to alumni.json</li>
+    </ul>
+    Build a script that runs through all 2,289, matches what it can, and produces a report of what it recovered and what it couldn't.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Phase 2: Credential-Flexible Recovery (~1,373 alumni)</div>
+    <p class="card-detail">Re-run the missed list without credential filtering — accept any healthcare provider matching the name. Flag these as "credential mismatch — needs review." Lisa or her team confirms which ones are actually WesternU DO graduates who registered under a different credential.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Phase 3: Gap Report for Lisa (~688 alumni)</div>
+    <p class="card-detail">The truly unfindable. Generate a clean report: "These 688 alumni from your list have no NPI match. They may be retired, deceased, practicing under a different name, or never registered." Give this to Lisa — she'll know which ones matter and can manually provide info for the ones she cares about.</p>
+  </div>
+
+  <h2>Scope</h2>
+  <div class="stat-row"><span class="stat-label">Phase 1 (automated DO matching)</span><span class="stat-value">Build script + run (~2 hours)</span></div>
+  <div class="stat-row"><span class="stat-label">Phase 2 (credential-flexible)</span><span class="stat-value">Modify script + run + review (~1 hour)</span></div>
+  <div class="stat-row"><span class="stat-label">Phase 3 (gap report)</span><span class="stat-value">Generate report (~30 min)</span></div>
+  <div class="stat-row"><span class="stat-label">Expected recovery</span><span class="stat-value">~228 confirmed + up to ~1,373 pending review</span></div>
+  <div class="stat-row"><span class="stat-label">API cost</span><span class="stat-value">$0 — NPPES API is free, no key needed</span></div>
+
+  <h2>After Recovery</h2>
+  <div class="stat-row"><span class="stat-label">Current alumni count</span><span class="stat-value">6,283</span></div>
+  <div class="stat-row"><span class="stat-label">Projected after Phase 1</span><span class="stat-value">~6,511</span></div>
+  <div class="stat-row"><span class="stat-label">Projected after Phase 2 (with review)</span><span class="stat-value">~7,500+</span></div>
+  <div class="stat-row"><span class="stat-label">Remaining gap</span><span class="stat-value">~688 (genuinely unfindable)</span></div>
+
+  <div class="footer">
+    Generated 2026-03-30 — Be / NaciLink
+  </div>
+</div>
+</body>
+</html>
