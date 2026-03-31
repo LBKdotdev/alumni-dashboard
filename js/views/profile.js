@@ -48,6 +48,7 @@ export function renderProfile(alumni, state) {
             <div class="flex items-center gap-3 mb-1">
               <h1 class="text-2xl font-bold" style="color:var(--gray-900)">${alumni.name}, ${alumni.credentials}</h1>
               ${alumni.engagement.is_vip ? renderVIPBadge() : ''}
+              ${alumni.tags?.includes('demo-data') ? '<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;background:rgba(239,68,68,0.15);color:#ef4444;border:1px solid rgba(239,68,68,0.3);margin-left:8px;text-transform:uppercase;letter-spacing:0.05em">Demo Data</span>' : ''}
             </div>
             <p class="text-sm text-gray-500 mb-1">${alumni.professional.specialty}${alumni.professional.practice_name ? ` &middot; ${alumni.professional.practice_name}` : ''}</p>
             <p class="text-sm text-gray-400 mb-3">

@@ -136,6 +136,11 @@ export function renderQueue(state) {
     `<button class="pill ${queueFilter === key ? 'pill-active' : 'pill-inactive'}" data-action="queue-filter" data-filter="${key}">${label}</button>`
   ).join('')
 
+  const demoNotice = `<div style="padding:8px 14px;border-radius:8px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);margin-bottom:16px;display:flex;align-items:center;gap:8px">
+    <span style="font-size:10px;font-weight:700;color:#ef4444;text-transform:uppercase;letter-spacing:0.05em">Demo Scenarios</span>
+    <span style="font-size:12px;color:#888">These triggers are examples showing system capabilities — not live data</span>
+  </div>`
+
   const cards = filtered.map((t, i) => renderTriggerCard(t, i)).join('')
 
   const empty = filtered.length === 0 && !soapTrigger
@@ -179,6 +184,7 @@ export function renderQueue(state) {
 
     ${soapTrigger ? renderSOAPCard() : ''}
 
+    ${filtered.length > 0 ? demoNotice : ''}
     <div class="space-y-4">${cards}</div>
     ${empty}
     ${archived}
