@@ -173,7 +173,7 @@ export function toggleEngagement(alumniId, field) {
 export function confirmAlumni(alumniId) {
   updateAlumni(alumniId, a => ({
     ...a,
-    tags: a.tags.filter(t => t !== 'needs-verification' && t !== 'recovered-name-split'),
+    tags: a.tags.filter(t => t !== 'needs-verification' && t !== 'recovered-name-split' && t !== 'duplicate-review'),
   }))
 }
 
@@ -183,7 +183,7 @@ export function editAndConfirmAlumni(alumniId, changes) {
     name: changes.name || a.name,
     class_year: changes.class_year || a.class_year,
     credentials: changes.credentials || a.credentials,
-    tags: a.tags.filter(t => t !== 'needs-verification' && t !== 'recovered-name-split'),
+    tags: a.tags.filter(t => t !== 'needs-verification' && t !== 'recovered-name-split' && t !== 'duplicate-review'),
     notes: changes.note ? [{ date: new Date().toISOString().split('T')[0], author: 'Dr. Warren', text: changes.note }, ...a.notes] : a.notes,
   }))
 }

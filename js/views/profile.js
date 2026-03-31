@@ -110,11 +110,11 @@ export function renderProfile(alumni, state) {
               </button>
             </div>
 
-            ${alumni.tags?.includes('needs-verification') ? `
+            ${(alumni.tags?.includes('needs-verification') || alumni.tags?.includes('duplicate-review')) ? `
             <!-- Verification Bar -->
-            <div style="margin-top:16px;padding:16px;border-radius:10px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2)">
-              <p class="text-xs font-bold" style="color:#ef4444;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Needs Verification</p>
-              <p class="text-xs text-gray-400" style="margin-bottom:12px">This alumni was matched by name-splitting. Please confirm this is a WesternU graduate, edit their info, or remove if wrong person.</p>
+            <div style="margin-top:16px;padding:16px;border-radius:10px;background:${alumni.tags.includes('needs-verification') ? 'rgba(239,68,68,0.06)' : 'rgba(212,162,74,0.06)'};border:1px solid ${alumni.tags.includes('needs-verification') ? 'rgba(239,68,68,0.2)' : 'rgba(212,162,74,0.2)'}">
+              <p class="text-xs font-bold" style="color:${alumni.tags.includes('needs-verification') ? '#ef4444' : '#d4a24a'};text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">${alumni.tags.includes('needs-verification') ? 'Needs Verification' : 'Duplicate Review'}</p>
+              <p class="text-xs text-gray-400" style="margin-bottom:12px">${alumni.tags.includes('needs-verification') ? 'Matched by name-splitting. Please confirm this is a WesternU graduate, edit their info, or remove if wrong person.' : 'Another alumnus with this same name exists. Please confirm this is the right person, edit to distinguish, or remove if wrong match.'}</p>
               <div id="verify-edit-form" class="hidden" style="margin-bottom:12px">
                 <div style="display:flex;flex-direction:column;gap:8px">
                   <div>
